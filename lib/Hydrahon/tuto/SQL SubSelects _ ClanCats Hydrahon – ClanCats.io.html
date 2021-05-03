@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<!-- saved from url=(0071)https://clancats.io/hydrahon/master/sql-query-builder/select/subselects -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SQL SubSelects / ClanCats Hydrahon – ClanCats.io</title>
+
+    <meta name="description" content="Docs, coming soon. In the meantime check out &lt;a href=&quot;https://github.com/ClanCats/Hydrahon/issues/3&quot;&gt;https://github.com/ClanCats/Hydrahon/issues/3&lt;/a&gt; Overview and documentation of open source PHP Components, projects and libraries by ClanCats.">
+
+    <!-- Fonts -->
+    <link href="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/css" rel="stylesheet" type="text/css">
+    <link href="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/css(1)" rel="stylesheet">
+
+    <link href="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Style -->
+    <link href="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/clancatslabs.min.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+        /* Anchor offset */
+        h3[id]:before, h2[id]:before { 
+          display: block; 
+          content: " "; 
+          margin-top: -75px; 
+          height: 75px; 
+          visibility: hidden; 
+        }
+    </style>
+
+    <!-- JS -->
+    <script type="text/javascript" async="" src="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/analytics.js.télécharger"></script><script src="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/app.min.js.télécharger" type="text/javascript"></script>
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async="" src="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-52988690-1');
+    </script>
+
+
+    </head>
+
+<body>
+
+    <div id="ccf-header">
+        <div class="container">
+            <a href="https://clancats.io/">
+                <img style="width: 55px;" id="logo-img" alt="ClanCats Logo" title="ClanCats Logo" src="./SQL SubSelects _ ClanCats Hydrahon – ClanCats.io_files/logo.png">
+                <span class="header-title"></span>
+            </a>
+            <div id="ccf-main-nav" role="navigation">
+                <ul>
+                    	<li class="current active"><a href="https://clancats.io/hydrahon/master/"> Documentation</a></li>
+	<li><a target="_blank" href="https://github.com/ClanCats/Hydrahon"><i class="fa fa-github"></i> Github</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrapper">
+
+        
+        <div class="ccf-header-subline affix" data-spy="affix" data-offset-top="50" data-offset-bottom="200">
+            <div class="container">
+                <h2 style="float: right;">Hydrahon</h2>
+            </div>
+        </div>
+
+        <div class="container" style="margin-top: 36px;">
+
+            <div class="row" style="padding-top: 50px;">
+	<div class="col-md-3">
+
+		<div class="package-list-item" style="margin-top: 0;">
+			<div class="package-list-item-image" style="background-color: #5395C9">
+									<a href="https://clancats.io/hydrahon/master/">
+						<div class="logo" style="
+							mask-image: url(/assets/media/img/logo/hydrahon.png);
+							-webkit-mask-image: url(/assets/media/img/logo/hydrahon.png);
+							background-color: #fff
+						"></div>
+					</a>
+							</div>
+		</div>
+
+		
+		
+		<div class="subnavigation">
+			<ul>
+						
+			
+			
+									<li class="seperator"><span>SQL Query Builder</span></li>
+				
+			
+									<li class="active">
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select" class="">Select</a>
+						<ul>
+									
+			
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/basics" class="">Basics</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods" class="">Runner Methods</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/joining-data" class="">Joining data</a>
+					</li>
+				
+			
+									<li class="active">
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/subselects" class="">Subselects</a>
+					</li>
+				
+			
+		
+						</ul>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/insert" class="">Insert</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/update" class="">Update</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/delete" class="">Delete</a>
+					</li>
+				
+			
+									<li class="seperator"><span>Implementation</span></li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/implementation/mysql-pdo-implementation" class="">MySQL PDO Implementation</a>
+					</li>
+				
+			
+									<li class="seperator"><span>Good to know</span></li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/good-to-know/parameter-parsing-escaping" class="">Parameter Parsing &amp; escaping</a>
+					</li>
+				
+			
+		
+			</ul>
+		</div>
+	</div>
+
+	<div class="col-md-9">
+			<div class="content-wrapper"><h1>SQL SubSelects</h1>
+<p>Docs, coming soon. In the meantime check out <a href="https://github.com/ClanCats/Hydrahon/issues/3">https://github.com/ClanCats/Hydrahon/issues/3</a></p></div>
+	</div>
+</div>
+
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <footer>
+            <small>Created with <i class="glyphicon glyphicon-heart" style="color: red;"></i> in Zürich by Mario Döring</small>
+            <small class="pull-right">
+                <a target="_blank" href="https://twitter.com/mario_deluna"><i class="fa fa-twitter"></i> @mario_deluna</a>
+            </small>
+        </footer>
+    </div>
+
+
+
+</body></html>

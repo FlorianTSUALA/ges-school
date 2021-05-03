@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<!-- saved from url=(0075)https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>SQL Select Runner Methods / ClanCats Hydrahon – ClanCats.io</title>
+
+    <meta name="description" content="One important thing to know here is that there are multiple so-called &amp;quot;runner methods&amp;quot;. Think of them as helpers for common queries. These methods can modify your query, execute it and can do special operations with the returned result. Overview and documentation of open source PHP Components, projects and libraries by ClanCats.">
+
+    <!-- Fonts -->
+    <link href="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/css" rel="stylesheet" type="text/css">
+    <link href="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/css(1)" rel="stylesheet">
+
+    <link href="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+
+    <!-- Style -->
+    <link href="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/clancatslabs.min.css" type="text/css" rel="stylesheet">
+    <style type="text/css">
+        /* Anchor offset */
+        h3[id]:before, h2[id]:before { 
+          display: block; 
+          content: " "; 
+          margin-top: -75px; 
+          height: 75px; 
+          visibility: hidden; 
+        }
+    </style>
+
+    <!-- JS -->
+    <script type="text/javascript" async="" src="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/analytics.js.télécharger"></script><script src="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/app.min.js.télécharger" type="text/javascript"></script>
+
+    <!-- Global Site Tag (gtag.js) - Google Analytics -->
+    <script async="" src="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/js"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-52988690-1');
+    </script>
+
+
+    </head>
+
+<body>
+
+    <div id="ccf-header">
+        <div class="container">
+            <a href="https://clancats.io/">
+                <img style="width: 55px;" id="logo-img" alt="ClanCats Logo" title="ClanCats Logo" src="./SQL Select Runner Methods _ ClanCats Hydrahon – ClanCats.io_files/logo.png">
+                <span class="header-title"></span>
+            </a>
+            <div id="ccf-main-nav" role="navigation">
+                <ul>
+                    	<li class="current active"><a href="https://clancats.io/hydrahon/master/"> Documentation</a></li>
+	<li><a target="_blank" href="https://github.com/ClanCats/Hydrahon"><i class="fa fa-github"></i> Github</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div id="wrapper">
+
+        
+        <div class="ccf-header-subline affix" data-spy="affix" data-offset-top="50" data-offset-bottom="200">
+            <div class="container">
+                <h2 style="float: right;">Hydrahon</h2>
+            </div>
+        </div>
+
+        <div class="container" style="margin-top: 36px;">
+
+            <div class="row" style="padding-top: 50px;">
+	<div class="col-md-3">
+
+		<div class="package-list-item" style="margin-top: 0;">
+			<div class="package-list-item-image" style="background-color: #5395C9">
+									<a href="https://clancats.io/hydrahon/master/">
+						<div class="logo" style="
+							mask-image: url(/assets/media/img/logo/hydrahon.png);
+							-webkit-mask-image: url(/assets/media/img/logo/hydrahon.png);
+							background-color: #fff
+						"></div>
+					</a>
+							</div>
+		</div>
+
+		
+		
+		<div class="subnavigation">
+			<ul>
+						
+			
+			
+									<li class="seperator"><span>SQL Query Builder</span></li>
+				
+			
+									<li class="active">
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select" class="">Select</a>
+						<ul>
+									
+			
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/basics" class="">Basics</a>
+					</li>
+				
+			
+									<li class="active">
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods" class="">Runner Methods</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/joining-data" class="">Joining data</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/select/subselects" class="">Subselects</a>
+					</li>
+				
+			
+		
+						</ul>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/insert" class="">Insert</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/update" class="">Update</a>
+					</li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/sql-query-builder/delete" class="">Delete</a>
+					</li>
+				
+			
+									<li class="seperator"><span>Implementation</span></li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/implementation/mysql-pdo-implementation" class="">MySQL PDO Implementation</a>
+					</li>
+				
+			
+									<li class="seperator"><span>Good to know</span></li>
+				
+			
+									<li>
+						<a href="https://clancats.io/hydrahon/master/good-to-know/parameter-parsing-escaping" class="">Parameter Parsing &amp; escaping</a>
+					</li>
+				
+			
+		
+			</ul>
+		</div>
+	</div>
+
+	<div class="col-md-9">
+			<div class="content-wrapper"><ul class="content-navigation"><li style="margin-bottom: 20px;"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#"><strong>Navigation</strong></a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#fetching-1">Fetching</a></li><ul><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#execute-2">Execute</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#get-3">Get</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#one-4">One</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#first-amp-last-5">First &amp; Last</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#find-6">Find</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#column-7">Column</a></li></ul><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#aggregators-8">Aggregators</a></li><ul><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#count-9">Count</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#sum-10">Sum</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#min-11">Min</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#max-12">Max</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#average-13">Average</a></li><li><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#exists-14">Exists</a></li></ul></ul><h1>SQL Select Runner Methods</h1>
+<p>One important thing to know here is that there are multiple so-called "runner methods". Think of them as helpers for common queries. These methods can modify your query, execute it and can do special operations with the returned result.</p>
+<div class="callout callout-note"><p><strong class="callout-label">Note:</strong> The displayed SQL query in the examples has no prepared statements. In other words the "?" have been replaced with the actual parameter.</p>
+</div>
+<hr><h2 id="fetching-1"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#fetching-1">#&nbsp;</a> Fetching</h2>
+<hr><h3 id="execute-2"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#execute-2">#&nbsp;</a> Execute</h3>
+<p>The absolute base runner method is <code>execute</code>. It's what all other runner methods are based on. </p>
+<p>It's an alias of <code>executeResultFetcher</code>, this means the method just forwards the plain data that you return inside your <code>ClanCats\Hydrahon\Builder</code> instance callback.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="pln">$h</span><span class="pun">-&gt;</span><span class="pln">table</span><span class="pun">(</span><span class="str">'people'</span><span class="pun">)-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">execute</span><span class="pun">();</span></code></pre>
+<hr><h3 id="get-3"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#get-3">#&nbsp;</a> Get</h3>
+<p>The default runner method is the <code>get</code> method, it handles most of the built-in result modifications.</p>
+<p>As an example the handling of an expected single result vs. collections.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="pln">$people </span><span class="pun">=</span><span class="pln"> $h</span><span class="pun">-&gt;</span><span class="pln">table</span><span class="pun">(</span><span class="str">'people'</span><span class="pun">);</span><span class="pln">
+
+$people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">where</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Trevor'</span><span class="pun">)-&gt;</span><span class="pln">execute</span><span class="pun">();</span><span class="pln"> </span><span class="com">// [[id: 1, name: 'Trevor']]</span><span class="pln">
+$people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">where</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Trevor'</span><span class="pun">)-&gt;</span><span class="pln">limit</span><span class="pun">(</span><span class="lit">1</span><span class="pun">)-&gt;</span><span class="pln">execute</span><span class="pun">();</span><span class="pln"> </span><span class="com">// [[id: 1, name: 'Trevor']]</span></code></pre>
+<p>Will return a collection or in other words an array of arrays. </p>
+<p>Using the <code>get</code> method Hydrahon knows that you are expecting a single result by setting the limit to 1.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="pln">$people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">where</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Trevor'</span><span class="pun">)-&gt;</span><span class="kwd">get</span><span class="pun">();</span><span class="pln"> </span><span class="com">// [[id: 1, name: 'Trevor']]</span><span class="pln">
+$people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">where</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Trevor'</span><span class="pun">)-&gt;</span><span class="pln">limit</span><span class="pun">(</span><span class="lit">1</span><span class="pun">)-&gt;</span><span class="kwd">get</span><span class="pun">();</span><span class="pln"> </span><span class="com">// [id: 1, name: 'Trevor']</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-get" aria-controls="function-public-function-get" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-get" aria-controls="parameters-public-function-get" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-get">
+    	
+    	<p>Executes the <code>executeResultFetcher</code> callback and handles the results.</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> </span><span class="kwd">get</span><span class="pun">()</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-get">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">mixed</span>      				              The fetched result.
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div> <p></p>
+<hr><h3 id="one-4"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#one-4">#&nbsp;</a> One</h3>
+<p>The method one hopefully speaks like a lot of methods for itself. It will add <code>limit 1</code> to your query and return a single result.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="pln">$jeffry </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">where</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'jeffry'</span><span class="pun">)-&gt;</span><span class="pln">one</span><span class="pun">();</span><span class="pln"> </span><span class="com">// [id: 2, name: 'jeffry']</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-one" aria-controls="function-public-function-one" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-one" aria-controls="parameters-public-function-one" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-one">
+    	
+    	<p>Sets the limit to 1, executes and returns the first result using get.</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> one</span><span class="pun">()</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-one">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">mixed</span>      				              The single result.
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div> <p></p>
+<hr><h3 id="first-amp-last-5"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#first-amp-last-5">#&nbsp;</a> First &amp; Last</h3>
+<p>Selects the first/last result ordered by the given key (default is <code>id</code>).</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="pln">$firstPerson </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">first</span><span class="pun">();</span><span class="pln"> 
+$lastPerson </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">last</span><span class="pun">();</span></code></pre>
+<p>You can set on what key the first / last item should be selected:</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="pln">$youngest </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">first</span><span class="pun">(</span><span class="str">'age'</span><span class="pun">);</span><span class="pln">
+$oldest </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">last</span><span class="pun">(</span><span class="str">'age'</span><span class="pun">);</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-firstkey-id" aria-controls="function-public-function-firstkey-id" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-firstkey-id" aria-controls="parameters-public-function-firstkey-id" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-firstkey-id">
+    	
+    	<p>Get the first result orderd by the given key.</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> first</span><span class="pun">(</span><span class="pln">$key </span><span class="pun">=</span><span class="pln"> </span><span class="str">'id'</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-firstkey-id">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$key</td>	
+							<td>By what should the first item be selected? Default is: 'id'</td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">mixed</span>      				              The first result.
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h3 id="find-6"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#find-6">#&nbsp;</a> Find</h3>
+<p>Selects one item with the given value. This translates to a simple <code>where</code> with <code>limit</code> 1.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select * from `questions` where `id` = 42 limit 0, 1</span><span class="pln">
+$theAnswer </span><span class="pun">=</span><span class="pln"> $h</span><span class="pun">-&gt;</span><span class="pln">table</span><span class="pun">(</span><span class="str">'questions'</span><span class="pun">)-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">find</span><span class="pun">(</span><span class="lit">42</span><span class="pun">);</span></code></pre>
+<p>You can also set the key.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select * from `people` where `name` = John limit 0, 1</span><span class="pln">
+$john </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">find</span><span class="pun">(</span><span class="str">'John'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'name'</span><span class="pun">);</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-findid-key-id" aria-controls="function-public-function-findid-key-id" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-findid-key-id" aria-controls="parameters-public-function-findid-key-id" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-findid-key-id">
+    	
+    	<p>Find something, means select one item by key</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> find</span><span class="pun">(</span><span class="pln">$id</span><span class="pun">,</span><span class="pln"> $key </span><span class="pun">=</span><span class="pln"> </span><span class="str">'id'</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-findid-key-id">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">int</td>	
+							<td class="functioninfo-parameter-var">$id</td>	
+							<td></td>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$key</td>	
+							<td></td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">mixed</span>      				              
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h3 id="column-7"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#column-7">#&nbsp;</a> Column</h3>
+<p>Select one specific value. </p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select `age` from `people` where `name` = Ray limit 0, 1</span><span class="pln">
+$age </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">where</span><span class="pun">(</span><span class="str">'name'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'Ray'</span><span class="pun">)-&gt;</span><span class="pln">column</span><span class="pun">(</span><span class="str">'age'</span><span class="pun">);</span><span class="pln"> </span><span class="com">// returns 26</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-columncolumn" aria-controls="function-public-function-columncolumn" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-columncolumn" aria-controls="parameters-public-function-columncolumn" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-columncolumn">
+    	
+    	<p>Just get a single value from the result</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> column</span><span class="pun">(</span><span class="pln">$column</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-columncolumn">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$column</td>	
+							<td>The name of the column.</td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">mixed</span>      				              The columns value
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h2 id="aggregators-8"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#aggregators-8">#&nbsp;</a> Aggregators</h2>
+<hr><h3 id="count-9"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#count-9">#&nbsp;</a> Count</h3>
+<p>Selects using the MySQL <code>count</code> function and returns the number of results.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select count(*) from `people` limit 0, 1</span><span class="pln">
+$peopleCount </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">count</span><span class="pun">();</span></code></pre>
+<p>By default the wildcard <code>*</code> is used but you can pass a field name:</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select count(`deleted_at`) from `people` limit 0, 1</span><span class="pln">
+$deletedCount </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">count</span><span class="pun">(</span><span class="str">'deleted_at'</span><span class="pun">);</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-countfield-null" aria-controls="function-public-function-countfield-null" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-countfield-null" aria-controls="parameters-public-function-countfield-null" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-countfield-null">
+    	
+    	<p>Just return the number of results</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> count</span><span class="pun">(</span><span class="pln">$field </span><span class="pun">=</span><span class="pln"> </span><span class="kwd">null</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-countfield-null">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$field</td>	
+							<td></td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">int</span>      				              
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h3 id="sum-10"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#sum-10">#&nbsp;</a> Sum</h3>
+<p>Selects using the MySQL <code>sum</code> function and returns the result.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select sum(`number_of_visits`) from `people` limit 0, 1</span><span class="pln">
+$totalVisits </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">sum</span><span class="pun">(</span><span class="str">'number_of_visits'</span><span class="pun">);</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-sumfield" aria-controls="function-public-function-sumfield" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-sumfield" aria-controls="parameters-public-function-sumfield" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-sumfield">
+    	
+    	<p>Helper for the SQL sum aggregation.</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> sum</span><span class="pun">(</span><span class="pln">$field</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-sumfield">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$field</td>	
+							<td></td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">int</span>      				              
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h3 id="min-11"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#min-11">#&nbsp;</a> Min</h3>
+<p>Selects using the MySQL <code>min</code> function and returns the result.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select min(`score`) from `game`.`ranking` limit 0, 1</span><span class="pln">
+$lowestScore </span><span class="pun">=</span><span class="pln"> $h</span><span class="pun">-&gt;</span><span class="pln">table</span><span class="pun">(</span><span class="str">'game.ranking'</span><span class="pun">)-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">min</span><span class="pun">(</span><span class="str">'score'</span><span class="pun">);</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-minfield" aria-controls="function-public-function-minfield" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-minfield" aria-controls="parameters-public-function-minfield" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-minfield">
+    	
+    	<p>Helper for the SQL min aggregation.</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> min</span><span class="pun">(</span><span class="pln">$field</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-minfield">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$field</td>	
+							<td></td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">int</span>      				              
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h3 id="max-12"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#max-12">#&nbsp;</a> Max</h3>
+<p>Selects using the MySQL <code>max</code> function and returns the result.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select max(`score`) from `game`.`ranking` limit 0, 1</span><span class="pln">
+$highestScore </span><span class="pun">=</span><span class="pln"> $h</span><span class="pun">-&gt;</span><span class="pln">table</span><span class="pun">(</span><span class="str">'game.ranking'</span><span class="pun">)-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">max</span><span class="pun">(</span><span class="str">'score'</span><span class="pun">);</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-maxfield" aria-controls="function-public-function-maxfield" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-maxfield" aria-controls="parameters-public-function-maxfield" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-maxfield">
+    	
+    	<p>Helper for the SQL max aggregation.</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> max</span><span class="pun">(</span><span class="pln">$field</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-maxfield">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$field</td>	
+							<td></td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">int</span>      				              
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h3 id="average-13"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#average-13">#&nbsp;</a> Average</h3>
+<p>Selects using the MySQL <code>avg</code> function and returns the result.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select avg(`age`) from `people` limit 0, 1</span><span class="pln">
+$averageAge </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="pln">avg</span><span class="pun">(</span><span class="str">'age'</span><span class="pun">);</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-avgfield" aria-controls="function-public-function-avgfield" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-avgfield" aria-controls="parameters-public-function-avgfield" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-avgfield">
+    	
+    	<p>Helper for the SQL average aggregation.</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> avg</span><span class="pun">(</span><span class="pln">$field</span><span class="pun">)</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-avgfield">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			    			<div class="col-sm-12">
+            <h4>Arguments</h4>
+					<table class="table table-striped table-bordered">
+						<tbody><tr>
+							<th>Data type</th>	
+							<th>Variable name</th>
+							<th style="width: 60%;">Comment</th>	
+						</tr>
+												<tr>
+							<td class="functioninfo-parameter-type">string</td>	
+							<td class="functioninfo-parameter-var">$field</td>	
+							<td></td>	
+						</tr>
+											</tbody></table>
+		
+    			</div>
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">int</span>      				              
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p>
+<hr><h3 id="exists-14"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#exists-14">#&nbsp;</a> Exists</h3>
+<p>Returns a bool value if anything under the queries conditions exists.</p>
+<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="com">// SQL: select exists(select * from `people` where `age` &gt; 89) as `exists</span><span class="pln">
+$hasOldPeople </span><span class="pun">=</span><span class="pln"> $people</span><span class="pun">-&gt;</span><span class="kwd">select</span><span class="pun">()-&gt;</span><span class="kwd">where</span><span class="pun">(</span><span class="str">'age'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'&gt;'</span><span class="pun">,</span><span class="pln"> </span><span class="str">'89'</span><span class="pun">)-&gt;</span><span class="pln">exists</span><span class="pun">();</span></code></pre>
+<p></p><div class="functioninfo">
+  <!-- Nav tabs -->
+  <ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#function-public-function-exists" aria-controls="function-public-function-exists" role="tab" data-toggle="tab">Method</a></li>
+    <li role="presentation"><a href="https://clancats.io/hydrahon/master/sql-query-builder/select/runner-methods#parameters-public-function-exists" aria-controls="parameters-public-function-exists" role="tab" data-toggle="tab">Arguments / Return</a></li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content" style="margin-top: 20px;">
+    <div role="tabpanel" class="tab-pane active" id="function-public-function-exists">
+    	
+    	<p>Do any results of this query exist?</p>
+    	<h4>Method definition:</h4>
+		<pre class="prettyprint prettyprinted" style=""><code class="language-php"><span class="kwd">public</span><span class="pln"> </span><span class="kwd">function</span><span class="pln"> exists</span><span class="pun">()</span></code></pre>
+
+    </div>
+    <div role="tabpanel" class="tab-pane" id="parameters-public-function-exists">
+
+    	<div class="clearfix">
+
+    		<div class="row">
+    			                			<div class="col-sm-12">
+      				<h4>Returns</h4>
+  					<p>
+              	
+      					<span class="functioninfo-parameter-type">bool</span>      				              
+            </p>
+      			</div>
+              		</div>
+		</div>
+
+    </div>
+  </div>
+</div><p></p></div>
+	</div>
+</div>
+
+
+        </div>
+    </div>
+
+    <hr>
+
+    <div class="container">
+        <footer>
+            <small>Created with <i class="glyphicon glyphicon-heart" style="color: red;"></i> in Zürich by Mario Döring</small>
+            <small class="pull-right">
+                <a target="_blank" href="https://twitter.com/mario_deluna"><i class="fa fa-twitter"></i> @mario_deluna</a>
+            </small>
+        </footer>
+    </div>
+
+
+
+</body></html>

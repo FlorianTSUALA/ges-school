@@ -1,0 +1,12 @@
+https://stackoverflow.com/questions/18406156/redirect-all-to-index-php-using-htaccess
+https://stackoverflow.com/questions/35036973/modal-form-validation-in-bootstrap
+https://formvalidation.io/
+https://code.tutsplus.com/tutorials/submit-a-form-without-page-refresh-using-jquery--net-59
+<IfModule mod_rewrite.c>
+	Options -Multiviews
+	RewriteEngine On
+	RewriteBase /ges-school/public
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule	 ^(.+)$ index.php?url=$1 [QSA,L]
+</IfModule>

@@ -1,0 +1,48 @@
+<div class="mt-repeater">
+    <div data-repeater-list="group_a">
+        <div data-repeater-item="" class="row">
+            <div class="col-md-3">
+                <select name="pr_name" id="pr_name" class="form-control select2 product-select2">
+                </select>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group col-sm-12">
+                    <input placeholder="Desc" name="pr_dsc" id="pr_dsc" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group col-sm-12">
+                    <input placeholder="Qty" name="pr_qty" id="pr_qty" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group col-sm-12">
+                    <span class="input-group-addon">₹</span>
+                    <input placeholder="Price" name="pr_price" id="pr_price" class="form-control" type="text">
+                </div>
+            </div>
+            <div class="col-md-2">
+                <div class="input-group col-sm-12">
+                    <select name="pr_tax" class="form-control select2 pr_tax">
+                        <option value="0">---None---</option>
+                        <option value="5">5</option>
+                        <option value="12">12</option>
+                        <option value="18">18</option>
+                        <option value="28">28</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1">
+                <label class="control-label">&nbsp;</label>
+                <a href="javascript:;" data-repeater-delete="" class="btn btn-danger">
+                    <i class="fa fa-close"></i>
+                </a>
+            </div>
+        </div>
+        
+    </div>
+    <a style = "margin-top:5px;" id="add_btn" href="javascript:;" data-repeater-create="" class="btn btn-info mt-repeater-add">
+        <i class="fa fa-plus"></i> Add </a>
+    <br>
+    <br>
+</div>

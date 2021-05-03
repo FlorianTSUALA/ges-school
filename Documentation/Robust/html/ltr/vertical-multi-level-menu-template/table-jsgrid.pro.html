@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+    <meta name="description" content="Robust admin is super flexible, powerful, clean &amp; modern responsive bootstrap 4 admin template.">
+    <meta name="keywords" content="admin template, robust admin template, dashboard template, flat admin template, responsive admin template, web app, crypto dashboard, bitcoin dashboard">
+    <meta name="author" content="PIXINVENT">
+    <title>jsGrid - Robust - Responsive Bootstrap 4 Admin Dashboard Template for Web Application</title>
+    <link rel="apple-touch-icon" href="../../../app-assets/images/ico/apple-icon-120.png">
+    <link rel="shortcut icon" type="image/x-icon" href="../../../app-assets/images/ico/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i%7CMuli:300,400,500,700" rel="stylesheet">
+    <!-- BEGIN VENDOR CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/vendors.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/jsgrid/jsgrid-theme.min.css">
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/vendors/css/tables/jsgrid/jsgrid.min.css">
+    <!-- END VENDOR CSS-->
+    <!-- BEGIN ROBUST CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/app.css">
+    <!-- END ROBUST CSS-->
+    <!-- BEGIN Page Level CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../app-assets/css/core/menu/menu-types/vertical-multi-level-menu.css">
+    <!-- END Page Level CSS-->
+    <!-- BEGIN Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="../../../assets/css/style.css">
+  
+    <style>
+      /* html, body {
+          height: 100%;
+          width: 100%;
+          position: absolute,
+      } */
+      /* #page-content-wrapper, .container-fluid, .row, .another-fluid { height: inherit; }
+      #page-content-wrapper, .principal {padding:0;}
+       #page-content-wrapper {padding-top:5px;}
+      .fill {
+          //height:95vh;
+          min-height: 100%;
+          height: 100%;
+      } */
+      .jsontotable table, .jsontotable th, .jsontotable td {
+          border: 1px solid black;
+          margin: 10px;
+      }
+      /* code {
+          white-space: normal;
+      } */
+      /* #jsGrid, #jsGrid2 {
+          margin: 0px;
+          width: 100%;
+          height: 95%;
+          min-height: 95%;
+          display: block;
+          font-size: 11.5px;
+      } */
+      .jsgrid-cell {padding:0 !important; }
+      /* .bg-green { background-color:#88A23D !important; border-color:#72843e; }
+      .bg-yellow { background-color:#f5c62b !important;  border-color:#b99315;  }
+      .bg-orange { background-color:#ef611a !important;  border-color:#bb450a; }
+      .bg-red { background-color:#ce2e2e !important;  border-color:#a91616; } */
+
+      /* remove scrollbar */
+      .principal #jsGrid { margin-top:0px; }
+      /*
+      #jsGrid .jsgrid-grid-header,
+      #jsGrid .jsgrid-grid-body{
+          overflow: auto;
+      }
+      */
+      #jsGrid .jsgrid-grid-body{
+          
+          max-height: 80vh;
+          
+      }
+
+      .jsgrid-selected-row>.jsgrid-cell {
+          background: #ddd !important;
+          border-color: #aaa !important;
+      }
+      .jsgrid-header-row>.jsgrid-header-cell {
+          white-space: nowrap;
+          transform: translate(0%,100%) rotate(-90deg);
+          transform-origin: 0 0;
+          height: 100px;
+          text-align: left !important;
+          padding: 0 !important;
+          margin: 0;
+      }
+
+      /* .btn-config {padding:4px 12px; margin-top:8px;} */
+
+      /* view-source:https://www.dapio.com.br/inet/dashboard/grid.html */
+</style>
+
+    <!-- END Custom CSS-->
+  </head>
+  <body class="vertical-layout vertical-mmenu 2-columns   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-mmenu" data-col="2-columns">
+
+    <div class="app-content content">
+      <div class="content-wrapper">
+        <div class="content-header row">
+          <div class="content-header-left col-md-6 col-12">
+            <h3 class="content-header-title">jsGrid	</h3>
+            <div class="row breadcrumbs-top">
+              <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index.html">Home</a>
+                  </li>
+                  <li class="breadcrumb-item"><a href="#">jsGrid</a>
+                  </li>
+                  <li class="breadcrumb-item active">jsGrid
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>
+          <div class="content-header-right col-md-6 col-12">
+            <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+              <div class="btn-group" role="group"><a class="btn btn-outline-info" href="calendars-clndr.html"><i class="fa fa-calendar"></i></a><a class="btn btn-outline-info" href="timeline-center.html"><i class="fa fa-bar-chart"></i></a>
+                <button class="btn btn-outline-info dropdown-toggle dropdown-menu-right" id="btnGroupDrop1" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fa fa-settings icon-left"></i> Settings</button>
+                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1"><a class="dropdown-item" href="card-bootstrap.html">Bootstrap Cards</a><a class="dropdown-item" href="component-buttons-extended.html">Buttons Extended</a></div>
+              </div>
+            </div>
+          </div>
+          <div class="content-header-lead col-12 mt-2">
+            <p class="lead">jsGrid supports basic grid operations like inserting, filtering, editing, deleting, paging, and sorting. jsGrid is flexible and allows to customize its appearance and components.</p>
+          </div>
+        </div>
+        <div class="content-body"><!-- Basic scenario start -->
+         <section id="basic">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">Basic Scenario</h4>
+                    <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
+                    <div class="heading-elements">
+                        <ul class="list-inline mb-0">
+                            <li><a data-action="collapse"><i class="ft-minus"></i></a></li>
+                            <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li>
+                            <li><a data-action="expand"><i class="ft-maximize"></i></a></li>
+                            <li><a data-action="close"><i class="ft-x"></i></a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="card-content collapse show">
+                    <div class="card-body card-dashboard ">
+                        <p>Grid with filtering, editing, inserting, deleting, sorting and paging. Data provided by controller.</p>
+                        <div id="basicScenario"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+         </section>
+
+        </div>
+      </div>
+    </div>
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+
+
+    <footer class="footer undefined footer-light navbar-border navbar-shadow">
+      <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright  &copy; 2018 <a class="text-bold-800 grey darken-2" href="https://themeforest.net/user/pixinvent/portfolio?ref=pixinvent" target="_blank">PIXINVENT </a>, All rights reserved. </span><span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span></p>
+    </footer>
+
+    <!-- BEGIN VENDOR JS-->
+    <script src="../../../app-assets/vendors/js/vendors.min.js"></script>
+    <!-- BEGIN VENDOR JS-->
+    <!-- BEGIN PAGE VENDOR JS-->
+    <script src="../../../app-assets/vendors/js/menu/jquery.mmenu.all.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/jsgrid/jsgrid.min.js"></script>
+    <script src="../../../app-assets/vendors/js/tables/jsgrid/griddata.js"></script>
+    <!-- END PAGE VENDOR JS-->
+    <!-- BEGIN ROBUST JS-->
+    <script src="../../../app-assets/js/core/app-menu.js"></script>
+    <script src="../../../app-assets/js/core/app.js"></script>
+    <!-- END ROBUST JS-->
+    <!-- BEGIN PAGE LEVEL JS-->
+    <script src="../../../app-assets/js/scripts/tables/jsgrid/jsgrid.js"></script>
+    <!-- END PAGE LEVEL JS-->
+
+    <script>
+      
+      $(document).ready(function(){
+          // var trHead = $("thead:first tr");
+          // $("thead:first tr th").height("100px");
+          // $("th div", trHead).addClass("rotate").css('margin-left', '2px').css('position', 'absolute');
+
+          var trHead = $("#basicScenario > div.jsgrid-grid-header.jsgrid-header-scrollbar > table > tr.jsgrid-header-row");
+            $("#basicScenario > div.jsgrid-grid-header.jsgrid-header-scrollbar > table > tr.jsgrid-header-row th").height("100px");
+            $("#basicScenario > div.jsgrid-grid-header.jsgrid-header-scrollbar > table > tr.jsgrid-header-row > th.jsgrid-header-cell", trHead).addClass("rotate").css('margin-left', '2px').css('position', 'absolute');
+            // $("#basicScenario > div.jsgrid-grid-header.jsgrid-header-scrollbar > table > tr.jsgrid-header-row:first th", trHead).addClass("rotate").css('margin-left', '2px').css('position', 'absolute');
+            
+      })
+
+    </script>
+  </body>
+</html>
