@@ -26,7 +26,7 @@ define("APP_SESSION_TIME_OUT", 1440);
         "db_pass" => "",
         "db_host" => "localhost",
         "db_charset" => "UTF-8",
-        "db_name" => "ges-school"
+        "db_name" => "nkap-scour"
     );
     } else {
         //PHP ADMIN http://www.phpmyadmin.co/

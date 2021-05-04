@@ -104,9 +104,9 @@ $router->addRoute('versement_liste_test', 'test/versement/list', [VersementContr
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_info', 'versement/info/', [VersementController::class, 'info']);
 
-$router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
-$router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
-$router->addRoute('versement_info', 'versement/info/', [VersementController::class, 'info']);
+// $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
+// $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
+// $router->addRoute('versement_info', 'versement/info/', [VersementController::class, 'info']);
 
 //PRINTER REPORT
 $router->addRoute('print', 'print/{model}', [PrinterController::class, 'index']);
