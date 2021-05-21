@@ -8,7 +8,9 @@
     //switch bootstrap https://github.com/Bttstrp/bootstrap-switch [https://github.com/Bttstrp/bootstrap-switch/issues/343]
     echo '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/toggle/bootstrap-switch.min.js"></script>';
 	echo '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/toggle/bootstrap-checkbox.min.js"></script>';
-
+    // echo '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>';
+    echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQuery.print.js"></script>';
+    
     require "script-event.php";
     require "script-component-init.php";
     require "script-update-etat.php";
@@ -101,6 +103,7 @@
                                                         <div class="card-body">
                                                             <form id="form_versement" action="need-validation" class="" novalidate>
                                                                 <fieldset>
+
                                                                     <div class="row">
                                                                         <div class="col-md-12">
                                                                             <h4 class="form-section text-warning" align="">
@@ -180,10 +183,6 @@
                                                                         </div>
 
                                                                     </div>
-
-
-
-
 
                                                                     <div class="row">
                                                                         <div class="col-md-12">
@@ -544,20 +543,20 @@
             <form  class="needs-validation" id="create-form" method="POST"  action="" novalidate>
                 <div class="modal-body">
                     <div class="form-group">
+
                         <select id="family-relation" class="select-multiple-2 form-control" name="multi_select[]" id="multi_select" style="width:100%;">
                             <option data-matricule="" data-id="" disabled value="">----------------------</option>
                             <?php foreach($eleves as $item){?>
                             <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="RF-<?= $item['id']; ?>"><?= $item['libelle']; ?></option>
                             <?php } ?>
-                            
                         </select>
+
                     </div>
 
                     <div class="form-group">
                         <input type="number" id="RF-reduction" class="form-control" >
                         <input type="hidden" id="OLD-RF-reduction" class="reduction form-control" >
                     </div>
-
 
                 </div>
                 <div id="loading" class="spinner-grow text-warning" role="status"> <span class="sr-only">Loading...</span></div>

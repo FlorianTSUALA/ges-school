@@ -76,7 +76,7 @@ use App\Helpers\Helpers;
 $include_res_footer .= "";
 
 ob_start();
-include 'versement_detail_modal-script.php';
+// include 'versement_detail_modal-script.php';
 include 'versement_liste-script.php';
 $include_footer_script = ob_get_clean();
 ?>
@@ -121,7 +121,6 @@ $include_footer_script = ob_get_clean();
                                         </fieldset>
                                     </div>
 
-                                    
                                     <div class="p-0   ">
                                         <span class="dropdown">
                                             <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled><i class="icon-settings mr-1"></i>Rapport</button>
@@ -141,18 +140,15 @@ $include_footer_script = ob_get_clean();
                             <div class="card-content my-0 py-0">
                                 <div class="card-body">
                                     <div class="table-responsive-sm">
-                                        <table id="table-emprunt" class="table table-white-space table-bordered  table-sm" style="width: 100%;">
+                                       <table id="table-versements" class="table table-white-space table-bordered  table-sm" style="width: 100%;">
                                             <thead>
                                                 <tr>
                                                     <th>id</th>
-                                                    <th>N°</th>
+                                                    <th>Nom Complet</th>
                                                     <th>Code</th>
-                                                    <th>Livre</th>
-                                                    <th>Elève</th>				                
-                                                    <th>Date Emprunt</th>
-                                                    <th>Date Retour</th>
-                                                    <th>Classe</th>				                
-                                                    <th>Etat</th>				                
+                                                    <th>Date de naissance</th>
+                                                    <th>Lieu de naissance</th>				                
+                                				                
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -162,14 +158,11 @@ $include_footer_script = ob_get_clean();
                                             <tfoot>
                                                 <tr>
                                                     <th>id</th>
-                                                    <th>N°</th>
+                                                    <th>Nom Complet</th>
                                                     <th>Code</th>
-                                                    <th>Livre</th>
-                                                    <th>Elève</th>				                
-                                                    <th>Date Emprunt</th>
-                                                    <th>Date Retour</th>
-                                                    <th>Classe</th>				                
-                                                    <th>Etat</th>				                
+                                                    <th>Date de naissance</th>
+                                                    <th>Lieu de naissance</th>				                
+                                				                
                                                     <th>Actions</th>
                                                 </tr>
                                             </tfoot>

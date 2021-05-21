@@ -28,4 +28,16 @@ class Facture extends Model implements FrequentlyReapeat
 
             ];
     }
+
+    public static function getColumns()        
+    {
+        $columns = '';
+        $columns .= '{ "data": "id" },';
+        $columns .= '{ "data": "libelle" },';
+        $columns .= '{ "data": "code_enregistrement" },';
+        $columns .= '{ "data": "matricule" },';
+        $columns .= '{ "data": "date_naissance" },';
+        $columns .= '{ "data": "lieu_naissance" },';
+        return $columns;
+    }
 }

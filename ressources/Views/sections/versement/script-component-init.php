@@ -7,7 +7,4 @@
             $(this).select2({  placeholder: "Saisir un mot pour rechercher", tags: true, multiple: true, minimumResultsForSearch: 50, dropdownParent: $(this).parent()});
         })
     });
-
-
-
 </script>

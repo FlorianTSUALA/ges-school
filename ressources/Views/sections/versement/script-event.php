@@ -48,7 +48,7 @@ $(document).ready(function(){ flash_msg(data) });
                 select.trigger('change')
                 const _data = select.select2('data')
                 console.log("Livre : ")
-                console.log(_data)
+
                 let text =  '<ul>'
                 _text =  ' '
                 for(let k = 0; k<_data.length; k++)
@@ -73,6 +73,7 @@ $(document).ready(function(){ flash_msg(data) });
                 $('#RFT-reduction').val(" Reduction : "+$('#RF-reduction').val())
                 $('#montant').val(parseFloat($('#montant').val()) - parseFloat($('#RFT-reduction').val()))
                 $('#relation_familial_input').html(_text)
+                console.log(_text);
                 init();
             })
 

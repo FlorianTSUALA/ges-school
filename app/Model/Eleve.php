@@ -50,4 +50,16 @@ class Eleve extends Model implements FrequentlyReapeat
 
     }
 
+   public static function getColumns()        
+    {
+        $columns = '';
+        $columns .= '{ "data": "id" },';
+        $columns .= '{ "data": "libelle" },';
+        $columns .= '{ "data": "matricule" },';
+        $columns .= '{ "data": "date_naissance" },';
+        $columns .= '{ "data": "lieu_naissance" },';
+        $columns .= '{ "data": null }';
+        return $columns;
+    }
+
 }

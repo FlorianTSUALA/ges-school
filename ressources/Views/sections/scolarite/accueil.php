@@ -1,5 +1,6 @@
 <?php
 
+
 use Core\Routing\URL;
 
 $include_res_header = '';
@@ -21,6 +22,8 @@ $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js
 $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/js/scripts/charts/c3/axis/timezone.js"></script>'. "\n";
 
 $include_res_footer .= "";
+
+require "script_accueil_events.php";
 
 ob_start();
 
@@ -133,7 +136,7 @@ $include_footer_script = ob_get_clean();
                                 </div>
                             </div>
                             <div class="card-body">
-                                    <button type="button" class="btn mb-1  btn-lg btn-block"> Inscription</button>
+                                    <button id="myBtn" type="button" class="btn mb-1  btn-lg btn-block" onClick="med()"> Inscription</button>
                                     <button type="button" class="btn mb-1  btn-lg btn-block"> Versement</button>
                                     <button type="button" class="btn mb-1  btn-lg btn-block"> Elèves Inscrits</button>
                                     <button type="button" class="btn mb-1  btn-lg btn-block"> Gestion classes</button>

@@ -3,6 +3,7 @@
 use Core\Routing\URL;
 use App\Helpers\Helpers;
 
+echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQuery.print.js"></script>';
 ?>
 
 <script>
@@ -75,10 +76,15 @@ use App\Helpers\Helpers;
 
                         flash_msg(data)
 
-                        console.log(data)
-
+                        console.log('Ici ya erreu demandé', data)
+                        const printB = document.getElementById("invoice-items-details")
+                        $("invoice-items-details").printArea([]);
                     },
                     error: function (textStatus, errorThrown) {
+                        
+                        const printB = document.getElementById("invoice-items-details")
+                        $("invoice-items-details").printArea([]);
+                        console.log('Ici ya erreu demandé 1', data)
                         Success = false;
                         console.log(textStatus, errorThrown);
                     }

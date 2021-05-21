@@ -37,4 +37,16 @@ class AbonnementCantine extends Model implements FrequentlyReapeat
             ];
         
     }
+
+    public static function getColumns()        
+    {
+        $columns = '';
+        $columns .= '{ "data": "id" },';
+        // $columns .= '{ "data": "num" },';
+        $columns .= '{ "data": "nom_complet" },';
+        $columns .= '{ "data": "classe" },';
+       
+        $columns .= '{ "data": null }';
+        return $columns;
+    }
 }

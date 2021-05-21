@@ -215,6 +215,7 @@ use Core\Routing\URL;
             ]
         };
 
+
         // Apply options
         // ------------------------------
 

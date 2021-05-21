@@ -2,6 +2,7 @@
 
 use Core\Routing\URL;
 use App\Model\Emprunt;
+use App\Model\Eleve;
 use App\Helpers\Helpers;
 use Config\Invariant\API;
 
@@ -16,7 +17,7 @@ use Config\Invariant\API;
 
 <script> 
 
-  let msg  = 'Bienvenue à la section des paiement cantine'
+  let msg  = 'Bienvenue à la section versement'
 
   block_notification(msg)
 
@@ -44,91 +45,55 @@ use Config\Invariant\API;
         function init_data_table() {
           // $('#table-emprunt').append('<caption style="caption-side: top-right">Table caption</caption>');
 
-            table = $('#table-emprunt').DataTable({
+            table = $('#table-versements').DataTable({
                 scrollX: true,
                 paging: true,
                 // responsive: true,
                 //"serverSide": true,
                 //Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a database engine can be used to perform the sorting etc calculations - operations that modern database engines are highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
                 ajax:{
-                    url: '<?= URL::link('biblio_api_emprunt_liste') ?>',
+                    url: '<?= URL::link('versement-list_all') ?>',
                     data: function(data){
+                      console.log(data)
                         data.code =  code,
-                        data.filter_by = filter_by,
-                        data.start_date = start_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ),
-                        data.end_date = end_date.format( 'YYYY-MM-DD  HH:mm:ss.000' )
+                        data.filter_by =  filter_by
                     } ,
                     type: 'POST'
                 },
-                "columns": [<?= Emprunt::getColumns() ?>],
-                "columnDefs": [
-                  {
-                    targets: 0,
-                    visible: false
-                  },         
-                  {
-                    targets: 1,
-                    visible: false
-                  },         
-                  {
-                    targets: -2,
-                    visible: false
-                  },         
-                  {
-                    targets: -3,
-                    visible: false
-                  },
-                  {
+                "columns": [<?= Eleve::getColumns() ?>],
+                fixedColumns: true,
+              "columnDefs": [
+                {
+                  "targets": 0,
+                  width: '5%',
+                  "searchable": false,
+                  // "orderable": false,
+                  "class": "index",
+                   
+                },      
+                
+                {
                   "targets": -1,
+                  width: '7%', 
                   "data": null,
                   "render": function(data, type, full, meta){ 
-                        return `<div class="btn-group">
-                                  <button type="button"  data-boundary="viewport"  data-toggle="dropdown" class="btn btn-info dropdown-toggle"><i class="fa fa-cog"></i></button> 
-                                  <ul class="dropdown-menu" role="menu">
-                                    <li><a href="#" class="dropdown-item action action-voir" data-action="action-voir"  data-id="${data.id}"  ><i class="ft-eye"></i> voir</a></li>
-                                    <li><a href="#" class="dropdown-item action action-modifier" data-action="action-modifier"  data-id="${data.id}"  ><i class="ft-edit-2"></i> modifier</a></li>
-                                    <li><a href="#" class="dropdown-item action action-restituer" data-action="action-restituer"  data-id="${data.id}"  ><i class="ft-check"></i> restituer</a></li>
-                                    <li><a href="#" class="dropdown-item action action-reemprunter" data-action="action-reemprunter"  data-id="${data.id}"  ><i class="ft-upload"></i> re-emprunter</a></li>
-                                    <li><a href="#" class="dropdown-item action action-supprimer" data-action="action-supprimer"  data-id="${data.id}"  ><i class="ft-trash"></i> supprimer</a></li>
-                                  </ul>
-                                </div>`
-                        // return `<span class="dropdown"> 
-                        //           <button id="btnSearchDrop2${data.num}" type="button"  data-boundary="viewport"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-info dropdown-toggle"><i class="fa fa-cog"></i></button> 
-                        //             <span aria-labelledby="btnSearchDrop2${data.num}" class="dropdown-menu mt-1 dropdown-menu-right">  
-                        //               <a href="#" class="dropdown-item action action-voir" data-action="action-voir"  data-id="${data.id}"  ><i class="ft-eye"></i> voir</a>
-                        //               <a href="#" class="dropdown-item action action-modifier" data-action="action-modifier"  data-id="${data.id}"  ><i class="ft-edit-2"></i> modifier</a>
-                        //               <a href="#" class="dropdown-item action action-restituer" data-action="action-restituer"  data-id="${data.id}"  ><i class="ft-check"></i> restituer</a>
-                        //               <a href="#" class="dropdown-item action action-reemprunter" data-action="action-reemprunter"  data-id="${data.id}"  ><i class="ft-upload"></i> re-emprunter</a>
-                        //               <a href="#" class="dropdown-item action action-supprimer" data-action="action-supprimer"  data-id="${data.id}"  ><i class="ft-trash"></i> supprimer</a>  
-                        //             </span> 
-                        //           </span>`
-                                     
+                      // console.log(data);
+                        return  ' '+
+                                ' <div class="btn-group" role="group" aria-label="Basic example"> '+
+                                '      <button type="button" data-action="action-voir" class="action btn btn-sm btn-icon btn-primary mr-0" title="voir"><i class="ft-eye"></i></button> '+
+                                '      <button type="button" data-action="action-modifier" class="action btn btn-sm btn-icon btn-success mr-0" title="modifier"><i class="ft-edit-2"></i></button> '+
+                                '      <button type="button" data-action="action-supprimer" class="action btn btn-sm btn-icon btn-warning mr-0" title="supprimer"><i class="ft-trash"></i></button> '+
+                                '  </div>'
+
                     }
-                  // "defaultContent": "
-                  // id="btnSearchDrop2${data.id}"
-                  // '<span class="dropdown">  '+
-                  // '<button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-info dropdown-toggle"><i class="fa fa-cog"></i></button> <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">  ' +
-                  // '<a href="#" class="dropdown-item action action-voir" data-action="action-voir"  data-id="action-voir"  ><i class="ft-eye"></i> voir</a>' +
-                  // '<a href="#" class="dropdown-item action action-modifier" data-action="action-modifier"  data-id="action-modifier"  ><i class="ft-edit-2"></i> modifier</a>' +
-                  // '<a href="#" class="dropdown-item action action-restituer" data-action="action-restituer"  data-id="action-restituer"  ><i class="ft-check"></i> restituer</a>' +
-                  // '<a href="#" class="dropdown-item action action-reemprunter" data-action="action-reemprunter"  data-id="action-reemprunter"  ><i class="ft-upload"></i> re-emprunter</a>' +
-                  // '<a href="#" class="dropdown-item action action-supprimer" data-action="action-supprimer"  data-id="action-supprimer"  ><i class="ft-trash"></i> supprimer</a>  </span> </span>"' 
                 }
-              ],
-              "createdRow": function(row, data, index) {
-                    // if (data[2] * 1 < 9000) 
-                    {
-                      // console.log(data.date_expiration)
-                      let date_emprunt = new Date(data.date_emprunt).toLocaleDateString(window.navigator.language, {year: 'numeric',month: 'long',day: 'numeric',});
-                      let date_expiration = new Date(data.date_expiration).toLocaleDateString(window.navigator.language, {year: 'numeric',month: 'long',day: 'numeric',});
-                        //  console.log(date_expiration);
-                        $('td', row).eq(3).text( date_emprunt );
-                        $('td', row).eq(4).text( date_expiration );
-                    }
-                },
-                "fnDrawCallback": function( oSettings ) {
-                    // $('#table-emprunt').append('<caption style="caption-side: top-right">Table caption</caption>');
-                },
+            ],
+            "createdRow": function(row, data, index) {
+                  // let date = new Date(data.date).toLocaleDateString(window.navigator.language, {year: 'numeric',month: 'long',day: 'numeric',});
+              },
+              "fnDrawCallback": function( oSettings ) {
+                  // $('#table-emprunt').append('<caption style="caption-side: top-right">Table caption</caption>');
+              },
                 "destroy" : true,
                 dom: 'Blfrtip',
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tout"]],
@@ -146,7 +111,7 @@ use Config\Invariant\API;
 
             // $('#table-emprunt tbody .dropdown-toggle').dropdown(); 
 
-            $('#table-emprunt tbody').on( 'click', 'a.action', function (event) 
+            $('#table-versements tbody').on( 'click', 'a.action', function (event) 
               {
                 var id = $(this).data('id')
                 var action = $(this).data('action');

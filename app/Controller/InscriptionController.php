@@ -177,19 +177,6 @@ class InscriptionController extends AppController
         if ($result_antecedent_scolaire && $result_dossier_medical && $result_dossier_parental && $result_eleve && $result_parcours) {
 
             $code_classe = $this->classe->code(Request::getSecParam('classe_eleve', ''), Classe::LIBELLE) ;
-            //$this->setupSessionVerement();
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_CODE_ELEVE] = $code_eleve ;
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_CODE_CLASSE] = $code_classe;
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_CLASSE] = Request::getSecParam('classe_eleve', '');
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_CODE_PARCOURS] = $code_parcours;
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_MATRICULE] = $matricule ;
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_NOM] = Request::getSecParam('nom_eleve', '');
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_PRENOM] = Request::getSecParam('nom_eleve', '');
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_SEXE] = Request::getSecParam('nom_eleve', '');
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_DATE_NAISSANCE] = Request::getSecParam('date_naissance_eleve', '');
-            // $_SESSION[S::DATA_TRANSPORT][S::VERS_LIEU_NAISSANCE] = Request::getSecParam('lieu_naissance_eleve', '');
-
-            // $this->session->flash("Inscription Enregistrée avec success");
 
             $msg_inscriptpion = 'Inscription Enregistrée avec success';
             $data_inscriptpion = [];

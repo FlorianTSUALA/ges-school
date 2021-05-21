@@ -33,7 +33,8 @@ ob_start();
 
 
 // include 'script-component-init.php';
-include 'abonnement_liste-script.php';
+// include 'abonnement_liste-script.php';
+// include 'abonnement_cantine-script.php';
 $include_footer_script = ob_get_clean();
 ?>
 <!--
@@ -140,7 +141,9 @@ $include_footer_script = ob_get_clean();
 					                <!-- <th>date_debut</th> -->
 					                <!-- <th>date_fin</th> -->
 					                <!-- <th>montant_total</th> -->
-					                <th>classe</th>
+					                <th>Montant</th>
+                                    <th>Date debut</th>
+                                    <th>Date fin</th>
 					            </tr>
 					        </thead>
 					        <tbody>
@@ -156,26 +159,25 @@ $include_footer_script = ob_get_clean();
                                         <td style="width: 30px;"><a href="#" class="text-bold-600"><?= ++$i;?></a></td>
                                         <td>
                                             <ul class="list-inline clearfix mt-1" style="align:  center;">
-                                                <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement->nom_eleve  ;?> </a></li><br>
-                                                <!-- <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement->date_debut  ;?> </a></li><br> -->
-                                                <!-- <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement->date_fin  ;?> </a></li><br> -->
-                                                <!-- <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement->montant_total  ;?> </a></li><br> -->
-                                                <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement->classe  ;?> </a></li><br>
+                                                <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement['nom_eleve']  ;?> </a></li><br>
                                             </ul>
                                         </td>
-                                    <!-- 
                                         <td>
-                                            <span class="dropdown">
-                                                <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-info dropdown-toggle"><i class="fa fa-cog"></i></button>
-                                                <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
-                                                    <a href="#<?= $abonnement->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-voir"><i class="ft-eye"></i> Voir +</a>
-                                                    <a href="#<?= $abonnement->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-modifier"><i class="ft-edit-2"></i> Modifier</a>
-                                                    <a href="#<?= $abonnement->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-abonnement-cantine"><i class="ft-check"></i> Abonement Cantine</a>
-                                                    <a href="#<?= $abonnement->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-abonnement-club"><i class="ft-upload"></i> Abonement Club</a>
-                                                    <a href="#<?= $abonnement->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-supprimer"><i class="ft-trash"></i> Supprimer</a>
-                                                </span>
-                                            </span>
-                                        </td> -->
+                                            <ul class="list-inline clearfix mt-1" style="align:  center;">
+                                                <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement['montant_total']  ;?> </a></li><br>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline clearfix mt-1" style="align:  center;">
+                                                <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement['date_debut']  ;?> </a></li><br>
+                                            </ul>
+                                        </td>
+                                        <td>
+                                            <ul class="list-inline clearfix mt-1" style="align:  center;">
+                                                <li class="mr-3"><a href="#" class="text-bold-600"> <?= $abonnement['date_fin']  ;?> </a></li><br>
+                                            </ul>
+                                        </td>
+                                  
                                     </tr>
                                 <?php } ?>
 
@@ -185,10 +187,12 @@ $include_footer_script = ob_get_clean();
 					            <tr>
                                 <th style="width: 7%;">N°</th>
 					                <th>nom_eleve</th>
-					                <!-- <th>date_debut</th>
-					                <th>date_fin</th>
-					                <th>montant_total</th> -->
-					                <th>classe</th>
+					                <!-- <th>date_debut</th> -->
+					                <!-- <th>date_fin</th> -->
+					                <!-- <th>montant_total</th> -->
+					                <th>Montant</th>
+                                    <th>Date debut</th>
+                                    <th>Date fin</th>
 					            </tr>
 					        </tfoot>
 					    </table>

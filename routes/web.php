@@ -58,7 +58,7 @@ $router->addRoute('accueil', 'accueil', [HomeController::class, 'home']);
 
 $router->addRoute('biblio_accueil', 'biblio/accueil', [BiblioController::class, 'accueil']);
 $router->addRoute('cantine_accueil', 'cantine/accueil', [CantineController::class, 'accueil']);
-$router->addRoute('club_accueil', 'club/accueil', [ClubController::class, 'accueil']);
+$router->addRoute('club_accueil', 'club/accueil', [ClubController::class, 'index']);
 $router->addRoute('personnel_accueil', 'personnel/accueil', [PersonnelController::class, 'accueil']);
 $router->addRoute('enseignement_accueil', 'enseignant/accueil', [EnseignementController::class, 'accueil']);
 $router->addRoute('bulletin_accueil', 'bulletin/accueil', [BulletinController::class, 'accueil']);
@@ -308,3 +308,6 @@ $router->addRoute('testa', 'testa', [TestController::class, 'testA']);
 $router->addRoute('testb', 'testb', [TestController::class, 'testB']);
 $router->addRoute('testc', 'testc', [TestController::class, 'testC']);
 
+// CLUB 
+$router->addRoute('club-create', 'club/create/', [ClubController::class, 'save']);
+$router->addRoute('club_liste', 'club/detail', [ClubController::class, 'liste_abonnee_activite']);

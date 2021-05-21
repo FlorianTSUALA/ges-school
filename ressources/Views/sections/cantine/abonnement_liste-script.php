@@ -2,6 +2,7 @@
 
 use Core\Routing\URL;
 use Core\HTML\Form\InputType;
+use App\Model\AbonnementCantine;
 
 include dirname(__DIR__)."/_common_lib/_select2_script.php";
 
@@ -53,8 +54,14 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                         data.start_date = start_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ),
                         data.end_date = end_date.format( 'YYYY-MM-DD  HH:mm:ss.000' )
                     } ,
-                    type: 'POST'
+                    type: 'POST',
+
+                    success: function(msg){
+                      console.log("voici le message", msg)
+                    }
                 },
+
+                
                
             })
 

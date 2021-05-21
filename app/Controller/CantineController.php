@@ -230,7 +230,7 @@ class CantineController extends AppController
             [
                 'abonnement_cantine.code'=> 'id', 
                 'abonnement_cantine.date_paiement'=> 'date_paiement', 
-                'abonnement_cantine.date_debut'=> 'date_debut ', 
+                'abonnement_cantine.date_debut'=> 'date_debut', 
                 'abonnement_cantine.date_fin'=> 'date_fin', 
                 'abonnement_cantine.montant_total'=> 'montant_total', 
                 'classe.libelle'=> 'classe', 
@@ -243,8 +243,8 @@ class CantineController extends AppController
         ->join('parcours', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'parcours.classe_id', '=', 'classe.id')
         ->join('pension_classe', 'pension_classe.classe_id', '=', 'parcours.classe_id')
-        // ->where('parcours.visibilite', '=', 1)
-        ->where('parcours.annee_scolaire_id', '=', $annee_scolaire)
+        ->where('abonnement_cantine.visibilite', '=', 1)
+        // ->where('parcours.annee_scolaire_id', '=', $annee_scolaire)
         ->get();
 
 
