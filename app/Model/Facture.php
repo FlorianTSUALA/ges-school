@@ -3,21 +3,21 @@
 namespace App\Model;
 
 use Core\Model\Model;
-use Core\HTML\Form\FormModel;        
+use Core\HTML\Form\FormModel;
 use Core\Model\HydrahonModel;
 
 class Facture extends Model implements FrequentlyReapeat
 {
     use HydrahonModel;
     protected $entity;
-    
+
     const REFERENCE = "reference";
     const MONTANT = "montant";
     const REDUCTION = "reduction";
     const DATE_FACTURE = "date_facture";
     const BENEFICAIRE = "beneficaire";
     const GESTIONNAIRE = "gestionnaire";
-    
+
     public function __construct(){
         parent::__construct();
         $this->fillables =
@@ -29,7 +29,7 @@ class Facture extends Model implements FrequentlyReapeat
             ];
     }
 
-    public static function getColumns()        
+    public static function getColumns()
     {
         $columns = '';
         $columns .= '{ "data": "id" },';
@@ -39,5 +39,50 @@ class Facture extends Model implements FrequentlyReapeat
         $columns .= '{ "data": "date_naissance" },';
         $columns .= '{ "data": "lieu_naissance" },';
         return $columns;
+    }
+
+
+    public static function get_eleve_by_facture($id_fact)
+    {
+      $id_eleve=0;
+      $eleve=array();
+      $pention = DBTable::getModel('pension_eleve')->select(['eleve_id'=>'eleve_id'])
+                ->where('visibilite', '=', 1)
+                ->where('facture_id', '=', $id_fact)
+                ->get();
+      if (! empty($pention)) {
+        $id_eleve=$pention[0]['eleve_id'];
+      }
+      else {
+        $abonnement_activite = DBTable::getModel('abonnement_activite')->select(['eleve_id'=>'eleve_id'])
+                  ->where('visibilite', '=', 1)
+                  ->where('facture_id', '=', $id_fact)
+                  ->get();
+        if (! empty($abonnement_activite)) {
+          $id_eleve=$abonnement_activite[0]['eleve_id'];
+        }
+        else {
+          $abonnement_cantine = DBTable::getModel('abonnement_cantine')->select(['eleve_id'=>'eleve_id'])
+                    ->where('visibilite', '=', 1)
+                    ->where('facture_id', '=', $id_fact)
+                    ->get();
+          if (! empty($abonnement_cantine)) {
+            $id_eleve=$abonnement_cantine[0]['eleve_id'];
+          }
+        }
+      }
+
+      if ($id_eleve != 0) {
+        $eleve = DBTable::getModel('eleve')->select()
+                  ->where('visibilite', '=', 1)
+                  ->where('id', '=', $id_eleve)
+                  ->get();
+        if (! empty($eleve)) {
+          $eleve=$eleve[0];
+          //var_dump($eleve);
+        }
+      }
+
+      return $eleve;
     }
 }

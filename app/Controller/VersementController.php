@@ -24,7 +24,7 @@ use Config\Invariant\API;
 
 class VersementController extends \App\Controller\Admin\AppController
 {
-    
+
     public function __construct()
     {
         parent::__construct();
@@ -103,15 +103,15 @@ class VersementController extends \App\Controller\Admin\AppController
 
         $type_pensions = DBTable::getModel('type_pension')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
         $activites = DBTable::getModel('activite')->select(['code'=>'id', 'libelle' => 'libelle', 'montant' => 'montant'])->where('visibilite', '=', 1)->get();
-        
+
         $prix_abonnement_cantine = DBTable::getModel('prix_abonnement')
                             ->select('prix_abonnement.montant')
                             ->where('visibilite', '=', 1)
                             ->where('periode', '=', 'MOIS')
                             ->where('type_abonnement', '=', 'CANTINE')
                             //->where('type_abonnement_id', '=', 0)
-                            ->one()['montant']; 
-                   
+                            ->one()['montant'];
+
         $prix_abonnement_activites = DBTable::getModel('prix_abonnement')
                             ->select(
                                 [
@@ -173,12 +173,12 @@ class VersementController extends \App\Controller\Admin\AppController
 
         $eleve_id = DBTable::getModel('eleve')->select()->find($code, 'code')['id'];
         $classe_id = DBTable::getModel('classe')->select()->find(Request::getSecParam('classe_id', ''), 'code')['id'];
-        
+
         $montant_paye = Request::getSecParam('montant_paye', 0);
         $nom_eleve = Request::getSecParam('nom_eleve', 0);
         $reduction = Request::getSecParam('reduction', 0);
         $date_facture = date('Y-m-d') ;
-        
+
         $reference =  Request::getSecParam('reference', 0);
         $date_paiement =  Request::getSecParam('date_paiement');
 
@@ -205,8 +205,8 @@ class VersementController extends \App\Controller\Admin\AppController
         //Facture
         if($debug)   vd('ok Facture');
 
-        
-    
+
+
         //PENSION ELEVE
                 $data_pension = $_POST['pension_classe']??[];
 
@@ -225,7 +225,7 @@ class VersementController extends \App\Controller\Admin\AppController
                     $type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
                     $pension_classe_id = Model::getId(DBTable::PENSION_CLASSE, $pension_classe_code);
 
-                    if($est_mensuel == 1){    
+                    if($est_mensuel == 1){
                         foreach($item['multiplicateur'] as $tranche){
                             {
                                 $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
@@ -249,7 +249,7 @@ class VersementController extends \App\Controller\Admin\AppController
                                     'motif' => $motif,
                                     'quantite' => 1
                                 ];
-                                
+
                                 $model_pension_eleve->insert($data_pension_eleve)->execute();
                                 $pension_eleve_id = Model::getId(DBTable::PENSION_ELEVE, $code_pension_eleve);
                                 array_push($ids_pension_eleve, $pension_eleve_id);
@@ -261,7 +261,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
                             $motif = 'Payement Non periodique';
                             $code_pension_eleve = PensionEleve::generateCode();
-                            
+
                             $data_pension_eleve_autre = [
                                 'code' => $code_pension_eleve,
                                 'facture_id' => $facure_id,
@@ -285,15 +285,15 @@ class VersementController extends \App\Controller\Admin\AppController
             if($debug)  vd('ok Pension eleve');
 
         //PENSION ELEVE
-        
+
 
         //ACTIVITE
 
             $activites = $_POST['activites']??[];
-            
+
             $items = $activites['multiplicateur']??[];
             $reduction = $activites['remise'];
-            
+
 
 
             $k = 0;
@@ -301,7 +301,7 @@ class VersementController extends \App\Controller\Admin\AppController
                 $nom_activite = $activite['value'];
                 $code_activite = $activite['id'];
                 $montant_activite = $activite['montant'];
-                
+
                 $i = 0;
                 $j = 0;
 
@@ -310,7 +310,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
                     $prev_index_month = Helpers::strFrMonth2Index($items[$i]['value']);
                     $current_index_month = $prev_index_month;
-                    
+
                     $isLast = ($i+1) == count($items);
 
                     if (!$isLast)
@@ -318,9 +318,9 @@ class VersementController extends \App\Controller\Admin\AppController
                             $current_index_month = Helpers::strFrMonth2Index($items[$j]['value']);
                             $x = ($prev_index_month + 1);
                             $y = ($current_index_month + 0);
-                            
-                            if ($y != $x) break;  
-        
+
+                            if ($y != $x) break;
+
                             $prev_index_month = $current_index_month;
                         }
                     else
@@ -330,7 +330,7 @@ class VersementController extends \App\Controller\Admin\AppController
                     $quantite = $offset + 1;
                     if($debug)  $total = count($items);
                     // echo "---- TOtal = {$total}i = $i; j = $j; --- OFFSET : $offset ---- <br/>";
-                    
+
                     if ($quantite < 0) break;
                     $quantite = ($isLast)? 1 : $offset;
 
@@ -349,15 +349,15 @@ class VersementController extends \App\Controller\Admin\AppController
                         'date_debut' => $start_date,
                         'date_fin' => $end_date,
                     ];
-                    
+
                     $model_abonnement_activite->insert($data_abonnement_activite)->execute();
                     $abonnement_activite_id = Model::getId(DBTable::ABONNEMENT_CANTINE, $code_abonnement_activite);
                     array_push($ids_pension_activite, $abonnement_activite_id);
 
                     $abonnement_detail = DBTable::getModel(DBTable::ABONNEMENT_DETAIL);
-                    
+
                     $code_abonnement_detail = AbonnementDetail::generateCode();
-                    
+
                     $data_abonnment_detail = [
                         'code' => $code_abonnement_detail,
                         'abonnement_id' => $abonnement_activite_id,
@@ -369,33 +369,33 @@ class VersementController extends \App\Controller\Admin\AppController
                         'date_debut' =>  $start_date,
                         'date_fin' =>  $end_date
                     ];
-                    
+
                     $abonnement_detail->insert($data_abonnment_detail)->execute();
                     $abonnement_detail_id = Model::getId(DBTable::ABONNEMENT_DETAIL, $code_abonnement_detail);
                     array_push($ids_pension_abonnement_detail, $abonnement_detail_id);
 
                     $i = $j - 1;
 
-                    if ($isLast) break; 
-                    if($debug)  if ($z == 100) die('upd to 10'); 
+                    if ($isLast) break;
+                    if($debug)  if ($z == 100) die('upd to 10');
                     if($debug)  $z++;
                 }
-            
-                if($debug)  if ($k == 10) die('upd to 100'); 
+
+                if($debug)  if ($k == 10) die('upd to 100');
                 if($debug)  $k++;
-            
+
             }
             if($debug)  vd('ok Activité');
 
         //ACTIVITE
 
-            
+
         //CANTINE
-                
+
             $cantines = $_POST['cantines']??[];
-            
+
             $items = $cantines['recapitulatif'];
-            
+
             $i = 0;
             $j = 0;
             if ($debug) $k = 0;
@@ -404,7 +404,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
                 $prev_index_month = Helpers::strFrMonth2Index($items[$i]['value']);
                 $current_index_month = $prev_index_month;
-                
+
                 $isLast = ($i+1) == count($items);
 
                 if (!$isLast)
@@ -412,8 +412,8 @@ class VersementController extends \App\Controller\Admin\AppController
                         $current_index_month = Helpers::strFrMonth2Index($items[$j]['value']);
                         $x = ($prev_index_month + 1);
                         $y = ($current_index_month + 0);
-                        
-                        if ($y != $x) break;  
+
+                        if ($y != $x) break;
 
                         $prev_index_month = $current_index_month;
                     }
@@ -422,7 +422,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
                 $offset = $j - 1 - $i;
                 $quantite = $offset + 1;
-                
+
                 if ($quantite < 0) break;
                 $quantite = ($isLast)? 1 : $offset;
                 $total = count($items);
@@ -442,7 +442,7 @@ class VersementController extends \App\Controller\Admin\AppController
                     'date_debut' => $start_date,
                     'date_fin' => $end_date,
                 ];
-                
+
                 $model_cantine->insert($data_abonnment_cantine)->execute();
                 $abonnement_cantine_id = Model::getId(DBTable::ABONNEMENT_CANTINE, $code_cantine);
                 array_push($ids_pension_cantine, $abonnement_cantine_id);
@@ -467,8 +467,8 @@ class VersementController extends \App\Controller\Admin\AppController
 
                 if ($debug) if($k==10) die('KO');
 
-                if ($isLast) break; 
-                $i = $j - 1; 
+                if ($isLast) break;
+                $i = $j - 1;
             }
             if($debug) vd('ok Cantine');
 
@@ -498,9 +498,9 @@ class VersementController extends \App\Controller\Admin\AppController
             ];
             $model_pension_eleve->insert($data_pension_eleve_autre)->execute();
         //AUTRES
-        
+
         //vd('ok Autres');
-        
+
         //vd($result_pension_eleve , $result_abonnement_detail , $result_abonnement_cantine , $result_facture);
         // $result = $result_pension_eleve && $result_abonnement_detail && $result_abonnement_cantine && $result_facture ;
         $result = true;
@@ -524,12 +524,12 @@ class VersementController extends \App\Controller\Admin\AppController
 
         // $eleve_id = DBTable::getModel('eleve')->select()->find($code, 'code')['id'];
         // $classe_id = DBTable::getModel('classe')->select()->find(Request::getSecParam('classe_id', ''), 'code')['id'];
-        
+
         // $montant_paye = Request::getSecParam('montant_paye', 0);
         // $nom_eleve = Request::getSecParam('nom_eleve', 0);
         // $reduction = Request::getSecParam('reduction', 0);
         // $date_facture = date('Y-m-d') ;
-        
+
         // $reference =  Request::getSecParam('reference', 0);
         // $date_paiement =  Request::getSecParam('date_paiement');
 
@@ -565,7 +565,7 @@ class VersementController extends \App\Controller\Admin\AppController
             // $data = json_encode($data);
 
             $results[API::TAG_DATA] = $eleves;
-            
+
             $results[API::TAG_STATUS] = API::TAG_SUCCESS;
             $results[API::TAG_DATATABLE_DR] = API::TAG_DATATABLE_VALUE_DR;
             $results[API::TAG_DATATABLE_RT] = count($eleves);
@@ -593,11 +593,11 @@ class VersementController extends \App\Controller\Admin\AppController
 
 
     }
-    
+
     public function imprimer_facture(){
-        
+
         $data = $_POST;
-        
+
         //encodage des tables qui seront transferer dans une variable de session avec pour clé la reference de la facture du versement
         $data['pension_classe'] = json_decode($data['pension_classe'], true);
         $data['cantines'] = json_decode($data['cantines'], true);
@@ -608,12 +608,12 @@ class VersementController extends \App\Controller\Admin\AppController
         $_SESSION[$data['reference']] = $data;
         // setcookie($data['reference'], $data, TIME_COOKIE_LONG, URL::link('facture_cantine'));
 
-        $this->renderPDF('reports.versement', compact('data'), 'facture_versement' );  
+        $this->renderPDF('reports.versement', compact('data'), 'facture_versement' );
 
     }
 
     public function print(){
-        
+
         // $periode
         // $date_debut
         // $date_fin
@@ -621,7 +621,7 @@ class VersementController extends \App\Controller\Admin\AppController
         // $quantite
         // $total
         // , compact('date_facturation', 'eleve', 'classe', 'reference', 'remise', 'reste', 'solde_paye', 'sous_total', 'items'), 'facture_cantine'
-        $this->renderPDF('reports.versement' );  
+        $this->renderPDF('reports.versement' );
 
     }
 
@@ -629,8 +629,12 @@ class VersementController extends \App\Controller\Admin\AppController
     {
         $route = 'versement_liste';
 
-        
-        $this->render('sections.versement.liste.versement_liste', compact('route'));
+        $factures = DBTable::getModel('facture')
+                  ->select(['id'=>'id', 'code'=>'code', 'libelle' => 'libelle' , 'montant' => 'montant', 'date_facture' => 'date_facture'])
+                  ->where('visibilite', '=', 1)
+                  ->orderBy('id', 'DESC')
+                  ->get();
+        $this->render('sections.versement.liste.versement_liste', compact('route', 'factures'));
     }
 
     public function liste_abonnee_test()
@@ -640,5 +644,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
         $this->render('sections.versement.liste.versement_liste', compact('route'), 'default_empty');
     }
-    
+
+
+
 }

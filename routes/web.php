@@ -308,6 +308,6 @@ $router->addRoute('testa', 'testa', [TestController::class, 'testA']);
 $router->addRoute('testb', 'testb', [TestController::class, 'testB']);
 $router->addRoute('testc', 'testc', [TestController::class, 'testC']);
 
-// CLUB 
+// CLUB
 $router->addRoute('club-create', 'club/create/', [ClubController::class, 'save']);
 $router->addRoute('club_liste', 'club/detail', [ClubController::class, 'liste_abonnee_activite']);
