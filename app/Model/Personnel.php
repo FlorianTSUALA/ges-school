@@ -67,7 +67,7 @@ class Personnel extends Model implements FrequentlyReapeat
         $columns .= '{ "data": "nom_complet" },';
         $columns .= '{ "data": "fonction" },';
         $columns .= '{ "data": "telephone" },';
-        // $columns .= '{ "data": "sexe" },';
+        $columns .= '{ "data": "sexe" },';
         // $columns .= '{ "data": "email" },';
         $columns .= '{ "data": null }';
         return $columns;

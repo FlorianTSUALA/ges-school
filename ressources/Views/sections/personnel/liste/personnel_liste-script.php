@@ -80,7 +80,7 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
               //"serverSide": true,
               //Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a database engine can be used to perform the sorting etc calculations - operations that modern database engines are highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
               ajax:{
-                  url: '<?= URL::link('personnel_api_get_all') ?>',
+                  url: '<?= URL::link(' api_personnel_all') ?>',
                   data: function(data){
                       data.code =  code,
                       data.filter_by =  filter_by

@@ -32,8 +32,7 @@ class PersonnelController extends AppController
         parent::__construct();
 
         $this->vairant = DBTable::PERSONNEL;
-        $this->folder_view_index = 'personnel.index';
-
+        // $this->folder_view_index = 'personnel.index';
 
         $this->loadModel($this->vairant);
         $this->loadModel('pays');
