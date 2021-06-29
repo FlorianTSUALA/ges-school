@@ -630,7 +630,7 @@ class VersementController extends \App\Controller\Admin\AppController
         $route = 'versement_liste';
 
         $factures = DBTable::getModel('facture')
-                  ->select(['id'=>'id', 'code'=>'code', 'libelle' => 'libelle' , 'montant' => 'montant', 'date_facture' => 'date_facture'])
+                  ->select()
                   ->where('visibilite', '=', 1)
                   ->orderBy('id', 'DESC')
                   ->get();

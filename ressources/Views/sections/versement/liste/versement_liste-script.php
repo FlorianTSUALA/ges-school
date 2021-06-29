@@ -15,7 +15,7 @@ use Config\Invariant\API;
 -->
 
 
-<script> 
+<script>
 
   let msg  = 'Bienvenue à la section versement'
 
@@ -36,12 +36,12 @@ use Config\Invariant\API;
             console.log(start_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ))
             return start_date.format( 'YYYY-MM-DD  HH:mm:ss.000' )
         }
-        
+
         function getDateEnd(){
             console.log(end_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ))
             return end_date.format( 'YYYY-MM-DD  HH:mm:ss.000' )
         }
-        
+
         function init_data_table() {
           // $('#table-emprunt').append('<caption style="caption-side: top-right">Table caption</caption>');
 
@@ -69,14 +69,14 @@ use Config\Invariant\API;
                   "searchable": false,
                   // "orderable": false,
                   "class": "index",
-                   
-                },      
-                
+
+                },
+
                 {
                   "targets": -1,
-                  width: '7%', 
+                  width: '7%',
                   "data": null,
-                  "render": function(data, type, full, meta){ 
+                  "render": function(data, type, full, meta){
                       // console.log(data);
                         return  ' '+
                                 ' <div class="btn-group" role="group" aria-label="Basic example"> '+
@@ -99,7 +99,7 @@ use Config\Invariant\API;
                 "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "Tout"]],
                 stateSave: true,
               <?= Helpers::dataTableCommunOptions() ?>
-               
+
             })
 
             // $('#table-emprunt').on('show.bs.dropdown', function () {
@@ -109,9 +109,9 @@ use Config\Invariant\API;
             // })
 
 
-            // $('#table-emprunt tbody .dropdown-toggle').dropdown(); 
+            // $('#table-emprunt tbody .dropdown-toggle').dropdown();
 
-            $('#table-versements tbody').on( 'click', 'a.action', function (event) 
+            $('#table-versements tbody').on( 'click', 'a.action', function (event)
               {
                 var id = $(this).data('id')
                 var action = $(this).data('action');
@@ -163,7 +163,7 @@ use Config\Invariant\API;
         }
 
 
-    (function(window, document, $){    
+    (function(window, document, $){
 
     	// Localization
       $('.localeRange').daterangepicker({
@@ -194,7 +194,7 @@ use Config\Invariant\API;
       // Max and Min date
       min: [2019,8,20],
       // max: [2022,10,30],
-        
+
       // Using Javascript
       // min: new Date(2015,3,20,7),
       // max: new Date(2015,7,14,18,30)
@@ -228,13 +228,13 @@ use Config\Invariant\API;
   }, cb)
 
   init_data_table()
-  
+
   function cb(start, end) {
     $('#resume_filtre').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
     start_date = start
     end_date = end
-    console.log(start_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ))         
-    console.log(end_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ))         
+    console.log(start_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ))
+    console.log(end_date.format( 'YYYY-MM-DD  HH:mm:ss.000' ))
     table.ajax.reload()
     // table.ajax({
     //               url: '<?= URL::link('cantine_abonnement_info') ?>',
@@ -255,11 +255,11 @@ use Config\Invariant\API;
 
 
 <script>
-    
+
     window.setInterval(
       function (){
         table.ajax.reload()
-      }, 
+      },
       <?= API::REALTIME_TIME_RECENT_TRANSACTION ?>
     )
 
@@ -277,7 +277,7 @@ use Config\Invariant\API;
         } );
         $('#modal-restitution').modal('show')
     } );
- 
+
     $('#example tbody').on( 'click', 'button', function () {
         var data = table.row( $(this).parents('tr') ).data();
         alert( data[0] +"'s salary is: "+ data[ 5 ] );
@@ -286,7 +286,7 @@ use Config\Invariant\API;
 
 
 <!-- <script>
-        
+
         (function () {
           if (typeof EventTarget !== "undefined") {
               let func = EventTarget.prototype.addEventListener;
