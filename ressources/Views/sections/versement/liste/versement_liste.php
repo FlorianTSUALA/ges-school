@@ -147,7 +147,7 @@ $include_footer_script = ob_get_clean();
                                        <table  id="datatable" class="table table-bordered table-striped table-hover table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th>Code</th>
+                                                    <th>#</th>
                                                     <th>Libéllé</th>
                                                     <th>Montant</th>
                                                     <th>Réduction</th>
@@ -158,9 +158,9 @@ $include_footer_script = ob_get_clean();
                                             </thead>
                                             <tbody>
 
-                                            <?php foreach ($factures as $facture): ?>
+                                            <?php $comp=0; foreach ($factures as $facture): ?>
                                               <tr>
-                                                  <td><?php echo $facture['code'] ?></td>
+                                                  <td><?php $comp++; echo $comp; ?></td>
                                                   <td><?php echo $facture['libelle'] ?></td>
                                                   <td><?php echo number_format($facture['montant'],0,',',' ').' Fcfa' ?></td>
                                                   <td><?php echo number_format($facture['reduction'],0,',',' ').' Fcfa' ?></td>
@@ -413,16 +413,38 @@ $include_footer_script = ob_get_clean();
 
                                                           </div>
                                                           <div class="modal-footer">
-                                                            <button type="button" class="btn btn-secondary" style="background: #f5a663;" data-dismiss="modal">Fermer</button>
+                                                            <button type="button" class="btn btn-info" style=" border: none;" data-dismiss="modal">Imprimer</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <button type="button" class="btn btn-secondary" style="background: #f5a663; border: none;" data-dismiss="modal">Fermer</button>
                                                           </div>
                                                         </div>
                                                       </div>
                                                     </div>
 
 
-                                                    <a href="javascript:void(0)" data-action="action-modifier" class="" title="modifier" style="color: green;"><i class="ft-edit-2"></i></a>&nbsp;&nbsp;&nbsp;
-                                                    <a href="javascript:void(0)" data-action="action-supprimer" class="" title="supprimer" style="color: red;"><i class="ft-trash"></i></a>
+                                                    <a href="/versement-modification/<?php echo $facture['id'] ?>" data-action="action-modifier" class="" title="modifier" style="color: green;"><i class="ft-edit-2"></i></a>&nbsp;&nbsp;&nbsp;
 
+
+                                                    <a href="javascript:void(0)" data-action="action-supprimer" class="" title="supprimer" data-toggle="modal" data-target="#suppression_facture<?php echo $facture['id'] ?>" style="color: red;"><i class="ft-trash"></i></a>
+
+                                                    <div class="modal fade" id="suppression_facture<?php echo $facture['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+                                                      <div class="modal-dialog modal-dialog modal-lg modal-dialog-centered" role="document">
+                                                        <div class="modal-content">
+                                                          <div class="modal-header" style="background: #f5a663;">
+                                                            <h5 class="modal-title" id="exampleModalLongTitle">Suppression d'un versement</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                              <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                          </div>
+                                                          <div class="modal-body">
+                                                            <center> Voulez vous vraiment supprimer ce versement ?</center>
+                                                          </div>
+                                                          <div class="modal-footer">
+                                                            <a href="/versement/suppression/<?php echo $facture['id'] ?>" class="btn btn-danger">oui</a>
+                                                            <button type="button" class="btn btn-success" data-dismiss="modal">Non</button>
+                                                          </div>
+                                                        </div>
+                                                      </div>
+                                                    </div>
 
                                                   </td>
                                               </tr>
@@ -431,7 +453,7 @@ $include_footer_script = ob_get_clean();
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                  <th>Code</th>
+                                                  <th>#</th>
                                                   <th>Libéllé</th>
                                                   <th>Montant</th>
                                                   <th>Réduction</th>

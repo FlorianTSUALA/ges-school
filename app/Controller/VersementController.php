@@ -162,6 +162,47 @@ class VersementController extends \App\Controller\Admin\AppController
     /*
     *  Enregistre les informations de  versement et retpurne le status d'enregistrement
     */
+    public function get_details_versement($fact_id)
+    {
+
+      // table pension elève
+      $pension_eleve = DBTable::getModel('pension_eleve')
+                ->select()
+                ->where('facture_id', '=', $fact_id)
+                ->where('visibilite', '=', 1)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+      // table abonnement activite
+      $abonnement_activite = DBTable::getModel('abonnement_activite')
+                ->select()
+                ->where('facture_id', '=', $fact_id)
+                ->where('visibilite', '=', 1)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+      // table abonnement detail
+      $abonnement_detail = DBTable::getModel('abonnement_detail')
+                ->select()
+                ->where('facture_id', '=', $fact_id)
+                ->where('visibilite', '=', 1)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+      // table abonnement detail
+      $abonnement_cantine = DBTable::getModel('abonnement_cantine')
+                ->select()
+                ->where('facture_id', '=', $fact_id)
+                ->where('visibilite', '=', 1)
+                ->orderBy('id', 'DESC')
+                ->get();
+
+      //  table pension_eleve autres
+
+    }
+
+
+
     public function save($code)
     {
         $debug = false;
@@ -643,6 +684,12 @@ class VersementController extends \App\Controller\Admin\AppController
 
 
         $this->render('sections.versement.liste.versement_liste', compact('route'), 'default_empty');
+    }
+
+
+    public function suppression()
+    {
+
     }
 
 
