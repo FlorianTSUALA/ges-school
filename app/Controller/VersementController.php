@@ -21,6 +21,7 @@ use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
 use App\Controller\Admin\AppController;
 use Config\Invariant\API;
+use Core\Routing\URL;
 
 class VersementController extends \App\Controller\Admin\AppController
 {
@@ -162,46 +163,6 @@ class VersementController extends \App\Controller\Admin\AppController
     /*
     *  Enregistre les informations de  versement et retpurne le status d'enregistrement
     */
-    public function get_details_versement($fact_id)
-    {
-
-      // table pension elève
-      $pension_eleve = DBTable::getModel('pension_eleve')
-                ->select()
-                ->where('facture_id', '=', $fact_id)
-                ->where('visibilite', '=', 1)
-                ->orderBy('id', 'DESC')
-                ->get();
-
-      // table abonnement activite
-      $abonnement_activite = DBTable::getModel('abonnement_activite')
-                ->select()
-                ->where('facture_id', '=', $fact_id)
-                ->where('visibilite', '=', 1)
-                ->orderBy('id', 'DESC')
-                ->get();
-
-      // table abonnement detail
-      $abonnement_detail = DBTable::getModel('abonnement_detail')
-                ->select()
-                ->where('facture_id', '=', $fact_id)
-                ->where('visibilite', '=', 1)
-                ->orderBy('id', 'DESC')
-                ->get();
-
-      // table abonnement detail
-      $abonnement_cantine = DBTable::getModel('abonnement_cantine')
-                ->select()
-                ->where('facture_id', '=', $fact_id)
-                ->where('visibilite', '=', 1)
-                ->orderBy('id', 'DESC')
-                ->get();
-
-      //  table pension_eleve autres
-
-    }
-
-
 
     public function save($code)
     {
@@ -687,11 +648,22 @@ class VersementController extends \App\Controller\Admin\AppController
     }
 
 
-    public function suppression()
+    public function suppression($id_fact)
     {
+      $factures = DBTable::getModel('facture')
+                ->update(['visibilite' => 0])
+                ->where('id', '=', $id_fact)
+                ->execute();
+
+      $_SESSION['message']='<div class="col-md-10 alert alert-success" style="margin: auto; text-align: center;" role="alert">
+                              Versement supprimé avec succès !
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                              </button>
+                            </div>';
+      //return redirect()->back()->with('success', 'Versement effectué avec succès');
+      return header('location:'.URL::base().'versement/list');
 
     }
-
-
 
 }

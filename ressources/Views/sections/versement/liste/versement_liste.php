@@ -140,6 +140,13 @@ $include_footer_script = ob_get_clean();
 
                             </div>
 
+                              <?php if (isset($_SESSION['message'])){
+                                  $message=$_SESSION['message'];
+                                  echo $message;
+                                  $_SESSION['message']='';
+                                } ?>
+
+
 
                             <div class="card-content my-0 py-0">
                                 <div class="card-body">
@@ -327,6 +334,11 @@ $include_footer_script = ob_get_clean();
                                                                                         </tr>
                                                                                     </thead>
                                                                                     <tbody id="recap-body">
+
+                                                                                      <?php
+                                                                                        $pention=Facture::get_details_facture($facture['id']);
+                                                                                        var_dump($details);
+                                                                                       ?>
                                                                                         <!-- <tr>
                                                                                             <th scope="row" id="recap-numero_ligne"><?= $numero_ligne??"" ;?></th>
                                                                                             <td>
@@ -421,7 +433,7 @@ $include_footer_script = ob_get_clean();
                                                     </div>
 
 
-                                                    <a href="/versement-modification/<?php echo $facture['id'] ?>" data-action="action-modifier" class="" title="modifier" style="color: green;"><i class="ft-edit-2"></i></a>&nbsp;&nbsp;&nbsp;
+                                                    <a href="<?php echo  URL::base().'versement/modification/'.$facture['id'] ?>" data-action="action-modifier" class="" title="modifier" style="color: green;"><i class="ft-edit-2"></i></a>&nbsp;&nbsp;&nbsp;
 
 
                                                     <a href="javascript:void(0)" data-action="action-supprimer" class="" title="supprimer" data-toggle="modal" data-target="#suppression_facture<?php echo $facture['id'] ?>" style="color: red;"><i class="ft-trash"></i></a>
@@ -439,7 +451,7 @@ $include_footer_script = ob_get_clean();
                                                             <center> Voulez vous vraiment supprimer ce versement ?</center>
                                                           </div>
                                                           <div class="modal-footer">
-                                                            <a href="/versement/suppression/<?php echo $facture['id'] ?>" class="btn btn-danger">oui</a>
+                                                            <a href="<?php echo  URL::base().'versement/suppression/'.$facture['id'] ?>" class="btn btn-danger">oui</a>
                                                             <button type="button" class="btn btn-success" data-dismiss="modal">Non</button>
                                                           </div>
                                                         </div>

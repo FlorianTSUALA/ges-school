@@ -85,4 +85,49 @@ class Facture extends Model implements FrequentlyReapeat
 
       return $eleve;
     }
+
+
+    public static function get_details_facture($fact_id)
+    {
+
+      // table pension elève
+      $pension_eleve = DBTable::getModel('pension_eleve')
+                ->select()
+                ->join('type_pension', 'type_pension.id', '=', 'pension_eleve.type_pension_id')
+                ->where('pension_eleve.facture_id', '=', $fact_id)
+                ->where('pension_eleve.visibilite', '=', 1)
+                ->where('type_pension.visibilite', '=', 1)
+                ->orderBy('pension_eleve.id', 'DESC')
+                ->get();
+
+
+      // table abonnement activite
+      // $abonnement_activite = DBTable::getModel('abonnement_activite')
+      //           ->select()
+      //           ->where('facture_id', '=', $fact_id)
+      //           ->where('visibilite', '=', 1)
+      //           ->orderBy('id', 'DESC')
+      //           ->get();
+      //
+      // // table abonnement detail
+      // $abonnement_detail = DBTable::getModel('abonnement_detail')
+      //           ->select()
+      //           ->where('facture_id', '=', $fact_id)
+      //           ->where('visibilite', '=', 1)
+      //           ->orderBy('id', 'DESC')
+      //           ->get();
+      //
+      // // table abonnement detail
+      // $abonnement_cantine = DBTable::getModel('abonnement_cantine')
+      //           ->select()
+      //           ->where('facture_id', '=', $fact_id)
+      //           ->where('visibilite', '=', 1)
+      //           ->orderBy('id', 'DESC')
+      //           ->get();
+
+      //  table pension_eleve autres
+
+      return $pension_eleve;
+
+    }
 }
