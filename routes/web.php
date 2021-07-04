@@ -203,7 +203,7 @@ $router->addRoute('ajout_personnel', 'personnel/nouveau', [PersonnelController::
 $router->addRoute('modifier_personnel', 'personnel/modifier/{code}', [PersonnelController::class, 'modifier']);
 $router->addRoute('personnel_liste', 'personnel/detail', [PersonnelController::class, 'liste']);
 $router->addRoute('personnel_salle_classe', 'personnel/salleclasse', [PersonnelController::class, 'liste_classe']);
-$router->addRoute('personnel_api_get_all', 'personnel/api/all', [PersonnelController::class, 'getApiPersonnels']);
+$router->addRoute(' api_personnel_all', 'personnel/api/all', [PersonnelController::class, 'getApiPersonnels']);
 $router->addRoute('personnel_api_info', 'personnel/api/info/{code}', [PersonnelController::class, 'getApiPersonnel']);
 $router->addRoute('personnel_api_delete_personnel', 'personnel/api/delete/personnel/{code}', [PersonnelController::class, 'apiDeletePersonnel']);
 $router->addRoute('api_personnel_list', 'personnel/api/list', [PersonnelController::class, 'getApiAllEssentiel']);
