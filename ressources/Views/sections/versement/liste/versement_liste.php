@@ -336,9 +336,42 @@ $include_footer_script = ob_get_clean();
                                                                                     <tbody id="recap-body">
 
                                                                                       <?php
-                                                                                        $pention=Facture::get_details_facture($facture['id']);
-                                                                                        var_dump($details);
+                                                                                        $pentions_facture_scolarite=Facture::get_details_facture_scolarite($facture['id']);
+                                                                                        $comp_detail=0;
+                                                                                        if (! empty($pentions_facture_scolarite)) {
+                                                                                          $comp_detail++;
+                                                                                          $tot=0;
+                                                                                          $mois=array();
+                                                                                          foreach ($pentions_facture_scolarite as $sco) {
+                                                                                            $tot+=$sco['montant'];
+                                                                                            $mois[]=substr($sco['motif'],22);
+                                                                                          }
+
+                                                                                          $mois_order=array();
+                                                                                          for ($i=(count($pentions_facture_scolarite)-1); $i >= 0 ; $i--) {
+                                                                                            $mois_order[]=$mois[$i];
+                                                                                          }
+
+                                                                                          ?>
+                                                                                          <tr>
+                                                                                              <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
+                                                                                              <td>
+                                                                                                  <p id="recap-typepaiement"><?= "Pension : Scolarité" ;?></p>
+                                                                                                  <em class="text-muted" id="recap-description"><?= "Concernant les tranches suivantes :";?>
+                                                                                                    <?php foreach ($mois_order as $m): ?>
+                                                                                                      <?php echo $m.',' ?>
+                                                                                                    <?php endforeach; ?>
+
+                                                                                                  </em>
+                                                                                              </td>
+                                                                                              <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_scolarite[0]['montant'],0,',',' ');?> Fcfa</td>
+                                                                                              <td class="text-right" id="recap-quantite"><?= count($pentions_facture_scolarite);?></td>
+                                                                                              <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
+                                                                                          </tr>
+                                                                                          <?php
+                                                                                        }
                                                                                        ?>
+
                                                                                         <!-- <tr>
                                                                                             <th scope="row" id="recap-numero_ligne"><?= $numero_ligne??"" ;?></th>
                                                                                             <td>

@@ -86,8 +86,23 @@ class Facture extends Model implements FrequentlyReapeat
       return $eleve;
     }
 
+    public static function get_pensions_facture($fact_id)
+    {
+      // table pension elève
+      $pension_eleve = DBTable::getModel('pension_eleve')
+                ->select()
+                ->join('type_pension', 'type_pension.id', '=', 'pension_eleve.type_pension_id')
+                ->where('pension_eleve.facture_id', '=', $fact_id)
+                ->where('pension_eleve.visibilite', '=', 1)
+                ->where('type_pension.visibilite', '=', 1)
+                ->orderBy('pension_eleve.id', 'DESC')
+                ->get();
 
-    public static function get_details_facture($fact_id)
+      return $pension_eleve;
+    }
+
+
+    public static function get_details_facture_scolarite($fact_id)
     {
 
       // table pension elève
@@ -95,6 +110,7 @@ class Facture extends Model implements FrequentlyReapeat
                 ->select()
                 ->join('type_pension', 'type_pension.id', '=', 'pension_eleve.type_pension_id')
                 ->where('pension_eleve.facture_id', '=', $fact_id)
+                ->where('type_pension.id', '=', 1)
                 ->where('pension_eleve.visibilite', '=', 1)
                 ->where('type_pension.visibilite', '=', 1)
                 ->orderBy('pension_eleve.id', 'DESC')
