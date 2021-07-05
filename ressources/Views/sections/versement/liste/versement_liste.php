@@ -175,6 +175,7 @@ $include_footer_script = ob_get_clean();
                                                   <td>
                                                     <?php
                                                         $eleve=Facture::get_eleve_by_facture($facture['id']);
+                                                        $ele_id=(! empty($eleve))?$eleve['id']:0;
                                                         if (! empty($eleve)) {
                                                           ?>
                                                           <a href="javascript:void()" class="btn-link" data-toggle="modal" data-target="#details_eleve<?php echo $eleve['id'] ?>" title="afficher les détails">
@@ -371,6 +372,97 @@ $include_footer_script = ob_get_clean();
                                                                                           <?php
                                                                                         }
                                                                                        ?>
+
+
+                                                                                       <?php
+                                                                                         $pentions_facture_inscription=Facture::get_details_facture_inscription($facture['id']);
+
+                                                                                         if (! empty($pentions_facture_inscription)) {
+                                                                                           $comp_detail++;
+                                                                                           $tot=0;
+                                                                                           foreach ($pentions_facture_inscription as $sco) {
+                                                                                             $tot+=$sco['montant'];
+                                                                                           }
+
+
+                                                                                           ?>
+                                                                                           <tr>
+                                                                                               <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
+                                                                                               <td>
+                                                                                                   <p id="recap-typepaiement"><?= "Pension : Inscription" ;?></p>
+
+                                                                                               </td>
+                                                                                               <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_inscription[0]['montant'],0,',',' ');?> Fcfa</td>
+                                                                                               <td class="text-right" id="recap-quantite"><?= count($pentions_facture_inscription);?></td>
+                                                                                               <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
+                                                                                           </tr>
+                                                                                           <?php
+                                                                                         }
+                                                                                        ?>
+
+                                                                                       <?php
+                                                                                         $pentions_facture_tenue=Facture::get_details_facture_tenue($facture['id']);
+
+                                                                                         if (! empty($pentions_facture_tenue)) {
+                                                                                           $comp_detail++;
+                                                                                           $tot=0;
+                                                                                           $mois=array();
+                                                                                           foreach ($pentions_facture_tenue as $sco) {
+                                                                                             $tot+=$sco['montant'];
+                                                                                           }
+
+                                                                                           ?>
+                                                                                           <tr>
+                                                                                               <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
+                                                                                               <td>
+                                                                                                   <p id="recap-typepaiement"><?= "Pension : Tenue" ;?></p>
+
+                                                                                               </td>
+                                                                                               <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_tenue[0]['montant'],0,',',' ');?> Fcfa</td>
+                                                                                               <td class="text-right" id="recap-quantite"><?= count($pentions_facture_tenue);?></td>
+                                                                                               <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
+                                                                                           </tr>
+                                                                                           <?php
+                                                                                         }
+                                                                                        ?>
+
+
+                                                                                        <?php
+                                                                                          $pentions_facture_cantine=Facture::get_details_facture_cantine_eleve($facture['id'],$ele_id);
+                                                                                          // var_dump($pentions_facture_cantine);
+                                                                                          // die();
+
+                                                                                          if (! empty($pentions_facture_cantine)) {
+                                                                                            $comp_detail++;
+                                                                                            $tot=0;
+                                                                                            $mois=array();
+                                                                                            foreach ($pentions_facture_cantine as $sco) {
+                                                                                              $tot+=$sco['prix_unitaire'];
+                                                                                              //$mois[]=substr($sco['motif'],22);
+                                                                                            }
+
+                                                                                            // $mois_order=array();
+                                                                                            // for ($i=(count($pentions_facture_cantine)-1); $i >= 0 ; $i--) {
+                                                                                            //   $mois_order[]=$mois[$i];
+                                                                                            // }
+
+
+
+                                                                                            ?>
+                                                                                            <tr>
+                                                                                                <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
+                                                                                                <td>
+                                                                                                    <p id="recap-typepaiement"><?= "Pension : Cantine" ;?></p>
+
+                                                                                                </td>
+                                                                                                <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_cantine[0]['prix_unitaire'],0,',',' ');?> Fcfa</td>
+                                                                                                <td class="text-right" id="recap-quantite"><?= count($pentions_facture_cantine);?></td>
+                                                                                                <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                          }
+                                                                                         ?>
+
 
                                                                                         <!-- <tr>
                                                                                             <th scope="row" id="recap-numero_ligne"><?= $numero_ligne??"" ;?></th>
