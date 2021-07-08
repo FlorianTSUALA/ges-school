@@ -90,6 +90,54 @@ $include_footer_script = ob_get_clean();
 
 -->
 
+
+<?php
+
+  function mois_en_lettre($mois)
+  {
+    if ($mois=='01') {
+      return 'Janvier';
+    }
+    elseif ($mois=='02') {
+      return 'Février';
+    }
+    elseif ($mois=='03') {
+      return 'Mars';
+    }
+    elseif ($mois=='04') {
+      return 'Avril';
+    }
+    elseif ($mois=='05') {
+      return 'Mai';
+    }
+    elseif ($mois=='06') {
+      return 'Juin';
+    }
+    elseif ($mois=='07') {
+      return 'Juillet';
+    }
+    elseif ($mois=='08') {
+      return 'Août';
+    }
+    elseif ($mois=='09') {
+      return 'Septembre';
+    }
+    elseif ($mois=='10') {
+      return 'Octobre';
+    }
+    elseif ($mois=='11') {
+      return 'Novembre';
+    }
+    elseif ($mois=='12') {
+      return 'Décembre';
+    }
+    else {
+      return '';
+    }
+  }
+
+?>
+
 <div class="app-content content">
 
 
@@ -428,35 +476,32 @@ $include_footer_script = ob_get_clean();
 
 
                                                                                         <?php
-                                                                                          $pentions_facture_cantine=Facture::get_details_facture_cantine_eleve($facture['id'],$ele_id);
-                                                                                          // var_dump($pentions_facture_cantine);
-                                                                                          // die();
+                                                                                          $pentions_facture_activite=Facture::get_details_abonnement_activite($facture['id'],$ele_id);
+                                                                                          //var_dump($pentions_facture_activite);
+                                                                                          //die();
 
-                                                                                          if (! empty($pentions_facture_cantine)) {
+                                                                                          if (! empty($pentions_facture_activite)) {
                                                                                             $comp_detail++;
-                                                                                            $tot=0;
+                                                                                            $tot=$pentions_facture_activite[0]['montant_total'];
+                                                                                            $pu=$tot/count($pentions_facture_activite);
                                                                                             $mois=array();
-                                                                                            foreach ($pentions_facture_cantine as $sco) {
-                                                                                              $tot+=$sco['prix_unitaire'];
-                                                                                              //$mois[]=substr($sco['motif'],22);
+                                                                                            foreach ($pentions_facture_activite as $sco) {
+                                                                                              $mois[]=substr($sco['date_debut'],5,2);
                                                                                             }
-
-                                                                                            // $mois_order=array();
-                                                                                            // for ($i=(count($pentions_facture_cantine)-1); $i >= 0 ; $i--) {
-                                                                                            //   $mois_order[]=$mois[$i];
-                                                                                            // }
-
-
-
                                                                                             ?>
                                                                                             <tr>
                                                                                                 <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
                                                                                                 <td>
                                                                                                     <p id="recap-typepaiement"><?= "Pension : Cantine" ;?></p>
+                                                                                                    <em class="text-muted" id="recap-description"><?= "Concernant les tranches suivantes :";?>
+                                                                                                      <?php foreach ($mois as $m): ?>
+                                                                                                        <?php echo mois_en_lettre($m).',' ?>
+                                                                                                      <?php endforeach; ?>
 
+                                                                                                      </em>
                                                                                                 </td>
-                                                                                                <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_cantine[0]['prix_unitaire'],0,',',' ');?> Fcfa</td>
-                                                                                                <td class="text-right" id="recap-quantite"><?= count($pentions_facture_cantine);?></td>
+                                                                                                <td class="text-right" id="recap-prix"><?= number_format($pu,0,',',' ');?> Fcfa</td>
+                                                                                                <td class="text-right" id="recap-quantite"><?= count($pentions_facture_activite);?></td>
                                                                                                 <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
                                                                                             </tr>
                                                                                             <?php

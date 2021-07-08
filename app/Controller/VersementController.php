@@ -636,7 +636,7 @@ class VersementController extends \App\Controller\Admin\AppController
                   ->where('visibilite', '=', 1)
                   ->orderBy('id', 'DESC')
                   ->get();
-                  
+
         $this->render('sections.versement.liste.versement_liste', compact('route', 'factures'));
     }
 

@@ -187,28 +187,50 @@ class Facture extends Model implements FrequentlyReapeat
     }
 
 
-    public static function get_details_facture_cantine_eleve($fact_id,$ele_id)
+    public static function get_details_abonnement_activite($fact_id,$ele_id)
     {
 
       // table pension elève
-      // $pension_activite = DBTable::getModel('abonnement_cantine')
-      //           ->select()
-      //           //->join('abonnement_cantine', 'abonnement_cantine.id', '=', 'abonnement_detail.abonnement_id')
-      //           ->where('abonnement_cantine.facture_id', '=', $fact_id)
-      //           ->where('abonnement_cantine.eleve_id', '=', $ele_id)
-      //           ->where('abonnement_cantine.visibilite', '=', 1)
-      //           //->where('abonnement_detail.visibilite', '=', 1)
-      //           ->orderBy('abonnement_cantine.id', 'ASC')
-      //           ->get();
-      $pension_activite = DBTable::getModel('abonnement_detail')
+      $abonnement_activite = DBTable::getModel('abonnement_activite')
                 ->select()
-                ->join('abonnement_cantine', 'abonnement_cantine.id', '=', 'abonnement_detail.abonnement_id')
+                ->join('abonnement_detail', 'abonnement_detail.abonnement_id', '=', 'abonnement_activite.id')
+                ->where('abonnement_activite.facture_id', '=', $fact_id)
+                ->where('abonnement_activite.eleve_id', '=', $ele_id)
+                ->where('abonnement_activite.visibilite', '=', 1)
+                ->where('abonnement_detail.visibilite', '=', 1)
+                ->orderBy('abonnement_activite.id', 'DESC')
+                ->get();
+
+
+
+
+      return $abonnement_activite;
+
+    }
+
+
+    public static function get_details_facture_cantine_eleve($fact_id,$ele_id)
+    {
+
+      //table pension elève
+      $pension_activite = DBTable::getModel('abonnement_cantine')
+                ->select()
+                //->join('abonnement_cantine', 'abonnement_cantine.id', '=', 'abonnement_detail.abonnement_id')
                 ->where('abonnement_cantine.facture_id', '=', $fact_id)
                 ->where('abonnement_cantine.eleve_id', '=', $ele_id)
                 ->where('abonnement_cantine.visibilite', '=', 1)
-                ->where('abonnement_detail.visibilite', '=', 1)
-                ->orderBy('abonnement_detail.id', 'ASC')
+                //->where('abonnement_detail.visibilite', '=', 1)
+                ->orderBy('abonnement_cantine.id', 'ASC')
                 ->get();
+      // $pension_activite = DBTable::getModel('abonnement_detail')
+      //           ->select()
+      //           ->join('abonnement_cantine', 'abonnement_cantine.id', '=', 'abonnement_detail.abonnement_id')
+      //           ->where('abonnement_cantine.facture_id', '=', $fact_id)
+      //           ->where('abonnement_cantine.eleve_id', '=', $ele_id)
+      //           ->where('abonnement_cantine.visibilite', '=', 1)
+      //           ->where('abonnement_detail.visibilite', '=', 1)
+      //           ->orderBy('abonnement_detail.id', 'ASC')
+      //           ->get();
 
 
       return $pension_activite;
