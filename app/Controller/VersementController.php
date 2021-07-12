@@ -303,6 +303,7 @@ class VersementController extends \App\Controller\Admin\AppController
                 $nom_activite = $activite['value'];
                 $code_activite = $activite['id'];
                 $montant_activite = $activite['montant'];
+                $activite_id =   Model::getId(DBTable::ACTIVITE, $code_activite);
 
                 $i = 0;
                 $j = 0;
@@ -346,6 +347,7 @@ class VersementController extends \App\Controller\Admin\AppController
                         'code' => $code_abonnement_activite,
                         'facture_id' => $facure_id,
                         'eleve_id' => $eleve_id,
+                        'activite_id' => $activite_id,
                         'montant_total' => $montant_activite * $activites['recapitulatif'],
                         'reduction' => $activites['remise'],
                         'date_debut' => $start_date,
