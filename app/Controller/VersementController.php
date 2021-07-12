@@ -355,7 +355,7 @@ class VersementController extends \App\Controller\Admin\AppController
                     ];
 
                     $model_abonnement_activite->insert($data_abonnement_activite)->execute();
-                    $abonnement_activite_id = Model::getId(DBTable::ABONNEMENT_CANTINE, $code_abonnement_activite);
+                    $abonnement_activite_id = Model::getId(DBTable::ABONNEMENT_ACTIVITE, $code_abonnement_activite);
                     array_push($ids_pension_activite, $abonnement_activite_id);
 
                     $abonnement_detail = DBTable::getModel(DBTable::ABONNEMENT_DETAIL);

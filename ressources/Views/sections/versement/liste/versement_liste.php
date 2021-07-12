@@ -476,18 +476,31 @@ $include_footer_script = ob_get_clean();
 
 
                                                                                         <?php
-                                                                                          $pentions_facture_activite=Facture::get_details_abonnement_activite($facture['id'],$ele_id);
-                                                                                          //var_dump($pentions_facture_activite);
-                                                                                          //die();
+                                                                                          $pentions_facture_cantine=Facture::get_details_facture_cantine_eleve($facture['id'],$ele_id);
+                                                                                          // var_dump($pentions_facture_cantine);
+                                                                                          // die();
 
-                                                                                          if (! empty($pentions_facture_activite)) {
+                                                                                          if (! empty($pentions_facture_cantine)) {
                                                                                             $comp_detail++;
-                                                                                            $tot=$pentions_facture_activite[0]['montant_total'];
-                                                                                            $pu=$tot/count($pentions_facture_activite);
+                                                                                            $tot=$pentions_facture_cantine[0]['montant_total'];
+
                                                                                             $mois=array();
-                                                                                            foreach ($pentions_facture_activite as $sco) {
-                                                                                              $mois[]=substr($sco['date_debut'],5,2);
+                                                                                            $qte=0;
+                                                                                            foreach ($pentions_facture_cantine as $pentions_facture_cant) {
+                                                                                              $mois_deb=substr($pentions_facture_cant['date_debut'],5,2);
+                                                                                              $mois_fin=substr($pentions_facture_cant['date_fin'],5,2);
+                                                                                              $i=$mois_deb;
+                                                                                              while ($i <=$mois_fin) {
+                                                                                                $mois[]=$i;
+                                                                                                $qte++;
+                                                                                                $i++;
+                                                                                              }
+
                                                                                             }
+
+
+                                                                                            $pu=($qte>0)?$tot/$qte:0;
+
                                                                                             ?>
                                                                                             <tr>
                                                                                                 <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
@@ -501,12 +514,35 @@ $include_footer_script = ob_get_clean();
                                                                                                       </em>
                                                                                                 </td>
                                                                                                 <td class="text-right" id="recap-prix"><?= number_format($pu,0,',',' ');?> Fcfa</td>
-                                                                                                <td class="text-right" id="recap-quantite"><?= count($pentions_facture_activite);?></td>
+                                                                                                <td class="text-right" id="recap-quantite"><?= $qte;?></td>
                                                                                                 <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
                                                                                             </tr>
                                                                                             <?php
                                                                                           }
                                                                                          ?>
+
+
+                                                                                         <?php
+                                                                                           $pentions_facture_scolarite=Facture::get_details_facture_activite($facture['id'],$ele_id);
+                                                                                           if (! empty($pentions_facture_scolarite)) {
+                                                                                               $comp_detail++;
+
+                                                                                             ?>
+                                                                                             <tr>
+                                                                                                 <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
+                                                                                                 <td>
+                                                                                                     <p id="recap-typepaiement"><?= "Pension des activités :" ;?></p>
+                                                                                                     <em class="text-muted" id="recap-description"><?= "Concernant les tranches suivantes :";?>
+
+                                                                                                     </em>
+                                                                                                 </td>
+                                                                                                 <td class="text-right" id="recap-prix"> Fcfa</td>
+                                                                                                 <td class="text-right" id="recap-quantite"></td>
+                                                                                                 <td class="text-right" id="recap-somme"> Fcfa</td>
+                                                                                             </tr>
+                                                                                             <?php
+                                                                                           }
+                                                                                          ?>
 
 
                                                                                         <!-- <tr>
