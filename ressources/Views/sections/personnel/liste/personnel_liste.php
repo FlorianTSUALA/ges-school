@@ -34,7 +34,6 @@ $include_res_footer .= "";
 ob_start();
     include 'personnel_liste-script.php';
     include 'personnel_info_modal-script.php';
-    include 'personnel_info_modal.php';
 $include_footer_script = ob_get_clean();
 
 
@@ -179,3 +178,7 @@ $table_header = "
         </div>
     </div>
 </div>
+
+<?php
+    include 'personnel_info_modal.php';
+?>

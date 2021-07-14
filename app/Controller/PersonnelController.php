@@ -52,7 +52,6 @@ class PersonnelController extends AppController
     public function liste()
     {
         $route = 'personnel_liste';
-
         $type_personnels = (new PersonnelRepository())->getPersonnelGroupByTypePersonnel();   
 
         
@@ -60,7 +59,7 @@ class PersonnelController extends AppController
 
         $data_info_personnels = (new PersonnelRepository())->getInfoPersonnels($annee_scolaire_id);
 
-        // dd($data_info_personnels);
+        //dd($data_info_personnels);
         $this->render('sections.personnel.liste.personnel_liste', compact( 'route', 'data_info_personnels', 'type_personnels'));
     }
 

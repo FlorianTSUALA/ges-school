@@ -38,8 +38,6 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
             beforeSend:function(){
             },
             success:function(data){
-                console.log(data)
-
                 personnel = data
                 $("#recap-id").text(personnel.id)
                 $("#recap-nom").text(personnel.nom)
@@ -88,8 +86,6 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
                   type: 'POST'
               },
               "columns": [<?= Personnel::getColumns() ?>],
-             
-             
               order: [[ 1, 'asc' ]],
               scrollY:        "300px",
               scrollX:        true,

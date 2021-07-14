@@ -296,8 +296,6 @@ class VersementController extends \App\Controller\Admin\AppController
             $items = $activites['multiplicateur']??[];
             $reduction = $activites['remise'];
 
-
-
             $k = 0;
             foreach($activites['activites']??[] as $activite){
                 $nom_activite = $activite['value'];
@@ -329,6 +327,8 @@ class VersementController extends \App\Controller\Admin\AppController
                     else
                         $j = $i;
 
+
+                    
                     $offset = $j - 1 - $i;
                     $quantite = $offset + 1;
                     if($debug)  $total = count($items);
@@ -389,6 +389,7 @@ class VersementController extends \App\Controller\Admin\AppController
                 if($debug)  $k++;
 
             }
+
             if($debug)  vd('ok Activité');
 
         //ACTIVITE

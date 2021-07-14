@@ -139,8 +139,6 @@ $include_footer_script = ob_get_clean();
 ?>
 
 <div class="app-content content">
-
-
         <div>
         <!-- <div class="content-detached "> -->
             <div class="content-body">
