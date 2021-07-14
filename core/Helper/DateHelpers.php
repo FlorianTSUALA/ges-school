@@ -404,7 +404,7 @@ trait DateHelpers
         $current_index_month = (int)date('m');
         $index_year = (int)date('Y');
 
-        $index_year = ($current_index_month > $index_month)? $index_year + 1 : $index_year; 
+        //$index_year = ($current_index_month > $index_month)? $index_year + 1 : $index_year; 
 
         $str_index_month = (strlen(''.$index_month) == 2)? $index_month : '0'.$index_month;
         $str_date = $index_year.'-'.$str_index_month.'-01';
