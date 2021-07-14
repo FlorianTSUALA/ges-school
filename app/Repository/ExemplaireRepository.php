@@ -27,6 +27,8 @@ class ExemplaireRepository extends BaseRepository{
         ->get();
     }
 
+
+    //regler cette requete
     public function getAllEmprunt()
     {
         $req =

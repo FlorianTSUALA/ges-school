@@ -61,22 +61,22 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                 },
                 "columns": [<?= Emprunt::getColumns() ?>],
                 "columnDefs": [
-                  {
-                    targets: 0,
-                    visible: false
-                  },         
-                  {
-                    targets: 1,
-                    visible: false
-                  },         
-                  {
-                    targets: -2,
-                    visible: false
-                  },         
-                  {
-                    targets: -3,
-                    visible: false
-                  },
+                   {
+                     targets: 0,
+                     visible: false
+                   },         
+                  // {
+                  //   targets: 1,
+                  //   visible: true
+                  // },         
+                  // {
+                  //   targets: -2,
+                  //   visible: true
+                  // },         
+                  // {
+                  //   targets: -3,
+                  //   visible: true
+                  // },
                   {
                   "targets": -1,
                   "data": null,
@@ -107,8 +107,8 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                       let date_emprunt = new Date(data.date_emprunt).toLocaleDateString(window.navigator.language, {year: 'numeric',month: 'long',day: 'numeric',});
                       let date_expiration = new Date(data.date_expiration).toLocaleDateString(window.navigator.language, {year: 'numeric',month: 'long',day: 'numeric',});
                         //  console.log(date_expiration);
-                        $('td', row).eq(3).text( date_emprunt );
-                        $('td', row).eq(4).text( date_expiration );
+                        $('td', row).eq(4).text( date_emprunt );
+                        $('td', row).eq(5).text( date_expiration );
                     }
                 },
                 "fnDrawCallback": function( oSettings ) {

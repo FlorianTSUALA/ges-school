@@ -95,7 +95,6 @@ class BiblioController extends AppController
     public function getListeEmprunt()
     {
         $data = (new ExemplaireRepository())->getAllEmprunt();
-
         $results[API::TAG_DATA] = $data;
         $results[API::TAG_STATUS] = API::TAG_SUCCESS;
         $results[API::TAG_DATATABLE_DR] = API::TAG_DATATABLE_VALUE_DR;
