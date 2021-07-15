@@ -116,33 +116,6 @@ class Facture extends Model implements FrequentlyReapeat
                 ->orderBy('pension_eleve.id', 'DESC')
                 ->get();
 
-
-      // table abonnement activite
-      // $abonnement_activite = DBTable::getModel('abonnement_activite')
-      //           ->select()
-      //           ->where('facture_id', '=', $fact_id)
-      //           ->where('visibilite', '=', 1)
-      //           ->orderBy('id', 'DESC')
-      //           ->get();
-      //
-      // // table abonnement detail
-      // $abonnement_detail = DBTable::getModel('abonnement_detail')
-      //           ->select()
-      //           ->where('facture_id', '=', $fact_id)
-      //           ->where('visibilite', '=', 1)
-      //           ->orderBy('id', 'DESC')
-      //           ->get();
-      //
-      // // table abonnement detail
-      // $abonnement_cantine = DBTable::getModel('abonnement_cantine')
-      //           ->select()
-      //           ->where('facture_id', '=', $fact_id)
-      //           ->where('visibilite', '=', 1)
-      //           ->orderBy('id', 'DESC')
-      //           ->get();
-
-      //  table pension_eleve autres
-
       return $pension_eleve;
 
     }
@@ -200,6 +173,24 @@ class Facture extends Model implements FrequentlyReapeat
                 ->where('abonnement_detail.visibilite', '=', 1)
                 ->orderBy('abonnement_activite.id', 'DESC')
                 ->get();
+
+
+      return $abonnement_activite;
+
+    }
+
+    public static function get_details_facture_pension_autre($fact_id)
+    {
+      // table pension elève
+      $abonnement_activite = DBTable::getModel('pension_eleve')
+                ->select()
+                ->where('pension_eleve.facture_id', '=', $fact_id)
+                ->whereNull('pension_eleve.type_pension_id')
+                ->where('pension_eleve.visibilite', '=', 1)
+                ->orderBy('pension_eleve.id', 'DESC')
+                ->get();
+
+      //var_dump($abonnement_activite); die();
 
 
       return $abonnement_activite;

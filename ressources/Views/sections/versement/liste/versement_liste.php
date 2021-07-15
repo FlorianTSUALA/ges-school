@@ -584,6 +584,33 @@ $include_footer_script = ob_get_clean();
                                                                                            }
                                                                                           ?>
 
+                                                                                          <?php
+                                                                                            $pentions_facture_pension_autre=Facture::get_details_facture_pension_autre($facture['id']);
+                                                                                            var_dump($pentions_facture_pension_autre);
+
+                                                                                            if (! empty($pentions_facture_pension_autre)) {
+                                                                                              $comp_detail++;
+                                                                                              $tot=0;
+                                                                                              $mois=array();
+                                                                                              foreach ($pentions_facture_pension_autre as $sco) {
+                                                                                                $tot+=$sco['montant'];
+                                                                                              }
+
+                                                                                              ?>
+                                                                                              <tr>
+                                                                                                  <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
+                                                                                                  <td>
+                                                                                                      <p id="recap-typepaiement"><?= "Pension : Autre" ;?></p>
+
+                                                                                                  </td>
+                                                                                                  <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_pension_autre[0]['montant'],0,',',' ');?> Fcfa</td>
+                                                                                                  <td class="text-right" id="recap-quantite"><?= count($pentions_facture_pension_autre);?></td>
+                                                                                                  <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
+                                                                                              </tr>
+                                                                                              <?php
+                                                                                            }
+                                                                                           ?>
+
 
 
 
