@@ -564,9 +564,21 @@ $include_footer_script = ob_get_clean();
 
                                                                                                        </em>
                                                                                                  </td>
-                                                                                                 <td class="text-right" id="recap-prix"><?= number_format($pu,0,',',' ');?> Fcfa</td>
+                                                                                                 <td class="text-right" id="recap-prix">
+                                                                                                   <?php $k=0;
+                                                                                                          $nb_act=count($activites);
+                                                                                                          $sum_mtn=0;
+                                                                                                   ?>
+                                                                                                   (
+                                                                                                   <?php foreach ($activites as $activite): ?>
+                                                                                                     <?php $k++; $sum_mtn+=$activite['montant']; ?>
+                                                                                                     <?php echo number_format($activite['montant'],0,',',' ') ?>
+                                                                                                     <?php echo ($k < $nb_act)?' + ':' '; ?>
+                                                                                                   <?php endforeach; ?>
+                                                                                                   ) *  <?php echo $qte; ?>
+                                                                                                    Fcfa</td>
                                                                                                  <td class="text-right" id="recap-quantite"><?= $qte;?></td>
-                                                                                                 <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
+                                                                                                 <td class="text-right" id="recap-somme"><?= number_format(($sum_mtn*$qte),0,',',' ');?> Fcfa</td>
                                                                                              </tr>
                                                                                              <?php
                                                                                            }
