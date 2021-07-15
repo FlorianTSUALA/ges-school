@@ -277,7 +277,7 @@ class Facture extends Model implements FrequentlyReapeat
     {
 
       // table pension elève
-      $activite = DBTable::getModel('abonnement_activite')
+      $details_activite = DBTable::getModel('abonnement_activite')
                 ->select()
                 ->where('abonnement_activite.facture_id', '=', $fact_id)
                 ->where('abonnement_activite.eleve_id', '=', $ele_id)
@@ -285,25 +285,42 @@ class Facture extends Model implements FrequentlyReapeat
                 ->orderBy('abonnement_activite.id', 'DESC')
                 ->get();
 
-      if (! empty($activite)) {
-        $activite_id=$activite[0]['id'];
-      }
-      else {
-        $activite_id=0;
-      }
 
-      //table pension elève
-      $pension_cantine = DBTable::getModel('abonnement_detail')
-                ->select()
-                ->where('abonnement_detail.abonnement_id', '=', $activite_id)
-                ->where('abonnement_detail.visibilite', '=', 1)
-                ->orderBy('abonnement_detail.id', 'ASC')
+        return $details_activite;
+
+    }
+
+    public static function get_activite_facture_eleve($fact_id,$ele_id)
+    {
+
+      $activite_ids = DBTable::getModel('abonnement_activite')
+                ->select(['activite_id'=>'activite_id'])
+                ->distinct()
+                ->where('abonnement_activite.facture_id', '=', $fact_id)
+                ->where('abonnement_activite.eleve_id', '=', $ele_id)
+                ->where('abonnement_activite.visibilite', '=', 1)
+                ->orderBy('abonnement_activite.id', 'DESC')
                 ->get();
 
-     //var_dump($pension_cantine);
+
+      $ids_act=[];
+      foreach ($activite_ids as $activite_id) {
+        $ids_act[]=intval($activite_id['activite_id']);
+        //var_dump($activite_id);
+      }
+
+      //var_dump($ids_act);
 
 
-        return $pension_cantine;
+      // table pension elève
+      $activites = DBTable::getModel('activite')
+                ->select()
+                ->whereIn('activite.id', $ids_act)
+                ->where('activite.visibilite', '=', 1)
+                ->orderBy('activite.id', 'DESC')
+                ->get();
+
+        return $activites;
 
     }
 }
