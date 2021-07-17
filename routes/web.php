@@ -94,6 +94,7 @@ $router->addRoute('versement_facture', 'versement/print/{code}', [VersementContr
 $router->addRoute('versement-preview', 'versement/preview/{code}', [VersementController::class, 'preview']);
 
 $router->addRoute('versement-suppression', 'versement/suppression/{id_fact}', [VersementController::class, 'suppression']);
+$router->addRoute('versement-modification', 'versement/modification/{id_fact}', [VersementController::class, 'v_modification']);
 
 //LISTE VERSEMENT
 

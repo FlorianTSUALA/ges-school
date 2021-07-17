@@ -586,56 +586,25 @@ $include_footer_script = ob_get_clean();
 
                                                                                           <?php
                                                                                             $pentions_facture_pension_autre=Facture::get_details_facture_pension_autre($facture['id']);
-                                                                                            var_dump($pentions_facture_pension_autre);
+                                                                                            //var_dump($pentions_facture_pension_autre);
 
-                                                                                            if (! empty($pentions_facture_pension_autre)) {
+                                                                                            if (! empty($pentions_facture_pension_autre) && $pentions_facture_pension_autre['motif'] !='') {
                                                                                               $comp_detail++;
-                                                                                              $tot=0;
-                                                                                              $mois=array();
-                                                                                              foreach ($pentions_facture_pension_autre as $sco) {
-                                                                                                $tot+=$sco['montant'];
-                                                                                              }
-
                                                                                               ?>
                                                                                               <tr>
                                                                                                   <th scope="row" id="recap-numero_ligne"><?= $comp_detail ;?></th>
                                                                                                   <td>
-                                                                                                      <p id="recap-typepaiement"><?= "Pension : Autre" ;?></p>
+                                                                                                      <p id="recap-typepaiement"><?= "Pension : ".$pentions_facture_pension_autre['motif'] ;?></p>
 
                                                                                                   </td>
-                                                                                                  <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_pension_autre[0]['montant'],0,',',' ');?> Fcfa</td>
-                                                                                                  <td class="text-right" id="recap-quantite"><?= count($pentions_facture_pension_autre);?></td>
-                                                                                                  <td class="text-right" id="recap-somme"><?= number_format($tot,0,',',' ');?> Fcfa</td>
+                                                                                                  <td class="text-right" id="recap-prix"><?= number_format($pentions_facture_pension_autre['montant'],0,',',' ');?> Fcfa</td>
+                                                                                                  <td class="text-right" id="recap-quantite"><?= 1;?></td>
+                                                                                                  <td class="text-right" id="recap-somme"><?= number_format($pentions_facture_pension_autre['montant'],0,',',' ');?> Fcfa</td>
                                                                                               </tr>
                                                                                               <?php
                                                                                             }
                                                                                            ?>
 
-
-
-
-                                                                                        <!-- <tr>
-                                                                                            <th scope="row" id="recap-numero_ligne"><?= $numero_ligne??"" ;?></th>
-                                                                                            <td>
-                                                                                                <p id="recap-typepaiement"><?= $typepaiement??"" ;?></p>
-                                                                                                <em class="text-muted" id="recap-description"><?= $description??"";?></em>
-                                                                                            </td>
-                                                                                            <td class="text-right" id="recap-prix"><?= $prix??"";?> Fcfa</td>
-                                                                                            <td class="text-right" id="recap-quantite"><?= $quantite??"";?></td>
-                                                                                            <td class="text-right" id="recap-somme"><?= $somme??"";?> Fcfa</td>
-                                                                                        </tr> -->
-                                                                                        <!--
-                                                                                            <tr>
-                                                                                                <th scope="row">2</th>
-                                                                                                <td>
-                                                                                                    <p>Tranche mensuelle</p>
-                                                                                                    <em class="text-muted">Il s'agit de la scolarité mensuelle d'un élève.</em>
-                                                                                                </td>
-                                                                                                <td class="text-right">20 000 Fcfa</td>
-                                                                                                <td class="text-right">5</td>
-                                                                                                <td class="text-right">100 000 Fcfa</td>
-                                                                                            </tr>
-                                                                                        -->
                                                                                     </tbody>
                                                                                 </table>
                                                                             </div>

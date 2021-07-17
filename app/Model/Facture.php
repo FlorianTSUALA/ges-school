@@ -192,8 +192,12 @@ class Facture extends Model implements FrequentlyReapeat
 
       //var_dump($abonnement_activite); die();
 
-
-      return $abonnement_activite;
+      if (! empty($abonnement_activite)) {
+        return $abonnement_activite[0];
+      }
+      else {
+        return array();
+      }
 
     }
 
