@@ -11,7 +11,7 @@ class Classe extends Model implements FrequentlyReapeat
 {
     use HydrahonModel;
     protected $entity;
-    
+
     const CYCLE_ID = "cycle_id";
 
     public function __construct(){
@@ -25,4 +25,5 @@ class Classe extends Model implements FrequentlyReapeat
 
 
     }
+
 }

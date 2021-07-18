@@ -46,11 +46,11 @@ $funtion_signataire = "Le Sécrétariat";
         data_versement['classe_id'] = $('#classe option:selected').val()
 
         data_versement['long_date_facture'] = "<?= Helpers::getFullDate(date("Y-m-d H:i:s")) ?>"
-        
+
         data_versement['montant_paye'] =  $('#montant').val()
 
         let classe = $( "#classe option:selected" ).text()
-       
+
         var body = ''
         var sous_total = 0
         var _montant_total = 0
@@ -67,7 +67,7 @@ $funtion_signataire = "Le Sécrétariat";
                 let current = items[item]
 
                 let _type_pension_code = current['type_pension_code']
-            
+
                 let  _est_mensuel    = parseInt(current['est_mensuel'])
                 let _montant =  parseFloat(current['montant'])
                 let _mensualite = parseFloat(current['mensualite'])
@@ -120,7 +120,7 @@ $funtion_signataire = "Le Sécrétariat";
         //Pension Scolaire
 
         //Cantines
-            current = cantines 
+            current = cantines
             let _est_mensuel = parseInt(current['est_mensuel'])
             let _montant = parseFloat(current['montant'])
             let _mensualite = parseFloat(current['mensualite'])
@@ -147,7 +147,7 @@ $funtion_signataire = "Le Sécrétariat";
                 _montant_total += sub_total
                 let j = 0
                 let periode = ''
-     
+
                 for(var tranche in current['recapitulatif'])
                     periode += (current['recapitulatif'][tranche]['value'] + ((size = ++j)? '.' : ', '))
 
@@ -165,7 +165,7 @@ $funtion_signataire = "Le Sécrétariat";
 
         //Activite
             let activites_souscrits  = activites['activites']
-            current = activites 
+            current = activites
             _est_mensuel = parseInt(current['est_mensuel'])
             _montant = parseFloat(current['montant'])
             _mensualite = parseFloat(current['mensualite'])
@@ -196,12 +196,12 @@ $funtion_signataire = "Le Sécrétariat";
 
                     if (j == activites_souscrits.length - 1) {
                         msg += activites_souscrits[j]['value'] + '. '
-                        tmp_montant_txt += activites_souscrits[j]['montant'] 
+                        tmp_montant_txt += activites_souscrits[j]['montant']
                     } else {
                         msg += activites_souscrits[j]['value'] + ', '
                         tmp_montant_txt += activites_souscrits[j]['montant'] + ' + '
                     }
-                    
+
                     tmp_montant += parseFloat( activites_souscrits[j]['montant'] )
                 }
 
@@ -219,7 +219,7 @@ $funtion_signataire = "Le Sécrétariat";
 
                 for (var tranche in current['multiplicateur'])
                     periode += (current['multiplicateur'][tranche]['value'] + ((size = ++j)? '.' : ', '))
-        
+
 
                 body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
                 body += '       </td>'
@@ -232,7 +232,7 @@ $funtion_signataire = "Le Sécrétariat";
         //Activite
 
         //Autres
-            current = autres 
+            current = autres
             _montant = parseFloat(current['montant'])
             _montant = (isNaN(_montant))? 0 : _montant
             _remise = parseFloat(current['remise'])
@@ -270,9 +270,9 @@ $funtion_signataire = "Le Sécrétariat";
         $('#recap-cheque').hide()
         $('#recap-nom_banque').hide()
         $('#recap-numero_cheque').hide()
-        
+
         reduction = 0
-        
+
         $('.reduction').each(function()
         {
             reduction += (isNaN(parseFloat($(this).val())))? 0 : parseFloat($(this).val())

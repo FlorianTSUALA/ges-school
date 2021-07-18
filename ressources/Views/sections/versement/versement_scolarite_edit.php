@@ -3,6 +3,7 @@ use App\Helpers\S;
 use Core\Routing\URL;
 use App\Model\Facture;
 use App\Model\Eleve;
+use App\Model\PensionEleve;
 
 ob_start();
 
@@ -15,9 +16,9 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
 
 require "script-event.php";
 require "script-component-init.php";
-require "script-update-etat.php";
-require "script-save.php";
-require "script-versement_scolarite.php";
+require "script-update-etat_edit.php";
+require "script-save_edit.php";
+require "script-versement_scolarite_edit.php";
 
 $include_footer_script = ob_get_clean();
 
@@ -117,8 +118,15 @@ $readonly = '';
 
                                   <?php
                                     $eleve=Facture::get_eleve_by_facture($id_fact);
-                                    $ele_id=(! empty($eleve))?$eleve['id']:0;
-
+                                    $ele_id=0;
+                                    $classe_id=0;
+                                    if (! empty($eleve)) {
+                                      $parcours=Eleve::get_parcours_eleve($eleve['id']);
+                                      $ele_id=$eleve['id'];
+                                      $classe_id=$parcours['classe_id'];
+                                    }
+                                    //var_dump($classe_id); die();
+                                    //$parcours=Eleve::get_parcours_eleve($eleve['id']);
                                   ?>
 
                                   <div class="row">
@@ -213,6 +221,12 @@ $readonly = '';
                                   <!-- Scolarite -->
                                   <?php $i = 0;
                                   foreach($type_pensions as $item){  ?>
+                                  <?php
+                                      $type_pension_all_data=PensionEleve::get_pension_by_code($item['id']);
+                                      $id_tp=(! empty($type_pension_all_data))?$type_pension_all_data['id']:0;
+                                      $frais_sco_all=PensionEleve::get_fais_scolarite($id_tp,$classe_id);
+                                      $frais_sco=(! empty($frais_sco_all))?$frais_sco_all['montant']:0;
+                                   ?>
                                     <div class="row">
 
                                       <div class="col-3 ">
@@ -228,9 +242,40 @@ $readonly = '';
                                         <fieldset class="mb-1">
                                           <h5>Multiplicateur</h5>
                                           <div class="form-group">
+                                            <?php
+                                              $pentions_facture_scolarite=Facture::get_details_facture_scolarite($id_fact);
+                                              $mois_order=array();
+                                              $mois_selectionnes=array();
+                                              $reduction=0;
+
+                                              if (! empty($pentions_facture_scolarite)) {
+                                                $reduction=$pentions_facture_scolarite[0]['reduction'];
+                                                $mois=array();
+                                                foreach ($pentions_facture_scolarite as $sco) {
+                                                  $mois[]=substr($sco['motif'],22);
+                                                }
+
+                                                $mois_order=array();
+                                                for ($i=(count($pentions_facture_scolarite)-1); $i >= 0 ; $i--) {
+                                                  $mois_order[]=$mois[$i];
+                                                }
+                                              }
+
+                                              foreach ($mois_order as $m) {
+                                                $mois_selectionnes[]=Facture::convert_mois_lettre_en_code_tranche_sco($m);
+                                              }
+
+                                              //var_dump($pentions_facture_scolarite);
+
+                                            ?>
+
                                             <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-<?= $item['id'];?>"  name="SELECT-COL3-<?= $item['id'];?>"   required>
                                               <?php foreach($tranche_scolaires as $tranche_scolaire){?>
-                                                <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
+                                                <option value="<?= $tranche_scolaire['id']; ?>"
+                                                  <?php if (in_array($tranche_scolaire['id'],$mois_selectionnes)): ?>
+                                                    selected
+                                                  <?php endif; ?>
+                                                  ><?= $tranche_scolaire['libelle']; ?></option>
                                               <?php } ?>
                                             </select>
                                           </div>
@@ -247,21 +292,26 @@ $readonly = '';
                                       </div>
 
 
+
                                       <div class="col-2">
                                         <fieldset class="mb-1">
                                           <h5>Reduction</h5>
                                           <div class="form-group">
-                                            <input type="number" class="form-control reduction"  id="COL5-<?= $item['id'];?>" value="0"  name="COL5-<?= $item['id'];?>"   placeholder="" />
+                                            <input type="number" class="form-control reduction"  id="COL5-<?= $item['id'];?>"  name="COL5-<?= $item['id'];?>" value="<?php echo $reduction ?>"   placeholder="" />
                                           </div>
                                         </fieldset>
                                       </div>
 
+                                      <?php
+                                        $init_recaputilatif="(".count($mois_selectionnes)." * ".$frais_sco.") - ".$reduction;
+                                        //var_dump($init_recaputilatif); die();
+                                      ?>
 
                                       <div class="col-3">
                                         <fieldset class="mb-1">
                                           <h5>Recaputilatif</h5>
                                           <div class="form-group">
-                                            <input type="text" class="form-control "  id="COL4-<?= $item['id'];?>" value="0"  name="COL4-<?= $item['id'];?>"   placeholder="" readonly/>
+                                            <input type="text" class="form-control "  id="COL4-<?= $item['id'];?>" value="<?php echo $init_recaputilatif ?>"  name="COL4-<?= $item['id'];?>"   placeholder="" readonly/>
                                           </div>
                                         </fieldset>
                                       </div>
@@ -274,7 +324,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Type pension</h5>
                                         <div class="form-group">
-                                          <input type="text" class="form-control  " readonly value="Cantine"  id="COL2-Cantine"   COL2-Cantine=""  placeholder="" />
+                                          <input type="text" class="form-control  " readonly value="Cantine"  id="COL2-Cantine"   COL2-Cantine=""  placeholder="" value="<?php echo $init_recaputilatif ?>" />
                                         </div>
                                       </fieldset>
                                     </div>
@@ -481,7 +531,6 @@ $readonly = '';
 
 
       <?php include "versement_scolarite_etat_edit.php"; ?>
-
 
     </div>
   </div>

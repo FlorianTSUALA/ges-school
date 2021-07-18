@@ -13,8 +13,8 @@ use Core\Model\HydrahonModel;
 class PensionClasse extends Model implements FrequentlyReapeat
 {
     use HydrahonModel;
-    protected $entity;   
-    
+    protected $entity;
+
     const TYPE_PENSION_ID = "type_pension_id";
     const Classe_ID = "classe_id";
     const MONTANT = "montant";
@@ -23,11 +23,11 @@ class PensionClasse extends Model implements FrequentlyReapeat
     const EST_MENSUEL = "est_mensuel";
 
 
-    public function __construct(){        
-        
+    public function __construct(){
+
         $type_pensions = TypePension::table()->select([ 'code' => 'id' , 'libelle' => 'value'])->where('visibilite', 1)->get();
         $classes = Classe::table()->select([ 'code' => 'id' , 'libelle' => 'value'])->where('visibilite', 1)->get();
-        
+
         $this->fillables =
             [
                 new FormModel(false, self::TYPE_PENSION_ID, 'Type de pension', InputType::SELECT2, $type_pensions, '', 'Choisir une pension', true, 'select2 form-control'),
@@ -41,4 +41,6 @@ class PensionClasse extends Model implements FrequentlyReapeat
             ];
 
     }
+
+    
 }

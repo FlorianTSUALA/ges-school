@@ -91,53 +91,6 @@ $include_footer_script = ob_get_clean();
 -->
 
 
-<?php
-
-  function mois_en_lettre($mois)
-  {
-    if ($mois=='01') {
-      return 'Janvier';
-    }
-    elseif ($mois=='02') {
-      return 'Février';
-    }
-    elseif ($mois=='03') {
-      return 'Mars';
-    }
-    elseif ($mois=='04') {
-      return 'Avril';
-    }
-    elseif ($mois=='05') {
-      return 'Mai';
-    }
-    elseif ($mois=='06') {
-      return 'Juin';
-    }
-    elseif ($mois=='07') {
-      return 'Juillet';
-    }
-    elseif ($mois=='08') {
-      return 'Août';
-    }
-    elseif ($mois=='09') {
-      return 'Septembre';
-    }
-    elseif ($mois=='10') {
-      return 'Octobre';
-    }
-    elseif ($mois=='11') {
-      return 'Novembre';
-    }
-    elseif ($mois=='12') {
-      return 'Décembre';
-    }
-    else {
-      return '';
-    }
-  }
-
-?>
-
 <div class="app-content content">
         <div>
         <!-- <div class="content-detached "> -->
@@ -506,7 +459,7 @@ $include_footer_script = ob_get_clean();
                                                                                                     <p id="recap-typepaiement"><?= "Pension : Cantine" ;?></p>
                                                                                                     <em class="text-muted" id="recap-description"><?= "Concernant les tranches suivantes :";?>
                                                                                                       <?php foreach ($mois as $m): ?>
-                                                                                                        <?php echo mois_en_lettre($m).',' ?>
+                                                                                                        <?php echo Facture::mois_en_lettre($m).',' ?>
                                                                                                       <?php endforeach; ?>
 
                                                                                                       </em>
@@ -559,7 +512,7 @@ $include_footer_script = ob_get_clean();
                                                                                                      </p>
                                                                                                      <em class="text-muted" id="recap-description"><?= "Concernant les tranches suivantes :";?>
                                                                                                        <?php foreach ($mois as $m): ?>
-                                                                                                         <?php echo mois_en_lettre($m).',' ?>
+                                                                                                         <?php echo Facture::mois_en_lettre($m).',' ?>
                                                                                                        <?php endforeach; ?>
 
                                                                                                        </em>

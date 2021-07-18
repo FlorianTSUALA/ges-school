@@ -3,15 +3,15 @@
 namespace App\Model;
 
 use Core\Model\Model;
-use Core\HTML\Form\FormModel;        
+use Core\HTML\Form\FormModel;
 use Core\HTML\Form\InputType;
 use Core\Model\HydrahonModel;
 
 class PensionEleve extends Model implements FrequentlyReapeat
 {
     use HydrahonModel;
-    protected $entity;   
-    
+    protected $entity;
+
     const TYPE_PENSION_ID = "type_pension_id";
     const Classe_ID = "classe_id";
     const PensionClasse_ID = "pension_classe_id";
@@ -49,5 +49,38 @@ class PensionEleve extends Model implements FrequentlyReapeat
                 // new FormModel(true, self::AUTRES ),
             ];
 
+    }
+
+    public static function get_pension_by_code($code)
+    {
+      $pension_eleve = DBTable::getModel('type_pension')
+                ->select()
+                ->where('type_pension.visibilite', '=', 1)
+                ->where('type_pension.code', '=', $code)
+                ->orderBy('type_pension.id', 'DESC')
+                ->get();
+      if (! empty($pension_eleve)) {
+        return $pension_eleve[0];
+      }
+      else {
+        return array();
+      }
+    }
+
+    public static function get_fais_scolarite($id_tp,$classe_id)
+    {
+      $pension_eleve = DBTable::getModel('pension_classe')
+                ->select()
+                ->where('pension_classe.visibilite', '=', 1)
+                ->where('pension_classe.type_pension_id', '=', $id_tp)
+                ->where('pension_classe.classe_id', '=', $classe_id)
+                ->orderBy('pension_classe.id', 'DESC')
+                ->get();
+      if (! empty($pension_eleve)) {
+        return $pension_eleve[0];
+      }
+      else {
+        return array();
+      }
     }
 }

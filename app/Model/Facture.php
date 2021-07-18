@@ -318,4 +318,77 @@ class Facture extends Model implements FrequentlyReapeat
         return $activites;
 
     }
+
+
+    public static function convert_mois_lettre_en_code_tranche_sco($m)
+    {
+      if ($m=='Janvier' || $m=='janvier') {
+        return 'TRAN_1598852718';
+      }
+      elseif ($m=='Février' || $m=='février' || $m=='FÃ©vrier') {
+        return 'TRAN_1598854167';
+      }
+      elseif ($m=='Mars' || $m=='mars') {
+        return 'TRAN_1598854187';
+      }
+      elseif ($m=='Avril' || $m=='avril') {
+        return 'TRAN_1598854187';
+      }
+      elseif ($m=='Mai' || $m=='mai') {
+        return 'TRAN_1598854815';
+      }
+      elseif ($m=='Juin' || $m=='juin') {
+        return 'TRAN_1598854822';
+      }
+      elseif ($m=='Juillet' || $m=='juillet') {
+        return 'TRAN_1598854833';
+      }
+      else {
+        require '';
+      }
+    }
+
+
+    public static function mois_en_lettre($mois)
+    {
+      if ($mois=='01') {
+        return 'Janvier';
+      }
+      elseif ($mois=='02') {
+        return 'Février';
+      }
+      elseif ($mois=='03') {
+        return 'Mars';
+      }
+      elseif ($mois=='04') {
+        return 'Avril';
+      }
+      elseif ($mois=='05') {
+        return 'Mai';
+      }
+      elseif ($mois=='06') {
+        return 'Juin';
+      }
+      elseif ($mois=='07') {
+        return 'Juillet';
+      }
+      elseif ($mois=='08') {
+        return 'Août';
+      }
+      elseif ($mois=='09') {
+        return 'Septembre';
+      }
+      elseif ($mois=='10') {
+        return 'Octobre';
+      }
+      elseif ($mois=='11') {
+        return 'Novembre';
+      }
+      elseif ($mois=='12') {
+        return 'Décembre';
+      }
+      else {
+        return '';
+      }
+    }
 }
