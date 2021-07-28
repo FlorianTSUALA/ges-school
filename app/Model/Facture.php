@@ -294,7 +294,7 @@ class Facture extends Model implements FrequentlyReapeat
                 ->where('abonnement_activite.facture_id', '=', $fact_id)
                 ->where('abonnement_activite.eleve_id', '=', $ele_id)
                 ->where('abonnement_activite.visibilite', '=', 1)
-                ->orderBy('abonnement_activite.id', 'DESC')
+                // ->orderBy('abonnement_activite.id', 'DESC')
                 ->get();
 
 
@@ -391,4 +391,5 @@ class Facture extends Model implements FrequentlyReapeat
         return '';
       }
     }
+    
 }
