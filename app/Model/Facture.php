@@ -285,6 +285,23 @@ class Facture extends Model implements FrequentlyReapeat
 
     }
 
+    public static function get_details_facture_activite_new($fact_id,$ele_id)
+    {
+
+      // table pension elève
+      $details_activite = DBTable::getModel('abonnement_activite')
+                ->select()
+                ->where('abonnement_activite.facture_id', '=', $fact_id)
+                ->where('abonnement_activite.eleve_id', '=', $ele_id)
+                ->where('abonnement_activite.visibilite', '=', 1)
+                ->orderBy('abonnement_activite.id', 'ASC')
+                ->get();
+
+
+        return $details_activite;
+
+    }
+
     public static function get_activite_facture_eleve($fact_id,$ele_id)
     {
 
@@ -322,25 +339,25 @@ class Facture extends Model implements FrequentlyReapeat
 
     public static function convert_mois_lettre_en_code_tranche_sco($m)
     {
-      if ($m=='Janvier' || $m=='janvier') {
+      if ($m=='Janvier' || $m=='janvier' || $m=='01') {
         return 'TRAN_1598852718';
       }
-      elseif ($m=='Février' || $m=='février' || $m=='FÃ©vrier') {
+      elseif ($m=='Février' || $m=='février' || $m=='FÃ©vrier' || $m=='02') {
         return 'TRAN_1598854167';
       }
-      elseif ($m=='Mars' || $m=='mars') {
+      elseif ($m=='Mars' || $m=='mars' || $m=='03') {
         return 'TRAN_1598854187';
       }
-      elseif ($m=='Avril' || $m=='avril') {
+      elseif ($m=='Avril' || $m=='avril' || $m=='04') {
         return 'TRAN_1598854187';
       }
-      elseif ($m=='Mai' || $m=='mai') {
+      elseif ($m=='Mai' || $m=='mai' || $m=='05') {
         return 'TRAN_1598854815';
       }
-      elseif ($m=='Juin' || $m=='juin') {
+      elseif ($m=='Juin' || $m=='juin' || $m=='06') {
         return 'TRAN_1598854822';
       }
-      elseif ($m=='Juillet' || $m=='juillet') {
+      elseif ($m=='Juillet' || $m=='juillet' || $m=='07') {
         return 'TRAN_1598854833';
       }
       else {
@@ -391,5 +408,5 @@ class Facture extends Model implements FrequentlyReapeat
         return '';
       }
     }
-    
+
 }

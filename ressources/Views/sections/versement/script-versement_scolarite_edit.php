@@ -335,7 +335,13 @@ use App\Helpers\S;
             if($(reduction).val() < 0)
                 $(reduction).val(0)
             init()
-        })
+        });
+
+        //$(classe).click();
+
+        $(classe).onchange();
+        $(reduction).trigger('change');
+        //$(reduction).change();
 
         // $(reste).on("change paste keyup mouseup", function () {
         //     if($(reste).val() < 0)

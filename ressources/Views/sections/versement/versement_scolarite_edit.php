@@ -438,19 +438,52 @@ $readonly = '';
                                   <!-- Activite -->
                                   <div class="row">
 
+                                    <?php
+                                      $acts=Facture::get_details_facture_activite_new($id_fact,$ele_id);
+                                      $array_activites=Facture::get_activite_facture_eleve($id_fact,$ele_id);
+                                      $mois=array();
+                                      foreach ($acts as $act) {
+
+                                          $mois_deb=substr($act['date_debut'],5,2);
+                                          $mois_fin=substr($act['date_fin'],5,2);
+                                          $i=$mois_deb;
+                                          while ($i <=$mois_fin) {
+                                            if (! in_array(Facture::convert_mois_lettre_en_code_tranche_sco($i),$mois)) {
+                                              $mois[]=Facture::convert_mois_lettre_en_code_tranche_sco($i);
+                                            }
+                                            $i++;
+                                          }
+                                      }
+
+                                      if (! empty($acts)) {
+                                        $reduction=$acts[0]['reduction'];
+                                        //$frais_tenue=$pentions_facture_tenue[0]['montant'];
+                                        $init_recaputilatif=$quantite."*".$frais_tenue."-".$reduction."=".($quantite*$frais_tenue - $reduction);
+                                      }
+                                      //var_dump($mois); var_dump($activites); die();
+                                    ?>
+
                                     <div class="col-3 ">
                                       <fieldset class="mb-1">
                                         <h5>Activité</h5>
                                         <div class="form-group">
                                           <select class="select2 col-md-10 form-control" multiple="multiple"  id="SELECT-COL2-Activite"  name="SELECT-COL2-Activite"   required>
                                             <?php foreach($activites as $activite){?>
-                                              <option value="<?= $activite['id']; ?>" title="<?= $activite['montant']; ?>" ><?= $activite['libelle']; ?></option>
+                                              <option value="<?= $activite['id']; ?>"
+                                                title="<?= $activite['montant']; ?>"
+                                                <?php foreach ($array_activites as $array_activite): ?>
+                                                  <?php if ($array_activite['code'] == $activite['id']): ?>
+                                                    selected
+                                                  <?php endif; ?>
+                                                <?php endforeach; ?>
+                                                ><?= $activite['libelle']; ?></option>
                                             <?php } ?>
                                           </select>
                                         </div>
                                       </fieldset>
                                     </div>
 
+                                    <?php //var_dump($tranche_scolaires); die(); ?>
 
                                     <div id="" class="col-4">
                                       <fieldset class="mb-1">
@@ -458,7 +491,13 @@ $readonly = '';
                                         <div class="form-group">
                                           <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Activite"  name="SELECT-COL3-Activite"   required>
                                             <?php foreach($tranche_scolaires as $tranche_scolaire){?>
-                                              <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
+                                              <option value="<?= $tranche_scolaire['id']; ?>"
+                                                <?php foreach ($mois as $m): ?>
+                                                  <?php if ($m==$tranche_scolaire['id']): ?>
+                                                    selected
+                                                  <?php endif; ?>
+                                                <?php endforeach; ?>
+                                                ><?= $tranche_scolaire['libelle']; ?></option>
                                             <?php } ?>
                                           </select>
                                         </div>
