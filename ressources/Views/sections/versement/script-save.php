@@ -82,8 +82,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
                     },
                     error: function (textStatus, errorThrown) {
                         
-                        const printB = document.getElementById("invoice-items-details")
-                        $("invoice-items-details").printArea([]);
+                        alert("Erreur d'enregistrement de votre versement")
                         console.log('Ici ya erreu demandé 1', data)
                         Success = false;
                         console.log(textStatus, errorThrown);
