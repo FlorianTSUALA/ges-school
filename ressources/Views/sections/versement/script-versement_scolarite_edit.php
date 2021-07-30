@@ -339,8 +339,9 @@ use App\Helpers\S;
 
         //$(classe).click();
 
-        $(classe).onchange();
+        $('.select2').onchange();
         $(reduction).trigger('change');
+
         //$(reduction).change();
 
         // $(reste).on("change paste keyup mouseup", function () {

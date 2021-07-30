@@ -319,7 +319,7 @@ $readonly = '';
                                         </fieldset>
                                       </div>
 
-                                      <div id="TYPE-NUMBER-<?= $item['id']; ?>" class="col-4">
+                                      <div id="TYPE-NUMBER-<?= $item['id']; ?>" class="col-4" style="display: none;">
                                         <fieldset class="mb-1">
 
                                           <h5>Multiplicateur</h5>                                                                         <div class="form-group">
