@@ -14,7 +14,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/toggle/boot
 // echo '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>';
 echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQuery.print.js"></script>';
 
-require "script-event.php";
+require "script-event_edit.php";
 require "script-component-init.php";
 require "script-update-etat_edit.php";
 require "script-save_edit.php";
@@ -290,6 +290,7 @@ $readonly = '';
 
 
                                       }
+
                                    ?>
                                     <div class="row">
 
@@ -301,6 +302,8 @@ $readonly = '';
                                           </div>
                                         </fieldset>
                                       </div>
+
+                                      <?php //var_dump($mois_selectionnes, $tranche_scolaires) ?>
 
                                       <div id="TYPE-SELECT-<?= $item['id']; ?>" class="col-4">
                                         <fieldset class="mb-1">
@@ -319,7 +322,7 @@ $readonly = '';
                                         </fieldset>
                                       </div>
 
-                                      <div id="TYPE-NUMBER-<?= $item['id']; ?>" class="col-4" style="display: none;">
+                                      <div id="TYPE-NUMBER-<?= $item['id']; ?>" class="col-4">
                                         <fieldset class="mb-1">
 
                                           <h5>Multiplicateur</h5>                                                                         <div class="form-group">

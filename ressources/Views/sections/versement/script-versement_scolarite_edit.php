@@ -49,6 +49,7 @@ use App\Helpers\S;
             fromInscription = false;
         }
 
+        //isFirstLoad = false;
         if(isFirstLoad){
             trigger($(classe).select2().find(':selected').data('id'))
             isFirstLoad = false;
@@ -335,14 +336,8 @@ use App\Helpers\S;
             if($(reduction).val() < 0)
                 $(reduction).val(0)
             init()
-        });
-
-        //$(classe).click();
-
-        $('.select2').onchange();
-        $(reduction).trigger('change');
-
-        //$(reduction).change();
+        })
+        //$('.select2').onchange();
 
         // $(reste).on("change paste keyup mouseup", function () {
         //     if($(reste).val() < 0)
