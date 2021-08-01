@@ -325,7 +325,6 @@ class VersementController extends \App\Controller\Admin\AppController
         //PENSION ELEVE
                 $data_pension = $_POST['pension_classe'];
 
-
                 // if($debug) vd( $data_pension );
                 foreach ($data_pension??[] as $item) {
 
@@ -372,7 +371,7 @@ class VersementController extends \App\Controller\Admin\AppController
                                 }
                             }
                     }else{
-                        if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0"))
+                        if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0") && !empty($item['recapitulatif']))
                         {
                             $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
                             $motif = 'Payement Non periodique';
@@ -401,7 +400,6 @@ class VersementController extends \App\Controller\Admin\AppController
             if($debug)  vd('ok Pension eleve');
 
         //PENSION ELEVE
-
 
         //ACTIVITE
 
