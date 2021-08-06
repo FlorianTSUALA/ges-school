@@ -154,7 +154,7 @@ $include_footer_script = ob_get_clean();
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Libéllé</th>
+                                                   
                                                     <th>Montant</th>
                                                     <th>Réduction</th>
                                                     <th>Date</th>
@@ -167,7 +167,6 @@ $include_footer_script = ob_get_clean();
                                             <?php $comp=0; foreach ($factures as $facture): ?>
                                               <tr>
                                                   <td><?php $comp++; echo $comp; ?></td>
-                                                  <td><?php echo $facture['libelle'] ?></td>
                                                   <td><?php echo number_format($facture['montant'],0,',',' ').' Fcfa' ?></td>
                                                   <td><?php echo number_format($facture['reduction'],0,',',' ').' Fcfa' ?></td>
                                                   <td><?php $date = new DateTime($facture['date_facture']); echo $date->format('d/m/Y'); ?></td>
@@ -663,7 +662,7 @@ $include_footer_script = ob_get_clean();
                                             <tfoot>
                                                 <tr>
                                                   <th>#</th>
-                                                  <th>Libéllé</th>
+                                                 
                                                   <th>Montant</th>
                                                   <th>Réduction</th>
                                                   <th>Date</th>

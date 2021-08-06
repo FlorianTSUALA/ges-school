@@ -32,6 +32,7 @@ use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use App\Repository\AffectationSalleClasseRepository;
 
+
 class TestController extends AppController
 {
 
@@ -41,7 +42,76 @@ class TestController extends AppController
         $this->loadModel('cycle');
     }
 
-    public function test( )
+    public function test()
+    {   
+        $jour_delai = 5 ;
+        $mois_encours = NULL;
+        if(isset($mois_encours)){
+          $mois_encours = strtolower($mois_encours) ;
+         $mois_encours = ucfirst($mois_encours) ;  
+        }    
+        $eleve_retard = 'NULL';
+        $tab_eleve_id = DBTable::getModel('eleve')
+      ->select(['id'=>'eleve_id',])
+      ->get();
+
+      $tab_eleve_retard = array();
+      if(!isset($mois_encours)) { 
+        $mois_encours = self::mois_en_lettre(date("m")) ;   
+        }
+
+      foreach($tab_eleve_id as $eleve_id ){
+      
+       $tranche_id_mois = DBTable::getModel('pension_eleve')
+      ->select(['pension_eleve.tranche_scolaire_id'=>'tranche_scolaire_id',
+              'tranche_scolaire.libelle'=>'mois' ])
+      ->join('tranche_scolaire', 'tranche_scolaire.id', '=', 'pension_eleve.tranche_scolaire_id')
+      ->where('pension_eleve.visibilite', '=', 1)
+      ->where('tranche_scolaire_id', '<>', 'NULL')
+      ->where('pension_eleve.eleve_id', '=', $eleve_id)
+      ->get(); 
+
+    //$tableau_valeur = array()
+    
+    $payer_retard = "true"; 
+    $jour_int = (int) date("d");
+
+    if ($jour_int >= $jour_delai) {
+
+      foreach($tranche_id_mois as $tranche_id_moi){ 
+     // $mois_deb=substr($pentions_facture_cant['date_debut'],5,2);
+     
+        if ($tranche_id_moi['mois'] == $mois_encours ){
+            $payer_retard = "false";
+            break ; }
+     }
+    
+
+   if($payer_retard == "true") {
+
+    $eleve_retards = DBTable::getModel('eleve')
+    ->select([new Expression("concat( eleve.nom,' ',eleve.prenom) as nom_complet"),
+                             'salle_classe.libelle' => 'salle_classe',])
+      ->join('parcours', 'parcours.eleve_id', '=', 'eleve.id')
+      ->join('salle_classe', 'salle_classe.id', '=', 'parcours.salle_classe_id')
+      ->where('eleve.visibilite', '=', 1)
+      ->where('salle_classe.libelle', '<>', 'NULL')
+      ->where('eleve.id', '=', $eleve_id)
+      ->get(); 
+
+      foreach ($eleve_retards as $eleve_retard)
+      array_push($tab_eleve_retard, $eleve_retard);      
+   }
+   
+  }
+      }
+ 
+      dd($tab_eleve_retard );
+     return $tab_eleve_retard ;
+    }
+
+
+    public function test11( )
     {
         $affectation_salle_eleve = (Parcours::table()
             ->select(
@@ -175,9 +245,9 @@ class TestController extends AppController
         echo Helpers::toJSON($results) ;
         dd("ok");
         $repository = new PersonnelRepository();
-        $items = (new PersonnelRepository())->getDocumentGroupByPersonnel();
+       // $items = (new PersonnelRepository())->getDocumentGroupByPersonnel();
 
-        dd($items);
+      //  dd($items);
     }
 
     public function testB()
@@ -246,5 +316,47 @@ class TestController extends AppController
         // $this->    
     }
 
+    public static function mois_en_lettre($mois)
+    {
+      if ($mois=='01') {
+        return 'Janvier';
+      }
+      elseif ($mois=='02') {
+        return 'Février';
+      }
+      elseif ($mois=='03') {
+        return 'Mars';
+      }
+      elseif ($mois=='04') {
+        return 'Avril';
+      }
+      elseif ($mois=='05') {
+        return 'Mai';
+      }
+      elseif ($mois=='06') {
+        return 'Juin';
+      }
+      elseif ($mois=='07') {
+        return 'Juillet';
+      }
+      elseif ($mois=='08') {
+        return 'Août';
+      }
+      elseif ($mois=='09') {
+        return 'Septembre';
+      }
+      elseif ($mois=='10') {
+        return 'Octobre';
+      }
+      elseif ($mois=='11') {
+        return 'Novembre';
+      }
+      elseif ($mois=='12') {
+        return 'Décembre';
+      }
+      else {
+        return '';
+      }
+    }
 
 }

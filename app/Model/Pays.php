@@ -3,8 +3,9 @@
 namespace App\Model;
 
 use Core\Model\Model;
-use Core\HTML\Form\FormModel;        
+use Core\HTML\Form\InputType;
 use Core\Model\HydrahonModel;
+use Core\HTML\Form\FormModel;        
 
 class Pays extends Model implements FrequentlyReapeat
 {
@@ -16,7 +17,7 @@ class Pays extends Model implements FrequentlyReapeat
         $this->fillables =
             [
                 new FormModel(true, self::LIBELLE),
-                new FormModel(true, self::DESCRIPTION),
+                new FormModel(true, self::DESCRIPTION, self::DESCRIPTION, InputType::TEXT, [], '', '', false),
             ];
     }
 }

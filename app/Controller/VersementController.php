@@ -762,6 +762,19 @@ class VersementController extends \App\Controller\Admin\AppController
         $this->render('sections.versement.liste.versement_liste', compact('route', 'factures'));
     }
 
+    public function liste_retard()
+    {
+        $route = 'versement_retard';
+
+        $factures = DBTable::getModel('facture')
+                  ->select()
+                  ->where('visibilite', '=', 1)
+                  ->orderBy('id', 'DESC')
+                  ->get();
+
+        $this->render('sections.versement.liste.versement_retard', compact('route', 'factures'));
+    }
+
     public function liste_abonnee_test()
     {
         $route = 'versement_liste';

@@ -45,14 +45,20 @@ th, td {
   padding: 8px;
   text-align: left;    
 }
-</style>
-<page>
+#bon{
+    
+    height: 300px;    
+}
 
-<table  style="width:100%">
+</style>
+<page id="bon">
+
+
+<table  style="width:100%;">
     <tr>
         <td  rowspan="4"  style="width: 13%"><img src="<?= URL::base() ?>/assets/app-assets/images/logo/logo-80x80.png"> </td>
-        <td style="text-align: left;    width: 22%"><b>Ges-School</b></td>
-        <td style="text-align: right;    width: 65%">  <b>REÇU DE PAIEMENT DE LA CANTINE</b> </td>
+        <td style="text-align: left;    width: 22%"><b>Ges-School1</b></td>
+        <td style="text-align: right;    width: 65%">  <b>REÇU DE PAIEMENT</b> </td>
     </tr>
   
     <tr>
@@ -92,9 +98,8 @@ th, td {
         <td colspan="3" style="text-align: right;"> </td>
     </tr> 
 </table>
-
-           
-<table cellspacing='0'>
+      
+<table cellspacing='0' style="width:100%; ">
     <colgroup>
         <col style="width: 8%">
         <col style="width: 47%">
@@ -119,9 +124,7 @@ th, td {
     
 </table>
 
-
-
-<table  style="width:100%">
+<table  style="width:100%; ">
     <tr>
         <td style="text-align: left;    width: 65%"></td>
         <td style="text-align: left;    width: 15%"></td>
@@ -154,6 +157,112 @@ th, td {
 
 
 </table>
+
+<table  style="width:100%; ">
+    <tr>
+        <td  rowspan="4"  style="width: 13%"><img src="<?= URL::base() ?>/assets/app-assets/images/logo/logo-80x80.png"> </td>
+        <td style="text-align: left;    width: 22%"><b>Ges-School</b></td>
+        <td style="text-align: right;    width: 65%">  <b>REÇU DE PAIEMENT</b> </td>
+    </tr>
+  
+    <tr>
+        <td></td>
+        <td  style="text-align: right;">  <?= $data['reference'] ?></td>
+    </tr>    
+   
+    <tr>
+        <td>Batterie 4</td>
+    </tr>    
+    <tr>
+        <td>Libreville, Gabon</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align: right;">Solde à payer</td>
+    </tr>
+    <tr>
+        <td colspan="3" style="text-align: right;"><strong class="text-danger" ><?= $data['montant_paye'] ?></strong></td>
+    </tr> 
+    <tr>
+        <td colspan="3" style="text-align: right;"> </td>
+    </tr> 
+    <tr>
+        <td colspan="3" style="text-align: right;"> </td>
+    </tr> 
+    <tr>
+        <td colspan="2" style="text-align: left;"><strong class="text-danger" >Facture de</strong></td>
+        <td  style="text-align: right;">Date de facturation :<strong class="text-danger" > <?= $data['long_date_facture'] ?> </strong></td>
+    </tr> 
+    <tr>
+        <td colspan="3" style="text-align: left;">Elève : <strong class="text-danger" > <?= $data['eleve'] ?></strong></td>
+    </tr> 
+    <tr>
+        <td colspan="3" style="text-align: left;">Classe : <strong class="text-danger" > <?= $data['classe'] ?></strong></td>
+    </tr> 
+    <tr>
+        <td colspan="3" style="text-align: right;"> </td>
+    </tr> 
+</table>
+      
+<table cellspacing='0' style="width:100%; ">
+    <colgroup>
+        <col style="width: 8%">
+        <col style="width: 47%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+    </colgroup>
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Object et description</th>
+            <th>Montant</th>
+            <th>Quantité</th>
+            <th>Montant total</th>
+        </tr>
+    </thead>
+    <tbody>
+
+    <?= $data['html_table_body'] ?>
+
+    </tbody>
+    
+</table>
+
+<table  style="width:100%;">
+    <tr>
+        <td style="text-align: left;    width: 65%"></td>
+        <td style="text-align: left;    width: 15%"></td>
+        <td style="text-align: right;    width: 20%"></td>
+    </tr>
+    <tr>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left;" colspan="2" >Montant total du versement</td>
+    </tr>
+    <tr>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left; padding: 5px 10px 5px 5px;">Sous-Total</td>
+        <td style="text-align: right;"><?= $data['montant_paye'] - $data['reduction'] ?></td>
+    </tr>
+    <tr>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left; padding: 5px 10px 5px 5px;">Remise</td>
+        <td style="text-align: right;"><?= $data['reduction'] ?></td>
+    </tr>
+    <!-- <tr>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left; padding: 5px 10px 5px 5px;">Reste</td>
+        <td style="text-align: right;"><?= $data['reste'] ?></td>
+    </tr> -->
+    <tr>
+        <td style="text-align: left;"></td>
+        <td style="text-align: left; padding: 5px 10px 5px 5px;">Solde à payer</td>
+        <td style="text-align: right;"> <?= $data['montant_paye'] ?></td>
+    </tr>
+
+
+</table>
+
+
 
 
 

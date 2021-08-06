@@ -38,6 +38,7 @@ class TrancheScolaireController extends AppController
                 annee_scolaire.libelle as annee_scolaire_id, 
                 tranche_scolaire.code as code, 
                 tranche_scolaire.libelle as libelle, 
+                tranche_scolaire.description as description, 
                 tranche_scolaire.date_fin as date_fin
                 ')
                     ->where('tranche_scolaire.visibilite', 1)

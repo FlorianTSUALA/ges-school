@@ -105,6 +105,7 @@ $router->addRoute('versement-detail', 'versement/detal/{code}', [VersementContro
 
 $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
+$router->addRoute('versement_retard', 'versement/retard', [VersementController::class, 'liste_retard']);
 $router->addRoute('versement_info', 'versement/info/', [VersementController::class, 'info']);
 
 // $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);

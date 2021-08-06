@@ -5,6 +5,7 @@ namespace App\Model;
 use Core\Model\Model;
 use Core\HTML\Form\FormModel;
 use Core\Model\HydrahonModel;
+use ClanCats\Hydrahon\Query\Expression;
 
 class Facture extends Model implements FrequentlyReapeat
 {
@@ -17,6 +18,8 @@ class Facture extends Model implements FrequentlyReapeat
     const DATE_FACTURE = "date_facture";
     const BENEFICAIRE = "beneficaire";
     const GESTIONNAIRE = "gestionnaire";
+    const JOURDELAI = 5 ;
+    //const PAYER_RETARD = "true" ;
 
     public function __construct(){
         parent::__construct();
@@ -40,6 +43,76 @@ class Facture extends Model implements FrequentlyReapeat
         $columns .= '{ "data": "lieu_naissance" },';
         return $columns;
     }
+
+
+
+    public static function get_retard_paie_scolarite($mois_encours = NULL,  $jour_delai = 5)
+    {
+        if(isset($mois_encours)){
+          $mois_encours = strtolower($mois_encours) ;
+         $mois_encours = ucfirst($mois_encours) ;  
+        }    
+        //$eleve_retard = 'NULL';
+        $tab_eleve_id = DBTable::getModel('eleve')
+      ->select(['id'=>'eleve_id',])
+      ->get();
+
+      $tab_eleve_retard = array();
+      if(!isset($mois_encours)) { 
+        $mois_encours = self::mois_en_lettre(date("m")) ;   
+        }
+
+      foreach($tab_eleve_id as $eleve_id ){
+      
+       $tranche_id_mois = DBTable::getModel('pension_eleve')
+      ->select(['pension_eleve.tranche_scolaire_id'=>'tranche_scolaire_id',
+              'tranche_scolaire.libelle'=>'mois' ])
+      ->join('tranche_scolaire', 'tranche_scolaire.id', '=', 'pension_eleve.tranche_scolaire_id')
+      ->where('pension_eleve.visibilite', '=', 1)
+      ->where('tranche_scolaire_id', '<>', 'NULL')
+      ->where('pension_eleve.eleve_id', '=', $eleve_id)
+      ->get(); 
+
+    //$tableau_valeur = array()
+    
+    $payer_retard = "true"; 
+    $jour_int = (int) date("d");
+
+    if ($jour_int >= $jour_delai) {
+
+      foreach($tranche_id_mois as $tranche_id_moi){ 
+     // $mois_deb=substr($pentions_facture_cant['date_debut'],5,2);
+     
+        if ($tranche_id_moi['mois'] == $mois_encours ){
+            $payer_retard = "false";
+            break ; }
+     }
+    
+
+   if($payer_retard == "true") {
+
+    $eleve_retards = DBTable::getModel('eleve')
+    ->select([new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                             'salle_classe.libelle' => 'salle_classe',])
+      ->join('parcours', 'parcours.eleve_id', '=', 'eleve.id')
+      ->join('salle_classe', 'salle_classe.id', '=', 'parcours.salle_classe_id')
+      ->where('eleve.visibilite', '=', 1)
+      ->where('salle_classe.libelle', '<>', 'NULL')
+      ->where('eleve.id', '=', $eleve_id)
+      ->get(); 
+
+      foreach ($eleve_retards as $eleve_retard)
+      array_push($tab_eleve_retard, $eleve_retard);     
+   }
+   
+  }
+      }
+   
+     return $tab_eleve_retard ;
+
+    }
+
+
 
 
     public static function get_eleve_by_facture($id_fact)
