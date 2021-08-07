@@ -27,11 +27,11 @@ class InscriptionActivite extends Model implements FrequentlyReapeat
         [
             new FormModel(false,self::ELEVE_ID,'Eleve', InputType::SELECT2, $eleves, '', 'Choisir un eleve', true, 'select2 form-control'),
             new FormModel(false,self::PERSONNEL_ACTIVITE_ID,'Activité suivie', InputType::SELECT2, $personel_activites, '', 'Choisir une activité', true, 'select2 form-control'),
-            new FormModel(true, self::DATE_INSCRIPTION, "Date d'inscription", InputType::DATE, [], '', '', false),
+            new FormModel(true, self::DATE_INSCRIPTION, "Date de début", InputType::DATE, [], '', '', false),
             new FormModel(true, self::DATE_ARRET, "Date d'arret", InputType::DATE, [], '', '', false),
             new FormModel(true, self::MONTANT, self::MONTANT, InputType::NUMBER, [], '', '', false),
             new FormModel(true, self::LIBELLE, 'Libellé', InputType::TEXT, [], '', '', false),
-            new FormModel(true, self::DESCRIPTION,  self::DESCRIPTION, InputType::TEXT, [], '', '', false ),
+          //  new FormModel(true, self::DESCRIPTION,  self::DESCRIPTION, InputType::TEXT, [], '', '', false ),
         ];
 
 

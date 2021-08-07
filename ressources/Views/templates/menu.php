@@ -103,20 +103,7 @@ return[
                 "hasChildren" => false,
                 "children" => [],
             ],
-            "GESTION_CLASSES" => [
-                "title" => "Classe",
-                "icon" => "",
-                "msg_page" => "",
-                "menu_explication" => "",
-                "full_url" =>  URL::link("classe"),
-                "action" => "classe",
-                "alt" => "",
-                "class" => "",
-                "isActive" => "",
-                "alwaysVisible" => true,
-                "hasChildren" => false,
-                "children" => [],
-            ],
+      
         ],
     ],
 

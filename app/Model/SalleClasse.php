@@ -21,7 +21,6 @@ class SalleClasse extends Model implements FrequentlyReapeat
         [
             new FormModel(false,'classe_id','Classe', InputType::SELECT2, $classes, '', 'Choisir une classe', true, 'select2 form-control'),
             new FormModel(true, self::LIBELLE, 'Libellé' ),
-            new FormModel(true, self::DESCRIPTION,  self::DESCRIPTION, InputType::TEXT, [], '', '', false ),
         ];
 
 

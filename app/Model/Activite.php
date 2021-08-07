@@ -24,7 +24,7 @@ class Activite extends Model implements FrequentlyReapeat
                 new FormModel(false,self::TYPE_ACTIVITE_ID, 'Type d\'activite', InputType::SELECT2, $type_activites, '', 'Choisir un type d\'activité', true, 'select2 form-control'),
                 new FormModel(true, self::LIBELLE, self::LIBELLE, InputType::TEXT, [], '', '', false),
                 new FormModel(true, self::MONTANT, self::MONTANT, InputType::NUMBER, [], '', '', false),
-                new FormModel(true, self::DESCRIPTION, self::DESCRIPTION, InputType::TEXT, [], '', '', false),
+                //new FormModel(true, self::DESCRIPTION, self::DESCRIPTION, InputType::TEXT, [], '', '', false),
             ];
     }
 }

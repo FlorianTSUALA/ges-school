@@ -26,8 +26,6 @@ class AnneeScolaire extends Model implements FrequentlyReapeat
             new FormModel(true, self::DEBUT_ANNEE, 'Début d\'année', InputType::DATE),
             new FormModel(true, self::FIN_ANNEE, 'Fin d\'année', InputType::DATE),
             new FormModel(true, self::STATUT, self::STATUT, InputType::RADIO, [['id'=>'1', 'value'=>'Actif'], ['id'=>'0', 'value'=>'Inactif']]),
-            new FormModel(true, self::SLOGAN, self::SLOGAN, InputType::TEXT, [], '', '', false),
-            new FormModel(true, self::MISSION, self::MISSION, InputType::TEXT, [], '', '', false),
         ];
     }
 

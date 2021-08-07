@@ -17,7 +17,6 @@ class Pays extends Model implements FrequentlyReapeat
         $this->fillables =
             [
                 new FormModel(true, self::LIBELLE),
-                new FormModel(true, self::DESCRIPTION, self::DESCRIPTION, InputType::TEXT, [], '', '', false),
             ];
     }
 }

@@ -35,7 +35,7 @@ class SalleClasseController extends AppController
         
     public function getall(){
         $model = SalleClasse::table();
-        $results = $model->select(' classe.libelle as classe_id, salle_classe.code as external_target, salle_classe.code as code, salle_classe.libelle as libelle, salle_classe.description as description')
+        $results = $model->select(' classe.libelle as classe_id, salle_classe.code as external_target, salle_classe.code as code, salle_classe.libelle as libelle')
                     ->where('classe.visibilite', 1)
                     ->join('classe', 'salle_classe.classe_id', '=', 'classe.id')->get();
         return $results;

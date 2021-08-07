@@ -35,8 +35,8 @@ class PensionClasse extends Model implements FrequentlyReapeat
                 // new FormModel(true, self::LIBELLE ),
                 new FormModel(true, self::MONTANT ,'Montant',InputType::NUMBER ),
                 new FormModel(true, self::OPTIONNEL, self::OPTIONNEL, InputType::RADIO, [['id'=>'1', 'value'=>'Oui'], ['id'=>'0', 'value'=>'Non']]),
-                new FormModel(true, self::EST_MENSUEL, 'Est mensuel ?', InputType::RADIO, [['id'=>'1', 'value'=>'Oui'], ['id'=>'0', 'value'=>'Non']]),
-                new FormModel(true, self::MENTUALITE ,'Mensualité',InputType::NUMBER ),
+              //  new FormModel(true, self::EST_MENSUEL, 'Est mensuel ?', InputType::RADIO, [['id'=>'1', 'value'=>'Oui'], ['id'=>'0', 'value'=>'Non']]),
+               // new FormModel(true, self::MENTUALITE ,'Mensualité',InputType::NUMBER ),
 
             ];
 

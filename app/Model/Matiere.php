@@ -23,9 +23,9 @@ class Matiere extends Model implements FrequentlyReapeat
             [
                 new FormModel(false, self::DISCIPLINE_ID, 'Discipline', InputType::SELECT2, $disciplines, '', 'Choisir un cycle', true, 'select2 form-control'),
                 new FormModel(true, self::LIBELLE ),
-                new FormModel(true, self::ABREVIATION,'Abbrévation', null, null, null, null, false ),
-                new FormModel(true, self::COULEUR,'Couleur', InputType::COLOR, null, null, null, false ),
-                new FormModel(true, self::DESCRIPTION ,'Description', null, null, null, null, false),
+                //new FormModel(true, self::ABREVIATION,'Abbrévation', null, null, null, null, false ),
+                //new FormModel(true, self::COULEUR,'Couleur', InputType::COLOR, null, null, null, false ),
+                //new FormModel(true, self::DESCRIPTION ,'Description', null, null, null, null, false),
             ];
     }
 }

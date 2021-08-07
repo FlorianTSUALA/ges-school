@@ -68,6 +68,8 @@ class Facture extends Model implements FrequentlyReapeat
       ->select(['pension_eleve.tranche_scolaire_id'=>'tranche_scolaire_id',
               'tranche_scolaire.libelle'=>'mois' ])
       ->join('tranche_scolaire', 'tranche_scolaire.id', '=', 'pension_eleve.tranche_scolaire_id')
+      ->join('type_pension', 'type_pension.id', '=', 'pension_eleve.type_pension_id')
+      ->where('type_pension.libelle','=','scolarité')
       ->where('pension_eleve.visibilite', '=', 1)
       ->where('tranche_scolaire_id', '<>', 'NULL')
       ->where('pension_eleve.eleve_id', '=', $eleve_id)
