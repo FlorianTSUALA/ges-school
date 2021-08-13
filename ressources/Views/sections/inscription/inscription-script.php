@@ -33,7 +33,7 @@ use App\Helpers\Helpers;
                 pays_eleve: "required",
                 classe_eleve: "required",
                 statut_apprenant_eleve: "required",
-                annee_scolaire: "required",
+               // annee_scolaire: "required",
             },
             messages: {
                 nom_eleve: {
@@ -57,9 +57,7 @@ use App\Helpers\Helpers;
                 statut_apprenant_eleve: {
                     required: "Ce champs est obligatoire !",
                 },
-                annee_scolaire: {
-                    required: "Ce champs est obligatoire !",
-                },
+               
             },
         });
     
@@ -126,9 +124,9 @@ use App\Helpers\Helpers;
                 $('#recap-statut_apprenant_eleve').text($('#statut_apprenant_eleve :selected').val()? $('#statut_apprenant_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
                 $('#recap-classe_eleve').text($('#classe_eleve :selected').val()? $('#classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
                 $('#recap-salle_classe_eleve').text($('#salle_classe_eleve :selected').val()? $('#salle_classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
-                $('#recap-annee_scolaire').text($('#annee_scolaire :selected').val()? $('#annee_scolaire :selected').val() : '<?= Helpers::repeatChar();?>');
-                $('#recap-pays_pere').text($('#pays_pere :selected').val()? $('#pays_pere :selected').val() : '<?= Helpers::repeatChar();?>'); 
-                $('#recap-pays_mere').text($('#pays_mere :selected').val()? $('#pays_mere :selected').val() : '<?= Helpers::repeatChar();?>');
+               // $('#recap-annee_scolaire').text($('#annee_scolaire :selected').val()? $('#annee_scolaire :selected').val() : '<?= Helpers::repeatChar();?>');
+                //$('#recap-pays_pere').text($('#pays_pere :selected').val()? $('#pays_pere :selected').val() : '<?= Helpers::repeatChar();?>'); 
+               // $('#recap-pays_mere').text($('#pays_mere :selected').val()? $('#pays_mere :selected').val() : '<?= Helpers::repeatChar();?>');
                 $('#recap-groupe_sanguin').text($('#groupe_sanguin :selected').val()? $('#groupe_sanguin :selected').val() : '<?= Helpers::repeatChar();?>');
                 
                 // $('#recap-est_tuteur_pere').text($('input[type=radio][name=est_tuteur_pere]:checked').val()? $('input[type=radio][name=est_tuteur_pere]:checked').val() : '<?= Helpers::repeatChar();?>');
