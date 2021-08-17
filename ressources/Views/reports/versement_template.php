@@ -38,8 +38,8 @@
 
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <section class="card">
-                                        <div id="invoice-template" class="card-body bg-light rounded">
+                                    <section  id="print-template"  class="card">
+                                        <div  id="invoice-template" class="card-body bg-light rounded">
                                             <!-- Invoice Company Details -->
                                             <div id="invoice-company-details" class="row">
                                                 <div class="col-md-6 col-sm-12 text-center text-md-left">

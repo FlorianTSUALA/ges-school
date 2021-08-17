@@ -63,31 +63,14 @@
                                 <div class="col-md-7">
                                     <div class="card-text">
                     
-                                        <p class=" font-medium-2"><h2P style="color:black;font-family:Niagara Engraved; font-size: 28px;">Renseigner toutes les informations concernant le versement.</h2P></p>
+                                        <p ><h2P style="color:black; font-size: 18px;">Renseigner toutes les informations concernant le versement.</h2P></p>
                                       <!--   <p class="font-medium-2"><strong class="red">NB !!!</strong> Preciser l'année scolaire en cours ou, <a href="<?= URL::link('annee_scolaire');?>" class="alert-link">Créer une?</a></p>.-->
                                     </div>
 
                                 </div>  
                                     
                                 <div class="col-md-5 ">
-                                    <div class="alert alert-warning alert-dismissible row" role="alert">
-                                        <!-- <span class="alert-icon"><i class="fa fa-warning"></i></span> -->
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                        <label for="annee_scolaire" class="col-form-label  text-bold-700 text-danger">Année scolaire:</label>
-                                        <div class="col-8">
-                                            <select id="annee_scolaire" class="select2 form-control" name="annee_scolaire" required>
-                                                <?php
-                                                foreach($annee_scolaires as $item) { 
-                                                    ?>
-                                                    <option value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_annee_scolaire'] == $item['id']))? 'selected' : ''; ?>><?= $item['libelle']; ?></option>
-                                                <?php } ?>
-
-                                            </select>
-                                        </div>
-                                        <!-- <p><strong>NB!</strong>Preciser l'année scolaire en cours ou, <a href="#" class="alert-link">Creer une?</a></p>. -->
-                                    </div>
+                                   
                                 </div>
 
                             </div>  
@@ -104,13 +87,7 @@
                                                             <form id="form_versement" action="need-validation" class="" novalidate>
                                                                 <fieldset>
 
-                                                                    <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <h4 class="form-section text-warning" align="">
-                                                                                <strong>Informations utiles</strong>
-                                                                            </h4>
-                                                                        </div>
-                                                                    </div>
+                                                                   
 <!-- Nom complet et classe -->
                                                                     <div class="row">
                                                                         <div class="col-md-6">

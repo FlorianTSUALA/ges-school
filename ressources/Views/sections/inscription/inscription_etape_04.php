@@ -136,11 +136,12 @@ use Core\Routing\URL;
 
                                 </div>
 
+                                
                                 <div class="col-5">
                                     <div class="row">
-                                        <strong class="col-6">Année Scolaire :</strong>
+                                        <strong class="col-6">Prénom d'usage :</strong>
 
-                                        <em  id="recap-annee_scolaire" class="col-6"><?= Helpers::repeatChar();?> </em>
+                                        <em  id="recap-prenom_usage" class="col-6"><?= Helpers::repeatChar();?></em>
                                     </div>
                                 </div>
                             </div>
@@ -169,30 +170,7 @@ use Core\Routing\URL;
                                 </div>
                             </div>
 
-                            <div class="row mt-1">
-
-                                <div class="col-5">
-                                    <div class="row">
-                                        <strong class="col-6">Contact de l'école :</strong>
-
-                                        <em  id="recap-telephone" class="col-6"><?= Helpers::repeatChar();?></em>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-
-                                </div>
-
-                                
-                                <div class="col-5">
-                                    <div class="row">
-                                        <strong class="col-6">Prénom d'usage :</strong>
-
-                                        <em  id="recap-prenom_usage" class="col-6"><?= Helpers::repeatChar();?></em>
-                                    </div>
-                                </div>
-
-                            </div>
+                     
 
 
                         </div>
@@ -241,11 +219,11 @@ use Core\Routing\URL;
 
 
                             <div class="row mt-1">
-                                <div class="col-5">
+                               <div class="col-5">
                                     <div class="row">
-                                        <strong class="col-6">Pays du père:</strong>
+                                        <strong class="col-6">Quartier du père:</strong>
 
-                                        <em  id="recap-pays_pere" class="col-6"><?= Helpers::repeatChar();?></em>
+                                        <em  id="recap-quartier_pere" class="col-6"><?= Helpers::repeatChar();?></em>
                                     </div>
                                 </div>
 
@@ -323,13 +301,7 @@ use Core\Routing\URL;
 
                                 </div>
 
-                                <div class="col-5">
-                                    <div class="row">
-                                        <strong class="col-6">Quartier du père:</strong>
-
-                                        <em  id="recap-quartier_pere" class="col-6"><?= Helpers::repeatChar();?></em>
-                                    </div>
-                                </div>
+                                
 
                             </div>
 
@@ -369,11 +341,11 @@ use Core\Routing\URL;
 
                             <div class="row mt-1">
 
-                                <div class="col-5">
+                            <div class="col-5">
                                     <div class="row">
-                                        <strong class="col-6">Pays de la mère :</strong>
+                                        <strong class="col-6">Quartier de la mère :</strong>
 
-                                        <em  id="recap-pays_mere" class="col-6"><?= Helpers::repeatChar();?></em>
+                                        <em  id="recap-quartier_mere" class="col-6"><?= Helpers::repeatChar();?></em>
                                     </div>
                                 </div>
                                 <div class="col-2">
@@ -450,13 +422,7 @@ use Core\Routing\URL;
 
                                 </div>
 
-                                <div class="col-5">
-                                    <div class="row">
-                                        <strong class="col-6">Quartier de la mère :</strong>
-
-                                        <em  id="recap-quartier_mere" class="col-6"><?= Helpers::repeatChar();?></em>
-                                    </div>
-                                </div>
+                                
 
                             </div>
                             <br> <div class="row">

@@ -19,6 +19,11 @@ use App\Model\DossierParental;
 use App\Model\StatutApprenant;
 use App\Repository\EleveRepository;
 use App\Controller\Admin\AppController;
+use App\Repository\AnneeScolaireRepository;
+
+
+ // $annee_scolaires = ( new AnneeScolaireRepository() )->getActive();
+
 
 class InscriptionController extends AppController
 {
@@ -135,8 +140,8 @@ class InscriptionController extends AppController
         $data_eleve = [
             'code' => $code_eleve,
             'matricule' => $matricule,
-            'nom' => Request::getSecParam('nom_eleve', ''),
-            'prenom' => Request::getSecParam('prenom_eleve', ''),
+            'nom' => strtoupper(Request::getSecParam('nom_eleve', '')) ,
+            'prenom' => ucfirst(Request::getSecParam('prenom_eleve', '')) ,
             'prenom_usage' => Request::getSecParam('prenom_usage', ''),
             'lieu_naissance' => Request::getSecParam('lieu_naissance_eleve', ''),
             'date_naissance' => Request::getSecParam('date_naissance_eleve', ''),
@@ -155,9 +160,9 @@ class InscriptionController extends AppController
 
         $id_salle_classe = $this->salle_classe->id(Request::getSecParam('salle_classe_eleve', ''), SalleClasse::LIBELLE);
         $id_salle_classe = ($id_salle_classe == false) ? null : $id_salle_classe;
-
-        $id_annee_scolaire = $this->annee_scolaire->id(Request::getSecParam('annee_scolaire', ''), AnneeScolaire::LIBELLE);
-        $code_annee_scolaire = $this->annee_scolaire->code(Request::getSecParam('annee_scolaire', ''), AnneeScolaire::LIBELLE);
+    
+        $id_annee_scolaire = ( new AnneeScolaireRepository() )->getActive()['id'] ;
+        $code_annee_scolaire = ( new AnneeScolaireRepository() )->getActive()['code'] ;
         //PARCOURS ELEVE
         $code_parcours = $this->parcours->genCode();
         $data_parcours = [
@@ -183,8 +188,8 @@ class InscriptionController extends AppController
             $data_inscriptpion['msg_inscriptpion'] = 'Inscription Enregistrée';
             $data_inscriptpion['code_classe'] = $code_classe;
             $data_inscriptpion['code_eleve'] = $code_eleve;
-            $data_inscriptpion['nom_eleve'] = Request::getSecParam('nom_eleve', '');
-            $data_inscriptpion['prenom_eleve'] = Request::getSecParam('prenom_eleve', '');
+            $data_inscriptpion['nom_eleve'] = Request::getSecParam('nom_eleve', '') ;
+            $data_inscriptpion['prenom_eleve'] = Request::getSecParam('prenom_eleve', '') ;
             $data_inscriptpion['code_parcours'] = $code_parcours;
             $data_inscriptpion['annee_scolaire'] = Request::getSecParam('annee_scolaire', '');
             $data_inscriptpion['code_annee_scolaire'] = $code_annee_scolaire;
