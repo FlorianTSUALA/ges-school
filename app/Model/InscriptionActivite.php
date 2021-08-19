@@ -8,6 +8,8 @@ use Core\HTML\Form\InputType;
 use ClanCats\Hydrahon\Query\Expression as Ex;
 use Core\Model\HydrahonModel;
 
+use function Core\Helper\dd;
+
 class InscriptionActivite extends Model implements FrequentlyReapeat
 {
     use HydrahonModel;

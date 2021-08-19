@@ -124,7 +124,7 @@ th, td {
     
 </table>
 
-<table  style="width:100%; ">
+<table   table  style="width:100%; ">
     <tr>
         <td style="text-align: left;    width: 65%"></td>
         <td style="text-align: left;    width: 15%"></td>

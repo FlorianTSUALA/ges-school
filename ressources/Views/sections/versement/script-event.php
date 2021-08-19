@@ -68,6 +68,35 @@ $(document).ready(function(){ flash_msg(data) });
 
             })
 
+
+            //TYPE SELECT
+           /* var _text =  ' '
+            $('#eleve_nom_complet').on('select2:close', function () {
+                let select = $(this)
+                select.trigger('change')
+
+                $("#eleve_nom_complet").select2("val");
+                $("#classe").select2("val", "0");
+                const _data = select.select2('data')
+             
+                $('#classe').val(null).trigger('change');
+
+                for(let k = 0; k<_data.length; k++)
+                {
+                    console.log(_data[k].selected)
+                    text += ' <li> ' + _data[k].text + ' </li>'
+                    _text += ' ' + _data[k].text + ' '
+                }
+                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_eleve'] == $item['id']))? 'selected' : ''; ?>><?= $item['libelle']; ?></option>
+
+                console.log("Livre . ")
+                console.log(text + " ||| Size = "+select.select2('data').length)
+
+
+                $('#list-familyship').html(text)
+
+            })*/
+
             $(document).on('click', '#btn-save-family-relation', function(e)
             {
                 $('#RFT-reduction').val(" Reduction : "+$('#RF-reduction').val())

@@ -76,9 +76,9 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
 
                         flash_msg(data)
 
-                        console.log('Ici ya erreu demandé', data)
-                        const printB = document.getElementById("invoice-items-details")
-                        $("invoice-items-details").printArea([]);
+                        // console.log('Ici ya erreu demandé', data)
+                        // const printB = document.getElementById("invoice-items-details")
+                        // $("invoice-items-details").printArea([]);
                     },
                     error: function (textStatus, errorThrown) {
                         

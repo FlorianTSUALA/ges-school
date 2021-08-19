@@ -11,7 +11,46 @@ use App\Model\AnneeScolaire;
 use Core\Repository\BaseRepository;
 use ClanCats\Hydrahon\Query\Expression;
 
+use function Core\Helper\dd;
+
 class EleveRepository extends BaseRepository{
+    
+
+    public function getEleveById($eleve_code)
+    {
+        return DBTable::getModel('eleve')
+        ->select(
+            [
+                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                'eleve.code' => 'id',
+                'eleve.matricule' => 'matricule',
+                'eleve.date_naissance' => 'date_naissance',
+                'eleve.lieu_naissance' => 'lieu_naissance'
+            ]
+        )
+        ->where('visibilite', '=', 1)
+        ->where('code', '=', $eleve_code)
+        ->one();
+    }
+    
+    
+
+    public function getEleveInfo()
+    {
+        return DBTable::getModel('eleve')
+        ->select(
+            [
+                new Expression("concat(eleve.nom,' ',eleve.prenom) as libelle"),
+                'eleve.code' => 'id',
+                'eleve.matricule' => 'matricule',
+                'eleve.date_naissance' => 'date_naissance',
+                'eleve.lieu_naissance' => 'lieu_naissance'
+            ]
+        )
+        ->join(DBTable::PARCOURS, 'parcours.eleve_id', '=', 'eleve.id')
+        ->where('visibilite', '=', 1)
+        ->get();
+    }
     
 
     public function getInfoPerso()
@@ -26,8 +65,29 @@ class EleveRepository extends BaseRepository{
                 'eleve.lieu_naissance' => 'lieu_naissance'
             ]
         )
-        ->where('visibilite', '=', 1)
+        ->join(DBTable::PARCOURS, 'parcours.eleve_id', '=', 'eleve.id')
+        ->where('eleve.visibilite', '=', 1)
         ->get();
+    }
+
+    public function getInfoEleveByAnneeScolaire($annee_scolaire_id)
+    {
+        $eleves = DBTable::getModel('eleve')
+        ->select(
+            [
+                new Expression("concat(eleve.nom,' ',eleve.prenom) as libelle"),
+                'eleve.code' => 'id',
+                'eleve.matricule' => 'matricule',
+                'eleve.date_naissance' => 'date_naissance',
+                'eleve.lieu_naissance' => 'lieu_naissance',
+                'parcours.classe_id' => 'classe_id'
+            ]
+        )
+        ->join(DBTable::PARCOURS, 'parcours.eleve_id', '=', 'eleve.id')
+        ->where('parcours.annee_scolaire_id', '=', $annee_scolaire_id)
+        ->where('eleve.visibilite', '=', 1)
+        ->get();
+        return ($eleves);
     }
         
     public function info(string $search){

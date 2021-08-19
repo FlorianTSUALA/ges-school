@@ -176,7 +176,9 @@ class VersementController extends \App\Controller\Admin\AppController
         $delete_title = $this->delete_title;
         $msg_delete = $this->msg_delete;
 
-        $eleves = (new EleveRepository() )->getInfoPerso();
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        
+        $eleves = (new EleveRepository() )->getInfoEleveByAnneeScolaire($annee_scolaire_id);
 
         $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
@@ -280,7 +282,6 @@ class VersementController extends \App\Controller\Admin\AppController
     public function save($code)
     {
         $debug = false;
-
         $ids_pension_eleve = [];
         $ids_pension_abonnement_detail = [];
         $ids_pension_cantine = [];
@@ -290,14 +291,18 @@ class VersementController extends \App\Controller\Admin\AppController
         $classe_id = DBTable::getModel('classe')->select()->find(Request::getSecParam('classe_id', ''), 'code')['id'];
 
         $montant_paye = Request::getSecParam('montant_paye', 0);
-        $nom_eleve = Request::getSecParam('nom_eleve', 0);
+        
+        $elve_id = Request::getSecParam('eleve_id', 0);
+        $nom_eleve =  (new EleveRepository() )->getEleveById( $elve_id )['nom_complet'];
+
         $reduction = Request::getSecParam('reduction', 0);
         $date_facture = date('Y-m-d') ;
 
         $reference =  Request::getSecParam('reference', 0);
         $date_paiement =  Request::getSecParam('date_paiement');
 
-        $annee_scolaire_id = Model::getId(DBTable::ANNEE_SCOLAIRE, Request::getSecParam('annee_scolaire_id', ''));
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE);
+
         $type_paiement_id = Model::getId(DBTable::TYPE_PAIEMENT, Request::getSecParam('type_paiement_id', ''));
         //Facture
             $model_facture = DBTable::getModel(DBTable::FACTURE);
@@ -308,7 +313,7 @@ class VersementController extends \App\Controller\Admin\AppController
                 'libelle' => 'Facture versment',
                 'reference' => $reference,
                 'beneficiaire' => $nom_eleve,
-                'gestionnaire' => 'Secretaire',
+                'gestionnaire' => $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM),
                 'montant' => $montant_paye,
                 'reduction' => $reduction,
                 'date_facture' => $date_facture,
@@ -324,6 +329,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
         //PENSION ELEVE
                 $data_pension = $_POST['pension_classe'];
+                $data_pension = is_array($data_pension)? $data_pension : [];
 
                 // if($debug) vd( $data_pension );
                 foreach ($data_pension??[] as $item) {
@@ -421,6 +427,7 @@ class VersementController extends \App\Controller\Admin\AppController
                     $j = 0;
 
                     if($debug)  $z = 0;
+                    $items = is_array($items)? $items : [];
                     for ($i = 0; $i<count($items); $i++) {
 
                         $prev_index_month = Helpers::strFrMonth2Index($items[$i]['value']);
@@ -513,9 +520,9 @@ class VersementController extends \App\Controller\Admin\AppController
         //CANTINE
 
             $cantines = $_POST['cantines']??[];
-
-            $items = $cantines['recapitulatif'];
-
+            //checker les valeur par defaut de tous les élements
+            $items = is_array($cantines['recapitulatif'])? $cantines['recapitulatif'] : [] ;
+           
             $i = 0;
             $j = 0;
             if ($debug) $k = 0;
@@ -601,7 +608,8 @@ class VersementController extends \App\Controller\Admin\AppController
             $montant = $autres['montant'];
             $reduction = $autres['remise'];
 
-            if($montant != "0"){
+          
+            if(!(empty($montant) || $montant == "0")){
                 $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
                 
                 $motif = empty($motif)? "Autres" :$motif;
