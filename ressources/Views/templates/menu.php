@@ -33,14 +33,13 @@ return[
         "alwaysVisible" => true,
         "hasChildren" => true,
         "children" => [
-
             "ENREGISTRMENT_ELEVE" => [
                 "title" => "Enregistrement Elève",
                 "icon" => "",
                 "msg_page" => "",
                 "menu_explication" => "",
-                "full_url" => URL::link("inscrire"),
-                "action" => "inscrire",
+                "full_url" => URL::link("ajout_eleve"),
+                "action" => "ajout_eleve",
                 "alt" => "",
                 "class" => "",
                 "isActive" => "",

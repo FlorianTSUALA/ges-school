@@ -73,9 +73,31 @@ $router->addRoute('login', '', [LoginController::class, 'index']);
 $router->addRoute('postlogin', 'login', [LoginController::class, 'login']);
 $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
 
+
+// -- SCOLARITE
+
+    // -- ELEVE
+    
+        $router->crudRoute('eleve', EleveController::class);
+        $router->addRoute('ajout_eleve', 'eleve/nouveau', [EleveController::class, 'index_ajout_eleve']);
+        $router->addRoute('modifier_eleve', 'eleve/modifier/{code}', [EleveController::class, 'modifier']);
+        $router->addRoute('eleve_liste', 'eleve/detail', [EleveController::class, 'liste']);
+        $router->addRoute('eleve_salle_classe', 'eleve/salleclasse', [EleveController::class, 'liste_classe']);
+        $router->addRoute(' api_eleve_all', 'eleve/api/all', [EleveController::class, 'getApiEleves']);
+        $router->addRoute('eleve_api_info', 'eleve/api/info/{code}', [EleveController::class, 'getApiEleve']);
+        $router->addRoute('eleve_api_delete_eleve', 'eleve/api/delete/eleve/{code}', [EleveController::class, 'apiDeleteEleve']);
+        $router->addRoute('api_eleve_list', 'eleve/api/list', [EleveController::class, 'getApiAllEssentiel']);
+    
+    // PAIEMENT
+
+        // VERSEMENT
+
+        // LISTE
+
+
 //INSCRIPTION
-//$router->addRoute('inscrire', 'inscription', [InscriptionController::class, 'index']);
-$router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
+    //$router->addRoute('inscrire', 'inscription', [InscriptionController::class, 'index']);
+    $router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
 
 // TEST SAVING WITH EXCEL
 $router->addRoute('excell', 'excell', [ExcelController::class, 'excell']);
@@ -119,27 +141,23 @@ $router->addRoute('versement_info', 'versement/info/', [VersementController::cla
 //PRINTER REPORT
 $router->addRoute('print', 'print/{model}', [PrinterController::class, 'index']);
 
-//ELEVE
+//ACTVITE
 $router->crudRoute('activite', ActiviteController::class);
 
-//ELEVE
+//TYPE ACTVITE
 $router->crudRoute('type_activite', TypeActiviteController::class);
 
-//ELEVE
+//INSCRIPTION ACTIVITE
 $router->crudRoute('inscription_activite', InscriptionActiviteController::class);
 
 //PRIX_ABONNEMENT
 $router->crudRoute('prix_abonnement', PrixAbonnementController::class);
 
-//ELEVE
+//ABONNEMENT ACTIVTE
 $router->crudRoute('abonnement_activite', AbonnementActiviteController::class);
 
-//ELEVE
+//ABONNEMENT ACTIVITE
 $router->crudRoute('personnel_activite', AbonnementActiviteController::class);
-
-//ELEVE
-$router->crudRoute('eleve', EleveController::class);
-
 
 //CLASS
 $router->crudRoute('classe', ClasseController::class);
