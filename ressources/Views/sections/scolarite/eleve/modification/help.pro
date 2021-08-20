@@ -31,3 +31,4 @@
 <input type="date" class="form-control"  value="<?= Helpers::format($personnel['date_prise_service'])??date("Y-m-D") ?>" id="date_prise_service" name="date_prise_service" />
 
 <textarea placeholder="Autres informations du personnel"  type="text" style="min-width: 100%;" class="form-control" id="autres" name="autres" ><?= $personnel['autres']??" " ?></textarea>
+

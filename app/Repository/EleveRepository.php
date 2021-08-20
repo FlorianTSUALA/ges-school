@@ -274,9 +274,61 @@ class EleveRepository extends BaseRepository{
         return $this->toObject($result);
     }
 
+    /**
+     * using in eleve liste
+     *
+     * @return void
+     */
+    public function getInfoEleves(){
+        $req =
+            "                
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
+            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
+            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
+            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom,  InfoEleve.prenom_usage as surnom, InfoEleve.prenom as prenom, concat(InfoEleve.nom, ' ', InfoEleve.prenom) as nom_complet,
+            InfoEleve.sexe as sexe,
+            InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo_eleve,
+            InfoEleve.id as id, InfoEleve.code as code
+            from
+            (
+                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
+                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
+                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
+                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
+                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
+                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
+                        eleve.id as id, eleve.code as code, eleve.prenom_usage as prenom_usage,
+                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
+                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
+                        eleve.anciennete as anciennete, eleve.photo as photo
+                from
+                    (
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        from dossier_parental
+                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
+                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
+                    ) dp,
+                    eleve
+                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
+                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
+                        left join pays on pays.id = eleve.pays_id
+                where dp.id = eleve.dossier_parental_id
+            ) InfoEleve
+        ";
+        $result = $this->query($req);
+        return $this->toObject($result);
+    }
+
     public function getEleveInscriptionInfo(){
         $req =
-            "                select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            "                
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
             InfoEleve.email as email, InfoEleve.ecole as ecole,
             InfoEleve.classe as classe, InfoEleve.telephone as telephone,
             InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
