@@ -33,11 +33,8 @@ return[
         "alwaysVisible" => true,
         "hasChildren" => true,
         "children" => [
-<<<<<<< HEAD
+
             "ENREGISTRMENT_ELEVE" => [
-=======
-            "Inscription" => [
->>>>>>> 41e0aad418104da78ef343ba0493f05f943422fe
                 "title" => "Enregistrement Elève",
                 "icon" => "",
                 "msg_page" => "",

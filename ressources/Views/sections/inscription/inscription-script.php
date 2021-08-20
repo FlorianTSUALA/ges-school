@@ -31,8 +31,8 @@ use App\Helpers\Helpers;
                 date_naissance_eleve: "required",
                 sexe_eleve: "required",
                 pays_eleve: "required",
-                classe_eleve: "required",
-                statut_apprenant_eleve: "required",
+                //classe_eleve: "required",
+               // statut_apprenant_eleve: "required",
                // annee_scolaire: "required",
             },
             messages: {
@@ -51,12 +51,12 @@ use App\Helpers\Helpers;
                 pays_eleve: {
                     required: "Ce champs est obligatoire !",
                 },
-                classe_eleve: {
+               /* classe_eleve: {
                     required: "Ce champs est obligatoire !",
                 },
                 statut_apprenant_eleve: {
                     required: "Ce champs est obligatoire !",
-                },
+                },*/
                
             },
         });
@@ -122,8 +122,8 @@ use App\Helpers\Helpers;
                 
                 $('#recap-pays_eleve').text($('#pays_eleve :selected').val()? $('#pays_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
                 $('#recap-statut_apprenant_eleve').text($('#statut_apprenant_eleve :selected').val()? $('#statut_apprenant_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
-                $('#recap-classe_eleve').text($('#classe_eleve :selected').val()? $('#classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
-                $('#recap-salle_classe_eleve').text($('#salle_classe_eleve :selected').val()? $('#salle_classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
+                //$('#recap-classe_eleve').text($('#classe_eleve :selected').val()? $('#classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
+               // $('#recap-salle_classe_eleve').text($('#salle_classe_eleve :selected').val()? $('#salle_classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
                // $('#recap-annee_scolaire').text($('#annee_scolaire :selected').val()? $('#annee_scolaire :selected').val() : '<?= Helpers::repeatChar();?>');
                 //$('#recap-pays_pere').text($('#pays_pere :selected').val()? $('#pays_pere :selected').val() : '<?= Helpers::repeatChar();?>'); 
                // $('#recap-pays_mere').text($('#pays_mere :selected').val()? $('#pays_mere :selected').val() : '<?= Helpers::repeatChar();?>');

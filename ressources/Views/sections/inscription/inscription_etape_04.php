@@ -99,38 +99,47 @@ use Core\Routing\URL;
                                 </div>
                             </div>
 
-                            <div class="row mt-1">
-                                <div class="col-5">
+                           <!--  <div class="row mt-1">-->
+                                <!-- <div class="col-5">
                                     <div class="row">
                                         <strong class="col-6">Classe :</strong>
 
                                         <em  id="recap-classe_eleve" class="col-6"><?= Helpers::repeatChar();?></em>
                                     </div>
-                                </div>
+                                </div> -->
 
-                                <div class="col-2">
+                                <!-- <div class="col-2">
 
-                                </div>
+                                </div> -->
 
-                                <div class="col-5">
-                                    <div class="row">
+                               <!-- <div class="col-5">-->
+                                    <!-- <div class="row">
                                         <strong class="col-6">Statut de l'élève :</strong>
 
                                         <em  id="recap-statut_apprenant_eleve" class="col-6"><?= Helpers::repeatChar();?> </em>
-                                    </div>
-                                </div>
-                            </div>
+                                    </div> -->
+                                <!-- </div>
+                            </div> -->
 
                             <br>
 
                             <div class="row mt-1">
-                                <div class="col-5">
+
+                               <div class="col-5">
+                                    <div class="row">
+                                        <strong class="col-6">Classe de l'an dernier :</strong>
+
+                                        <em  id="recap-classe" class="col-6"><?= Helpers::repeatChar();?></em>
+                                    </div>
+                                </div>
+                               
+                                    <!-- <div class="col-5">
                                     <div class="row">
                                         <strong class="col-6">Salle de Classe :</strong>
 
                                         <em  id="recap-salle_classe_eleve" class="col-6"><?= Helpers::repeatChar();?></em>
                                     </div>
-                                </div>
+                                    </div> -->
 
                                 <div class="col-2">
 
@@ -162,11 +171,7 @@ use Core\Routing\URL;
                                 </div>
 
                                 <div class="col-5">
-                                    <div class="row">
-                                        <strong class="col-6">Classe de l'an dernier :</strong>
-
-                                        <em  id="recap-classe" class="col-6"><?= Helpers::repeatChar();?></em>
-                                    </div>
+                                    
                                 </div>
                             </div>
 

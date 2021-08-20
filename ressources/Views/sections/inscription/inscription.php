@@ -33,7 +33,7 @@ $include_footer_script = ob_get_clean();
                     <div id="kick-start" class="border-2 border-warning card box-shadow-2">
                         <div class="card-header border-bottom-2 border-bottom-warning card-header-inverse ">
                             <h4 class="card-title center text-uppercase">
-                                Processus d'inscription
+                                Processus d'enregistrement
                             </h4>
                         </div>
 
