@@ -34,7 +34,7 @@ return[
         "hasChildren" => true,
         "children" => [
             "Inscription" => [
-                "title" => "Inscription",
+                "title" => "Enregistrement Elève",
                 "icon" => "",
                 "msg_page" => "",
                 "menu_explication" => "",

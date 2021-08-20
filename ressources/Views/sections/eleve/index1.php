@@ -139,16 +139,16 @@ $include_footer_script = ob_get_clean();
                                         <!-- <td><span class="badge badge-info"><?= $eleve->statut_apprenant?></span></td> -->
 
                                         <td>
-                                            <span class="dropdown">
+                                            <!-- <span class="dropdown"> -->
                                                 <button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-info dropdown-toggle"><i class="fa fa-cog"></i></button>
-                                                <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">
+                                                <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right" role="menu">
                                                     <a href="#<?= $eleve->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-voir"><i class="ft-eye"></i> Voir +</a>
                                                     <a href="#<?= $eleve->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-modifier"><i class="ft-edit-2"></i> Modifier</a>
                                                     <a href="#<?= $eleve->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-abonnement-cantine"><i class="ft-check"></i> Abonement Cantine</a>
                                                     <a href="#<?= $eleve->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-abonnement-club"><i class="ft-upload"></i> Abonement Club</a>
                                                     <a href="#<?= $eleve->classe; ?>" class="dropdown-item"  data-toggle="modal" data-target="#modal-supprimer"><i class="ft-trash"></i> Supprimer</a>
                                                 </span>
-                                            </span>
+                                            <!-- </span> -->
                                         </td>
                                     </tr>
                                 <?php } ?>
