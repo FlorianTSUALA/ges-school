@@ -12,13 +12,6 @@ $include_res_header .= '<style>
                         </style>';
 
 $include_res_footer = '';
-$include_res_footer .= '
-                        <style>
-                            img:hover {
-                                cursor: pointer;
-                            }
-                        </style>
-';
 $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js/extensions/jquery.steps.min.js"></script>';
 $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>';
 $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js/pickers/daterange/daterangepicker.js"></script>';
@@ -26,7 +19,7 @@ $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js
 $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/select/select2.full.min.js"></script>';
 
 ob_start();
-include "ajout_personnel-script.php";
+include "inscription-script.php";
 $include_footer_script = ob_get_clean();
 
 ?>
@@ -40,14 +33,14 @@ $include_footer_script = ob_get_clean();
                     <div id="kick-start" class="border-2 border-warning card box-shadow-2">
                         <div class="card-header border-bottom-2 border-bottom-warning card-header-inverse ">
                             <h4 class="card-title center text-uppercase">
-                                Processus d'ajout d'un personnel
+                                Processus d'inscription
                             </h4>
                         </div>
 
                         <div class="card-content collapse show">
                             <div class="card-body">
                                 <div class="card-text">
-                                    <p >Renseigner toutes les informations concernant un personnel.</p>
+                                    <p >Renseigner toutes les informations concernant l'élève.</p>
                                 </div>
 
                                 <div class="">
@@ -58,14 +51,21 @@ $include_footer_script = ob_get_clean();
 
                                                     <div class="card-content collapse show">
                                                         <div class="card-body">
-                                                            <form id="form-ajout_personnel" action="<?= URL::link('personnel-create'); ?>" method="POST" class="steps-validation wizard-circle needs-validation" enctype="multipart/form-data" novalidate>
+                                                            <form id="form-inscription" action="<?= URL::link('inscrire-create'); ?>" method="POST" class="steps-validation wizard-circle needs-validation" enctype="multipart/form-data" novalidate>
                                                                 <?php
-                                                                //ETAPE IDENTIFICATION PERSONNEL
-                                                                    require_once "ajout_personnel_etape_01.php";
+                                                                //ETAPE IDENTIFICATION ELEVE
+                                                                    require_once "inscription_etape_01.php";
+
+                                                                //ETAPE DOSSIER PARENTAL - PERE,MERE et ANTECEDENT SCOLAIRE
+                                                                    require_once "inscription_etape_02.php";
+
+                                                                //ETAPE DOSSIER MEDICAL
+
+                                                                    require_once "inscription_etape_03.php";
+
 
                                                                 //ETAPE VERIFICATION DES INFORMATIONS
-                                                                    require_once "ajout_personnel_etape_02.php";
-
+                                                                    require_once "inscription_etape_04.php";
                                                                 ?>
                                                             </form>
                                                         </div>

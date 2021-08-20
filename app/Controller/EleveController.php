@@ -4,16 +4,44 @@ namespace App\Controller;
 
 use App\Model\DBTable;
 use App\Repository\EleveRepository;
+use App\Helpers\TraitCRUDController;
 use App\Controller\Admin\AppController;
+use App\Controller\EleveControllerTraitCRUD;
 
 class EleveController extends AppController
 {
+
+    use TraitCRUDController, EleveControllerTraitCRUD;
+    
     private $eleve_repository;
 
     public function __construct()
     {
         parent::__construct();
+        /*
+            Provide from inscription
+            Begin
+        */
+        
+        parent::__construct();
+        $this->loadModel('pays');
+        $this->loadModel('statut_apprenant');
+        $this->loadModel('classe');
+        $this->loadModel('salle_classe');
+        $this->loadModel('annee_scolaire');
 
+        $this->loadModel('dossier_parental');
+        $this->loadModel('dossier_medical');
+        $this->loadModel('antecedent_scolaire');
+        $this->loadModel('eleve');
+        $this->loadModel('parcours');
+    
+        
+        /*
+            Provide from inscription
+            End
+        */
+        
         $this->eleve_repository = new EleveRepository;
 
         $this->vairant = DBTable::ELEVE;
@@ -43,6 +71,9 @@ class EleveController extends AppController
         //die();
         $this->render('sections.eleve.index1', compact('route', 'eleves', 'title', 'classes'));
     }
+
+
+
 
     public function eleve_detail(string $code)
     {
