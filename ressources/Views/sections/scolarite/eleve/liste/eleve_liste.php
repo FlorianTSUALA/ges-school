@@ -32,17 +32,19 @@ $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendor
 $include_res_footer .= "";
 
 ob_start();
-    // include 'personnel_liste-script.php';
-    // include 'personnel_info_modal-script.php';
+    include 'eleve_liste-script.php';
+    include 'eleve_info_modal-script.php';
 $include_footer_script = ob_get_clean();
 
 
 $table_header = "
                     <tr>
                         <th style=\"width: 5px;\">N°</th>
-                        <th class=\"word-wrap;\">Nom des enseignants</th>
-                        <th>Fonction</th>
-                        <th>Téléphone</th>
+                        <th>Matricule</th>
+                        <th class=\"word-wrap;\">Nom(s) et Prénom(s)</th>
+                        <th class=\"word-wrap;\">Surnon</th>
+                        <th>Sexe</th>
+                        <th>Age</th>
                         <th style=\"width: 5px;\">Action</th>
                     </tr>
 ";
@@ -64,7 +66,7 @@ $table_header = "
                 <ol class="breadcrumb">
                   <li class="breadcrumb-item"> <a href="<?= URL::link('accueil') ?>">Accueil</a></li>
                   <li class="breadcrumb-item"> <a href="<?= URL::link('liste_eleve') ?>">Eleves</a></li>
-                  <li class="breadcrumb-item active"><a href="#">Eleves Enregistrés</a> </li>
+                  <li class="breadcrumb-item active"><a href="#">Tous les élèves</a> </li>
                 </ol>
               </div>
             </div>
@@ -92,51 +94,18 @@ $table_header = "
         </div>
 
         <div class="content-body">
-            <section class="row">
-                <div class="col-12">
-                    <div class="card">
+            <section class="row card mb-0 pb-0">
+                <div class="card-content collapse show mb-0 pb-0" >
+                    <div class="card-body">
+                        <!-- Task List table -->
+                        <div class="table-responsive-sm" >
+                            <table id="table-eleve"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
 
-                        <div class="card-header pb-0 mb-0">
-                            <div class="d-flex">
-                                <div class="p-0  col-md-6 mr-auto ">
-                                    <h4 class="card-title" id="heading-prev-next">Gestion Des Eleves</h4><small class="text-muted">Consultation, modification et suppression des élèves.</small>
-                                </div>
-                                <!-- <div class="p-0 mr-1   ">
-                                    <a class="btn btn-primary"  href="<?= URL::link('ajout_personnel') ?>"><i class="ft-plus white"></i> Nouveau Personnel</a>
-                                </div> -->
-                                <div class="p-0   ">
-                                    <span class="dropdown">
-                                        <button disabled class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-settings mr-1"></i>Rapport</button>
-                                        <span class="dropdown-menu arrow  dropdown-menu-left">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-file-word-o"></i> Word</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF </a>
-                                        </span>
-                                    </span>
-                                </div>
-                            </div>
-                            <!-- <div class="d-flex  mt-1">
-                                <div class="alert bg-success alert-icon-left" role="alert">
-                                    <span class="alert-icon"><i class="fa fa-pencil-square"></i></span>
-                                    <span class="alert-icon"><i class="fa fa-pencil-square"></i></span>
-                                    <span id='resume_filtre'> listes des enseignants.</span>
-                                </div>
-                            </div> -->
-                        </div>
-
-                        <div class="card-content collapse show pt-0" >
-                            <div class="card-body">
-                                <!-- Task List table -->
-                                <div class="table-responsive-sm" >
-                                    <table id="table-personnel"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
-
-                                    <!-- <table id="table-personnel" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle"> -->
-                                        <thead> <?= $table_header ?> </thead>
-                                        <tbody> </tbody>
-                                        <tfoot> <?= $table_header ?> </tfoot>
-                                    </table>
-                                </div>
-                            </div>
+                            <!-- <table id="table-eleve" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle"> -->
+                                <thead> <?= $table_header ?> </thead>
+                                <tbody> </tbody>
+                                <tfoot> <?= $table_header ?> </tfoot>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -148,5 +117,5 @@ $table_header = "
 </div>
 
 <?php
-    // include 'personnel_info_modal.php';
+    include 'eleve_info_modal.php';
 ?>

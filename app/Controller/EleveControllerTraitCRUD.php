@@ -2,18 +2,10 @@
 
 namespace App\Controller;
 
-use App\App;
-use DateTime;
-use App\Helpers\S;
 use App\Model\Pays;
-use App\Model\Classe;
-use Core\Routing\URL;
-use App\Model\Parcours;
 use App\Model\SalleClasse;
-
 use App\Model\DossierParental;
 use App\Model\StatutApprenant;
-use Core\Model\Model;
 use App\Model\DBTable;
 use App\Helpers\Helpers;
 use App\Model\Eleve;
@@ -48,6 +40,9 @@ trait EleveControllerTraitCRUD
         $salle_classes = $this->salle_classe->all();
         $statut_apprenants = $this->statut_apprenant->all();
         $annee_scolaires =  $this->annee_scolaire->all();
+        $data_info_eleves = (new EleveRepository())->getInfoEleves();
+        
+        
         $this->render('sections.scolarite.eleve.ajout.eleve_ajout', compact('route', 'annee_scolaires', 'pays', 'classes', 'statut_apprenants', 'salle_classes'));
 
     }
@@ -168,6 +163,7 @@ trait EleveControllerTraitCRUD
         $route = 'eleve_liste';
         
         $eleves = (new EleveRepository())->getAll();   
+
         $this->render('sections.scolarite.eleve.liste.eleve_liste', compact( 'route', 'eleves'));
     }
 
@@ -459,10 +455,10 @@ trait EleveControllerTraitCRUD
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
         if($filter_by === 'ALL'){
-            $data_info_eleves = (new EleveRepository())->getInfoEleves($annee_scolaire_id);
+            $data_info_eleves = (new EleveRepository())->getInfoEleves();
         }else{
-            $type_eleve_id = Model::getId(DBTable::TYPE_PERSONNEL, $code);
-            $data_info_eleves = (new EleveRepository())->getInfoEleves($annee_scolaire_id, $type_eleve_id);
+            // $type_eleve_id = Model::getId(DBTable::TYPE_PERSONNEL, $code);
+            // $data_info_eleves = (new EleveRepository())->getInfoEleves($annee_scolaire_id, $type_eleve_id);
         }
         
         $results[API::TAG_STATUS] = API::TAG_SUCCESS;

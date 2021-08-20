@@ -54,10 +54,13 @@ class Eleve extends Model implements FrequentlyReapeat
     {
         $columns = '';
         $columns .= '{ "data": "id" },';
-        $columns .= '{ "data": "libelle" },';
         $columns .= '{ "data": "matricule" },';
+        $columns .= '{ "data": "nom_complet" },';
+        $columns .= '{ "data": "surnom" },';
+        $columns .= '{ "data": "sexe" },';
         $columns .= '{ "data": "date_naissance" },';
-        $columns .= '{ "data": "lieu_naissance" },';
+        // $columns .= '{ "data": "photo" },';
+        // $columns .= '{ "data": "lieu_naisance" },';
         $columns .= '{ "data": null }';
         return $columns;
     }

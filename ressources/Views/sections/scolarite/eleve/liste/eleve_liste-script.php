@@ -2,9 +2,9 @@
 
 use Core\Routing\URL;
 use App\Helpers\Helpers;
-use App\Model\Personnel;
+use App\Model\Eleve;
 
-include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
+include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
 
 ?>
 <!--
@@ -20,47 +20,45 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
   var code = ''
   var filter_by = 'ALL'
 
-  let msg  = 'Bienvenue à la gestion du Personnel'
+  let msg  = 'Bienvenue à la section qui liste de tous les élèves de l\'établissement'
   block_notification(msg)
 
     function redirectTo(id = false){
-        // console.log(id)
         id = (id == false) ? $('#recap-id').text(): id;
-        // console.log(id)
-        location.href = '<?= URL::link('modifier_personnel') ?>'+id
+        location.href = '<?= URL::link('eleve_modifier') ?>'+id
     }
 
-    function initDataModal(id){
+    function modal_eleve_detail(id){
         $.ajax({
-            url: '<?= URL::link('personnel_api_info');?>'+id,
+            url: '<?= URL::link('eleve_api_info');?>'+id,
             type: 'post',
             dataType: 'json',
             beforeSend:function(){
             },
             success:function(data){
-                personnel = data
-                $("#recap-id").text(personnel.id)
-                $("#recap-nom").text(personnel.nom)
-                $("#recap-prenom").text(personnel.prenom)
-                $("#recap-telephone").text(personnel.telephone)
-                $("#recap-email").text(personnel.email)
-                $("#recap-date_prise_service").text(personnel.date_prise_service)
-                $("#recap-adresse").text(personnel.adresse)
-                $("#recap-pays").text(personnel.pays)
-                $("#recap-type_personnel").text(personnel.type_personnel)
-                $("#recap-login").text(personnel.login)
-                $("#recap-sexe").text( (personnel.sexe == 'H')? 'Masculin' : 'Féminin' )
-                $("#recap-assurance").text(personnel.assurance)
-                $("#recap-autres").text(personnel.autres)
-                $("#recap-fonciton").text(personnel.fonction)
-                $("#recap-salle_classe").text(personnel.salle_classe)
-                $("#recap-photo").attr('src', "<?= URL::upload() ?>ressources/uploads/img/personnel/"+personnel.photo)
+                eleve = data
+                $("#recap-id").text(eleve.id)
+                $("#recap-nom").text(eleve.nom)
+                $("#recap-prenom").text(eleve.prenom)
+                $("#recap-telephone").text(eleve.telephone)
+                $("#recap-email").text(eleve.email)
+                $("#recap-date_prise_service").text(eleve.date_prise_service)
+                $("#recap-adresse").text(eleve.adresse)
+                $("#recap-pays").text(eleve.pays)
+                $("#recap-type_eleve").text(eleve.type_eleve)
+                $("#recap-login").text(eleve.login)
+                $("#recap-sexe").text( (eleve.sexe == 'H')? 'Masculin' : 'Féminin' )
+                $("#recap-assurance").text(eleve.assurance)
+                $("#recap-autres").text(eleve.autres)
+                $("#recap-fonciton").text(eleve.fonction)
+                $("#recap-salle_classe").text(eleve.salle_classe)
+                $("#recap-photo").attr('src', "<?= URL::upload() ?>ressources/uploads/img/eleve/"+eleve.photo)
 
                 $('#recap-pieces_jointes').on('click', function(e) {
-                    download("<?= URL::upload() ?>ressources/uploads/img/personnel/"+personnel.pieces_jointes)
+                    download("<?= URL::upload() ?>ressources/uploads/img/eleve/"+eleve.pieces_jointes)
                 })
 
-                $('#personnel_modal_info').modal('show')
+                $('#eleve_modal_info').modal('show')
 
             },
             error: function (textStatus, errorThrown) {
@@ -71,23 +69,45 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
         })    
     }
 
-  function init_data_table() {
-        // $('#table-personnel').append('<caption style="caption-side: top-right">Table caption</caption>');
+    
+  function delete_eleve(id){
+      $.ajax({
+          url: '<?= URL::link('eleve_api_delete_eleve');?>'+id,
+          type: 'post',
+          dataType: 'json',
+          beforeSend:function(){
+          },
+          success:function(data){
+              
+              table.ajax.reload( null, false ); // user paging is not reset on reload
+              swal("Bingo !!!", "Suppression réalisée avec sucess !!!", 'success')
 
-          table = $('#table-personnel').DataTable({
+          },
+          error: function (textStatus, errorThrown) {
+              Success = false;
+              swal("Erreur", "Erreur de communication avec le serveur ", "error");
+              console.log(textStatus, errorThrown);
+          }
+      });    
+  }
+  
+  function init_data_table() {
+        // $('#table-eleve').append('<caption style="caption-side: top-right">Table caption</caption>');
+
+          table = $('#table-eleve').DataTable({
               //"serverSide": true,
               //Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a database engine can be used to perform the sorting etc calculations - operations that modern database engines are highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
               ajax:{
-                  url: '<?= URL::link(' api_personnel_all') ?>',
+                  url: '<?= URL::link(' api_eleve_all') ?>',
                   data: function(data){
                       data.code =  code,
                       data.filter_by =  filter_by
                   } ,
                   type: 'POST'
               },
-              "columns": [<?= Personnel::getColumns() ?>],
+              "columns": [<?= Eleve::getColumns() ?>],
               order: [[ 1, 'asc' ]],
-              scrollY:        "300px",
+              scrollY:        "700px",
               scrollX:        true,
               scrollCollapse: true,
               // paging:         false,
@@ -95,13 +115,32 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
               "columnDefs": [
                 {
                   "targets": 0,
-                  width: '5%',
+                  width: '3%',
                   "searchable": false,
                   // "orderable": false,
                   "class": "index",
                    
                 },      
                 
+                {
+                  "targets": 2,
+                  width: '10%', 
+                },
+                
+                {
+                  "targets": -2,
+                  width: '2%', 
+                  "data": null,
+                  "render": function(data, type, full, meta){ 
+                      // console.log(data);
+                      function _calculateAge(birthday) { // birthday is a date
+                          var ageDifMs = Date.now() - birthday.getTime();
+                          var ageDate = new Date(ageDifMs); // miliseconds from epoch
+                          return Math.abs(ageDate.getUTCFullYear() - 1970);
+                      }
+                      return _calculateAge(new Date(data))
+                    }
+                },
                 {
                   "targets": -1,
                   width: '7%', 
@@ -143,7 +182,7 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
               } );
           } ).draw();
 
-          $('#table-personnel tbody').on( 'click', 'button.action', function () {
+          $('#table-eleve tbody').on( 'click', 'button.action', function () {
               // var id = $(this).data('id');
               var action = $(this).data('action');
               //alert('hello')
@@ -166,11 +205,11 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
 
               switch(action){
                 case 'action-voir':
-                  initDataModal(id)
+                  modal_eleve_detail(id)
                   // onclick="redirectTo(\''+data.id+'\')"
                   break;
                 case 'action-modifier':
-                  location.href = '<?= URL::link('modifier_personnel') ?>'+id
+                  location.href = '<?= URL::link('eleve_modifier') ?>'+id
                   // redirectTo(id)
                   break;
                 case 'action-supprimer':
@@ -178,7 +217,7 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
                     // message de notification
                     swal({
                         title: "Suppression",
-                        text: "Voulez vous supprimer ce personnel ?",
+                        text: "Voulez vous supprimer ce eleve ?",
                         icon: "warning",
                         showCancelButton: true,
                         buttons: {
@@ -199,7 +238,7 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
                         }
                     }).then(isConfirm => {
                         if (isConfirm) {
-                            deleteItem(id)
+                            delete_eleve(id)
                         } else {
                           console.log('annuler')  
                         }
@@ -224,26 +263,3 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
 
 </script>
 
-
-
-<script>
-
-$('#menu .list-group a.list-group-item').click(function(e) {
-  $('#menu .list-group a.list-group-item.active').removeClass('active');
-  var $current = $(this)
-  $current.addClass('active');
-  e.preventDefault();
-  if(this.id.includes('ID_')){
-    let current_id = this.id.replace('ID_', '')
-    code  =  current_id
-    filter_by = 'type_personnel'
-  }else{
-    filter_by = 'ALL'
-    code = ''
-  }
-  console.log(code)
-
-  table.ajax.reload()
-});
-
-</script>
