@@ -159,12 +159,8 @@ trait EleveControllerTraitCRUD
      
     public function liste()
     {
-
         $route = 'eleve_liste';
-        
-        $eleves = (new EleveRepository())->getAll();   
-
-        $this->render('sections.scolarite.eleve.liste.eleve_liste', compact( 'route', 'eleves'));
+        $this->render('sections.scolarite.eleve.liste.eleve_liste', compact( 'route'));
     }
 
     public function getall_person()
@@ -438,9 +434,8 @@ trait EleveControllerTraitCRUD
      */
     public function getApiEleve($code)  
     {
-        $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
-
-        $data_info_eleves = (new EleveRepository())->getInfoEleve($annee_scolaire_id, $code);
+        $eleve_id = Request::getSecParam('id', NULL);
+        $data_info_eleves = (new EleveRepository())->getInfoEleve($eleve_id);
 
         // vd( Helpers::toJSON($data_info_eleves));
         echo Helpers::toJSON($data_info_eleves);
