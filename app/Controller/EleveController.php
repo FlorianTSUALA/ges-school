@@ -4,14 +4,13 @@ namespace App\Controller;
 
 use App\Model\DBTable;
 use App\Repository\EleveRepository;
-use App\Helpers\TraitCRUDController;
 use App\Controller\Admin\AppController;
 use App\Controller\EleveControllerTraitCRUD;
 
 class EleveController extends AppController
 {
 
-    use TraitCRUDController, EleveControllerTraitCRUD;
+    use EleveControllerTraitCRUD;
     
     private $eleve_repository;
 

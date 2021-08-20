@@ -53,6 +53,22 @@ class EleveRepository extends BaseRepository{
     }
     
 
+    public function getAll()
+    {
+        return DBTable::getModel('eleve')
+        ->select(
+            [
+                new Expression("concat(eleve.nom,' ',eleve.prenom) as libelle"),
+                'eleve.code' => 'id',
+                'eleve.matricule' => 'matricule',
+                'eleve.date_naissance' => 'date_naissance',
+                'eleve.lieu_naissance' => 'lieu_naissance'
+            ]
+        )
+        ->where('eleve.visibilite', '=', 1)
+        ->get();
+    }
+
     public function getInfoPerso()
     {
         return DBTable::getModel('eleve')

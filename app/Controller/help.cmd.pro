@@ -1,0 +1,1 @@
+ ls | Rename-Item -NewName {$_.name -replace "xxx","yyy"}

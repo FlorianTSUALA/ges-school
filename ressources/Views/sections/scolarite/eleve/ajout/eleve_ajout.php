@@ -19,7 +19,7 @@ $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js
 $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/select/select2.full.min.js"></script>';
 
 ob_start();
-include "inscription-script.php";
+include "eleve_ajout-script.php";
 $include_footer_script = ob_get_clean();
 
 ?>
@@ -33,7 +33,7 @@ $include_footer_script = ob_get_clean();
                     <div id="kick-start" class="border-2 border-warning card box-shadow-2">
                         <div class="card-header border-bottom-2 border-bottom-warning card-header-inverse ">
                             <h4 class="card-title center text-uppercase">
-                                Processus d'inscription
+                                Processus d'enregistrement
                             </h4>
                         </div>
 
@@ -51,21 +51,19 @@ $include_footer_script = ob_get_clean();
 
                                                     <div class="card-content collapse show">
                                                         <div class="card-body">
-                                                            <form id="form-inscription" action="<?= URL::link('inscrire-create'); ?>" method="POST" class="steps-validation wizard-circle needs-validation" enctype="multipart/form-data" novalidate>
+                                                            <form id="form-eleve_ajout" action="<?= URL::link('eleve-create'); ?>" method="POST" class="steps-validation wizard-circle needs-validation" enctype="multipart/form-data" novalidate>
                                                                 <?php
                                                                 //ETAPE IDENTIFICATION ELEVE
-                                                                    require_once "inscription_etape_01.php";
+                                                                    require_once "eleve_ajout_etape_01.php";
 
                                                                 //ETAPE DOSSIER PARENTAL - PERE,MERE et ANTECEDENT SCOLAIRE
-                                                                    require_once "inscription_etape_02.php";
+                                                                    require_once "eleve_ajout_etape_02.php";
 
                                                                 //ETAPE DOSSIER MEDICAL
-
-                                                                    require_once "inscription_etape_03.php";
-
+                                                                    require_once "eleve_ajout_etape_03.php";
 
                                                                 //ETAPE VERIFICATION DES INFORMATIONS
-                                                                    require_once "inscription_etape_04.php";
+                                                                    require_once "eleve_ajout_etape_04.php";
                                                                 ?>
                                                             </form>
                                                         </div>

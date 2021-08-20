@@ -126,9 +126,9 @@ use App\Model\StatutApprenant;
 
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="statut_apprenant_eleve" class="col-4 col-form-label">Statut de l'apprenant<?= Helpers::required_input(); ?>:</label>
+                <label for="statut_apprenant_eleve" class="col-4 col-form-label">Statut de l'apprenant<?php //Helpers::required_input(); ?>:</label>
                 <div class="col-8">
-                    <select id="statut_apprenant_eleve" class="select2 form-control" name="statut_apprenant_eleve" required>
+                    <select id="statut_apprenant_eleve" class="select2 form-control" name="statut_apprenant_eleve" >
 
                         <option value="" >- Choissisez le statut actuel de l'élève -</option>
                         <?php foreach($statut_apprenants as $item){?>
@@ -165,7 +165,7 @@ use App\Model\StatutApprenant;
 
     </div>
 
-    <div class="row">
+    <!-- <div class="row">
 
         <div class="col-md-6">
             <div class="form-group row">
@@ -197,10 +197,10 @@ use App\Model\StatutApprenant;
             </div>
         </div>
 
-    </div>
+    </div> -->
 
     
-    <div class="row">
+    <!-- <div class="row">
 
         <div class="col-md-6">
             <div class="form-group row">
@@ -217,7 +217,7 @@ use App\Model\StatutApprenant;
             </div>
         </div>
 
-    </div>
+    </div> -->
 
 
 </fieldset>

@@ -79,9 +79,11 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     // -- ELEVE
     
         $router->crudRoute('eleve', EleveController::class);
-        $router->addRoute('ajout_eleve', 'eleve/nouveau', [EleveController::class, 'index_ajout_eleve']);
-        $router->addRoute('modifier_eleve', 'eleve/modifier/{code}', [EleveController::class, 'modifier']);
-        $router->addRoute('eleve_liste', 'eleve/detail', [EleveController::class, 'liste']);
+        $router->addRoute('eleve_ajout', 'eleve/nouveau', [EleveController::class, 'index_eleve_ajout']);
+        $router->addRoute('eleve_modifier', 'eleve/modifier/{code}', [EleveController::class, 'modifier']);
+        $router->addRoute('eleve_liste', 'eleve/liste', [EleveController::class, 'liste']);
+        $router->addRoute('eleve_liste_inscrit', 'eleve/liste/inscrit', [EleveController::class, 'liste']);
+        $router->addRoute('eleve_liste_non_inscrit', 'eleve/liste/non_inscrit', [EleveController::class, 'liste']);
         $router->addRoute('eleve_salle_classe', 'eleve/salleclasse', [EleveController::class, 'liste_classe']);
         $router->addRoute(' api_eleve_all', 'eleve/api/all', [EleveController::class, 'getApiEleves']);
         $router->addRoute('eleve_api_info', 'eleve/api/info/{code}', [EleveController::class, 'getApiEleve']);
