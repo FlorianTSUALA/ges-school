@@ -33,8 +33,8 @@ return[
         "alwaysVisible" => true,
         "hasChildren" => true,
         "children" => [
-            "Inscription" => [
-                "title" => "Inscription",
+            "ENREGISTRMENT_ELEVE" => [
+                "title" => "Enregistrement Elève",
                 "icon" => "",
                 "msg_page" => "",
                 "menu_explication" => "",
@@ -47,13 +47,13 @@ return[
                 "hasChildren" => false,
                 "children" => [],
             ],
-            "VERSEMENT_SCOLARITE" => [
-                "title" => "Versement Scolarité",
+            "LISTE_ELEVE" => [
+                "title" => "Liste des Elèves",
                 "icon" => "",
                 "msg_page" => "",
                 "menu_explication" => "",
-                "full_url" => URL::link("versement"),
-                "action" => "versement",
+                "full_url" => URL::link("liste_eleve"),
+                "action" => "liste_eleve",
                 "alt" => "",
                 "class" => "",
                 "isActive" => "",
@@ -61,13 +61,13 @@ return[
                 "hasChildren" => false,
                 "children" => [],
             ],
-            "Versement_liste" => [
-                "title" => "Liste des Versements",
+            "PENSION_INSCRIPTION" => [
+                "title" => "Pension Inscription",
                 "icon" => "",
                 "msg_page" => "",
                 "menu_explication" => "",
-                "full_url" => URL::link("versement_liste"),
-                "action" => "versement_liste",
+                "full_url" => URL::link("inscrire"),
+                "action" => "inscrire",
                 "alt" => "",
                 "class" => "",
                 "isActive" => "",
@@ -75,8 +75,22 @@ return[
                 "hasChildren" => false,
                 "children" => [],
             ],
-            "ELEVES_INSCRITS" => [
-                "title" => "Elèves Inscrits",
+            "PENSION_SCOLARITE" => [
+                "title" => "Pension Scolarité",
+                "icon" => "",
+                "msg_page" => "",
+                "menu_explication" => "",
+                "full_url" => URL::link("versement_scolarite"),
+                "action" => "versement_scolarite",
+                "alt" => "",
+                "class" => "",
+                "isActive" => "",
+                "alwaysVisible" => true,
+                "hasChildren" => false,
+                "children" => [],
+            ],
+            "LISTE_VERSEMENT" => [
+                "title" => "Liste Versement",
                 "icon" => "",
                 "msg_page" => "",
                 "menu_explication" => "",
@@ -89,6 +103,22 @@ return[
                 "hasChildren" => false,
                 "children" => [],
             ],
+            "VERSEMENT_MULTIPLE" => [
+                "title" => "Versement Multiple",
+                "icon" => "",
+                "msg_page" => "",
+                "menu_explication" => "",
+                "full_url" => URL::link("versement"),
+                "action" => "versement",
+                "alt" => "",
+                "class" => "",
+                "isActive" => "",
+                "alwaysVisible" => true,
+                "hasChildren" => false,
+                "children" => [],
+            ],
+            
+            
             "ELEVES_RETARDATAIRES" => [
                 "title" => "Retard Paiement ",
                 "icon" => "",

@@ -74,7 +74,7 @@ $router->addRoute('postlogin', 'login', [LoginController::class, 'login']);
 $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
 
 //INSCRIPTION
-$router->addRoute('inscrire', 'inscription', [InscriptionController::class, 'index']);
+//$router->addRoute('inscrire', 'inscription', [InscriptionController::class, 'index']);
 $router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
 
 // TEST SAVING WITH EXCEL
@@ -102,6 +102,10 @@ $router->addRoute('versement-list_all', 'versement/list/all', [VersementControll
 // $router->addRoute('versement-list_info', 'versement/list/_info{code}', [VersementController::class, 'preview']);
 $router->addRoute('versement-detail', 'versement/detal/{code}', [VersementController::class, 'detail']);
 
+//new
+$router->addRoute('inscrire', 'versement/enregistrement', [InscriptionController::class, 'index']);
+$router->addRoute('liste_eleve', 'versement/list/eleve', [VersementController::class, 'liste_abonnee']);
+$router->addRoute('versement_scolarite', 'versement/scolarite', [VersementController::class, 'liste_abonnee']);
 
 $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
