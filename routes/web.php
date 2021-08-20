@@ -127,9 +127,9 @@ $router->addRoute('versement-list_all', 'versement/list/all', [VersementControll
 $router->addRoute('versement-detail', 'versement/detal/{code}', [VersementController::class, 'detail']);
 
 //new
-$router->addRoute('inscrire', 'versement/enregistrement', [InscriptionController::class, 'index']);
+$router->addRoute('versement_inscription', 'versement/inscription', [VersementController::class, 'pension_inscription']);
 $router->addRoute('liste_eleve', 'versement/list/eleve', [VersementController::class, 'liste_abonnee']);
-$router->addRoute('versement_scolarite', 'versement/scolarite', [VersementController::class, 'liste_abonnee']);
+$router->addRoute('versement_scolarite', 'versement/pension', [VersementController::class, 'liste_abonnee']);
 
 $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
