@@ -112,7 +112,7 @@ $router->addRoute('eleve_search_detail', 'eleve_detail/search/{code}', [EleveCon
 
 //VERSEMENT
 $router->addRoute('versement_accueil', 'versement/accueil', [VersementController::class, 'accueil']);
-$router->addRoute('versement', 'versement', [VersementController::class, 'index']);
+$router->addRoute('versement_multiple', 'versement/multiple', [VersementController::class, 'index']);
 $router->addRoute('versement-create', 'versement/create/{code}', [VersementController::class, 'save']);
 $router->addRoute('versement_facture', 'versement/print/{code}', [VersementController::class, 'imprimer_facture']);
 $router->addRoute('versement-preview', 'versement/preview/{code}', [VersementController::class, 'preview']);
@@ -123,13 +123,14 @@ $router->addRoute('versement-modification', 'versement/modification/{id_fact}', 
 //LISTE VERSEMENT
 
 $router->addRoute('versement-list_all', 'versement/list/all', [VersementController::class, 'list_all']);
+//$router->addRoute('liste_versement', 'versement/list', [VersementController::class, 'detail']);
 // $router->addRoute('versement-list_info', 'versement/list/_info{code}', [VersementController::class, 'preview']);
-$router->addRoute('versement-detail', 'versement/detal/{code}', [VersementController::class, 'detail']);
+$router->addRoute('versement-detail', 'versement/detail/{code}', [VersementController::class, 'detail']);
 
 //new
 $router->addRoute('versement_inscription', 'versement/inscription', [VersementController::class, 'pension_inscription']);
 $router->addRoute('liste_eleve', 'versement/list/eleve', [VersementController::class, 'liste_abonnee']);
-$router->addRoute('versement_scolarite', 'versement/pension', [VersementController::class, 'liste_abonnee']);
+$router->addRoute('versement_scolarite', 'versement/scolarite', [VersementController::class, 'pension_scolarite']);
 
 $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);

@@ -132,7 +132,7 @@
                                                                     </div>
 
 <!-- Relation familiale -->
-                                                                    <div class="row">
+                                                                    <!-- <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="form-group row">
                                                                                 <label for="relation_familial_input" class="col-4 col-form-label">Autres enfants scolarisés à l'école:</label>
@@ -159,7 +159,7 @@
                                                                             </div>
                                                                         </div>
 
-                                                                    </div>
+                                                                    </div> -->
 
                                                                     <div class="row">
                                                                         <div class="col-md-12">
