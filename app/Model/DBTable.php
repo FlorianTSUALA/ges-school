@@ -6,11 +6,12 @@ use App\Model\Cours;
 use App\Model\Activite;
 use App\Model\Composer;
 use App\Model\SalleClasse;
+use App\Model\StatutEleve;
 use App\Model\VueBulletin;
 use App\Model\PensionEleve;
 use App\Model\TypeActivite;
-use App\Model\PrixAbonnement;
 
+use App\Model\PrixAbonnement;
 use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\InscriptionActivite;
@@ -67,6 +68,7 @@ class DBTable
     const SALLE_CLASSE = 'salle_classe';
     const SESSION = 'session';
     const STATUT_APPRENANT = 'statut_apprenant';
+    const STATUT_ELEVE = 'statut_eleve';
     const TRANCHE_HORAIRE = 'tranche_horaire';
     const TRANCHE_SCOLAIRE = 'tranche_scolaire';
     const TYPE_PAIEMENT = 'type_paiement';
@@ -197,6 +199,8 @@ class DBTable
                 return Session::table();
             case DBTable::STATUT_APPRENANT:
                 return StatutApprenant::table();
+            case DBTable::STATUT_ELEVE:
+                return StatutEleve::table();
             case DBTable::TRANCHE_HORAIRE:
                 return TrancheHoraire::table();
             case DBTable::TRANCHE_SCOLAIRE:

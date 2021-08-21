@@ -3,24 +3,25 @@
 namespace App\Controller;
 
 use App\Model\Pays;
-use App\Model\SalleClasse;
-use App\Model\DossierParental;
-use App\Model\StatutApprenant;
+use App\Model\Eleve;
 use App\Model\DBTable;
 use App\Helpers\Helpers;
-use App\Model\Eleve;
+use App\Model\TypeEleve;
 use Config\Invariant\API;
 use Core\Session\Request;
+use App\Model\SalleClasse;
+use App\Model\StatutEleve;
 use App\Helpers\HTMLHelper;
 
-use App\Model\TypeEleve;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use Core\HTML\Form\FormModel;
-use App\Helpers\TraitCRUDController;
+use App\Model\DossierParental;
+use App\Model\StatutApprenant;
 
-use App\Repository\ClasseRepository;
 use App\Repository\EleveRepository;
+use App\Helpers\TraitCRUDController;
+use App\Repository\ClasseRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
@@ -40,12 +41,34 @@ trait EleveControllerTraitCRUD
         $salle_classes = $this->salle_classe->all();
         $statut_apprenants = $this->statut_apprenant->all();
         $annee_scolaires =  $this->annee_scolaire->all();
-        $data_info_eleves = (new EleveRepository())->getInfoEleves();
-        
+        $data_info_eleves = $this->eleve_repository->getInfoEleves();
         
         $this->render('sections.scolarite.eleve.ajout.eleve_ajout', compact('route', 'annee_scolaires', 'pays', 'classes', 'statut_apprenants', 'salle_classes'));
-
     }
+    /**
+     * Affiche la page de mise à jour d'un eleve à partir de son code
+     *
+     * @param string $code
+     * @return page
+     */
+    public function modifier($code = null)
+    {
+        if(is_null($code))
+            return $this->liste();
+
+        $route = 'eleve_modifier';
+        $eleve = $this->eleve_repository->getInfoEleve($code);
+
+        $pays = $this->pays->all();
+        $classes = $this->classe->all();
+        $salle_classes = $this->salle_classe->all();
+        $statut_apprenants = $this->statut_apprenant->all();
+        $annee_scolaires =  $this->annee_scolaire->all();
+        $data_info_eleves = $this->eleve_repository->getInfoEleves();
+        
+        $this->render('sections.scolarite.eleve.modification.eleve_modification', compact('route', 'eleve', 'annee_scolaires', 'pays', 'classes', 'statut_apprenants', 'salle_classes'));
+    }
+
 
     /**
      * permet la connexion d'utilisateur à la BD
@@ -82,6 +105,7 @@ trait EleveControllerTraitCRUD
         $id_dossier_medical = $this->dossier_medical->id($code_dossier_medical);
         $id_pays_mere = ($this->pays->id(Request::getSecParam('pays_mere', ''), Pays::LIBELLE) == false)? null : $this->pays->id(Request::getSecParam('pays_mere', ''), Pays::LIBELLE) ;
         $id_pays_pere = ($this->pays->id(Request::getSecParam('pays_pere', ''), Pays::LIBELLE) == false)? null : $this->pays->id(Request::getSecParam('pays_pere', ''), Pays::LIBELLE) ;
+        $id_pays = ($this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE) == false)? null : $this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE) ;
         //DOSSIER PARENTAL
         $code_dossier_parental = $this->dossier_parental->genCode();
         $data_dossier_parental = [
@@ -94,6 +118,7 @@ trait EleveControllerTraitCRUD
             'profession_mere' => Request::getSecParam('profession_mere', ''),
             'employeur_mere' => Request::getSecParam('employeur_mere', ''),
             DossierParental::PAYS_MERE_ID => $id_pays_mere,
+            'pays_id' => $id_pays,
             'prenom_mere' => Request::getSecParam('prenom_mere', ''),
             'nom_mere' => Request::getSecParam('nom_mere', ''),
             'nom_pere' => Request::getSecParam('nom_pere', ''),
@@ -118,7 +143,7 @@ trait EleveControllerTraitCRUD
         $code_eleve = $this->eleve->genCode();
 
         
-        $matricule =  (new EleveRepository())->getMatricule() ;
+        $matricule =  $this->eleve_repository->getMatricule() ;
 
         $photo_name = Request::saveImg($matricule);
         if ($photo_name === 1) {
@@ -138,6 +163,7 @@ trait EleveControllerTraitCRUD
             'photo' => $photo_name,
             Eleve::PAYS_ID => $this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE),
             'anciennete' => (Request::getSecParam('anciennete_eleve', '') === '')? 0 : Request::getSecParam('anciennete_eleve', ''),
+            Eleve::STATUT_ELEVE_ID => $this->statut_eleve->id(Request::getSecParam('statut_eleve', ''), StatutEleve::LIBELLE),
             Eleve::DOSSIER_PARENTAL_ID => $id_dossier_parental,
             Eleve::GROUPE_FAMILIAL_ID => null,
             Eleve::DOSSIER_MEDICAL_ID => $id_dossier_medical,
@@ -190,52 +216,6 @@ trait EleveControllerTraitCRUD
 
 
         return $results;
-    }
-
-    /**
-     * Affiche la page de mise à jour d'un eleve à partir de son code
-     *
-     * @param string $code
-     * @return page
-     */
-    public function modifier_person($code = null)
-    {
-        if(is_null($code))
-            return $this->liste();
-
-        $route = 'eleve_modifier';
-
-        $eleve = Eleve::table()
-            ->select(
-                [ 
-                    'type_eleve_id' => 'type_eleve_id', 
-                    'pays_id' => 'pays_id', 
-                    'nom' => 'nom', 
-                    'prenom' => 'prenom', 
-                    'sexe' => 'sexe', 
-                    'telephone' => 'telephone', 
-                    'email' => 'email', 
-                    'adresse' => 'adresse', 
-                    'login' => 'login', 
-                    // 'password' => 'password', 
-                    'date_prise_service' => 'date_prise_service', 
-                    'date_fin_carriere' => 'date_fin_carriere', 
-                    'bibliographie' => 'bibliographie', 
-                    'assurance' => 'assurance', 
-                    'fonction' => 'fonction', 
-                    'autres' => 'autres', 
-                    'pieces_jointes' => 'pieces_jointes', 
-                    'code' => 'id', 
-                    'photo' => 'photo' 
-                    
-                ])->where('code', $code)->one();
-        // dd($eleve);
-        $this->app->setTitle('Mise à jour d\'un eleve  - Ges-School');
-        $type_eleves = TypeEleve::table()->select([ 'code' => 'id' , 'libelle' => 'value'])->where('visibilite', 1)->get();
-        $pays = Pays::table()->select([ 'code' => 'id' , 'libelle' => 'value'])->where('visibilite', 1)->get() ;
-
-        $this->render('sections.eleve.modification.eleve_modifier', compact('route', 'pays',  'type_eleves', 'eleve', 'code'));
-
     }
 
     public function save_person()
@@ -414,12 +394,12 @@ trait EleveControllerTraitCRUD
     public function liste_classe()
     {
 
-        // $eleves = (new EleveRepository())->getEleveGroupByTypeEleve();   
+        // $eleves = $this->eleve_repository->getEleveGroupByTypeEleve();   
         $classes = (new ClasseRepository())->getSalleClasseGroupByClasse();
         
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
-        $data_info_eleves = (new EleveRepository())->getInfoEleves($annee_scolaire_id);
+        $data_info_eleves = $this->eleve_repository->getInfoEleves($annee_scolaire_id);
 
         // dd($data_info_eleves);
         $this->render('sections.eleve.eleve_salle_classe', compact( 'classes','data_info_eleves'));
@@ -434,11 +414,8 @@ trait EleveControllerTraitCRUD
      */
     public function getApiEleve($code)  
     {
-        $eleve_id = Request::getSecParam('id', NULL);
-        $data_info_eleves = (new EleveRepository())->getInfoEleve($eleve_id);
-
-        // vd( Helpers::toJSON($data_info_eleves));
-        echo Helpers::toJSON($data_info_eleves);
+        $data_info_eleve = $this->eleve_repository->getInfoEleve($code);
+        echo Helpers::toJSON($data_info_eleve);
     }
 
 
@@ -450,10 +427,10 @@ trait EleveControllerTraitCRUD
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
         if($filter_by === 'ALL'){
-            $data_info_eleves = (new EleveRepository())->getInfoEleves();
+            $data_info_eleves = $this->eleve_repository->getInfoEleves();
         }else{
             // $type_eleve_id = Model::getId(DBTable::TYPE_PERSONNEL, $code);
-            // $data_info_eleves = (new EleveRepository())->getInfoEleves($annee_scolaire_id, $type_eleve_id);
+            // $data_info_eleves = $this->eleve_repository->getInfoEleves($annee_scolaire_id, $type_eleve_id);
         }
         
         $results[API::TAG_STATUS] = API::TAG_SUCCESS;

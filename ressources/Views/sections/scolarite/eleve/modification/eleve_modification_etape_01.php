@@ -8,6 +8,8 @@ use App\Model\SalleClasse;
 use App\Model\AnneeScolaire;
 use App\Model\StatutApprenant;
 
+use function Core\Helper\dd;
+
 ?>
 
 <!-- Step 1 -->
@@ -35,7 +37,7 @@ use App\Model\StatutApprenant;
             <div class="form-group row">
                 <label for="nom_eleve" class="col-4 col-form-label">Nom<?= Helpers::required_input(); ?>:</label>
                 <div class="col-8">
-                    <input placeholder="Nom de l'élève" type="text" class="form-control required" id="nom_eleve" name="nom_eleve" autofocus
+                    <input placeholder="Nom de l'élève" value="<?= $eleve->nom??"" ?>"  type="text" class="form-control required" id="nom_eleve" name="nom_eleve" autofocus
                            required="required" />
                 </div>
             </div>
@@ -45,7 +47,7 @@ use App\Model\StatutApprenant;
             <div class="form-group row">
                 <label for="prenom_eleve" class="col-4 col-form-label">Prénom :</label>
                 <div class="col-8">
-                    <input placeholder="Prénom de l'élève" type="text" class="form-control" id="prenom_eleve" name="prenom_eleve" />
+                    <input placeholder="Prénom de l'élève" type="text" value="<?= $eleve->prenom??"" ?>" class="form-control" id="prenom_eleve" name="prenom_eleve" />
                 </div>
             </div>
         </div>
@@ -56,7 +58,7 @@ use App\Model\StatutApprenant;
             <div class="form-group row">
                 <label for="date_naissance_eleve" class="col-4 col-form-label">Date de naissance<?= Helpers::required_input(); ?>:</label>
                 <div class="col-8">
-                    <input type="date" class="form-control required" id="date_naissance_eleve" name="date_naissance_eleve"
+                    <input type="date" class="form-control required"  value="<?= Helpers::format($eleve->date_naissance)??date("Y-m-D") ?>" id="date_naissance_eleve" name="date_naissance_eleve"
                            required="required" />
                 </div>
             </div>
@@ -66,7 +68,7 @@ use App\Model\StatutApprenant;
             <div class="form-group row">
                 <label for="lieu_naissance_eleve" class="col-4 col-form-label">Lieu de naissance<?= Helpers::required_input(); ?>:</label>
                 <div class="col-8">
-                    <input placeholder="Lieu de naissance" type="text" class="form-control required" id="lieu_naissance_eleve" name="lieu_naissance_eleve"
+                    <input placeholder="Lieu de naissance" type="text" class="form-control required" value="<?= $eleve->lieu_naissance??"" ?>" id="lieu_naissance_eleve" name="lieu_naissance_eleve"
                            required="required" />
                 </div>
             </div>
@@ -81,8 +83,9 @@ use App\Model\StatutApprenant;
                     <select id="pays_eleve" class="select2 form-control" name="pays_eleve" required>
 
                         <option value="" >- Choissisez une nationalité -</option>
+                        <?php /*dd($eleve)*/ ?>
                         <?php foreach($pays as $item){?>
-                                <option value="<?= $item->{Pays::LIBELLE}; ?>"><?= $item->{Pays::LIBELLE}; ?></option>
+                            <option  <?= (($eleve->pays??"") == $item->{Pays::LIBELLE})?"selected":"" ?> value="<?= $item->{Pays::LIBELLE}; ?>"><?= $item->{Pays::LIBELLE}; ?></option>
                         <?php } ?>
                        
                     </select>
@@ -98,12 +101,13 @@ use App\Model\StatutApprenant;
                         <div class="col-5">
                             <label for="sexe_eleve-01" class="">Féminin</label>
                             <input name="sexe_eleve" id="sexe_eleve-01" type="radio" class="cke_button__radio_icon" value="F"
-                                   required="required">
+                                <?= (($eleve->sexe??"") == 'F')?"checked":"" ?>   required="required">
                         </div>
 
                         <div class="col-5">
                             <label for="sexe_eleve-02" class="">Masculin</label>
-                            <input name="sexe_eleve" id="sexe_eleve-02" type="radio" class="cke_button__radio_icon" value="M">
+                            <input name="sexe_eleve" id="sexe_eleve-02" type="radio" class="cke_button__radio_icon"
+                            <?= (($eleve->sexe??"") == 'M')?"checked":"" ?>    value="M">
                         </div>
                     </div>
                     <label id="sexe_eleve-error" class="error" for="sexe_eleve"></label>
@@ -117,7 +121,7 @@ use App\Model\StatutApprenant;
             <div class="form-group row">
                 <label for="prenom_usage" class="col-4 col-form-label">Prénom d'usage:</label>
                 <div class="col-8">
-                    <input placeholder="Prénom d'usage" type="text" class="form-control" id="prenom_usage" name="prenom_usage" />
+                    <input placeholder="Prénom d'usage" type="text"   value="<?= $eleve->prenom_usage??"" ?>" class="form-control" id="prenom_usage" name="prenom_usage" />
                 </div>
             </div>
         </div>
@@ -126,13 +130,13 @@ use App\Model\StatutApprenant;
 
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="statut_apprenant_eleve" class="col-4 col-form-label">Statut de l'apprenant<?php //Helpers::required_input(); ?>:</label>
+                <label for="statut_eleve" class="col-4 col-form-label">Statut de l'apprenant<?php //Helpers::required_input(); ?>:</label>
                 <div class="col-8">
-                    <select id="statut_apprenant_eleve" class="select2 form-control" name="statut_apprenant_eleve" >
+                    <select id="statut_eleve" class="select2 form-control" name="statut_eleve" >
 
                         <option value="" >- Choissisez le statut actuel de l'élève -</option>
                         <?php foreach($statut_apprenants as $item){?>
-                                <option value="<?= $item->{StatutApprenant::LIBELLE}; ?>"><?= $item->{StatutApprenant::LIBELLE}; ?></option>
+                                <option   <?= (($eleve->pays??"") == $item->{Pays::LIBELLE})?"selected":"" ?> value="<?= $item->{StatutApprenant::LIBELLE}; ?>"><?= $item->{StatutApprenant::LIBELLE}; ?></option>
                         <?php }?>
                     </select>
                 </div>

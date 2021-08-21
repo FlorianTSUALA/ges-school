@@ -15,7 +15,10 @@ use function Core\Helper\dd;
 
 class EleveRepository extends BaseRepository{
     
-
+    public function __construct() {
+        
+    }
+    
     public function getEleveById($eleve_code)
     {
         return DBTable::getModel('eleve')
@@ -292,8 +295,8 @@ class EleveRepository extends BaseRepository{
             InfoEleve.matricule as matricule, InfoEleve.nom as nom,  InfoEleve.prenom_usage as surnom, InfoEleve.prenom as prenom, concat(InfoEleve.nom, ' ', InfoEleve.prenom) as nom_complet,
             InfoEleve.sexe as sexe,
             InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
-            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo_eleve,
-            InfoEleve.id as id, InfoEleve.code as code
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
+            InfoEleve.code as id
             from
             (
                 select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
@@ -318,7 +321,7 @@ class EleveRepository extends BaseRepository{
                         left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
                         left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
                         left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id
+                where dp.id = eleve.dossier_parental_id and eleve.visibilite = 1
             ) InfoEleve
         ";
         $result = $this->query($req);
@@ -330,7 +333,7 @@ class EleveRepository extends BaseRepository{
      *
      * @return void
      */
-    public function getInfoEleve($eleve_id){
+    public function getInfoEleve($eleve_code){
        
         $req =
             "                
@@ -341,11 +344,28 @@ class EleveRepository extends BaseRepository{
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
             InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule, InfoEleve.nom as nom,  InfoEleve.prenom_usage as surnom, InfoEleve.prenom as prenom, concat(InfoEleve.nom, ' ', InfoEleve.prenom) as nom_complet,
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom,  InfoEleve.prenom_usage as prenom_usage, InfoEleve.prenom as prenom, concat(InfoEleve.nom, ' ', InfoEleve.prenom) as nom_complet,
             InfoEleve.sexe as sexe,
             InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
-            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo_eleve,
-            InfoEleve.id as id, InfoEleve.code as code
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
+            InfoEleve.code as id, InfoEleve.pays as pays,
+
+            
+            InfoEleve.nom_pere as nom_pere, InfoEleve.prenom_pere as prenom_pere, InfoEleve.profession_pere as profession_pere, 
+            InfoEleve.employeur_pere as employeur_pere, InfoEleve.lieu_travail_pere as lieu_travail_pere, 
+            InfoEleve.quartier_pere as quartier_pere, InfoEleve.telephone_pere as telephone_pere, 
+            InfoEleve.ville_pere as ville_pere, InfoEleve.bureau_pere as bureau_pere, InfoEleve.est_tuteur as est_tuteur, 
+            InfoEleve.email_pere as email_pere, InfoEleve.signature_pere as signature_pere, InfoEleve.nom_mere as nom_mere, 
+            InfoEleve.prenom_mere as prenom_mere, InfoEleve.profession_mere as profession_mere, 
+            InfoEleve.employeur_mere as employeur_mere, InfoEleve.lieu_travail_mere as lieu_travail_mere, 
+            InfoEleve.quartier_mere as quartier_mere, InfoEleve.telephone_mere as telephone_mere, 
+            InfoEleve.ville_mere as ville_mere, InfoEleve.bureau_mere as bureau_mere, InfoEleve.est_tutrice as est_tutrice, 
+            InfoEleve.email_mere as email_mere, InfoEleve.signature_mere as signature_mere, 
+            InfoEleve.nom_personne_urgence as nom_personne_urgence, InfoEleve.prenom_personne_urgence as prenom_personne_urgence, 
+            InfoEleve.telephone_personne_urgence as telephone_personne_urgence, InfoEleve.lien as lien                         
+
+            
+            
             from
             (
                 select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
@@ -358,10 +378,39 @@ class EleveRepository extends BaseRepository{
                         eleve.id as id, eleve.code as code, eleve.prenom_usage as prenom_usage,
                         eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
                         eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo
+                        eleve.anciennete as anciennete, eleve.photo as photo, pays.libelle as pays,
+
+                        dp.nom_pere as nom_pere, dp.prenom_pere as prenom_pere, dp.profession_pere as profession_pere, 
+                        dp.employeur_pere as employeur_pere, dp.lieu_travail_pere as lieu_travail_pere, 
+                        dp.quartier_pere as quartier_pere, dp.telephone_pere as telephone_pere, 
+                        dp.ville_pere as ville_pere, dp.bureau_pere as bureau_pere, dp.est_tuteur as est_tuteur, 
+                        dp.email_pere as email_pere, dp.signature_pere as signature_pere, dp.nom_mere as nom_mere, 
+                        dp.prenom_mere as prenom_mere, dp.profession_mere as profession_mere, 
+                        dp.employeur_mere as employeur_mere, dp.lieu_travail_mere as lieu_travail_mere, 
+                        dp.quartier_mere as quartier_mere, dp.telephone_mere as telephone_mere, 
+                        dp.ville_mere as ville_mere, dp.bureau_mere as bureau_mere, dp.est_tutrice as est_tutrice, 
+                        dp.email_mere as email_mere, dp.signature_mere as signature_mere, 
+                        dp.nom_personne_urgence as nom_personne_urgence, dp.prenom_personne_urgence as prenom_personne_urgence, 
+                        dp.telephone_personne_urgence as telephone_personne_urgence, dp.lien as lien                         
+            
                 from
                     (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere,
+
+                        dossier_parental.nom_pere as nom_pere, dossier_parental.prenom_pere as prenom_pere, dossier_parental.profession_pere as profession_pere, 
+                        dossier_parental.employeur_pere as employeur_pere, dossier_parental.lieu_travail_pere as lieu_travail_pere, 
+                        dossier_parental.quartier_pere as quartier_pere, dossier_parental.telephone_pere as telephone_pere, 
+                        dossier_parental.ville_pere as ville_pere, dossier_parental.bureau_pere as bureau_pere, dossier_parental.est_tuteur as est_tuteur, 
+                        dossier_parental.email_pere as email_pere, dossier_parental.signature_pere as signature_pere, dossier_parental.nom_mere as nom_mere, 
+                        dossier_parental.prenom_mere as prenom_mere, dossier_parental.profession_mere as profession_mere, 
+                        dossier_parental.employeur_mere as employeur_mere, dossier_parental.lieu_travail_mere as lieu_travail_mere, 
+                        dossier_parental.quartier_mere as quartier_mere, dossier_parental.telephone_mere as telephone_mere, 
+                        dossier_parental.ville_mere as ville_mere, dossier_parental.bureau_mere as bureau_mere, dossier_parental.est_tutrice as est_tutrice, 
+                        dossier_parental.email_mere as email_mere, dossier_parental.signature_mere as signature_mere, 
+                        dossier_parental.nom_personne_urgence as nom_personne_urgence, dossier_parental.prenom_personne_urgence as prenom_personne_urgence, 
+                        dossier_parental.telephone_personne_urgence as telephone_personne_urgence, dossier_parental.lien as lien                         
+            
+
                         from dossier_parental
                         left join pays as pp on pp.id = dossier_parental.pays_pere_id
                         left join pays as pm on pm.id = dossier_parental.pays_mere_id
@@ -370,11 +419,11 @@ class EleveRepository extends BaseRepository{
                         left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
                         left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
                         left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id and eleve.id = $eleve_id
+                where dp.id = eleve.dossier_parental_id and eleve.code = '$eleve_code'  and eleve.visibilite = 1
             ) InfoEleve
         ";
         $result = $this->query($req);
-        return $this->toObject($result);
+        return $this->toObject($result)[0];
     }
 
     public function getEleveInscriptionInfo(){
@@ -393,7 +442,9 @@ class EleveRepository extends BaseRepository{
             InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe_parcours as classe_parcours,
             InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant,
+
+            
             from
             (
                 select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
@@ -408,8 +459,22 @@ class EleveRepository extends BaseRepository{
                         eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
                 from
                     (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
-                        from dossier_parental
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere,
+            
+                            dossier_parental.nom_pere as nom_pere, dossier_parental.prenom_pere as prenom_pere, dossier_parental.profession_pere as profession_pere, 
+                            dossier_parental.employeur_pere as employeur_pere, dossier_parental.lieu_travail_pere as lieu_travail_pere, 
+                            dossier_parental.quartier_pere as quartier_pere, dossier_parental.telephone_pere as telephone_pere, 
+                            dossier_parental.ville_pere as ville_pere, dossier_parental.bureau_pere as bureau_pere, dossier_parental.est_tuteur as est_tuteur, 
+                            dossier_parental.email_pere as email_pere, dossier_parental.signature_pere as signature_pere, dossier_parental.nom_mere as nom_mere, 
+                            dossier_parental.prenom_mere as prenom_mere, dossier_parental.profession_mere as profession_mere, 
+                            dossier_parental.employeur_mere as employeur_mere, dossier_parental.lieu_travail_mere as lieu_travail_mere, 
+                            dossier_parental.quartier_mere as quartier_mere, dossier_parental.telephone_mere as telephone_mere, 
+                            dossier_parental.ville_mere as ville_mere, dossier_parental.bureau_mere as bureau_mere, dossier_parental.est_tutrice as est_tutrice, 
+                            dossier_parental.email_mere as email_mere, dossier_parental.signature_mere as signature_mere, 
+                            dossier_parental.nom_personne_urgence as nom_personne_urgence, dossier_parental.prenom_personne_urgence as prenom_personne_urgence, 
+                            dossier_parental.telephone_personne_urgence as telephone_personne_urgence, dossier_parental.lien as lien                         
+                
+                            from dossier_parental
                         left join pays as pp on pp.id = dossier_parental.pays_pere_id
                         left join pays as pm on pm.id = dossier_parental.pays_mere_id
                     ) dp,
@@ -417,7 +482,7 @@ class EleveRepository extends BaseRepository{
                         left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
                         left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
                         left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id
+                where dp.id = eleve.dossier_parental_id  and eleve.visibilite = 1
 
             ) InfoEleve,
             (

@@ -14,7 +14,7 @@ class Inscrit{
     public const tag_pays_eleve = 'pays_eleve';
     public const tag_classe_eleve = 'classe_eleve';
     public const tag_sexe_eleve = 'sexe_eleve';
-    public const tag_statut_apprenant_eleve = 'statut_apprenant_eleve';   
+    public const tag_statut_eleve = 'statut_eleve';   
 
     public const tag_nom_pere = 'nom_pere';
     public const tag_prenom_pere = 'prenom_pere';
@@ -68,7 +68,7 @@ class Inscrit{
     public const pays_eleve = "";
     public const classe_eleve = "";
     public const sexe_eleve = "";
-    public const statut_apprenant_eleve = "";
+    public const statut_eleve = "";
     public const nom_pere = "";
     public const prenom_pere = "";
     public const profession_pere = "";

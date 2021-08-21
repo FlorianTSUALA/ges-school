@@ -32,7 +32,7 @@ use App\Helpers\Helpers;
                 sexe_eleve: "required",
                 pays_eleve: "required",
                 //classe_eleve: "required",
-               // statut_apprenant_eleve: "required",
+               // statut_eleve: "required",
                // annee_scolaire: "required",
             },
             messages: {
@@ -54,7 +54,7 @@ use App\Helpers\Helpers;
                /* classe_eleve: {
                     required: "Ce champs est obligatoire !",
                 },
-                statut_apprenant_eleve: {
+                statut_eleve: {
                     required: "Ce champs est obligatoire !",
                 },*/
                
@@ -121,7 +121,7 @@ use App\Helpers\Helpers;
 
                 
                 $('#recap-pays_eleve').text($('#pays_eleve :selected').val()? $('#pays_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
-                $('#recap-statut_apprenant_eleve').text($('#statut_apprenant_eleve :selected').val()? $('#statut_apprenant_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
+                $('#recap-statut_eleve').text($('#statut_eleve :selected').val()? $('#statut_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
                 //$('#recap-classe_eleve').text($('#classe_eleve :selected').val()? $('#classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
                // $('#recap-salle_classe_eleve').text($('#salle_classe_eleve :selected').val()? $('#salle_classe_eleve :selected').val() : '<?= Helpers::repeatChar();?>');
                // $('#recap-annee_scolaire').text($('#annee_scolaire :selected').val()? $('#annee_scolaire :selected').val() : '<?= Helpers::repeatChar();?>');

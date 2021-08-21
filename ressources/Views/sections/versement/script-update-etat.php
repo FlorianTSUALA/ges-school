@@ -63,7 +63,7 @@ $funtion_signataire = "Le Sécrétariat";
         //Pension Scolaire
             for(var item in items)
             {
-                ++i
+                
                 let current = items[item]
 
                 let _type_pension_code = current['type_pension_code']
@@ -81,7 +81,7 @@ $funtion_signataire = "Le Sécrétariat";
                 if(_recapitulatif == 0) continue
 
                 body += '<tr>'
-                body += '   <th scope="row">'+i+'</th>'
+                body += '   <th scope="row">'+ (++i) +'</th>'
                 body += '       <td>'
                 body += '           <p>Pension : '+current['type_pension']+'</p>'
 
@@ -129,9 +129,9 @@ $funtion_signataire = "Le Sécrétariat";
             let _remise = parseFloat(current['remise'])
             _remise = (isNaN(_remise))? 0 : _remise
             if(_multiplicateur > 0){
-                ++i
+                
                 body += '<tr>'
-                body += '   <th scope="row">'+i+'</th>'
+                body += '   <th scope="row">'+(++i)+'</th>'
                 body += '       <td>'
                 body += '           <p>Pension : Cantine </p>'
 
@@ -182,9 +182,9 @@ $funtion_signataire = "Le Sécrétariat";
             sub_total = 0
             if(nbre_tranche != 0 ){
             // if(nbre_tranche != 0 && activites_souscrits != undefined && activites_souscrits.length !== 0){
-                ++i
+                // ++i
                 body += '<tr>'
-                body += '   <th scope="row">' + i + '</th>'
+                body += '   <th scope="row">' + (++i) + '</th>'
                 body += '       <td>'
 
 
@@ -240,9 +240,9 @@ $funtion_signataire = "Le Sécrétariat";
             _montant_total += _montant
 
             if(_montant !== 0){
-                ++i
+                // ++i
                 body += '<tr>'
-                body += '   <th scope="row">'+i+'</th>'
+                body += '   <th scope="row">'+(++i)+'</th>'
                 body += '       <td>'
                 body += '           <p>Pension : '+ current['type_pension']+'</p>'
                 body += '       </td>'
@@ -293,6 +293,8 @@ $funtion_signataire = "Le Sécrétariat";
 
         $('#section_versement').hide()
         $('#section_recaputilatif').show()
-    });
+    }
+
+    // );
 
 </script>

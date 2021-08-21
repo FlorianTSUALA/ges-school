@@ -116,7 +116,7 @@ use Core\Routing\URL;
                                     <!-- <div class="row">
                                         <strong class="col-6">Statut de l'élève :</strong>
 
-                                        <em  id="recap-statut_apprenant_eleve" class="col-6"><?= Helpers::repeatChar();?> </em>
+                                        <em  id="recap-statut_eleve" class="col-6"><?= Helpers::repeatChar();?> </em>
                                     </div> -->
                                 <!-- </div>
                             </div> -->

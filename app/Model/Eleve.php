@@ -17,6 +17,7 @@ class Eleve extends Model implements FrequentlyReapeat
     const GROUPE_FAMILIAL_ID = "groupe_familial_id";
     const DOSSIER_PARENTAL_ID = "dossier_parental_id";
     const ANTECEDENT_SCOLAIRE_ID = "antecedent_scolaire_id";
+    const STATUT_ELEVE_ID = "statut_eleve_id";
     const MATRICULE = "matricule";
     const NOM = "nom";
     const PRENOM = "prenom";

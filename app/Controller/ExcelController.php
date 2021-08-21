@@ -176,7 +176,7 @@ class ExcelController extends AppController
             Parcours::ANNEE_SCOLAIRE_ID => $id_annee_scolaire,
             'date_inscription' => (new DateTime('NOW'))->format('Y-m-d H:i:s'),
             Parcours::ELEVE_ID => $id_eleve,
-            Parcours::STATUT_APPRENANT_ID => $this->statut_apprenant->id(Request::getSecParam('statut_apprenant_eleve', ''), StatutApprenant::LIBELLE),
+            Parcours::STATUT_APPRENANT_ID => $this->statut_apprenant->id(Request::getSecParam('statut_eleve', ''), StatutApprenant::LIBELLE),
             Parcours::CLASSE_ID => $this->classe->id(Request::getSecParam('classe_eleve', ''), Classe::LIBELLE),
             Parcours::SALLE_CLASSE_ID => $id_salle_classe,
         ];

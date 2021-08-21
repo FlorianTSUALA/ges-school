@@ -5,6 +5,7 @@ use App\Model\Classe;
 use Core\Routing\URL;
 use App\Helpers\Helpers;
 use App\Model\SalleClasse;
+use App\Model\StatutEleve;
 use App\Model\AnneeScolaire;
 use App\Model\StatutApprenant;
 
@@ -126,13 +127,13 @@ use App\Model\StatutApprenant;
 
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="statut_apprenant_eleve" class="col-4 col-form-label">Statut de l'apprenant<?php //Helpers::required_input(); ?>:</label>
+                <label for="statut_eleve" class="col-4 col-form-label">Statut de l'élève<?php //Helpers::required_input(); ?>:</label>
                 <div class="col-8">
-                    <select id="statut_apprenant_eleve" class="select2 form-control" name="statut_apprenant_eleve" >
+                    <select id="statut_eleve" class="select2 form-control" name="statut_eleve" >
 
                         <option value="" >- Choissisez le statut actuel de l'élève -</option>
                         <?php foreach($statut_apprenants as $item){?>
-                                <option value="<?= $item->{StatutApprenant::LIBELLE}; ?>"><?= $item->{StatutApprenant::LIBELLE}; ?></option>
+                                <option value="<?= $item->{StatutEleve::LIBELLE}; ?>"><?= $item->{StatutEleve::LIBELLE}; ?></option>
                         <?php }?>
                     </select>
                 </div>

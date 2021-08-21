@@ -20,11 +20,11 @@ class EleveController extends AppController
         /*
             Provide from inscription
             Begin
-        */
+        */  
         
         parent::__construct();
         $this->loadModel('pays');
-        $this->loadModel('statut_apprenant');
+        $this->loadModel('statut_eleve');
         $this->loadModel('classe');
         $this->loadModel('salle_classe');
         $this->loadModel('annee_scolaire');
@@ -41,7 +41,7 @@ class EleveController extends AppController
             End
         */
         
-        $this->eleve_repository = new EleveRepository;
+        $this->eleve_repository = new EleveRepository();
 
         $this->vairant = DBTable::ELEVE;
         $this->folder_view_index = 'eleve.index1';
@@ -70,9 +70,6 @@ class EleveController extends AppController
         //die();
         $this->render('sections.eleve.index1', compact('route', 'eleves', 'title', 'classes'));
     }
-
-
-
 
     public function eleve_detail(string $code)
     {

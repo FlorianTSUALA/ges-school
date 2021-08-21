@@ -42,79 +42,60 @@ include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
                 console.log("data")
                 console.log(data)
 
-                $('#recap-email').text($('#email').val() ? $('#email').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-telephone').text($('#telephone').val() ? $('#telephone').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-classe').text($('#classe').val() ? $('#classe').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-ecole').text($('#ecole').val() ? $('#ecole').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-autres').text($('#autres').val() ? $('#autres').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-probleme_particulier').text($('#probleme_particulier').val() ? $('#probleme_particulier').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-email_medecin').text($('#email_medecin').val() ? $('#email_medecin').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-telephone_medecin').text($('#telephone_medecin').val() ? $('#telephone_medecin').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-nom_medecin').text($('#nom_medecin').val() ? $('#nom_medecin').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-maladie_recurrente').text($('#maladie_recurrente').val() ? $('#maladie_recurrente').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-allergie').text($('#allergie').val() ? $('#allergie').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-email_mere').text($('#email_mere').val() ? $('#email_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-bureau_mere').text($('#bureau_mere').val() ? $('#bureau_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-quartier_mere').text($('#quartier_mere').val() ? $('#quartier_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-telephone_mere').text($('#telephone_mere').val() ? $('#telephone_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-lieu_travail_mere').text($('#lieu_travail_mere').val() ? $('#lieu_travail_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-profession_mere').text($('#profession_mere').val() ? $('#profession_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-employeur_mere').text($('#employeur_mere').val() ? $('#employeur_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-prenom_mere').text($('#prenom_mere').val() ? $('#prenom_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-nom_mere').text($('#nom_mere').val() ? $('#nom_mere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-telephone_personne_urgence').text($('#telephone_personne_urgence').val() ? $('#telephone_personne_urgence').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-nom_personne_urgence').text($('#nom_personne_urgence').val() ? $('#nom_personne_urgence').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-prenom_personne_urgence').text($('#prenom_personne_urgence').val() ? $('#prenom_personne_urgence').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-lien').text($('#lien').val() ? $('#lien').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-nom_eleve').text($('#nom_eleve').val() ? $('#nom_eleve').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-nom_usage').text($('#nom_usage').val() ? $('#nom_usage').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-prenom_eleve').text($('#prenom_eleve').val() ? $('#prenom_eleve').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-prenom_usage').text($('#prenom_usage').val() ? $('#prenom_usage').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-lieu_naissance_eleve').text($('#lieu_naissance_eleve').val() ? $('#lieu_naissance_eleve').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-date_naissance_eleve').text($('#date_naissance_eleve').val() ? $('#date_naissance_eleve').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-anciennete_eleve').text($('#anciennete_eleve').val() ? $('#anciennete_eleve').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-nom_pere').text($('#nom_pere').val() ? $('#nom_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-prenom_pere').text($('#prenom_pere').val() ? $('#prenom_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-employeur_pere').text($('#employeur_pere').val() ? $('#employeur_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-profession_pere').text($('#profession_pere').val() ? $('#profession_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-lieu_travail_pere').text($('#lieu_travail_pere').val() ? $('#lieu_travail_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-telephone_pere').text($('#telephone_pere').val() ? $('#telephone_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-bureau_pere').text($('#bureau_pere').val() ? $('#bureau_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-quartier_pere').text($('#quartier_pere').val() ? $('#quartier_pere').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-email_pere').text($('#email_pere').val() ? $('#email_pere').val() : '<?= Helpers::repeatChar(); ?>');
+                $('#recap-email').text(eleve.email)
+                $('#recap-telephone').text(eleve.telephone)
+                $('#recap-classe').text(eleve.classe)
+                $('#recap-ecole').text(eleve.ecole)
+                $('#recap-autres').text(eleve.autres)
+                $('#recap-probleme_particulier').text(eleve.probleme_particulier)
+                $('#recap-email_medecin').text(eleve.email_medecin)
+                $('#recap-telephone_medecin').text(eleve.telephone_medecin)
+                $('#recap-nom_medecin').text(eleve.nom_medecin)
+                $('#recap-maladie_recurrente').text(eleve.maladie_recurrente)
+                $('#recap-allergie').text(eleve.allergie)
+                $('#recap-email_mere').text(eleve.email_mere)
+                $('#recap-bureau_mere').text(eleve.bureau_mere)
+                $('#recap-quartier_mere').text(eleve.quartier_mere)
+                $('#recap-telephone_mere').text(eleve.telephone_mere)
+                $('#recap-lieu_travail_mere').text(eleve.lieu_travail_mere)
+                $('#recap-profession_mere').text(eleve.profession_mere)
+                $('#recap-employeur_mere').text(eleve.employeur_mere)
+                $('#recap-prenom_mere').text(eleve.prenom_mere)
+                $('#recap-nom_mere').text(eleve.nom_mere)
+                $('#recap-telephone_personne_urgence').text(eleve.telephone_personne_urgence)
+                $('#recap-nom_personne_urgence').text(eleve.nom_personne_urgence)
+                $('#recap-prenom_personne_urgence').text(eleve.prenom_personne_urgence)
+                $('#recap-lien').text(eleve.lien)
+                $('#recap-nom_eleve').text(eleve.nom)
+                $('#recap-nom_usage').text(eleve.nom_usage)
+                $('#recap-prenom_eleve').text(eleve.prenom)
+                $('#recap-prenom_usage').text(eleve.prenom_usage)
+                $('#recap-lieu_naissance_eleve').text(eleve.lieu_naissance)
+                $('#recap-date_naissance_eleve').text(eleve.date_naissance)
+                $('#recap-anciennete_eleve').text(eleve.anciennete)
+                $('#recap-nom_pere').text(eleve.nom_pere)
+                $('#recap-prenom_pere').text(eleve.prenom_pere)
+                $('#recap-employeur_pere').text(eleve.employeur_pere)
+                $('#recap-profession_pere').text(eleve.profession_pere)
+                $('#recap-lieu_travail_pere').text(eleve.lieu_travail_pere)
+                $('#recap-telephone_pere').text(eleve.telephone_pere)
+                $('#recap-bureau_pere').text(eleve.bureau_pere)
+                $('#recap-quartier_pere').text(eleve.quartier_pere)
+                $('#recap-email_pere').text(eleve.email_pere)
 
 
 
-                $('#recap-pays_eleve').text($('#pays_eleve :selected').val() ? $('#pays_eleve :selected').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-statut_apprenant_eleve').text($('#statut_apprenant_eleve :selected').val() ? $('#statut_apprenant_eleve :selected').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-classe_eleve').text($('#classe_eleve :selected').val() ? $('#classe_eleve :selected').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-salle_classe_eleve').text($('#salle_classe_eleve :selected').val() ? $('#salle_classe_eleve :selected').val() : '<?= Helpers::repeatChar(); ?>');
-                // $('#recap-annee_scolaire').text($('#annee_scolaire :selected').val()? $('#annee_scolaire :selected').val() : '<?= Helpers::repeatChar(); ?>');
-                //$('#recap-pays_pere').text($('#pays_pere :selected').val()? $('#pays_pere :selected').val() : '<?= Helpers::repeatChar(); ?>'); 
-                // $('#recap-pays_mere').text($('#pays_mere :selected').val()? $('#pays_mere :selected').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-groupe_sanguin').text($('#groupe_sanguin :selected').val() ? $('#groupe_sanguin :selected').val() : '<?= Helpers::repeatChar(); ?>');
-
-                // $('#recap-est_tuteur_pere').text($('input[type=radio][name=est_tuteur_pere]:checked').val()? $('input[type=radio][name=est_tuteur_pere]:checked').val() : '<?= Helpers::repeatChar(); ?>');
-                // $('#recap-est_tuteur_mere').text($('input[type=radio][name=est_tuteur_mere]:checked').val()? $('input[type=radio][name=est_tuteur_mere]:checked').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-sexe_eleve').text($('input[type=radio][name=sexe_eleve]:checked').val() ? $('input[type=radio][name=sexe_eleve]:checked').val() : '<?= Helpers::repeatChar(); ?>');
-                $('#recap-sexe_eleve').val($('input[type=radio][name=sexe_eleve]:checked').val() ? $('input[type=radio][name=sexe_eleve]:checked').val() : '<?= Helpers::repeatChar(); ?>');
+                $('#recap-pays_eleve').text(eleve.pays)
+                $('#recap-statut_eleve').text(eleve.statut_eleve)
+                $('#recap-classe_eleve').text(eleve.classe_eleve)
+                $('#recap-salle_classe_eleve').text(eleve.salle_classe_eleve)
+                // $('#recap-annee_scolaire').text(eleve.annee_scolaire)
+                //$('#recap-pays_pere').text(eleve.pays_pere)
+                // $('#recap-pays_mere').text(eleve.pays_mere)
+                $('#recap-groupe_sanguin').text(eleve.groupe_sanguin)
 
 
-                $("#recap-id").text(eleve.id)
-                $("#recap-nom").text(eleve.nom)
-                $("#recap-prenom").text(eleve.prenom)
-                $("#recap-telephone").text(eleve.telephone)
-                $("#recap-email").text(eleve.email)
-                $("#recap-date_prise_service").text(eleve.date_prise_service)
-                $("#recap-adresse").text(eleve.adresse)
-                $("#recap-pays").text(eleve.pays)
-                $("#recap-type_eleve").text(eleve.type_eleve)
-                $("#recap-login").text(eleve.login)
-                $("#recap-sexe").text( (eleve.sexe == 'H')? 'Masculin' : 'Féminin' )
-                $("#recap-assurance").text(eleve.assurance)
-                $("#recap-autres").text(eleve.autres)
-                $("#recap-fonciton").text(eleve.fonction)
-                $("#recap-salle_classe").text(eleve.salle_classe)
+                $("#recap-sexe_eleve").text( (eleve.sexe == 'H')? 'Masculin' : 'Féminin' )
                 $("#recap-photo").attr('src', "<?= URL::upload() ?>ressources/uploads/img/eleve/"+eleve.photo)
 
                 $('#recap-pieces_jointes').on('click', function(e) {

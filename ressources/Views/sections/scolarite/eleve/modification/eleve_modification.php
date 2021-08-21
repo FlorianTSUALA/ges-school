@@ -19,7 +19,7 @@ $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js
 $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/select/select2.full.min.js"></script>';
 
 ob_start();
-include "eleve_ajout-script.php";
+include "eleve_modification-script.php";
 $include_footer_script = ob_get_clean();
 
 ?>
@@ -51,19 +51,19 @@ $include_footer_script = ob_get_clean();
 
                                                     <div class="card-content collapse show">
                                                         <div class="card-body">
-                                                            <form id="form-eleve_ajout" action="<?= URL::link('eleve-create'); ?>" method="POST" class="steps-validation wizard-circle needs-validation" enctype="multipart/form-data" novalidate>
+                                                            <form id="form-eleve_modification" action="<?= URL::link('eleve-create'); ?>" method="POST" class="steps-validation wizard-circle needs-validation" enctype="multipart/form-data" novalidate>
                                                                 <?php
                                                                 //ETAPE IDENTIFICATION ELEVE
-                                                                    require_once "eleve_ajout_etape_01.php";
+                                                                    require_once "eleve_modification_etape_01.php";
 
                                                                 //ETAPE DOSSIER PARENTAL - PERE,MERE et ANTECEDENT SCOLAIRE
-                                                                    require_once "eleve_ajout_etape_02.php";
+                                                                    require_once "eleve_modification_etape_02.php";
 
                                                                 //ETAPE DOSSIER MEDICAL
-                                                                    require_once "eleve_ajout_etape_03.php";
+                                                                    require_once "eleve_modification_etape_03.php";
 
                                                                 //ETAPE VERIFICATION DES INFORMATIONS
-                                                                    require_once "eleve_ajout_etape_04.php";
+                                                                    require_once "eleve_modification_etape_04.php";
                                                                 ?>
                                                             </form>
                                                         </div>

@@ -805,7 +805,7 @@ class VersementController extends \App\Controller\Admin\AppController
             //     ->join('statut_apprenant', 'statut_apprenant.id', '=', 'parcours.statut_apprenant_id')
             //     ->where('parcours.visibilite', 1)
             //     ->where('visibilite', 1)
-            //     ->where('visibilite', 1);
+            //     ->whewwwwwwre('visibilite', 1);
 
             // $data = $data->get();
 
