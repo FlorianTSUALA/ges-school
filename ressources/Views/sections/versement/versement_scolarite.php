@@ -52,7 +52,7 @@
                     <div id="kick-start" class="border-2 border-warning card box-shadow-2">
                         <div class="card-header border-bottom-2 border-bottom-warning card-header-inverse ">
                             <h4 class="card-title center text-uppercase">
-                                Versement de pension
+                                Versement de Scolarité
                             </h4>
                         </div>
 
@@ -63,7 +63,7 @@
                                 <div class="col-md-7">
                                     <div class="card-text">
                     
-                                        <p ><h2P style="color:black; font-size: 18px;">Renseigner toutes les informations concernant le versement.</h2P></p>
+                                        <p ><h2P style="color:black; font-size: 18px;">Renseigner toutes les informations concernant la Scolarité.</h2P></p>
                                       <!--   <p class="font-medium-2"><strong class="red">NB !!!</strong> Preciser l'année scolaire en cours ou, <a href="<?= URL::link('annee_scolaire');?>" class="alert-link">Créer une?</a></p>.-->
                                     </div>
 
@@ -169,7 +169,7 @@
                                                                         </div>
                                                                     </div>
 <!-- Scolarite -->
-        <?php $i = 0;
+        <!-- <?php $i = 0;
             foreach($type_pensions as $item){  ?>
                 <div class="row">
 
@@ -224,15 +224,15 @@
                         </fieldset>
                     </div>
                 </div>
-        <?php    }  ?>
-<!-- Cantine -->
+        <?php    }  ?> -->
+<!-- Scolarite-->
                                                                     <div class="row">
 
                                                                         <div class="col-3 ">
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Type pension</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="text" class="form-control  " readonly value="Cantine"  id="COL2-Cantine"   COL2-Cantine"  placeholder="" />   
+                                                                                    <input type="text" class="form-control  " readonly value="Scolarite"  id="COL2-Scolarite"   COL2-Scolarite"  placeholder="" />   
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
@@ -242,7 +242,7 @@
                                                                                 <fieldset class="mb-1">
                                                                                     <h5>Multiplicateur</h5>
                                                                                     <div class="form-group">
-                                                                                        <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Cantine"  name="SELECT-COL3-Cantine"   required>
+                                                                                        <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Scolarite"  name="SELECT-COL3-Scolarite"   required>
                                                                                         <?php foreach($tranche_scolaires as $tranche_scolaire){?>
                                                                                                 <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
                                                                                         <?php } ?>
@@ -256,7 +256,7 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Reduction</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="number" class="form-control reduction"  id="COL5-Cantine" value="0"  name="COL5-Cantine"   placeholder="" />
+                                                                                    <input type="number" class="form-control reduction"  id="COL5-Scolarite" value="0"  name="COL5-Scolarite"   placeholder="" />
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
@@ -266,13 +266,13 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Recaputilatif</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="text" class="form-control "  id="COL4-Cantine" value="0"  name="COL4-Cantine"   placeholder="" readonly/>
+                                                                                    <input type="text" class="form-control "  id="COL4-Scolarite" value="0"  name="COL4-Scolarite"   placeholder="" readonly/>
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
                                                                     </div>
 <!-- Activite -->
-                                                                    <div class="row">
+                                                                    <!-- <div class="row">
 
                                                                         <div class="col-3 ">
                                                                             <fieldset class="mb-1">
@@ -319,7 +319,7 @@
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
 
                                                                     
                                                                     
