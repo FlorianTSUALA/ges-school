@@ -36,7 +36,7 @@ use App\Helpers\Helpers;
                 sexe_eleve: "required",
                 pays_eleve: "required",
                 classe_eleve: "required",
-                statut_eleve: "required",
+               // statut_eleve: "required",
                 // annee_scolaire: "required",
             },
             messages: {
@@ -58,9 +58,9 @@ use App\Helpers\Helpers;
                 classe_eleve: {
                     required: "Ce champs est obligatoire !",
                 },
-                statut_eleve: {
-                    required: "Ce champs est obligatoire !",
-                },
+                // statut_eleve: {
+                //     required: "Ce champs est obligatoire !",
+                // },
 
             },
         });
