@@ -295,6 +295,6 @@ $funtion_signataire = "Le Sécrétariat";
         $('#section_recaputilatif').show()
     }
 
-    // );
+    );
 
 </script>
