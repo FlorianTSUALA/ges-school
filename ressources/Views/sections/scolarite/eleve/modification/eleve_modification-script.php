@@ -36,7 +36,7 @@ use App\Helpers\Helpers;
                 sexe_eleve: "required",
                 pays_eleve: "required",
                 classe_eleve: "required",
-                statut_eleve: "required",
+               // statut_eleve: "required",
                 // annee_scolaire: "required",
             },
             messages: {
@@ -58,9 +58,9 @@ use App\Helpers\Helpers;
                 classe_eleve: {
                     required: "Ce champs est obligatoire !",
                 },
-                statut_eleve: {
-                    required: "Ce champs est obligatoire !",
-                },
+                // statut_eleve: {
+                //     required: "Ce champs est obligatoire !",
+                // },
 
             },
         });
@@ -215,10 +215,10 @@ use App\Helpers\Helpers;
                             }).then(isConfirm => {
                                 if (isConfirm) {
                                     // form.reset()
-                                    window.location.replace("<?= URL::link('eleve_liste'); ?>");
+                                    window.location.replace("<?= URL::link('eleve_ajout'); ?>");
                                 } else {
                                     // form.reset()
-                                    window.location.replace("<?= URL::link('eleve_modifier'); ?>");
+                                    window.location.replace("<?= URL::link('eleve_liste'); ?>");
                                 }
                             });
 

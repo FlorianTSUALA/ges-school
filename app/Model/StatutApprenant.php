@@ -16,7 +16,8 @@ class StatutApprenant extends Model implements FrequentlyReapeat
         $this->fillables =
             [
                 new FormModel(true, self::LIBELLE ),
-                new FormModel(true, self::DESCRIPTION ),
+                new FormModel(true, self::DESCRIPTION, 'Description', null, null, null, null, false ),
+
             ];
     }
 }

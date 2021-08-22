@@ -40,8 +40,9 @@ class Exemplaire extends Model implements FrequentlyReapeat
                 new FormModel(false, self::DOCUMENT_ID, 'Document', InputType::SELECT2, $documents, '', 'Choisir un document', true, 'select2 form-control', '', '', '', 'titre'),
                 new FormModel(false, self::ETAT_DOCUMENT_ID,'Etat du document', InputType::SELECT2, $etat_documents, '', 'Choisir un état du document', true, 'select2 form-control'),
                 new FormModel(true, self::STATUT  ,'Statut du document', InputType::SELECT2, $status, '', 'Choisir un statut', true, 'select2 form-control' ),
-                new FormModel(true, self::CODE_ENREGISTRMENT ,'Numero d\'enregistrement', InputType::TEXT ),
-                new FormModel(true, self::DATE_ACQUISITION ,'Date d\'acquisition',InputType::DATE ),
+                new FormModel(true, self::CODE_ENREGISTRMENT ,'Numero d\'enregistrement', InputType::TEXT , null, null, null, false ),
+                new FormModel(true, self::DATE_ACQUISITION ,'Date d\'acquisition',InputType::DATE , null, null, null, false ),
+
 
             ];
     }
