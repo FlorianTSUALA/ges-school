@@ -121,7 +121,7 @@ use Core\Routing\URL;
                                 <!-- </div>
                             </div> -->
 
-                            <br>
+                            
 
                             <div class="row mt-1">
 
