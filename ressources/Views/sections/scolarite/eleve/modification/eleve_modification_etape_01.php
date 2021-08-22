@@ -131,7 +131,7 @@ use function Core\Helper\dd;
 
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="statut_eleve" class="col-4 col-form-label">Statut de l'apprenant<?php //Helpers::required_input(); ?>:</label>
+                <label for="statut_eleve" class="col-4 col-form-label">Statut de l'élève<?php //Helpers::required_input(); ?>:</label>
                 <div class="col-8">
                     <select id="statut_eleve" class="select2 form-control" name="statut_eleve" >
 

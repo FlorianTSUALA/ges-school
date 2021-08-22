@@ -29,7 +29,7 @@
             <div class="form-group row">
                 <label for="nom_pere" class="col-4 col-form-label">Nom du père:</label>
                 <div class="col-8">
-                    <input placeholder="Nom du père" type="text" class="form-control" id="nom_pere" name="nom_pere" autofocus/>
+                    <input placeholder="Nom du père" type="text" class="form-control"  id="nom_pere" name="nom_pere" autofocus/>
                 </div>
             </div>
 

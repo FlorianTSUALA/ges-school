@@ -5,7 +5,7 @@
     <?php } ?>
 </select>
 
-
+value="<?= Helpers::format($eleve->date_naissance)??date("Y-m-D") ?>" 
 
 
 <div class="col-5">
