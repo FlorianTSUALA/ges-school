@@ -7,6 +7,7 @@ use App\Helpers\Helpers;
 use App\Model\SalleClasse;
 use App\Model\AnneeScolaire;
 use App\Model\StatutApprenant;
+use App\Model\StatutEleve;
 
 use function Core\Helper\dd;
 
@@ -135,8 +136,8 @@ use function Core\Helper\dd;
                     <select id="statut_eleve" class="select2 form-control" name="statut_eleve" >
 
                         <option value="" >- Choissisez le statut actuel de l'élève -</option>
-                        <?php foreach($statut_apprenants as $item){?>
-                                <option   <?= (($eleve->pays??"") == $item->{Pays::LIBELLE})?"selected":"" ?> value="<?= $item->{StatutApprenant::LIBELLE}; ?>"><?= $item->{StatutApprenant::LIBELLE}; ?></option>
+                        <?php foreach($statut_eleves as $item){?>
+                                <option   <?= (($eleve->statut_eleve??"") == $item->{StatutEleve::LIBELLE})?"selected":"" ?> value="<?= $item->{StatutEleve::LIBELLE}; ?>"><?= $item->{StatutEleve::LIBELLE}; ?></option>
                         <?php }?>
                     </select>
                 </div>
@@ -150,7 +151,7 @@ use function Core\Helper\dd;
             <div class="form-group row">
                 <label for="ecole" class="col-4 col-form-label">Nom de l'ancienne école:</label>
                 <div class="col-8">
-                    <input placeholder="Nom de l'ancienne école" type="text" class="form-control" id="ecole" name="ecole" />
+                    <input placeholder="Nom de l'ancienne école" type="text"  value="<?= $eleve->prenom_usage??"" ?>" class="form-control" id="ecole" name="ecole" />
                 </div>
             </div>
         </div>
@@ -160,7 +161,7 @@ use function Core\Helper\dd;
             <div class="form-group row">
                 <label for="classe" class="col-4 col-form-label">Classe de l'an dernier :</label>
                 <div class="col-8">
-                    <input placeholder="Classe fréquentée l'an dernier" type="text" class="form-control" id="classe" name="classe" />
+                    <input placeholder="Classe fréquentée l'an dernier"  value="<?= $eleve->classe??"" ?>"   type="text" class="form-control" id="classe" name="classe" />
                 </div>
             </div>
         </div>

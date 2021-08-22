@@ -164,7 +164,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
     public function index()
     {
-        $route = "versement";
+        $route = "versement_multiple";
         $title = "Gestion des frais scolaires";
         $this->app->setTitle($this->title_page);
         // $fillables = $this->{$this->vairant}->fillables;

@@ -132,7 +132,7 @@ use App\Model\StatutApprenant;
                     <select id="statut_eleve" class="select2 form-control" name="statut_eleve" >
 
                         <option value="" >- Choissisez le statut actuel de l'élève -</option>
-                        <?php foreach($statut_apprenants as $item){?>
+                        <?php foreach($statut_eleves as $item){?>
                                 <option value="<?= $item->{StatutEleve::LIBELLE}; ?>"><?= $item->{StatutEleve::LIBELLE}; ?></option>
                         <?php }?>
                     </select>

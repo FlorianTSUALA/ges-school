@@ -63,7 +63,7 @@
                                 <div class="col-md-7">
                                     <div class="card-text">
                     
-                                        <p ><h2P style="color:black; font-size: 18px;">Renseigner toutes les informations concernant le versement11.</h2P></p>
+                                        <p ><h2 style="color:black; font-size: 18px;">Renseigner toutes les informations concernant le versement.</h2></p>
                                       <!--   <p class="font-medium-2"><strong class="red">NB !!!</strong> Preciser l'année scolaire en cours ou, <a href="<?= URL::link('annee_scolaire');?>" class="alert-link">Créer une?</a></p>.-->
                                     </div>
 

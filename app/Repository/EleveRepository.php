@@ -459,22 +459,8 @@ class EleveRepository extends BaseRepository{
                         eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
                 from
                     (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere,
-            
-                            dossier_parental.nom_pere as nom_pere, dossier_parental.prenom_pere as prenom_pere, dossier_parental.profession_pere as profession_pere, 
-                            dossier_parental.employeur_pere as employeur_pere, dossier_parental.lieu_travail_pere as lieu_travail_pere, 
-                            dossier_parental.quartier_pere as quartier_pere, dossier_parental.telephone_pere as telephone_pere, 
-                            dossier_parental.ville_pere as ville_pere, dossier_parental.bureau_pere as bureau_pere, dossier_parental.est_tuteur as est_tuteur, 
-                            dossier_parental.email_pere as email_pere, dossier_parental.signature_pere as signature_pere, dossier_parental.nom_mere as nom_mere, 
-                            dossier_parental.prenom_mere as prenom_mere, dossier_parental.profession_mere as profession_mere, 
-                            dossier_parental.employeur_mere as employeur_mere, dossier_parental.lieu_travail_mere as lieu_travail_mere, 
-                            dossier_parental.quartier_mere as quartier_mere, dossier_parental.telephone_mere as telephone_mere, 
-                            dossier_parental.ville_mere as ville_mere, dossier_parental.bureau_mere as bureau_mere, dossier_parental.est_tutrice as est_tutrice, 
-                            dossier_parental.email_mere as email_mere, dossier_parental.signature_mere as signature_mere, 
-                            dossier_parental.nom_personne_urgence as nom_personne_urgence, dossier_parental.prenom_personne_urgence as prenom_personne_urgence, 
-                            dossier_parental.telephone_personne_urgence as telephone_personne_urgence, dossier_parental.lien as lien                         
-                
-                            from dossier_parental
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere                
+                        from dossier_parental
                         left join pays as pp on pp.id = dossier_parental.pays_pere_id
                         left join pays as pm on pm.id = dossier_parental.pays_mere_id
                     ) dp,
