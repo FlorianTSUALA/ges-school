@@ -215,10 +215,13 @@ use App\Helpers\Helpers;
                             }).then(isConfirm => {
                                 if (isConfirm) {
                                     // form.reset()
-                                    window.location.replace("<?= URL::link('eleve_liste'); ?>");
+                                    // window.location.replace("<?= URL::link('eleve_liste'); ?>");
+                                    window.location.href = "<?= URL::link('eleve_ajout'); ?>";
+                                    // window.location.reload();
                                 } else {
                                     // form.reset()
-                                    window.location.replace("<?= URL::link('eleve_ajout'); ?>");
+                                    window.location.href = "<?= URL::link('eleve_liste'); ?>";
+                                    // window.location.reload();
                                 }
                             });
 

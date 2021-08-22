@@ -414,7 +414,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
         
-        $elevesl = (new EleveRepository() )->getInfoEleveByAnneeScolaire($annee_scolaire_id);
+        $eleves = (new EleveRepository() )->getInfoEleveByAnneeScolaire($annee_scolaire_id);
 
         $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
