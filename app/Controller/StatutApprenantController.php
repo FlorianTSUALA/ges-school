@@ -4,10 +4,12 @@ namespace App\Controller;
     
 use App\Model\DBTable;
 use Core\Session\Request;
+use App\Helpers\TraitCRUDController;
 use App\Controller\Admin\AppController;
 
 class StatutApprenantController extends AppController
 {
+    use TraitCRUDController;
 
     public function __construct()
     {

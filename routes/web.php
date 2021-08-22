@@ -1,6 +1,7 @@
 <?php
 
 use App\Controller\ExcelController;
+use App\Controller\StatutEleveController;
 
 //START
     use App\Controller\ClubController;
@@ -112,7 +113,10 @@ $router->addRoute('eleve_search_detail', 'eleve_detail/search/{code}', [EleveCon
 
 //VERSEMENT
 $router->addRoute('versement_accueil', 'versement/accueil', [VersementController::class, 'accueil']);
-$router->addRoute('versement_multiple', 'versement/multiple', [VersementController::class, 'index']);
+$router->addRoute('versement_multiple', 'versement/multiple', [VersementController::class, 'index_multiple']);
+$router->addRoute('versement_inscription', 'versement/inscription', [VersementController::class, 'index_inscription']);
+$router->addRoute('versement_scolarite', 'versement/scolarite', [VersementController::class, 'index_scolarite']);
+
 $router->addRoute('versement-create', 'versement/create/{code}', [VersementController::class, 'save']);
 $router->addRoute('versement_facture', 'versement/print/{code}', [VersementController::class, 'imprimer_facture']);
 $router->addRoute('versement-preview', 'versement/preview/{code}', [VersementController::class, 'preview']);
@@ -128,9 +132,7 @@ $router->addRoute('versement-list_all', 'versement/list/all', [VersementControll
 $router->addRoute('versement-detail', 'versement/detail/{code}', [VersementController::class, 'detail']);
 
 //new
-$router->addRoute('versement_inscription', 'versement/inscription', [VersementController::class, 'pension_inscription']);
 $router->addRoute('liste_eleve', 'versement/list/eleve', [VersementController::class, 'liste_abonnee']);
-$router->addRoute('versement_scolarite', 'versement/scolarite', [VersementController::class, 'pension_scolarite']);
 
 $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
@@ -200,6 +202,9 @@ $router->crudRoute('repas', RepasController::class);
 
 //STATUT_APPRENANT
 $router->crudRoute('statut_apprenant', StatutApprenantController::class);
+
+//STATUT_ELEVE
+$router->crudRoute('statut_eleve', StatutEleveController::class);
 
 //PAYS
 $router->crudRoute('pays', PaysController::class);
