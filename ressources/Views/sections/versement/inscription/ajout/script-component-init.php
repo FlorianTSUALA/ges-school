@@ -1,4 +1,4 @@
-<?php include dirname(__DIR__)."/_common_lib/_select2_script.php"; ?>
+<?php include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php"; ?>
 
 
 <script>

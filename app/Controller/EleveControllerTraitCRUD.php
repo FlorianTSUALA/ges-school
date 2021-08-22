@@ -66,7 +66,7 @@ trait EleveControllerTraitCRUD
         $annee_scolaires =  $this->annee_scolaire->all();
         $data_info_eleves = $this->eleve_repository->getInfoEleves();
         
-        $this->render('sections.scolarite.eleve.modification.eleve_modification', compact('route', 'eleve', 'annee_scolaires', 'pays', 'classes', 'statut_apprenants', 'salle_classes'));
+        $this->render('sections.scolarite.eleve.modification.eleve_modification', compact('route', 'eleve', 'annee_scolaires', 'pays', 'classes', 'statut_eleves', 'salle_classes'));
     }
 
 

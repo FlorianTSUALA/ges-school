@@ -499,7 +499,7 @@
             </section>
 
             
-            <?php include "versement_scolarite_etat.php"; ?>
+            <?php require "versement_scolarite_etat.php"; ?>
 
 
         </div>

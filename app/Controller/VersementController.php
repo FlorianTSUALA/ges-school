@@ -371,7 +371,7 @@ class VersementController extends \App\Controller\Admin\AppController
             $data_inscriptpion = $_SESSION[S::DATA_TRANSPORT];
             $_SESSION[S::DATA_TRANSPORT] = null;
         }
-        $this->render('sections.versement.inscription.versement_inscription', compact(
+        $this->render('sections.versement.inscription.ajout.versement_inscription', compact(
             //versement/inscription file
             //'abonnement_cantine',
             //'class_name', 'base_route', 'title', 'create_title', 'view_title', 'update_title', 'delete_title', 'msg_delete',
@@ -414,7 +414,7 @@ class VersementController extends \App\Controller\Admin\AppController
 
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
         
-        $eleves = (new EleveRepository() )->getInfoEleveByAnneeScolaire($annee_scolaire_id);
+        $elevesl = (new EleveRepository() )->getInfoEleveByAnneeScolaire($annee_scolaire_id);
 
         $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
@@ -490,7 +490,8 @@ class VersementController extends \App\Controller\Admin\AppController
             $data_inscriptpion = $_SESSION[S::DATA_TRANSPORT];
             $_SESSION[S::DATA_TRANSPORT] = null;
         }
-        $this->render('sections.versement.scolarite.versement_scolarite', compact(
+
+        $this->render('sections.versement.scolarite.ajout.versement_scolarite', compact(
             //versement/inscription file
             //'abonnement_cantine',
             //'class_name', 'base_route', 'title', 'create_title', 'view_title', 'update_title', 'delete_title', 'msg_delete',
@@ -510,6 +511,7 @@ class VersementController extends \App\Controller\Admin\AppController
             'prix_abonnement_activites',
             'prix_abonnement_cantine'
         ));
+
     }
     /*
     *  Enregistre les informations de  versement et retpurne le status d'enregistrement

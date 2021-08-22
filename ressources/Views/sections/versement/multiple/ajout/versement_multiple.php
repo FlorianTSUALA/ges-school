@@ -11,11 +11,11 @@
     // echo '<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>';
     echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQuery.print.js"></script>';
     
-    require "script-event.php";
     require "script-component-init.php";
-    require "script-update-etat.php";
+    require "script-event.php";
     require "script-save.php";
-    require "script-versement_scolarite.php";
+    require "script-update-etat.php";
+    require "script-versement_multiple.php";
 
     $include_footer_script = ob_get_clean();
 
@@ -499,7 +499,7 @@
             </section>
 
             
-            <?php include "versement_scolarite_etat.php"; ?>
+            <?php require "versement_multiple_etat.php"; ?>
 
 
         </div>
