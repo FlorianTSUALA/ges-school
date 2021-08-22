@@ -161,16 +161,21 @@
 
                                                                     </div> -->
 
-                                                                    <div class="row">
+                                                                    <!-- <div class="row">
                                                                         <div class="col-md-12">
                                                                             <h4 class="form-section text-warning" align="">
                                                                                
                                                                             </h4>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
 <!-- Scolarite -->
-        <!-- <?php $i = 0;
-            foreach($type_pensions as $item){  ?>
+<?php $i = 0;
+            foreach($type_pensions as $item){  
+                 if(strtolower($item['libelle'] == 'inscription') ) {
+
+                 }
+                
+                ?>
                 <div class="row">
 
                     <div class="col-3 ">
@@ -224,9 +229,9 @@
                         </fieldset>
                     </div>
                 </div>
-        <?php    }  ?> -->
+        <?php    }  ?> 
 <!-- Inscription -->
-                                                                    <div class="row">
+                                                                    <!-- <div class="row">
 
                                                                         <div class="col-3 ">
                                                                             <fieldset class="mb-1">
@@ -270,16 +275,16 @@
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
 
 
-                                                                    <div class="row">
+                                                                    <!-- <div class="row">
                                                                         <div class="col-md-12">
                                                                             <h4 class="form-section text-warning" align="">
                                                                                
                                                                             </h4>
                                                                         </div>
-                                                                    </div>
+                                                                    </div> -->
 <!-- Montant à payer -->
                                                                     <div class="row">
                                                                         <div class="col-md-6">
