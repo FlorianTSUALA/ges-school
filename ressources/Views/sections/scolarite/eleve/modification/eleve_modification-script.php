@@ -178,7 +178,7 @@ use App\Helpers\Helpers;
                 },
                 onBlock: function() {
                     $.ajax({
-                        url: '<?= URL::link('eleve-create') ?>',
+                        url: '<?= URL::link('eleve-update') ?><?= $eleve->id ?>',
                         type: 'post',
                         data: new FormData($("#"+form_id)[0]), //form[0],
                         enctype: 'multipart/form-data',
@@ -213,11 +213,13 @@ use App\Helpers\Helpers;
                                     }
                                 }
                             }).then(isConfirm => {
+
                                 if (isConfirm) {
                                     window.location.href = "<?= URL::link('eleve_ajout'); ?>";
                                 } else {
                                     window.location.href = "<?= URL::link('eleve_liste'); ?>";
                                 }
+
                             });
 
                             console.log(data)

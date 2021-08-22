@@ -15,10 +15,12 @@ use App\Helpers\HTMLHelper;
 
 use function Core\Helper\dd;
 use function Core\Helper\vd;
+use App\Model\DossierMedical;
 use Core\HTML\Form\FormModel;
 use App\Model\DossierParental;
-use App\Model\StatutApprenant;
 
+use App\Model\StatutApprenant;
+use App\Model\AntecedentScolaire;
 use App\Repository\EleveRepository;
 use App\Helpers\TraitCRUDController;
 use App\Repository\ClasseRepository;
@@ -151,6 +153,9 @@ trait EleveControllerTraitCRUD
             $photo_name = 'no-photo.jpg';
         }
 
+        $statut_eleve_id = $this->statut_eleve->id(Request::getSecParam('statut_eleve', ''), StatutEleve::LIBELLE); 
+        $statut_eleve_id = ($this->statut_eleve->id(Request::getSecParam('statut_eleve', ''), StatutEleve::LIBELLE) == false)? NULL : $statut_eleve_id; 
+
 
         $data_eleve = [
             'code' => $code_eleve,
@@ -165,7 +170,7 @@ trait EleveControllerTraitCRUD
             'photo' => $photo_name,
             Eleve::PAYS_ID => $this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE),
             'anciennete' => (Request::getSecParam('anciennete_eleve', '') === '')? 0 : Request::getSecParam('anciennete_eleve', ''),
-            Eleve::STATUT_ELEVE_ID => $this->statut_eleve->id(Request::getSecParam('statut_eleve', ''), StatutEleve::LIBELLE),
+            Eleve::STATUT_ELEVE_ID => $statut_eleve_id,
             Eleve::DOSSIER_PARENTAL_ID => $id_dossier_parental,
             Eleve::GROUPE_FAMILIAL_ID => null,
             Eleve::DOSSIER_MEDICAL_ID => $id_dossier_medical,
@@ -220,61 +225,6 @@ trait EleveControllerTraitCRUD
         return $results;
     }
 
-    public function save_person()
-    {
-        //INFO PERSONNEL
-        $code_eleve = Eleve::generateCode();
-        
-        $matricule = $code_eleve;
-
-        $photo_name = Request::saveImg($matricule . '_photo_profile', 'photo', 'img/eleve');
-        if ($photo_name === 1) {
-            $photo_name = 'no-photo.jpg';
-        }
-
-        $piece_jointes ='photo_autres';
-        $photo_peices_jointes = Request::saveImg($matricule . '_photo_peices_jointes', 'photo_autres', 'img/eleve');
-        if ($photo_peices_jointes === 1) {
-            $photo_peices_jointes = 'attachement.jpg';
-        }
-        
-        $password = Request::getSecParam('password', '');
-        if($password != '' && $password != 'aucun'){
-            $data_info_eleves['password'] = Helpers::passwordEncrypt($password);
-        }
-
-        $data_eleve = [
-            'type_eleve_id' =>  Eleve::getId(DBTable::TYPE_PERSONNEL, Request::getSecParam('type_eleve', ''), TypeEleve::CODE),
-            'pays_id' =>  Pays::getId(DBTable::PAYS, Request::getSecParam('pays', ''), Pays::CODE),
-            'nom' => Request::getSecParam('nom', '') ,
-            'prenom' => Request::getSecParam('prenom', '') ,
-            'sexe' => Request::getSecParam('sexe', '') ,
-            'autres' => Request::getSecParam('autres', '') ,
-            'telephone' => Request::getSecParam('telephone', '') ,
-            'email' => Request::getSecParam('email', '') ,
-            'adresse' => Request::getSecParam('adresse', '') ,
-            'login' => Request::getSecParam('login', '') ,
-            'password' => $password ,
-            'date_prise_service' => Request::getSecParam('date_prise_service', NULL) ,
-            // 'date_fin_carriere' => Request::getSecParam('date_fin_carriere', '') ,
-            'bibliographie' => Request::getSecParam('bibliographie', '') ,
-            'assurance' => Request::getSecParam('assurance', '') ,
-            'fonction' => Request::getSecParam('fonction', '') ,
-            'pieces_jointes' =>  $photo_peices_jointes ,
-            'code' => $code_eleve,
-            'photo' => $photo_name
-        ];
-
-        $result_eleve = Eleve::table()->insert($data_eleve)->execute();
-        $result_eleve = true;
-        
-
-        if ($result_eleve) {
-            $this->sendResponseAndExit(Helpers::toJSON($result_eleve, TRUE));
-        } else {
-            $this->sendResponseAndExit($result_eleve, false, 400, 'DB Error');
-        }
-    }
 
     /**
      * update : permet de mettre à jour un eleve en base de données grace 
@@ -287,69 +237,121 @@ trait EleveControllerTraitCRUD
     {
         //INFO PERSONNEL
         $code_eleve = $code;
+        $code_eleve = strtoupper($code) ;
 
-        $matricule = $code_eleve;
-
+        $eleve = Eleve::table()->select()->where('code', $code_eleve)->one();
+        $photo_name = "no-photo.jpg";
         if(isset($_FILES['photo']))
         {
-            $photo_name = Request::saveImg($matricule . '_photo_profile', 'photo', 'img/eleve');
+            $photo_name = Request::saveImg($eleve["matricule"] . '_photo_profile', 'photo', 'img/eleve');
             if ($photo_name === 1) {
                 $photo_name = 'no-photo.jpg';
             }
         }
-        $piece_jointes ='photo_autres';
-        if(isset($_FILES[$piece_jointes])){
-            $photo_peices_jointes = Request::saveImg($matricule . '_photo_peices_jointes', $piece_jointes, 'img/eleve');
-            if ($photo_peices_jointes === 1) {
-                $photo_peices_jointes = 'attachement.jpg';
-            }
-        }
-        
 
-        $data_eleve = [
-            'type_eleve_id' =>  Eleve::getId(DBTable::TYPE_PERSONNEL, Request::getSecParam('type_eleve', ''), TypeEleve::CODE),
-            'pays_id' =>  Pays::getId(DBTable::PAYS, Request::getSecParam('pays', ''), Pays::CODE),
-            'nom' => Request::getSecParam('nom', '') ,
-            'prenom' => Request::getSecParam('prenom', '') ,
-            'sexe' => Request::getSecParam('sexe', '') ,
-            'autres' => Request::getSecParam('autres', '') ,
-            'telephone' => Request::getSecParam('telephone', '') ,
-            'email' => Request::getSecParam('email', '') ,
-            'adresse' => Request::getSecParam('adresse', '') ,
-            'login' => Request::getSecParam('login', '') ,
-            'date_prise_service' => Request::getSecParam('date_prise_service', NULL) ,
-            // 'date_fin_carriere' => Request::getSecParam('date_fin_carriere', '') ,
-            'bibliographie' => Request::getSecParam('bibliographie', '') ,
-            'assurance' => Request::getSecParam('nom_eleve', '') ,
-            'fonction' => Request::getSecParam('fonction', '') ,
-            'code' => $code_eleve,
+        //ANTECEDANT SCOLAIRE
+        $id_antecedent_scolaire = $eleve["antecedent_scolaire_id"];
+        $data_antecedent_scolaire = [
+            'email' => Request::getSecParam('email', ''),
+            'telephone' => Request::getSecParam('telephone', ''),
+            'classe' => Request::getSecParam('classe', ''),
+            'ecole' => Request::getSecParam('ecole', '')
+        ];
+        AntecedentScolaire::table()
+            ->update($data_antecedent_scolaire)
+            ->where('id', $id_antecedent_scolaire)
+            ->execute();
+
+
+
+        //DOSSIER MEDICAL
+        $id_dossier_medical = $eleve["dossier_medical_id"];
+        $data_dossier_medical = [
+            'autres' => Request::getSecParam('autres', ''),
+            'probleme_particulier' => Request::getSecParam('probleme_particulier', ''),
+            'email_medecin' => Request::getSecParam('email_medecin', ''),
+            'telephone_medecin' => Request::getSecParam('telephone_medecin', ''),
+            'nom_medecin' => Request::getSecParam('nom_medecin', ''),
+            'maladie_recurrente' => Request::getSecParam('maladie_recurrente', ''),
+            'allergie' => Request::getSecParam('allergie', ''),
+            'groupe_sanguin' => Request::getSecParam('groupe_sanguin', ''),
+        ];
+        DossierMedical::table()
+            ->update($data_dossier_medical)
+            ->where('id', $id_dossier_medical)
+            ->execute();
+
+        $id_pays_mere = ($this->pays->id(Request::getSecParam('pays_mere', ''), Pays::LIBELLE) == false)? null : $this->pays->id(Request::getSecParam('pays_mere', ''), Pays::LIBELLE) ;
+        $id_pays_pere = ($this->pays->id(Request::getSecParam('pays_pere', ''), Pays::LIBELLE) == false)? null : $this->pays->id(Request::getSecParam('pays_pere', ''), Pays::LIBELLE) ;
+        $id_pays = ($this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE) == false)? null : $this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE) ;
+
+        //DOSSIER PARENTAL
+        $id_dossier_parental = $eleve["dossier_parental_id"];
+        $data_dossier_parental = [
+        // 'est_tuteur_mere' => Request::getSecParam('est_tuteur_mere', ''),
+            'email_mere' => Request::getSecParam('email_mere', ''),
+            'bureau_mere' => Request::getSecParam('bureau_mere', ''),
+            'telephone_mere' => Request::getSecParam('telephone_mere', ''),
+            'lieu_travail_mere' => Request::getSecParam('lieu_travail_mere', ''),
+            'profession_mere' => Request::getSecParam('profession_mere', ''),
+            'employeur_mere' => Request::getSecParam('employeur_mere', ''),
+            'quartier_mere' => Request::getSecParam('quartier_mere', ''),
+            DossierParental::PAYS_MERE_ID => $id_pays_mere,
+            'prenom_mere' => Request::getSecParam('prenom_mere', ''),
+            'nom_mere' => Request::getSecParam('nom_mere', ''),
+            'nom_pere' => Request::getSecParam('nom_pere', ''),
+            'prenom_pere' => Request::getSecParam('prenom_pere', ''),
+            DossierParental::PAYS_PERE_ID => $id_pays_pere,
+            'employeur_pere' => Request::getSecParam('employeur_pere', ''),
+            'profession_pere' => Request::getSecParam('profession_pere', ''),
+            'lieu_travail_pere' => Request::getSecParam('lieu_travail_pere', ''),
+            'telephone_pere' => Request::getSecParam('telephone_pere', ''),
+            'bureau_pere' => Request::getSecParam('bureau_pere', ''),
+            'email_pere' => Request::getSecParam('email_pere', ''),
+            'quartier_pere' => Request::getSecParam('quartier_pere', ''),
+        // 'est_tuteur_pere' => Request::getSecParam('est_tuteur_pere', ''),
+            'telephone_personne_urgence' => Request::getSecParam('telephone_personne_urgence', ''),
+            'nom_personne_urgence' => Request::getSecParam('nom_personne_urgence', ''),
+            'prenom_personne_urgence' => Request::getSecParam('prenom_personne_urgence', ''),
+            'lien' => Request::getSecParam('lien', ''),
         ];
 
-        $password = Request::getSecParam('password', '');
+        DossierParental::table()
+            ->update($data_dossier_parental)
+            ->where('id', $id_dossier_parental)
+            ->execute();
+        //INFO ELEVE
+        $id_eleve = $eleve["id"];
+        $statut_eleve_id = $this->statut_eleve->id(Request::getSecParam('statut_eleve', ''), StatutEleve::LIBELLE); 
+        $statut_eleve_id = ($this->statut_eleve->id(Request::getSecParam('statut_eleve', ''), StatutEleve::LIBELLE) == false)? NULL : $statut_eleve_id; 
 
-        if($password != '' && $password != 'aucun'){
-            $data_eleve['password'] = Helpers::passwordEncrypt($password);
-        }
+        $data_eleve = [
+            'nom' => strtoupper(Request::getSecParam('nom_eleve', '')) ,
+            'prenom' => ucfirst(Request::getSecParam('prenom_eleve', '')) ,
+            'prenom_usage' => Request::getSecParam('prenom_usage', ''),
+            'lieu_naissance' => Request::getSecParam('lieu_naissance_eleve', ''),
+            'date_naissance' => Request::getSecParam('date_naissance_eleve', ''),
+            'sexe' => Request::getSecParam('sexe_eleve', ''),
+            'pays_id' => $id_pays,
+            'photo' => $photo_name,
+            Eleve::PAYS_ID => $this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE),
+            'anciennete' => (Request::getSecParam('anciennete_eleve', '') === '')? 0 : Request::getSecParam('anciennete_eleve', ''),
+            Eleve::STATUT_ELEVE_ID => $statut_eleve_id,
+        ];
 
-        // dd($data_info_eleves['password']);
-        if($photo_peices_jointes != 'attachement.jpg' &&  $photo_peices_jointes != '' ){
-            $data_eleve['pieces_jointes'] =  $photo_peices_jointes;
-        }
+        Eleve::table()
+            ->update($data_eleve)
+            ->where('id', $id_eleve)
+            ->execute();
 
-        if($photo_name != 'no-photo.jpg' && $photo_name != ''){
-            $data_eleve['photo'] =  $photo_name;
-        }
 
-        $result_eleve = Eleve::table()  ->update($data_eleve)
-                                                ->where('code', $code_eleve)
-                                                ->execute();
         $result_eleve = true;
-
-        if ($result_eleve) {
-            $this->sendResponseAndExit(Helpers::toJSON('Mise à jour réalisée avec sucess !!!', TRUE));
+        if (true) {
+            $this->sendResponseAndExit(Helpers::toJSON($result_eleve, TRUE));
         } else {
             $this->sendResponseAndExit($result_eleve, false, 400, 'DB Error');
         }
+
     }
 
     public function apiDeleteEleve($code){
