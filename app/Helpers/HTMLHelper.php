@@ -65,12 +65,21 @@ trait HTMLHelper
             $headerItem = Helpers::object_to_array($headerItem);
             $html .= '  <td  style="word-wrap: break-word;min-width: 20px;max-width: 200px;">' . helpers::formatToReadableOutput($model[$headerItem[FormModel::NAME]], $headerItem[FormModel::EXTERNAL_TYPE]) . '</td>';
         }
-    
-        $html .= '   <td width="20%">
-                        <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_delete_data btn btn-sm btn-danger"><i class="ft-trash-2"></i></button>
-                        <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_update_data btn btn-sm btn-green"><i class="ft-edit-2"></i></button>
-                        <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_read_data btn btn-sm btn-blue"><i class="ft-eye"></i></button>
-                    </td>';
+
+        if(!isset($model['editable']))
+            $model['editable'] = true;
+
+        if($model['editable'])
+        {
+            $html .= '   <td width="20%">
+                            <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_delete_data btn btn-sm btn-danger"><i class="ft-trash-2"></i></button>
+                            <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_update_data btn btn-sm btn-green"><i class="ft-edit-2"></i></button>
+                            <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_read_data btn btn-sm btn-blue"><i class="ft-eye"></i></button>
+                        </td>';        
+        }else{
+            $html .= '   <td width="20%">  </td>';  
+        }
+                 
         $html .= '</tr>';
         return $html;
     }

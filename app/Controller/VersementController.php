@@ -275,10 +275,9 @@ class VersementController extends \App\Controller\Admin\AppController
         ));
     }
 
-     /*
+    /*
     *  **   * Renvoie le formulaire de inscription
     */
-
     public function index_inscription()
     {
         $route = "versement_inscription";
@@ -397,7 +396,6 @@ class VersementController extends \App\Controller\Admin\AppController
     /*
     *  **   * Renvoie le formulaire de inscription
     */
-
     public function index_scolarite()
     {
         $route = "versement_scolarite";
@@ -513,10 +511,10 @@ class VersementController extends \App\Controller\Admin\AppController
         ));
 
     }
+
     /*
     *  Enregistre les informations de  versement et retpurne le status d'enregistrement
     */
-
     public function save_multiple($code)
     {
         $debug = false;
@@ -881,10 +879,10 @@ class VersementController extends \App\Controller\Admin\AppController
         }
 
     }
+
     /*
     *  Enregistre les informations de  versement et retpurne le status d'enregistrement
     */
-
     public function save_scolarite($code)
     {
         $debug = false;
@@ -1249,10 +1247,10 @@ class VersementController extends \App\Controller\Admin\AppController
         }
 
     }
+
     /*
     *  Enregistre les informations de  versement et retpurne le status d'enregistrement
     */
-
     public function save_inscription($code)
     {
         $debug = false;

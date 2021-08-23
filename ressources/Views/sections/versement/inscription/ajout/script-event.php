@@ -5,9 +5,6 @@
 
 let data = 'Bienvenue à la section dédiée aux versements scolaires'
 
-<?php if (isset($data_inscriptpion)){?>
-data = "<?= 'L\'élève '.$data_inscriptpion['nom_eleve'] . ' ' . $data_inscriptpion['prenom_eleve'] . ' a été inscrit avec success à l\année scolaire '. $data_inscriptpion['annee_scolaire'] .' !!! '?>"
-<?php } ?>
 $(document).ready(function(){ flash_msg(data) });
 
 

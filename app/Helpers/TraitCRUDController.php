@@ -54,7 +54,6 @@ trait TraitCRUDController
     }
 
     public function getall(){
-        dd(DBTable::getModel($this->vairant)->select()->where('visibilite', 1)->get());
         return json_decode(json_encode(DBTable::getModel($this->vairant)->select()->where('visibilite', 1)->get()));
         // return $this->{$this->vairant}->all();
     }
