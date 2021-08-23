@@ -224,11 +224,11 @@ use Core\Routing\URL;
 
 
                             <div class="row mt-1">
-                               <div class="col-5">
+                            <div class="col-5">
                                     <div class="row">
-                                        <strong class="col-6">Quartier du père:</strong>
+                                        <strong class="col-6">Adresse email du père:</strong>
 
-                                        <em  id="recap-quartier_pere" class="col-6"><?= Helpers::repeatChar();?></em>
+                                        <em  id="recap-email_pere" class="col-6"><?= Helpers::repeatChar();?></em>
                                     </div>
                                 </div>
 
@@ -293,22 +293,6 @@ use Core\Routing\URL;
                             </div>
 
 
-                            <div class="row mt-1">
-                                <div class="col-5">
-                                    <div class="row">
-                                        <strong class="col-6">Adresse email du père:</strong>
-
-                                        <em  id="recap-email_pere" class="col-6"><?= Helpers::repeatChar();?></em>
-                                    </div>
-                                </div>
-
-                                <div class="col-2">
-
-                                </div>
-
-                                
-
-                            </div>
 
 
                             <!-- recap mère -->
