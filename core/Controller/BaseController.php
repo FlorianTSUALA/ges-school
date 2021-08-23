@@ -65,6 +65,13 @@ abstract class BaseController
     }
  
 
+    protected function redirect_to(string $url)
+    {
+        header("HTTP/1.1 200 OK");
+        header("Location: {$url}");
+    }
+ 
+
     protected function renderAtLocation(string $location, String $nameView, array $variables = [], string $template = 'default')
     {
         header("HTTP/1.1 200 OK");

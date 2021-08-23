@@ -29,7 +29,8 @@ class SalleClasseController extends AppController
         $this->view_title = "Information d'une salle de classe";
         $this->update_title = "Mise à jour d'une salle de classe";
         $this->delete_title = "Suppression d'une salle de classe";
-        $this->msg_delete = "Voulez-vous vraiment supprimer la salle de classe ";
+        $this->msg_delete = "Attention, la suppression d'une salle de clase entrainera la non visibilité des affectations de salle de classe associé à cette salle de classe";
+                            "Mais aussi de touts les entités auquelle elle est rattachée !!!Voulez-vous vraiment supprimer la salle de classe ";
     }
 
         
@@ -37,6 +38,7 @@ class SalleClasseController extends AppController
         $model = SalleClasse::table();
         $results = $model->select(' classe.libelle as classe_id, salle_classe.code as external_target, salle_classe.code as code, salle_classe.libelle as libelle')
                     ->where('classe.visibilite', 1)
+                    ->where('salle_classe.visibilite', 1)
                     ->join('classe', 'salle_classe.classe_id', '=', 'classe.id')->get();
         return $results;
     }

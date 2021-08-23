@@ -139,6 +139,10 @@ class Session
         return $_SESSION[$tag][$tag_type]??null;
     }
 
+    public function set($tag, $value){
+        return $_SESSION[$tag] = $value;
+    }
+
     public function add($tag, $value){
         return $_SESSION[$tag] = $value;
     }

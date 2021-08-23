@@ -59,6 +59,7 @@ class S //Alias of Sessions
     const FLASH_INFO = 'info';
 
     const ANNEE_SCOLAIRE = 'annee_scolaire'; //ANSC
+    const ANNEE_SCOLAIRE_LIBELLE = 'annee_scolaire_label'; //ANSC
     const ANSC_ID = 'id';
     const ANSC_LIBELLE = 'libelle'; 
     const ANSC_DEBUT_ANNEE = 'debut_annee';

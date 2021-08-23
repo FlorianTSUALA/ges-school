@@ -212,6 +212,8 @@ $router->crudRoute('pays', PaysController::class);
 
 //ANNEE_SCOLAIRE
 $router->crudRoute('annee_scolaire', AnneeScolaireController::class);
+$router->addRoute('refresh_annee_scolaire', 'annee_scolaire/{annee_scolaire_id_and_action}', [AnneeScolaireController::class, 'refreshAnneeScolaire']);
+
 
 //TYPE_PAIEMENT
 $router->crudRoute('type_paiement', TypePaiementController::class);

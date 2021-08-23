@@ -28,8 +28,9 @@ class ClasseController extends AppController
         $this->view_title = "Information d'une classe";
         $this->update_title = "Mise à jour d'une classe";
         $this->delete_title = "Suppression d'une classe";
-        $this->msg_delete = "Voulez-vous vraiment supprimer la classe ";
-    }
+        $this->msg_delete = "Attention, la suppression d'une salle de clase entrainera la non visibilité des affectations de salle de classe associé à cette salle de classe";
+                            "Mais aussi de touts les entités auquelle elle est rattachée !!!Voulez-vous vraiment supprimer la salle de classe ";
+}
 
         
     public function getall(){

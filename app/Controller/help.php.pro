@@ -1,5 +1,6 @@
 $annee_scolaires = ( new AnneeScolaireRepository() )->getActive();
 
+$annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
 
         
 $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');

@@ -8,6 +8,7 @@ use App\Helpers\HTMLHelper;
 use Core\HTML\Form\FormModel;
 
 use function Core\Helper\dd;
+use function Core\Helper\vd;
 
 trait TraitCRUDController
 {
@@ -53,8 +54,8 @@ trait TraitCRUDController
     }
 
     public function getall(){
-        // dd($this->{$this->vairant}->all());
-        return $this->{$this->vairant}->all();
+        return json_decode(json_encode(DBTable::getModel($this->vairant)->select()->where('visibilite', 1)->get()));
+        // return $this->{$this->vairant}->all();
     }
 
     public function all(){
@@ -112,7 +113,9 @@ trait TraitCRUDController
 
     public function delete($code)
     {   
-        $result = $this->{$this->vairant}->delete('code', $code);
+        // $result = $this->{$this->vairant}->update('visibilite', 0)->where('code', $code);
+        $result = true;
+        DBTable::getModel($this->{$this->vairant})->update()->set('visibilite', 0)->where('code', '=', strtoupper($code))->execute();
         if($result){
             $items = $this->getall();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
