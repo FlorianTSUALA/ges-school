@@ -87,6 +87,7 @@ class DBAuth
 				// $_SESSION[S::ANNEE_SCOLA_ID] = $annee_scolaire['id'];
 
 				$_SESSION[S::ANNEE_SCOLAIRE] = $annee_scolaire['id'];
+				$_SESSION[S::ANNEE_SCOLAIRE_LIBELLE] = $annee_scolaire['libelle'];
 					
 				return true;
 			}

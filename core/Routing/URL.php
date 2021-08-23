@@ -16,6 +16,18 @@ class  URL{
         }
         return self::$router->get($name)->getPath();
     }
+	
+
+    public static function updateAnneeScolaire(string $annee_scolaire_id): string
+    {
+        $action = str_replace( strtolower(App::base_url()) , "", strtolower(App::full_url()) );
+		$action = str_replace( '/', '___', $action );
+		return  App::base_url() . "annee_scolaire/{$annee_scolaire_id}---{$action}";
+    }
+
+	public static function make_url_from_action(string $action){
+		return App::base_url() . $action;
+	}
 
     public static function link(string $name): string
     {

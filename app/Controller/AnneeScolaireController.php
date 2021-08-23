@@ -2,8 +2,14 @@
 
 namespace App\Controller;
 
-use App\Helpers\TraitCRUDController;
+use App\Helpers\S;
+use Core\Routing\URL;
 use App\Model\DBTable;
+
+use App\Model\AnneeScolaire;
+use function Core\Helper\dd;
+use function Core\Helper\vd;
+use App\Helpers\TraitCRUDController;
 use App\Controller\Admin\AppController;
 
 class AnneeScolaireController extends AppController
@@ -34,4 +40,17 @@ class AnneeScolaireController extends AppController
     // MISE A JOUR DE LA VISIBILITE
 
     //TODO MASQUAGE DE CERTAINS BOUTTONS SUR CERTAINES PAGES DE CRUD
+
+
+    public function refreshAnneeScolaire($annee_scolaire_id_and_action){
+        
+        $data = explode("---", $annee_scolaire_id_and_action, 2);
+        $action = str_replace("___", "/", $data[1]);
+        $annee_scolaire_id = $data[0];
+        $annee_scolaire = AnneeScolaire::table()->select()->where('code', $annee_scolaire_id)->one();
+        $this->session->set(S::ANNEE_SCOLAIRE_LIBELLE, $annee_scolaire['libelle']);
+        $this->session->set(S::ANNEE_SCOLAIRE, $annee_scolaire['id']);
+        $url = URL::make_url_from_action($action);
+        $this->redirect_to($url);
+    }
 }

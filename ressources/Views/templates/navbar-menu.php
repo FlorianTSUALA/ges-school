@@ -1,5 +1,6 @@
 <?php
 
+use App\App;
 use App\Helpers\S;
 use Core\Routing\URL;
 use App\Repository\AnneeScolaireRepository;
@@ -8,7 +9,9 @@ use App\Repository\AnneeScolaireRepository;
 //LA GESTION DES ANNEE SCOLAIRE DOIT ETRE LOCALE
 //ON DOIT GERER CELA AVEC LES SESSIONS. POUR NE PAS BASCULER TOUS LES UTILISATEURS
 //VERS UNE ANNEE SCOLAIRE DONNEE
-$annee_scolaire_courante = ( new AnneeScolaireRepository() )->getActive('libelle')??'non définie';
+// $annee_scolaire_courante = ( new AnneeScolaireRepository() )->getActive('libelle')??'non définie';
+$annee_scolaire_courante = $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE); //annee scolaire courante
+$annee_scolaire_courante_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
 $annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 
 ?>
@@ -59,10 +62,12 @@ $annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 						<a class="nav-link" id="dropdown-flag" ><b>Annee scolaire :</b></a>
 					</li>
 					<li class="dropdown dropdown-language nav-item">
-						<a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span><?= $annee_scolaire_courante ?></span><span class="selected-language"></span></a>
-						<div class="dropdown-menu" aria-labelledby="dropdown-flag">
+						<a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<span class="selected-language"><?= $annee_scolaire_courante ?></span>
+						</a>
+						<div class="dropdown-menu" id="menu_annee_scolaire" aria-labelledby="dropdown-flag">
 						<?php foreach($annee_scolaires as $annee_scolaire){ ?>
-							<a class="dropdown-item" href="#"> <?= $annee_scolaire['libelle']; ?></a>
+							<a class="dropdown-item" href="<?= URL::updateAnneeScolaire($annee_scolaire['id']) ?>"> <?= $annee_scolaire['libelle']; ?></a>
 						<?php } ?>
 						</div>
 					</li>
@@ -150,3 +155,10 @@ $annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 		</div>
 	</div>
 </nav>
+
+<script>
+	  $("#menu_annee_scolaire").change(function () {
+            alert($("#menu_annee_scolaire").val());
+        });
+
+</script>
