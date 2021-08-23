@@ -75,6 +75,8 @@ trait AffectationControllerTraitSalleEnseignant
     /**
      * retourne true si il existe des affectations concernant l'affectation des enseignants à une salle de classe
      * pour une année scolaire donnné
+     * 
+     *  @version a supprimer
      *
      * @param string $annee_scolaire_code
      * @return boolean
@@ -88,7 +90,7 @@ trait AffectationControllerTraitSalleEnseignant
     /**
      * retourne true si il existe des affectations concernant l'affectation des enseignants à une salle de classe
      * pour une année scolaire donnné
-     *
+     *  @version a supprimer
      * @param string $annee_scolaire_code
      * @return boolean
      */
@@ -102,16 +104,49 @@ trait AffectationControllerTraitSalleEnseignant
         return ( is_array($result) && count($result)>0);
     }
 
+
+        /**
+     * pour une année scolaire donnné
+     *
+     * @param string $annee_scolaire_code
+     * @return boolean
+     */
+    private function checkAndResolveInexistenceAffectationSalleEnseignant($annee_scolaire_id)
+    {
+        //verification incomplete, doit se faire pour toutes les salles de classe
+        //Il peut survenir que l'on cree ou modifie une salle de classe
+        $data_salle_classe = SalleClasse::table()->select([ 'id' => 'id' ])->where('visibilite', '=', 1)->get();
+        foreach ($data_salle_classe as $salle_classe)
+        {
+            $model = AffectationPersonnelSalleClasse::table();
+            $is_exists = $model->select()
+                            ->where('salle_classe_id', '=', $salle_classe['id'])
+                            ->where('visibilite', '=', 1)
+                            ->where('annee_scolaire_id', $annee_scolaire_id)
+                            ->exists();
+            
+            if(!$is_exists){
+                $salle_classe = $salle_classe['id'];
+                $data = ['annee_scolaire_id' => $annee_scolaire_id, 'salle_classe_id' => $salle_classe, 'code' =>  AffectationPersonnelSalleClasse::generateCode()];
+                AffectationPersonnelSalleClasse::table()->insert($data)->execute();
+            }
+        }
+    }
+    
     public function affecterSalleEnseignant()
     {
         $route = 'affectation_salle_enseignant';
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+     
         $affectationExist = $this->_verifierExistenceAffectationSalleEnseignant($annee_scolaire_id);
-       
+        
+        /*
+        $affectationExist = $this->_verifierExistenceAffectationSalleEnseignant($annee_scolaire_id);
         if(!$affectationExist)
             $this->_genererAffectationSalleEnseignant($annee_scolaire_id);
-
-            $salle_classes = Helpers::toJSON(SalleClasse::table()->select(['id'=>'id', 'libelle' => 'value'])->where('visibilite', '=', 1)->get());
+        */
+        $this->checkAndResolveInexistenceAffectationSalleEnseignant($annee_scolaire_id);
+        $salle_classes = Helpers::toJSON(SalleClasse::table()->select(['id'=>'id', 'libelle' => 'value'])->where('visibilite', '=', 1)->get());
         $classes = Helpers::toJSON(Classe::table()->select(['id'=>'id', 'libelle' => 'value'])->where('visibilite', '=', 1)->get());
         $personnels = Helpers::toJSON(Personnel::table()->select([ 'id' => 'id' , new Expression("concat(nom,' ',prenom) as value")])->where('visibilite', 1)->get());
         $affectation_personnel_salle_classes = Helpers::toJSON(AffectationPersonnelSalleClasse::table()
