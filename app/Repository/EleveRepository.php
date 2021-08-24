@@ -15,9 +15,15 @@ use function Core\Helper\dd;
 
 class EleveRepository extends BaseRepository{
     
+    /**
+     * @version ok
+     */
     public function __construct() {
     }
     
+    /**
+     * @version ok
+     */
     public function getEleve($eleve_code = NULL)
     {
         $model = DBTable::getModel('eleve')
@@ -37,7 +43,10 @@ class EleveRepository extends BaseRepository{
         }
     }
 
-    public function getInfoEleveParcours($annee_scolaire_id = null)
+    /**
+     * @version ok
+     */
+    public function getEleveParcours($annee_scolaire_id, $eleve_code = NULL)
     {
         $model = DBTable::getModel('eleve')
         ->select(
@@ -54,386 +63,24 @@ class EleveRepository extends BaseRepository{
         ->where('eleve.visibilite', '=', 1);
 
         if(!is_null($annee_scolaire_id)){
-            $model->where('parcours.annee_scolaire_id', '=', $annee_scolaire_id);
+            $model = $model->where('parcours.annee_scolaire_id', '=', $annee_scolaire_id);
+        }else{
+            return null;   
         }
-        return $model->get();
-        
-    }
-        
-    public function info(string $search){
-        $eleve = Eleve::table();
 
-        $eleve = $eleve->select(['id', 'code', 'nom', 'prenom', 'sexe', 'date_naissance', 'lieu_naissance', 'pays.libelle'=>'pays' ])
-                ->join('pays', 'pays.id', '=', 'eleve.pays_id')
-                ->where('eleve.visibilite', '=', 1);
-
-        $data = explode(" ", $search);
-
-        foreach($data as $item){
-            $eleve = $eleve->orWhere('eleve.nom', 'like', '%'.$item.'%');
-            $eleve = $eleve->orWhere('eleve.prenom', 'like', '%'.$item.'%');
+        if(is_null($eleve_code)){
+            $model = $model->get();
+        }else{
+            $model = $model->where('code', '=', $eleve_code)->one();
         }
-        
-        $model = $eleve->limit(5)->get();
 
-        echo json_encode($eleves);
+        return $model;
         
     }
-
-    public function detail_exp(string $code){
-        $eleve = Eleve::table();
-        $parcours = Parcours::table();
     
-        $eleve = $eleve->select(['id', 'code', 'nom', 'prenom', 'sexe', 'date_naissance', 'lieu_naissance', 'pays.libelle'=>'pays' ])
-                ->join('pays', 'pays.id', '=', 'eleve.pays_id')
-                ->where('eleve.visibilite', '=', 1)
-                ->where('eleve.code', '=', $code)
-                ->one();
-        
-        $parcours = $parcours
-                ->select(
-                    [
-                        'id', 'code', 'nom', 'prenom', 'sexe', 
-                        'date_naissance', 
-                        'pension_classe.type' => '', 
-                        'pension_classe.' => '', 
-                        'pays.libelle'=>'pays' 
-                    ]
-                )
-                ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
-                ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
-                ->join('pension_classe', 'pension_classe.classe_id', '=', 'parcours.classe_id')
-                ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
-                ->where('parcours.visibilite', '=', 1)
-                ->where('parcours.eleve_id', '=', $eleve->id)
-                ->one();
-            //Add pension classe
-    }
-    
-
-    /**
-     * Undocumented function
-     *@author Frank <fckakambi@gmail.com>
-     * @param [type] $annee_scolaire_id
-     * @return void
-     */
-    public function getEleveNonInscri($eleve_code, $annee_scolaire_id){
-        $req =
-        "
-            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
-            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
-            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
-            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
-            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
-            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
-            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
-            from
-            (
-                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
-                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
-                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
-                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
-                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
-                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
-                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
-                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
-                from
-                    (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
-                        from dossier_parental
-                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
-                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
-                    ) dp,
-                    eleve
-                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
-                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
-                        left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id
-
-            ) InfoEleve,
-            (
-                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
-                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
-                from parcours
-                left join classe on classe.id = parcours.classe_id
-                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
-                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
-                #where annee_scolaire.statut = 1
-            )  InfoParcours
-            where InfoEleve.id = InfoParcours.id
-            order by InfoParcours.date_inscription
-        ";
-        $result = $this->query($req);
-        return $this->toObject($result);
-    }
-
-    /**
-     * Undocumented function
-     *@author Frank <fckakambi@gmail.com>
-     * @param [type] $annee_scolaire_id
-     * @return void
-     */
-    public function getElevesNonInscris($annee_scolaire_id){
-        $req =
-        "
-            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
-            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
-            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
-            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
-            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
-            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
-            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
-            from
-            (
-                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
-                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
-                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
-                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
-                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
-                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
-                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
-                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
-                from
-                    (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
-                        from dossier_parental
-                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
-                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
-                    ) dp,
-                    eleve
-                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
-                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
-                        left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id
-
-            ) InfoEleve,
-            (
-                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
-                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
-                from parcours
-                left join classe on classe.id = parcours.classe_id
-                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
-                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
-                #where annee_scolaire.statut = 1
-            )  InfoParcours
-            where InfoEleve.id = InfoParcours.id
-            order by InfoParcours.date_inscription
-        ";
-        $result = $this->query($req);
-        return $this->toObject($result);
-    }
-    
-
-    /**
-     * Undocumented function
-     *@author Frank <fckakambi@gmail.com>
-     * @param [type] $annee_scolaire_id
-     * @return void
-     */
-    public function getEleveInscri($eleve_code, $annee_scolaire_id){
-        $req =
-        "
-            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
-            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
-            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
-            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
-            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
-            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
-            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
-            from
-            (
-                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
-                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
-                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
-                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
-                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
-                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
-                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
-                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
-                from
-                    (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
-                        from dossier_parental
-                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
-                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
-                    ) dp,
-                    eleve
-                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
-                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
-                        left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id
-
-            ) InfoEleve,
-            (
-                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
-                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
-                from parcours
-                left join classe on classe.id = parcours.classe_id
-                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
-                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
-                #where annee_scolaire.statut = 1
-            )  InfoParcours
-            where InfoEleve.id = InfoParcours.id
-            order by InfoParcours.date_inscription
-        ";
-        $result = $this->query($req);
-        return $this->toObject($result);
-    }
-
-    /**
-     * Undocumented function
-     *@author Frank <fckakambi@gmail.com>
-     * @param [type] $annee_scolaire_id
-     * @return void
-     */
-    public function getElevesInscris($annee_scolaire_id){
-        $req =
-        "
-            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
-            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
-            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
-            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
-            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
-            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
-            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
-            from
-            (
-                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
-                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
-                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
-                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
-                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
-                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
-                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
-                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
-                from
-                    (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
-                        from dossier_parental
-                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
-                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
-                    ) dp,
-                    eleve
-                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
-                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
-                        left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id
-
-            ) InfoEleve,
-            (
-                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
-                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
-                from parcours
-                left join classe on classe.id = parcours.classe_id
-                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
-                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
-                #where annee_scolaire.statut = 1
-            )  InfoParcours
-            where InfoEleve.id = InfoParcours.id
-            order by InfoParcours.date_inscription
-        ";
-        $result = $this->query($req);
-        return $this->toObject($result);
-    }
-
-    public function getEleveInscriptionInfoById($matricule){
-        $req =
-        "
-            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
-            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
-            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
-            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
-            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
-            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
-            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
-            from
-            (
-                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
-                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
-                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
-                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
-                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
-                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
-                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
-                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
-                from
-                    (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
-                        from dossier_parental
-                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
-                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
-                    ) dp,
-                    eleve
-                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
-                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
-                        left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id
-
-            ) InfoEleve,
-            (
-                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
-                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
-                from parcours
-                left join classe on classe.id = parcours.classe_id
-                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
-                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
-                #where annee_scolaire.statut = 1
-            )  InfoParcours
-            where InfoEleve.id = InfoParcours.id and InfoEleve.matricule=?
-            order by InfoParcours.date_inscription
-        ";
-        $result = $this->query($req, array($matricule));
-        return $this->toObject($result);
-    }
-
     /**
      * using in eleve liste
-     *
+     * @author Prodigit <prodigit7@gmail.com>
      * @return void
      */
     public function getInfoEleves(){
@@ -484,7 +131,7 @@ class EleveRepository extends BaseRepository{
 
     /**
      * using in eleve liste
-     *
+     * @author Prodigit <prodigit7@gmail.com>
      * @return void
      */
     public function getInfoEleve($eleve_code){
@@ -578,6 +225,394 @@ class EleveRepository extends BaseRepository{
         $result = $this->query($req);
         return $this->toObject($result)[0];
     }
+
+    /**
+     * Undocumented function
+     *@author Frank <fckakambi@gmail.com>
+     * @param [type] $annee_scolaire_id
+     * @version  to_implement
+     * @return Boolean
+     */
+    public function checkIfInParcours($eleve_code, $annee_scolaire_id){
+        $req =
+        "
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
+            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
+            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
+            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
+            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
+            InfoEleve.sexe as sexe_eleve,
+            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
+            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
+            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
+            from
+            (
+                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
+                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
+                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
+                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
+                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
+                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
+                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
+                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
+                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
+                from
+                    (
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        from dossier_parental
+                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
+                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
+                    ) dp,
+                    eleve
+                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
+                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
+                        left join pays on pays.id = eleve.pays_id
+                where dp.id = eleve.dossier_parental_id
+
+            ) InfoEleve,
+            (
+                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
+                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
+                from parcours
+                left join classe on classe.id = parcours.classe_id
+                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
+                #where annee_scolaire.statut = 1
+            )  InfoParcours
+            where InfoEleve.id = InfoParcours.id
+            order by InfoParcours.date_inscription
+        ";
+        $result = $this->query($req);
+        return $this->toObject($result);
+    }
+
+    /**
+     * Undocumented function
+     *@author Frank <fckakambi@gmail.com>
+     * @param [type] $annee_scolaire_id
+     * @version  to_implement
+     * @return void
+     */
+    public function getElevesNonInscris($annee_scolaire_id){
+        $req =
+        "
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
+            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
+            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
+            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
+            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
+            InfoEleve.sexe as sexe_eleve,
+            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
+            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
+            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
+            from
+            (
+                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
+                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
+                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
+                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
+                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
+                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
+                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
+                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
+                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
+                from
+                    (
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        from dossier_parental
+                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
+                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
+                    ) dp,
+                    eleve
+                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
+                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
+                        left join pays on pays.id = eleve.pays_id
+                where dp.id = eleve.dossier_parental_id
+
+            ) InfoEleve,
+            (
+                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
+                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
+                from parcours
+                left join classe on classe.id = parcours.classe_id
+                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
+                #where annee_scolaire.statut = 1
+            )  InfoParcours
+            where InfoEleve.id = InfoParcours.id
+            order by InfoParcours.date_inscription
+        ";
+        $result = $this->query($req);
+        return $this->toObject($result);
+    }
+
+    /**
+     * Undocumented function
+     *@author Frank <fckakambi@gmail.com>
+     * @param [type] $annee_scolaire_id
+     * @version  to_implement
+     * @return void
+     */
+    public function getEleveInscri($eleve_code, $annee_scolaire_id){
+        $req =
+        "
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
+            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
+            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
+            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
+            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
+            InfoEleve.sexe as sexe_eleve,
+            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
+            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
+            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
+            from
+            (
+                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
+                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
+                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
+                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
+                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
+                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
+                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
+                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
+                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
+                from
+                    (
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        from dossier_parental
+                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
+                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
+                    ) dp,
+                    eleve
+                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
+                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
+                        left join pays on pays.id = eleve.pays_id
+                where dp.id = eleve.dossier_parental_id
+
+            ) InfoEleve,
+            (
+                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
+                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
+                from parcours
+                left join classe on classe.id = parcours.classe_id
+                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
+                #where annee_scolaire.statut = 1
+            )  InfoParcours
+            where InfoEleve.id = InfoParcours.id
+            order by InfoParcours.date_inscription
+        ";
+        $result = $this->query($req);
+        return $this->toObject($result);
+    }
+
+    /**
+     * Undocumented function
+     *@author Frank <fckakambi@gmail.com>
+     * @param [type] $annee_scolaire_id
+     * @version  to_implement
+     * @return void
+     */
+    public function getElevesInscris($annee_scolaire_id){
+        $req =
+        "
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
+            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
+            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
+            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
+            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
+            InfoEleve.sexe as sexe_eleve,
+            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
+            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
+            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
+            from
+            (
+                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
+                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
+                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
+                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
+                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
+                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
+                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
+                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
+                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
+                from
+                    (
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        from dossier_parental
+                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
+                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
+                    ) dp,
+                    eleve
+                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
+                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
+                        left join pays on pays.id = eleve.pays_id
+                where dp.id = eleve.dossier_parental_id
+
+            ) InfoEleve,
+            (
+                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
+                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
+                from parcours
+                left join classe on classe.id = parcours.classe_id
+                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
+                #where annee_scolaire.statut = 1
+            )  InfoParcours
+            where InfoEleve.id = InfoParcours.id
+            order by InfoParcours.date_inscription
+        ";
+        $result = $this->query($req);
+        return $this->toObject($result);
+    }
+
+
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+        /**
+     * @version old
+     */ 
+    public function info(string $search){
+        $eleve = Eleve::table();
+
+        $eleve = $eleve->select(['id', 'code', 'nom', 'prenom', 'sexe', 'date_naissance', 'lieu_naissance', 'pays.libelle'=>'pays' ])
+                ->join('pays', 'pays.id', '=', 'eleve.pays_id')
+                ->where('eleve.visibilite', '=', 1);
+
+        $data = explode(" ", $search);
+
+        foreach($data as $item){
+            $eleve = $eleve->orWhere('eleve.nom', 'like', '%'.$item.'%');
+            $eleve = $eleve->orWhere('eleve.prenom', 'like', '%'.$item.'%');
+        }
+        
+        $model = $eleve->limit(5)->get();
+
+        echo json_encode($eleves);
+        
+    }
+
+    /**
+     * @version old
+     */
+    public function detail_exp(string $code){
+        $eleve = Eleve::table();
+        $parcours = Parcours::table();
+    
+        $eleve = $eleve->select(['id', 'code', 'nom', 'prenom', 'sexe', 'date_naissance', 'lieu_naissance', 'pays.libelle'=>'pays' ])
+                ->join('pays', 'pays.id', '=', 'eleve.pays_id')
+                ->where('eleve.visibilite', '=', 1)
+                ->where('eleve.code', '=', $code)
+                ->one();
+        
+        $parcours = $parcours
+                ->select(
+                    [
+                        'id', 'code', 'nom', 'prenom', 'sexe', 
+                        'date_naissance', 
+                        'pension_classe.type' => '', 
+                        'pension_classe.' => '', 
+                        'pays.libelle'=>'pays' 
+                    ]
+                )
+                ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
+                ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
+                ->join('pension_classe', 'pension_classe.classe_id', '=', 'parcours.classe_id')
+                ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
+                ->where('parcours.visibilite', '=', 1)
+                ->where('parcours.eleve_id', '=', $eleve->id)
+                ->one();
+            //Add pension classe
+    }
+    
+
+    public function getEleveInscriptionInfoById($matricule){
+        $req =
+        "
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
+            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
+            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
+            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
+            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
+            InfoEleve.sexe as sexe_eleve,
+            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
+            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoParcours.date_inscription_parcours as date_inscription_parcours, InfoParcours.classe as classe_parcours,
+            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
+            from
+            (
+                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
+                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
+                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
+                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
+                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
+                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
+                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
+                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
+                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
+                from
+                    (
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        from dossier_parental
+                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
+                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
+                    ) dp,
+                    eleve
+                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
+                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
+                        left join pays on pays.id = eleve.pays_id
+                where dp.id = eleve.dossier_parental_id
+
+            ) InfoEleve,
+            (
+                select  parcours.eleve_id as id, parcours.date_inscription_parcours, classe.libelle as classe_parcours,
+                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
+                from parcours
+                left join classe on classe.id = parcours.classe_id
+                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+                left join annee_scolaire on annee_scolaire.id = parcours.classe_id
+                #where annee_scolaire.statut = 1
+            )  InfoParcours
+            where InfoEleve.id = InfoParcours.id and InfoEleve.matricule=?
+            order by InfoParcours.date_inscription
+        ";
+        $result = $this->query($req, array($matricule));
+        return $this->toObject($result);
+    }
+
+
 
     public function getEleveInscriptionInfo(){
         $req =

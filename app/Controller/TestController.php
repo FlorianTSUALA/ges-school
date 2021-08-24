@@ -19,6 +19,7 @@ use App\Model\DossierMedical;
 use App\Model\DossierParental;
 use App\Model\StatutApprenant;
 use App\Model\AntecedentScolaire;
+use App\Repository\EleveRepository;
 use App\Repository\ClasseRepository;
 use App\Repository\CantineRepository;
 use App\Repository\DocumentRepository;
@@ -214,8 +215,8 @@ class TestController extends AppController
 
     public function testSQL()
     {
-        $repository = new AffectationSalleClasseRepository();
-        $result = $repository->getEnseignantNonAffecte();
+        $repository = new EleveRepository();
+        $result = $repository->getEleveInscriptionInfo();
         dd($result);
     }
 
