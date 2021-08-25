@@ -82,7 +82,7 @@
                                                                                 <div class="col-8">
                                                                                     <select id="eleve_nom_complet" class="select2 form-control" name="eleve_nom_complet" required>
                                                                                         <?php foreach($eleves as $item){?>
-                                                                                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_eleve'] == $item['id']))? 'selected' : ''; ?>><?= $item['libelle']; ?></option>
+                                                                                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_eleve'] == $item['id']))? 'selected' : ''; ?>><?= $item['nom_complet']; ?></option>
                                                                                         <?php } ?>
                                                                                     </select>
                                                                                 </div>
@@ -102,9 +102,9 @@
                                                                                 <div class="col-8">
 
                                                                                     <select id="classe" class="select2 form-control" name="classe" required>
-                                                                                        <!-- <option value="-----------">---------------</option> -->
-                                                                                        <?php foreach($classes as $item){?>
-                                                                                                <option data-id="<?= $item['id']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_classe'] == $item['id']))? 'selected' : ''; ?>><?= $item['libelle']; ?></option>
+                                                                                        <option data-montant="0"  data-id="<?= $item['id']; ?>" selected value="----"> selecionnez une classe</option>
+                                                                                        <?php foreach($pension_classe as $item){?>
+                                                                                                <option  data-montant="<?= $item['montant']; ?>" data-pension_classe_id="<?= $item['id']; ?>" value="<?= $item['classe_id']; ?>" ><?= $item['classe_libelle']; ?></option>
                                                                                         <?php } ?>
                                                                                     </select>
                                                                                 </div>

@@ -44,7 +44,8 @@ class EleveRepository extends BaseRepository{
     }
 
     /**
-     * @version ok
+     * @version stable
+     * @uses in VesementController.php
      */
     public function getEleveParcours($annee_scolaire_id, $eleve_code = NULL)
     {
@@ -97,6 +98,7 @@ class EleveRepository extends BaseRepository{
             InfoEleve.sexe as sexe,
             InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
             InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
+            InfoEleve.statut_eleve_id as statut_eleve_id, InfoEleve.statut_eleve as statut_eleve,
             InfoEleve.code as id
             from
             (
@@ -110,7 +112,8 @@ class EleveRepository extends BaseRepository{
                         eleve.id as id, eleve.code as code, eleve.prenom_usage as prenom_usage,
                         eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
                         eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo
+                        eleve.anciennete as anciennete, eleve.photo as photo,
+                        statut_eleve.code as statut_eleve_id, statut_eleve.libelle as statut_eleve
                 from
                     (
                         select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
@@ -122,6 +125,7 @@ class EleveRepository extends BaseRepository{
                         left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
                         left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
                         left join pays on pays.id = eleve.pays_id
+                        left join statut_eleve on statut_eleve.id = eleve.statut_eleve_id
                 where dp.id = eleve.dossier_parental_id and eleve.visibilite = 1
             ) InfoEleve
         ";
@@ -163,7 +167,9 @@ class EleveRepository extends BaseRepository{
             InfoEleve.ville_mere as ville_mere, InfoEleve.bureau_mere as bureau_mere, InfoEleve.est_tutrice as est_tutrice, 
             InfoEleve.email_mere as email_mere, InfoEleve.signature_mere as signature_mere, 
             InfoEleve.nom_personne_urgence as nom_personne_urgence, InfoEleve.prenom_personne_urgence as prenom_personne_urgence, 
-            InfoEleve.telephone_personne_urgence as telephone_personne_urgence, InfoEleve.lien as lien                         
+            InfoEleve.telephone_personne_urgence as telephone_personne_urgence, InfoEleve.lien as lien,
+            InfoEleve.statut_eleve_id as statut_eleve_id, InfoEleve.statut_eleve as statut_eleve
+
 
             
             
@@ -180,6 +186,7 @@ class EleveRepository extends BaseRepository{
                         eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
                         eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
                         eleve.anciennete as anciennete, eleve.photo as photo, pays.libelle as pays,
+                        statut_eleve.code as statut_eleve_id, statut_eleve.libelle as statut_eleve,
 
                         dp.nom_pere as nom_pere, dp.prenom_pere as prenom_pere, dp.profession_pere as profession_pere, 
                         dp.employeur_pere as employeur_pere, dp.lieu_travail_pere as lieu_travail_pere, 
@@ -219,6 +226,7 @@ class EleveRepository extends BaseRepository{
                         left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
                         left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
                         left join pays on pays.id = eleve.pays_id
+                        left join statut_eleve on statut_eleve.id = eleve.statut_eleve_id
                 where dp.id = eleve.dossier_parental_id and eleve.code = '$eleve_code'  and eleve.visibilite = 1
             ) InfoEleve
         ";

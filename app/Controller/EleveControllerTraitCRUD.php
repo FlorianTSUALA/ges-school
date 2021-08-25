@@ -34,7 +34,7 @@ trait EleveControllerTraitCRUD
 
     use TraitCRUDController;
 
-    public function index_eleve_ajout()
+    public function index_ajout()
     {
         $this->app->setTitle('Inscription d\'un(e) élève  - Ges-School');
         $route = "eleve_ajout";

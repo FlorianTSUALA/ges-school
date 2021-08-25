@@ -80,7 +80,7 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     // -- ELEVE
     
         $router->crudRoute('eleve', EleveController::class);
-        $router->addRoute('eleve_ajout', 'eleve/nouveau', [EleveController::class, 'index_eleve_ajout']);
+        $router->addRoute('eleve_ajout', 'eleve/nouveau', [EleveController::class, 'index_ajout']);
         $router->addRoute('eleve_modifier', 'eleve/modifier/{code}', [EleveController::class, 'modifier']);
         $router->addRoute('eleve_liste', 'eleve/liste', [EleveController::class, 'liste']);
         $router->addRoute('eleve_liste_inscrit', 'eleve/liste/inscrit', [EleveController::class, 'liste']);

@@ -38,8 +38,6 @@ use App\Helpers\S;
     // var _reduction = 0
     var _reste = 0
 
-    var cantine_prix_mois = <?= $prix_abonnement_cantine;?>
-
     function init(){
 
         if(isFirstLoad){
@@ -64,6 +62,13 @@ use App\Helpers\S;
 
     }
 
+    //INITIALISATION DU MULTIPLICATEUR
+
+    //  MET A JOUR LE TYPE DE MULTIPLICATEUR QD LA VALEUR DE LA CLASSE CHANGE (HIDE/SHOW)
+    //ToogleVisibleMultiplicator
+    function trigger(classe_id){
+    
+    }
     $(document).ready(function(){
 
         $(btn_home).hide()
