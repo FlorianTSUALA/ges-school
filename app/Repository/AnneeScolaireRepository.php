@@ -63,4 +63,15 @@ class AnneeScolaireRepository extends BaseRepository{
 
         return $id_annee_scolaire;
     }
+
+    public function getAnneeScolaireID($annee_scolaire_lib){
+
+        $annee_scolaire_ids = DBTable::getModel('annee_scolaire')
+        ->select('id')
+        ->where('libelle', '=', $annee_scolaire_lib)
+        ->get();
+        foreach ($annee_scolaire_ids as $annee_scolaire_id ) 
+        return  $annee_scolaire_id['id'] ;
+
+    }
 }

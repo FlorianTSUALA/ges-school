@@ -32,6 +32,8 @@ use Core\HTML\MessageFlash\FlashMessagesStatic;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use App\Repository\AffectationSalleClasseRepository;
+use DateTime;
+use DateHelpers;
 
 
 class TestController extends AppController
@@ -213,11 +215,21 @@ class TestController extends AppController
             dd($data) ;
     }
 
+    public static function getFullYear($datetime)
+    {
+        $time = strtotime($datetime);
+        return date("Y", $time);
+    }
+
+  
+
     public function testSQL()
     {
-        $repository = new EleveRepository();
-        $result = $repository->getInfoEleves();
-        dd(count($result ));
+
+    //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
+    
+    dd((new EleveRepository )->getElevesdemissioner(3)) ;
+  
     }
 
     public function testpdf()
