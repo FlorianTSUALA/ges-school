@@ -80,47 +80,5 @@ $(document).ready(function(){ flash_msg(data) });
 
     })
 
-    //INITIALISATION DU MULTIPLICATEUR
-
-    //  MET A JOUR LE TYPE DE MULTIPLICATEUR QD LA VALEUR DE LA CLASSE CHANGE (HIDE/SHOW)
-    //ToogleVisibleMultiplicator
-    function trigger(classe_id){
-        let type_pension_classe = <?= $pension_classe; ?>
-        //Initilisation
-        <?php   $i = -1;
-            foreach($type_pensions as $type_pension){  $i++; ?>
-                let <?= "active_type_$i"; ?> = '#TYPE-NUMBER-<?= $type_pension['id']; ?>'
-                let <?= "inactive_type_$i"; ?> = '#TYPE-SELECT-<?= $type_pension['id']; ?>'
-
-                type_pension_classe.forEach(function(item){
-
-                    if(item.type_pension == '<?= $type_pension['id']; ?>' && item.classe == classe_id){
-                        
-                        items[<?= $i; ?>]['pension_classe_code'] = item.id;
-                        items[<?= $i; ?>]['montant'] = item.montant;
-                        items[<?= $i; ?>]['remise'] = item.remise;
-                        items[<?= $i; ?>]['mensualite'] = item.mensualite;
-                        items[<?= $i; ?>]['est_mensuel'] = item.est_mensuel;
-                        
-
-                        if(parseInt(item.est_mensuel) == 1){
-                            <?= "active_type_$i"; ?> = '#TYPE-SELECT-<?= $type_pension['id']; ?>'
-                            <?= "inactive_type_$i"; ?> = '#TYPE-NUMBER-<?= $type_pension['id']; ?>'
-                        }else{
-                            <?= "active_type_$i"; ?> = '#TYPE-NUMBER-<?= $type_pension['id']; ?>'
-                            <?= "inactive_type_$i"; ?> = '#TYPE-SELECT-<?= $type_pension['id']; ?>'
-                        }
-
-                        return item;
-                    }
-
-                })
-
-                $(<?= "active_type_$i"; ?>).show()
-                $(<?= "inactive_type_$i"; ?>).hide()
-
-        <?php } ?>
-
-    }
 
 </script>

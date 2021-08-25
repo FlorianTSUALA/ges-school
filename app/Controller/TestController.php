@@ -216,8 +216,8 @@ class TestController extends AppController
     public function testSQL()
     {
         $repository = new EleveRepository();
-        $result = $repository->getEleveInscriptionInfo();
-        dd($result);
+        $result = $repository->getInfoEleves();
+        dd(count($result ));
     }
 
     public function testpdf()
