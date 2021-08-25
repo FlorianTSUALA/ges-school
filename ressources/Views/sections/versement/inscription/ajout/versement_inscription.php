@@ -12,7 +12,6 @@
     echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQuery.print.js"></script>';
     
     require "script-component-init.php";
-    require "script-event.php";
     require "script-save.php";
     require "script-update-etat.php";
     require "script-versement_inscription.php";

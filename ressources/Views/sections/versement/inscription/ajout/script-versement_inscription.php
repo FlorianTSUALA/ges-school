@@ -3,8 +3,16 @@
 use App\Helpers\S;
 
 ?>
-
 <script>
+
+
+    //Revoir le tag recapitulatif
+
+    let data = 'Bienvenue à la section dédiée aux versements scolaires'
+
+    $(document).ready(function(){ flash_msg(data) });
+
+
     var tranches = []
     var isFirstLoad = true
     var fromInscription = <?= ($this->session->has(S::DATA_TRANSPORT))? 'true' : 'false' ;?>
@@ -39,63 +47,21 @@ use App\Helpers\S;
     var _reste = 0
 
     function init(){
-
         if(isFirstLoad){
-            trigger($(classe).select2().find(':selected').data('id'))
+            trigger($(classe).select2().find(':selected').data('montant'))
             isFirstLoad = false;
         }
-
-        let _montant_total = 0;
-        let i = 0;
-
-
-
-        // //Reste
-            // _reduction = parseFloat($(reduction).val())
-            // _reste = parseFloat($(reste).val())
-            // _montant_total -= _reduction
-            _montant_total -= _reste
-            let reduction_familiale = (isNaN($('#RF-reduction').val()))? 0 : $('#RF-reduction').val()
-            _montant_total = _montant_total - reduction_familiale
-            $(montant).val(_montant_total)
-        // //Reste
-
-    }
-
-    //INITIALISATION DU MULTIPLICATEUR
-
-    //  MET A JOUR LE TYPE DE MULTIPLICATEUR QD LA VALEUR DE LA CLASSE CHANGE (HIDE/SHOW)
-    //ToogleVisibleMultiplicator
-    function trigger(classe_id){
- 
-}
-    $(document).ready(function(){
 
         $(btn_home).hide()
         $(btn_print).hide()
 
         $(eleve_nom_complet).on("select2:select select2:unselecting", function () {
             $(eleve_nom_complet).select2('data')
-            init()
         })
 
         $(classe).on("select2:select select2:unselecting", function () {
-            trigger($(classe).select2().find(":selected").data("id"))
-            init()
+            trigger($(classe).select2().find(":selected").data("montant"))
         })
-
-
-        $(reduction).on("change paste keyup mouseup", function () {
-            if($(reduction).val() < 0)
-                $(reduction).val(0)
-            init()
-        })
-
-        // $(reste).on("change paste keyup mouseup", function () {
-        //     if($(reste).val() < 0)
-        //         $(reste).val(0)
-        //     init()
-        // })
 
         $(btn_preview).click(function() {
             $(section_versement).hide()
@@ -114,9 +80,18 @@ use App\Helpers\S;
         $(btn_print).click(function() {
             imprimerRecuVersement()
         })
-        
-        init()
+    }
 
+    //INITIALISATION DU MULTIPLICATEUR
+
+    //  MET A JOUR LE TYPE DE MULTIPLICATEUR QD LA VALEUR DE LA CLASSE CHANGE (HIDE/SHOW)
+    //ToogleVisibleMultiplicator
+    function trigger(_montant){
+        $(montant).val(_montant)
+    }
+
+    $(document).ready(function(){
+        init()
     })
 
 

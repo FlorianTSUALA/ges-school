@@ -17,7 +17,6 @@ class TypePaiement extends Model implements FrequentlyReapeat
         $this->fillables =
             [
                 new FormModel(true, self::LIBELLE ),
-
             ];
     }
 }

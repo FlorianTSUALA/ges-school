@@ -51,6 +51,8 @@ class PensionEleve extends Model implements FrequentlyReapeat
 
     }
 
+    const TYPE_MOTIF_PERIODIQUE = 'Payement periodique';
+    const TYPE_MOTIF_NON_PERIODIQUE = 'Payement Non periodique';
     public static function get_pension_by_code($code)
     {
       $pension_eleve = DBTable::getModel('type_pension')

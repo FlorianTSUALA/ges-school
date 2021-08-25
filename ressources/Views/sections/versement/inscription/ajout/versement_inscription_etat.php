@@ -59,7 +59,7 @@ use App\Controller\PrinterController;
                                     </div>
                                 </div>
                                 <div class="col-md-6 col-sm-12 text-center text-md-right">
-                                    <h2>REÇU DE VERSEMENT</h2>
+                                    <h2>REÇU D'INSCRIPTION</h2>
                                     <p class="pb-3" id="recap-reference"> <strong>Réference : </strong> <?= $reference??"" ;?> </p>
                                     <ul class="px-0 list-unstyled">
                                         <li>Solde à payer</li>
@@ -153,14 +153,14 @@ use App\Controller\PrinterController;
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <tbody>
-                                                    <tr>
+                                                    <!-- <tr>
                                                         <td>Sous-Total</td>
                                                         <td class="text-right"><strong id="recap-sous_total"><?= $sous_total??"";?>Fcfa</strong></td>
-                                                    </tr>
-                                                    <tr>
+                                                    </tr> -->
+                                                    <!-- <tr>
                                                         <td>Remise</td>
                                                         <td class="text-right"><strong id="recap-reduction"><?= $remise??"";?> Fcfa</strong></td>
-                                                    </tr>
+                                                    </tr> -->
                                                     <!-- <tr>
                                                         <td>Reste</td>
                                                         <td class="text-right"><strong id="recap-reste"><?= $reste??"";?> Fcfa</strong></td>

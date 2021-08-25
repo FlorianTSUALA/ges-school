@@ -1,7 +1,9 @@
 <?php
 
+use App\Helpers\S;
 use Core\Routing\URL;
 use App\Helpers\Helpers;
+use App\Model\TypePension;
 
 echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQuery.print.js"></script>';
 ?>
@@ -11,17 +13,11 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
 
 
     function sauvegarderVersement(){
-        // console.log(cantines);
-        // console.log(activites);
-        // console.log(autres);
-        
         data = {
-
-                'pension_classe': items,
                 'eleve_id':  data_versement['eleve_id'],
                 'classe_id':  data_versement['classe_id'],
                 'statut_apprenant_id':  data_versement['statut_apprenant'],
-                'annee_scolaire_id':  data_versement['annee_scolaire'],
+                'annee_scolaire_id':  <?= $this->session->get(S::ANNEE_SCOLAIRE); ?>,
                 'type_paiement_id':  data_versement['type_paiement_id'],
                 'motif':  data_versement['motif'],
                 'autre':  data_versement['autres'],
@@ -29,7 +25,10 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
                 'sous_total':  data_versement['sous_total'],
                 'reduction':  data_versement['reduction'],
                 'nom_eleve':  data_versement['eleve_nom_complet'],
+                'motif':  data_versement['motif'],
                 'reference':  data_versement['reference'],
+                'pension_classe_id':  data_versement['pension_classe_id'],
+                'type_pension_id':  '<?= TypePension::INSCRIPTION_CODE ?>',
                 'date_paiement':  data_versement['date_paiement'],
          };
 
@@ -52,8 +51,9 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
                 backgroundColor: '#333'
             },
             onBlock: function() {
+                console.log($('#eleve_nom_complet option:selected').val())
                 $.ajax({
-                    url: '<?= URL::link('versement-create');?>'+$('#eleve_nom_complet option:selected').val(),
+                    url: '<?= URL::link('versement_inscription-create');?>'+$('#eleve_nom_complet option:selected').val(),
                     type: 'post',
                     data: data,
                     dataType: 'json',
@@ -91,7 +91,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
 
 
     function imprimerRecuVersement(){
-        gotoUrl('<?= URL::link('versement_facture');?>'+$('#eleve_nom_complet option:selected').val(), data_versement);
+        gotoUrl('<?= URL::link('versement_inscription_facture');?>'+$('#eleve_nom_complet option:selected').val(), data_versement);
         console.log(data_versement);
     }
 

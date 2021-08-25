@@ -36,13 +36,16 @@ class TrancheScolaireController extends AppController
         // annee_scolaire.code as external_target, 
         $results = $model->select('
                 annee_scolaire.libelle as annee_scolaire_id, 
+                type_tranche_scolaire.libelle as type_tranche_scolaire_id, 
                 tranche_scolaire.code as code, 
                 tranche_scolaire.libelle as libelle, 
                 tranche_scolaire.description as description, 
                 tranche_scolaire.date_fin as date_fin
                 ')
                     ->where('tranche_scolaire.visibilite', 1)
-                    ->join('annee_scolaire', 'tranche_scolaire.annee_scolaire_id', '=', 'annee_scolaire.id')->get();
+                    ->join('annee_scolaire', 'tranche_scolaire.annee_scolaire_id', '=', 'annee_scolaire.id')
+                    ->join('type_tranche_scolaire', 'tranche_scolaire.type_tranche_scolaire_id', '=', 'tranche_scolaire.id')
+                    ->get();
         return $results;
     }
 

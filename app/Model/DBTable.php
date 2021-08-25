@@ -15,6 +15,7 @@ use App\Model\PrixAbonnement;
 use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\InscriptionActivite;
+use App\Model\TypeTrancheScolaire;
 use App\Model\AffectationClasseMatiere;
 use App\Model\AffectationPersonnelSalleClasse;
 
@@ -53,6 +54,7 @@ class DBTable
     const MATIERE = 'matiere';
     const PARCOURS = 'parcours';
     const PAYS = 'pays';
+    const MOIS = 'mois';
     const PENSION_CLASSE = 'pension_classe';
     const PENSION_ELEVE = 'pension_eleve';
     const PENSION = 'pension';
@@ -71,6 +73,7 @@ class DBTable
     const STATUT_ELEVE = 'statut_eleve';
     const TRANCHE_HORAIRE = 'tranche_horaire';
     const TRANCHE_SCOLAIRE = 'tranche_scolaire';
+    const TYPE_TRANCHE_SCOLAIRE = 'type_tranche_scolaire';
     const TYPE_PAIEMENT = 'type_paiement';
     const TYPE_PENSION = 'type_pension';
     const TYPE_PERSONNEL = 'type_personnel';
@@ -163,6 +166,9 @@ class DBTable
             case DBTable::PAYS:
                 return Pays::table();
             break;
+            case DBTable::MOIS:
+                return Mois::table();
+            break;
             case DBTable::VIEW_BULLETIN:
                 return VueBulletin::table();
             break;
@@ -205,6 +211,8 @@ class DBTable
                 return TrancheHoraire::table();
             case DBTable::TRANCHE_SCOLAIRE:
                 return TrancheScolaire::table();
+            case DBTable::TYPE_TRANCHE_SCOLAIRE:
+                return TypeTrancheScolaire::table();
             case DBTable::TYPE_PAIEMENT:
                 return TypePaiement::table();
             case DBTable::TYPE_PENSION:

@@ -1,10 +1,17 @@
+<?php
+use App\Helpers\S;
+use App\Model\Classe;
+use Core\Model\Model;
+use Core\Routing\URL;
+use App\Model\DBTable;
+use Core\Session\Request;
+use App\Repository\AnneeScolaireRepository;
+
 $annee_scolaires = ( new AnneeScolaireRepository() )->getActive();
 
 $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-
         
 $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
-
 
 $code_classe = $this->classe->code(Request::getSecParam('classe_eleve', ''), Classe::LIBELLE) ;
 
@@ -23,3 +30,8 @@ $_SESSION[S::DATA_TRANSPORT] = $data_inscriptpion;
 $location = URL::link('versement');
 
 $this->renderAtLocation($location, 'sections.versement.versement_scolarite', compact('data_inscriptpion'));
+
+$pension_classe_code = Request::getSecParam('pension_classe_id');
+
+$type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
+                

@@ -1,7 +1,9 @@
 <?php
 
+use App\Controller\MoisController;
 use App\Controller\ExcelController;
 use App\Controller\StatutEleveController;
+use App\Controller\TypeTrancheScolaireController;
 
 //START
     use App\Controller\ClubController;
@@ -117,7 +119,13 @@ $router->addRoute('versement_multiple', 'versement/multiple', [VersementControll
 $router->addRoute('versement_inscription', 'versement/inscription', [VersementController::class, 'index_inscription']);
 $router->addRoute('versement_scolarite', 'versement/scolarite', [VersementController::class, 'index_scolarite']);
 
-$router->addRoute('versement-create', 'versement/create/{code}', [VersementController::class, 'save']);
+$router->addRoute('versement_multiple-create', 'versement/multiple/create/{code}', [VersementController::class, 'save_multiple']);
+$router->addRoute('versement_inscription-create', 'versement/inscription/create/{code}', [VersementController::class, 'save_inscription']);
+$router->addRoute('versement_scolarite-create', 'versement/scolarite/create/{code}', [VersementController::class, 'save_scolarite']);
+// $router->addRoute('versement-create', 'versement/create/{code}', [VersementController::class, 'save']);
+$router->addRoute('versement_multiple_facture', 'versement/multiple/print/{code}', [VersementController::class, 'impriner_facture_multiple']);
+$router->addRoute('versement_inscription_facture', 'versement/inscription/print/{code}', [VersementController::class, 'impriner_facture_inscription']);
+$router->addRoute('versement_scolarite_facture', 'versement/scolarite/print/{code}', [VersementController::class, 'impriner_facture_scolarite']);
 $router->addRoute('versement_facture', 'versement/print/{code}', [VersementController::class, 'imprimer_facture']);
 $router->addRoute('versement-preview', 'versement/preview/{code}', [VersementController::class, 'preview']);
 
@@ -209,6 +217,9 @@ $router->crudRoute('statut_eleve', StatutEleveController::class);
 //PAYS
 $router->crudRoute('pays', PaysController::class);
 
+//MOIS
+$router->crudRoute('mois', MoisController::class);
+
 
 //ANNEE_SCOLAIRE
 $router->crudRoute('annee_scolaire', AnneeScolaireController::class);
@@ -221,6 +232,10 @@ $router->crudRoute('type_paiement', TypePaiementController::class);
 
 //TRANCHE_SCOLAIRE
 $router->crudRoute('tranche_scolaire', TrancheScolaireController::class);
+
+
+//TYPE TRANCHE_SCOLAIRE
+$router->crudRoute('type_tranche_scolaire', TypeTrancheScolaireController::class);
 
 //TRANCHE_HORAIRE
 $router->crudRoute('tranche_horaire', TrancheHoraireController::class);

@@ -1,33 +1,25 @@
 <?php
 
+use App\Helpers\S;
 use App\Helpers\Helpers;
+use App\Model\TypePension;
 
-$signataire = "Charbonnier LaRose";
-$funtion_signataire = "Le Sécrétariat";
+$signataire = $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM);
+$funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
 
 ?>
 
 <script>
-
+    var data_versement = [] 
     var reference = '<?= Helpers::generateReference() ?>'
 
     $(document).on('click', '#btn_preview', function(e)
     {
 
-        data_versement['pension_classe'] =  items
-        data_versement['cantines'] =  cantines
-        data_versement['autres'] =  autres
-        data_versement['activites'] =  activites
-
         data_versement['signataire'] = '<?=  $signataire ?>'
         data_versement['funtion_signataire'] = '<?= $funtion_signataire ?>'
 
         data_versement['reference'] = $('#reference').val()
-
-        data_versement['pension_classe'] = items
-        data_versement['cantines'] = cantines
-        data_versement['autres'] = autres
-        data_versement['activites'] = activites
 
         data_versement['date_paiement'] = $('#date_paiement').val()
 
@@ -48,210 +40,38 @@ $funtion_signataire = "Le Sécrétariat";
         data_versement['long_date_facture'] = "<?= Helpers::getFullDate(date("Y-m-d H:i:s")) ?>"
 
         data_versement['montant_paye'] =  $('#montant').val()
+        data_versement['pension_classe_id'] =  $("#classe").select2().find(':selected').data('pension_classe_id')
+        data_versement['motif'] =  "Frais d'inscription"
 
         let classe = $( "#classe option:selected" ).text()
 
-        var body = ''
-        var sous_total = 0
-        var _montant_total = 0
-        var i = 0
-        data_versement['html_table_body'] = body
-
-        $('#recap-body').html(data_versement['html_table_body'])
-        $('#recap-reference').text(data_versement['reference'])
-
-        //Pension Scolaire
-            for(var item in items)
+        //Pension Inscription
+            var body = ''
+            data_versement['html_table_body'] = body
+            $('#recap-body').html(data_versement['html_table_body'])
+            $('#recap-reference').text(data_versement['reference'])
             {
-                
-                let current = items[item]
+                let i = 0
+                let current = []
+                current['motif'] = data_versement['motif']
+                current['montant'] = data_versement['montant_paye'] 
+                current['quantite'] = "Année scolaire <?= $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE); ?>"
+                current['montant_total'] = data_versement['montant_paye']
 
-                let _type_pension_code = current['type_pension_code']
-
-                let  _est_mensuel    = parseInt(current['est_mensuel'])
-                let _montant =  parseFloat(current['montant'])
-                let _mensualite = parseFloat(current['mensualite'])
-
-                let  msg = ''
-                let  sub_total = 0
-                let  tmp_montant = 0
-
-                var _recapitulatif = parseFloat(current['recapitulatif'])
-                _recapitulatif = (isNaN(_recapitulatif))? 0 : _recapitulatif
-                if(_recapitulatif == 0) continue
+                _montant_total = data_versement['montant_paye']
 
                 body += '<tr>'
                 body += '   <th scope="row">'+ (++i) +'</th>'
                 body += '       <td>'
-                body += '           <p>Pension : '+current['type_pension']+'</p>'
-
-                if(_est_mensuel === 1){
-
-                        tmp_montant = _mensualite
-
-                        let subdody = ''
-                        let periode  = ' '
-                        var size = current['multiplicateur'].length
-                        let j = 0
-
-                        for(var tranche in current['multiplicateur'])
-                            periode += (current['multiplicateur'][tranche]['value'] + ((size = ++j)? '.' : ', '))
-
-                        body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
-
-                    }else{
-                        _recapitulatif = (isNaN(_recapitulatif))? 1 : _recapitulatif
-                        tmp_montant = _montant
-                }
-
-                //Reste
-                _montant_total -= current['remise']
-
+                body += '           <p>Pension : '+ current['motif'] + '</p>'
                 body += '       </td>'
-                body += '       <td class="text-right">'+tmp_montant +' Fcfa</td>'
-                body += '       <td class="text-right">'+ _recapitulatif +'</td>'
-                sub_total = tmp_montant * _recapitulatif
-                body += '       <td class="text-right">'+ sub_total +' Fcfa</td>'
-
-                body += '</tr>'
-                sous_total += sub_total
-
-            }
-        //Pension Scolaire
-
-        //Cantines
-            current = cantines
-            let _est_mensuel = parseInt(current['est_mensuel'])
-            let _montant = parseFloat(current['montant'])
-            let _mensualite = parseFloat(current['mensualite'])
-            _multiplicateur = parseFloat(current['multiplicateur'])
-            _multiplicateur = (isNaN(_multiplicateur))? 0 : _multiplicateur
-            let _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-            if(_multiplicateur > 0){
-                
-                body += '<tr>'
-                body += '   <th scope="row">'+(++i)+'</th>'
-                body += '       <td>'
-                body += '           <p>Pension : Cantine </p>'
-
-
-
-                msg = ''
-                sub_total = 0
-                tmp_montant = 0
-                tmp_montant = cantine_prix_mois
-                sub_total = tmp_montant * _multiplicateur - _remise
-                msg = _multiplicateur+"*"+tmp_montant+"-"+_remise+ " = " +sub_total
-
-                _montant_total += sub_total
-                let j = 0
-                let periode = ''
-
-                for(var tranche in current['recapitulatif'])
-                    periode += (current['recapitulatif'][tranche]['value'] + ((size = ++j)? '.' : ', '))
-
-                body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
-
-                body += '       </td>'
-                body += '       <td class="text-right">'+tmp_montant +' Fcfa</td>'
-                body += '       <td class="text-right">'+ _multiplicateur +'</td>'
-                sub_total = tmp_montant * _multiplicateur
-                body += '       <td class="text-right">'+ sub_total +' Fcfa</td>'
-
-                    body += '</tr>'
-                }
-        //Cantines
-
-        //Activite
-            let activites_souscrits  = activites['activites']
-            current = activites
-            _est_mensuel = parseInt(current['est_mensuel'])
-            _montant = parseFloat(current['montant'])
-            _mensualite = parseFloat(current['mensualite'])
-            _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-
-            // console.log(current)
-            // console.log(parseInt(current['recapitulatif']))
-
-            let nbre_tranche = parseInt(current['recapitulatif'])
-            nbre_tranche = (isNaN(nbre_tranche))? 0 : nbre_tranche
-            // console.log(parseInt(nbre_tranche))
-
-            sub_total = 0
-            if(nbre_tranche != 0 ){
-            // if(nbre_tranche != 0 && activites_souscrits != undefined && activites_souscrits.length !== 0){
-                // ++i
-                body += '<tr>'
-                body += '   <th scope="row">' + (++i) + '</th>'
-                body += '       <td>'
-
-
-                let tmp_montant = 0
-                let tmp_montant_txt = ''
-                let msg = ''
-
-                for (let j=0; j<activites_souscrits.length; j++) {
-
-                    if (j == activites_souscrits.length - 1) {
-                        msg += activites_souscrits[j]['value'] + '. '
-                        tmp_montant_txt += activites_souscrits[j]['montant']
-                    } else {
-                        msg += activites_souscrits[j]['value'] + ', '
-                        tmp_montant_txt += activites_souscrits[j]['montant'] + ' + '
-                    }
-
-                    tmp_montant += parseFloat( activites_souscrits[j]['montant'] )
-                }
-
-                sub_total += (tmp_montant * nbre_tranche)
-                tmp_montant = (tmp_montant * nbre_tranche)
-                tmp_montant_txt = '(' + tmp_montant_txt+')*' + nbre_tranche
-
-                body += '           <p>Pension des activités : ' + msg + '</p>'
-
-                sub_total = sub_total - _remise
-
-                _montant_total += sub_total
-                let j = 0
-                let periode = ''
-
-                for (var tranche in current['multiplicateur'])
-                    periode += (current['multiplicateur'][tranche]['value'] + ((size = ++j)? '.' : ', '))
-
-
-                body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
-                body += '       </td>'
-                body += '       <td class="text-right">'+tmp_montant_txt +' Fcfa</td>'
-                body += '       <td class="text-right">'+ nbre_tranche +'</td>'
-
-                body += '       <td class="text-right">'+ tmp_montant +' Fcfa</td>'
+                body += '       <td class="text-right">'+ current['montant'] + ' Fcfa</td>'
+                body += '       <td class="text-right">'+ current['quantite'] + '</td>'
+                body += '       <td class="text-right">'+ current['montant_total'] + ' Fcfa</td>'
                 body += '</tr>'
             }
-        //Activite
+        //Pension Inscription
 
-        //Autres
-            current = autres
-            _montant = parseFloat(current['montant'])
-            _montant = (isNaN(_montant))? 0 : _montant
-            _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-            _montant_total += _montant
-
-            if(_montant !== 0){
-                // ++i
-                body += '<tr>'
-                body += '   <th scope="row">'+(++i)+'</th>'
-                body += '       <td>'
-                body += '           <p>Pension : '+ current['type_pension']+'</p>'
-                body += '       </td>'
-                body += '       <td class="text-right">'+_montant +' Fcfa</td>'
-                body += '       <td class="text-right">  1 </td>'
-                body += '       <td class="text-right">'+ _montant +' Fcfa</td>'
-                body += '</tr>'
-            }
-        //Autres
 
         data_versement['html_table_body'] = body
 
@@ -295,6 +115,6 @@ $funtion_signataire = "Le Sécrétariat";
         $('#section_recaputilatif').show()
     }
 
-    // );
+    );
 
 </script>
