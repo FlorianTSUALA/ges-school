@@ -67,8 +67,8 @@ use App\Helpers\S;
     //  MET A JOUR LE TYPE DE MULTIPLICATEUR QD LA VALEUR DE LA CLASSE CHANGE (HIDE/SHOW)
     //ToogleVisibleMultiplicator
     function trigger(classe_id){
-    
-    }
+ 
+}
     $(document).ready(function(){
 
         $(btn_home).hide()

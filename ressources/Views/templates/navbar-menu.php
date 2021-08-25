@@ -155,10 +155,3 @@ $annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 		</div>
 	</div>
 </nav>
-
-<script>
-	  $("#menu_annee_scolaire").change(function () {
-            alert($("#menu_annee_scolaire").val());
-        });
-
-</script>

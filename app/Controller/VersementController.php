@@ -16,6 +16,7 @@ use function Core\Helper\vd;
 use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\AbonnementActivite;
+use App\Model\TypePension;
 use App\Repository\EleveRepository;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
@@ -320,6 +321,8 @@ class VersementController extends \App\Controller\Admin\AppController
             ->join('classe', 'classe.id', '=', 'pension_classe.classe_id')
             ->join('type_pension', 'type_pension.id', '=', 'pension_classe.type_pension_id')
             ->where('pension_classe.visibilite', '=', 1)
+            ->where('type_pension.code', '=', TypePension::INSCRIPTION_CODE)
+            ->where('type_pension.visibilite', '=', 1)
             ->get();
         
 

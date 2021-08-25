@@ -43,7 +43,9 @@ trait TraitCRUDController
         $data = $this->resolveCode2IdInput($data, $this->fillExternal($this->{$this->vairant}->fillables)); 
         $data += ['code' => $this->{$this->vairant}->genCode()];
 
-        $result = $this->{$this->vairant}->save($data);
+        // $result = DBTable::getModel("$this->vairant")->save($data);
+        $result = DBTable::getModel("$this->vairant")->insert($data)->execute();
+        $result = true;
         if($result){
             $items = $this->getall();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
@@ -68,9 +70,9 @@ trait TraitCRUDController
 
     public function show($code)
     {
-        $entity = $this->{$this->vairant}->find('code', $code);
-        if(is_object($entity))
-            $entity = (array) $entity;
+        // dd( $this->{$this->vairant}->genCode());
+        // $entity = $this->{$this->vairant}->find('code', $code);
+        $entity = DBTable::getModel("$this->vairant")->select()->where('code', '=', $code)->one();
         $entity = $this->resolveId2CodeInput($entity, $this->{$this->vairant}->fillables); 
         if($entity){
             $this->sendResponseAndExit(Helpers::toJSON($entity, TRUE));
@@ -82,8 +84,8 @@ trait TraitCRUDController
 
     public function detail($code)
     {
-        $entity = $this->{$this->vairant}->find('code', $code);
-        
+        // $entity = $this->{$this->vairant}->find('code', $code);
+        $entity = DBTable::getModel("$this->vairant")->select()->where('code', '=', $code)->one();
         $entity = $this->resolveExternalId2Value($entity, $this->{$this->vairant}->fillables);
 
         if($entity){
@@ -100,8 +102,9 @@ trait TraitCRUDController
         $data = $this->resolveCode2IdInput($data, $this->fillExternal($this->{$this->vairant}->fillables)); 
         $clause = [ 'code' => $code ];
 
-        $result = $this->{$this->vairant}->update($data, $clause);
-
+        // $result = $this->{$this->vairant}->update($data, $clause);
+        DBTable::getModel("$this->vairant")->update()->set($data)->where($clause)->execute();
+        $result = true;
         if($result){
             $items = $this->getall();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
@@ -114,8 +117,8 @@ trait TraitCRUDController
     public function delete($code)
     {   
         // $result = $this->{$this->vairant}->update('visibilite', 0)->where('code', $code);
-        $result = true;
         DBTable::getModel($this->{$this->vairant})->update()->set('visibilite', 0)->where('code', '=', strtoupper($code))->execute();
+        $result = true;
         if($result){
             $items = $this->getall();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
