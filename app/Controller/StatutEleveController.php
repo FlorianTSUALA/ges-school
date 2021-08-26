@@ -7,8 +7,9 @@ use Core\Session\Request;
 use App\Helpers\TraitCRUDController;
 use App\Controller\Admin\AppController;
 use App\Model\Parcours;
+use App\Repository\AnneeScolaireRepository;
 
-class StatutEleveController extends AppController
+class StatutEleveController extends AppController 
 {
     use TraitCRUDController;
 
@@ -34,7 +35,10 @@ class StatutEleveController extends AppController
     }
     
     public function actualiserstatut($eleve_id, $annee_scolaire_id){
-      
+
+        $date_precedenteID = (new AnneeScolaireRepository)->getAnneeScolairePrecedenteID($annee_scolaire_id);
+    
+        
         $eleve_affecte = Parcours::table()
       ->select(
       [

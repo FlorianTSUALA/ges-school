@@ -7,6 +7,8 @@ use App\Model\DBTable;
 use App\Model\AnneeScolaire;
 use function Core\Helper\dd;
 use Core\Repository\BaseRepository;
+use Core\helper\DateHelpers;
+
 
 class AnneeScolaireRepository extends BaseRepository{
     
@@ -73,5 +75,24 @@ class AnneeScolaireRepository extends BaseRepository{
         foreach ($annee_scolaire_ids as $annee_scolaire_id ) 
         return  $annee_scolaire_id['id'] ;
 
+    }
+
+    public  function getAnneeScolairePrecedenteID($annee_scolaire_id){
+        $req =
+        "
+            select  annee_scolaire.libelle, annee_scolaire.debut_annee, annee_scolaire.fin_annee
+            from annee_scolaire
+            where annee_scolaire.id = $annee_scolaire_id
+           
+        ";    
+        $result = $this->query($req);   
+         foreach ($result as $key)
+         $date_passeeD = DateHelpers::getFullYear($key->debut_annee)-1;
+         $date_passeeF = DateHelpers::getFullYear($key->debut_annee);
+         $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";
+         $date_passeeID = (new AnneeScolaireRepository)->getAnneeScolaireID($date_passee_libelle);
+         $date_passeeID = intval($date_passeeID );
+        
+         return $date_passeeID;
     }
 }

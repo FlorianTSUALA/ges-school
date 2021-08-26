@@ -10,6 +10,7 @@ use App\Helpers\Helpers;
 use App\Model\AnneeScolaire;
 use Core\Repository\BaseRepository;
 use ClanCats\Hydrahon\Query\Expression;
+use Core\helper\DateHelpers;
 
 use function Core\Helper\dd;
 
@@ -331,31 +332,25 @@ class EleveRepository extends BaseRepository{
      * @return void
      */
     public function getElevesNonInscris($annee_scolaire_id){
-        $req =
-        "
-            select  annee_scolaire.libelle, annee_scolaire.debut_annee, annee_scolaire.fin_annee
-            from annee_scolaire
-            where annee_scolaire.id = $annee_scolaire_id
-           
-        ";    
-        $result = $this->query($req);   
-         foreach ($result as $key)
-         $date_passeeD = self::getFullYear($key->debut_annee)-1;
-         $date_passeeF = self::getFullYear($key->debut_annee);
-         $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";
-         $date_passeeID = (new AnneeScolaireRepository)->getAnneeScolaireID($date_passee_libelle);
-         $date_passeeID = intval($date_passeeID );
 
-         $datas1 = (new EleveRepository)->getElevesInscris($date_passeeID) ; // eleves inscrit l'an precedent
-         $datas2 = (new EleveRepository)->getElevesInscris($annee_scolaire_id);
-         dd($datas1);
+        $anneScolairePrecedenteID = (new AnneeScolaireRepository)->getAnneeScolairePrecedenteID($annee_scolaire_id);
+    
+         $eleveIscritAnneePreds = (new EleveRepository)->getElevesInscris($anneScolairePrecedenteID) ; // eleves inscrit l'an precedent
+         $eleveIscritAnneeEncours = (new EleveRepository)->getElevesInscris($annee_scolaire_id);
+         $datasID = array() ;
+         $datasEleveNonInscrit = array() ;
 
-         foreach($datas1 as $data){
-            dd($datas1);
-            if(in_array($data,$datas2) ){
+         foreach((array)$eleveIscritAnneePreds as $eleveIscritAnneePred){
 
-            }
-         }
+             foreach((array)$eleveIscritAnneeEncours as $eleveIscritAnneeEncour)
+             array_push($datasID , $eleveIscritAnneeEncour->id);  
+               
+            if( !(in_array($eleveIscritAnneePred->id, $datasID)) ){
+                array_push($datasEleveNonInscrit , $eleveIscritAnneePred) ;
+
+            } 
+         } 
+         return $datasEleveNonInscrit;
         
     }
 
@@ -370,7 +365,7 @@ class EleveRepository extends BaseRepository{
         $req =
         "
             select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.email as email, InfoEleve.ecole as ecole, infoEleve.id as id,
             InfoEleve.classe as classe, InfoEleve.telephone as telephone,
             InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
@@ -437,14 +432,14 @@ class EleveRepository extends BaseRepository{
         $req =
         "
             select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole,
+            InfoEleve.email as email, InfoEleve.ecole as ecole, infoEleve.id as id,
             InfoEleve.classe as classe, InfoEleve.telephone as telephone,
             InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
             InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
             InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
+            InfoEleve.sexe as sexe_eleve,InfoEleve.code as code,
             InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
             InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe_parcours as classe_parcours,
@@ -461,7 +456,7 @@ class EleveRepository extends BaseRepository{
                         dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
                         eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
                         eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id
+                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id, eleve.code as code
                 from
                     (
                         select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
