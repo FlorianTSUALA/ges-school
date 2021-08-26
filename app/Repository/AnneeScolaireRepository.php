@@ -84,9 +84,12 @@ class AnneeScolaireRepository extends BaseRepository{
             from annee_scolaire
             where annee_scolaire.id = $annee_scolaire_id
            
-        ";    
-        $result = $this->query($req);   
-         foreach ($result as $key)
+        ";  
+        $result = $this->query($req); 
+
+        if( empty($result))
+         return -1;
+         foreach ($result as $key) ;
          $date_passeeD = DateHelpers::getFullYear($key->debut_annee)-1;
          $date_passeeF = DateHelpers::getFullYear($key->debut_annee);
          $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";

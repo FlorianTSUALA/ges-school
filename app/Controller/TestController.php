@@ -228,7 +228,7 @@ class TestController extends AppController
 
     //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
     
-    dd((new EleveRepository )->getElevesNonInscris(3)) ;
+    dd((new EleveRepository )->getElevesNonInscris(3) );
   
     }
 

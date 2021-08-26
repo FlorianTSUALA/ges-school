@@ -315,4 +315,8 @@ class ParcoursRepository extends BaseRepository{
         return $affectation_classe_eleve;
     }
 
+    
+
+    // where eleve.id  NOT IN
+    // (select  parcours.eleve_id from parcours)
 }
