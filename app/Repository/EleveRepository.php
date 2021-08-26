@@ -324,7 +324,9 @@ class EleveRepository extends BaseRepository{
          $date_passeeID = intval($date_passeeID );
         }
          
-    /**
+    
+    
+        /**
      * Undocumented function
      *@author Frank <fckakambi@gmail.com>
      * @param [type] $annee_scolaire_id
@@ -398,7 +400,7 @@ class EleveRepository extends BaseRepository{
                         left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
                         left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
                         left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id 
+                where dp.id = eleve.dossier_parental_id and eleve.visibilite = 1
 
             ) InfoEleve
             where id  NOT IN
