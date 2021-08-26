@@ -28,6 +28,18 @@ class AnneeScolaireRepository extends BaseRepository{
             default: return $annee_scolaire;
         }
     }
+    
+    public function getAnneeScolaire($value, $tag = 'id', $what_select = 'all'){
+        $model =  DBTable::getModel(DBTable::ANNEE_SCOLAIRE)
+        ->select(['code'=>'id', 'libelle', 'debut_annee', 'fin_annee'])
+        ->where('visibilite', '=', 1)
+        ->where("$tag", '=', "$value")
+        ->one();
+        if(isset($model["$what_select"]))
+            return $model["$what_select"];
+        else
+            return $model;
+    }
 
     public function getAll(){
 
@@ -66,36 +78,11 @@ class AnneeScolaireRepository extends BaseRepository{
         return $id_annee_scolaire;
     }
 
-    public function getAnneeScolaireID($annee_scolaire_lib){
-
-        $annee_scolaire_ids = DBTable::getModel('annee_scolaire')
-        ->select('id')
-        ->where('libelle', '=', $annee_scolaire_lib)
-        ->get();
-        foreach ($annee_scolaire_ids as $annee_scolaire_id ) 
-        return  $annee_scolaire_id['id'] ;
-
-    }
-
     public  function getAnneeScolairePrecedenteID($annee_scolaire_id){
-        $req =
-        "
-            select  annee_scolaire.libelle, annee_scolaire.debut_annee, annee_scolaire.fin_annee
-            from annee_scolaire
-            where annee_scolaire.id = $annee_scolaire_id
-           
-        ";  
-        $result = $this->query($req); 
-
-        if( empty($result))
-         return -1;
-         foreach ($result as $key) ;
-         $date_passeeD = DateHelpers::getFullYear($key->debut_annee)-1;
-         $date_passeeF = DateHelpers::getFullYear($key->debut_annee);
-         $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";
-         $date_passeeID = (new AnneeScolaireRepository)->getAnneeScolaireID($date_passee_libelle);
-         $date_passeeID = intval($date_passeeID );
-        
-         return $date_passeeID;
+        $debut_annee = $this->getAnneeScolaire($annee_scolaire_id, 'id', 'debut_annee');
+        $date_passeeF = DateHelpers::getFullYear($debut_annee);
+        $date_passeeD = $date_passeeF - 1;
+        $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";
+        return intval($this->getAnneeScolaire($date_passee_libelle, 'libelle', 'id'));
     }
 }
