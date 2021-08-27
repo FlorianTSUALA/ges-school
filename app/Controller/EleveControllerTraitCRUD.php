@@ -2,23 +2,25 @@
 
 namespace App\Controller;
 
+use App\Helpers\S;
 use App\Model\Pays;
 use App\Model\Eleve;
+use App\Model\Classe;
 use App\Model\DBTable;
 use App\Helpers\Helpers;
 use App\Model\TypeEleve;
 use Config\Invariant\API;
 use Core\Session\Request;
 use App\Model\SalleClasse;
+
 use App\Model\StatutEleve;
 use App\Helpers\HTMLHelper;
-
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use App\Model\DossierMedical;
+
 use Core\HTML\Form\FormModel;
 use App\Model\DossierParental;
-
 use App\Model\StatutApprenant;
 use App\Model\AntecedentScolaire;
 use App\Repository\EleveRepository;
@@ -195,6 +197,20 @@ trait EleveControllerTraitCRUD
         $route = 'eleve_liste';
         $this->render('sections.scolarite.eleve.liste.eleve_liste', compact( 'route'));
     }
+     
+    public function liste_inscrit()
+    {
+        $route = 'eleve_liste';
+        $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
+        $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes',));
+    }
+     
+    public function liste_non_inscrit()
+    {
+        $route = 'eleve_liste';
+        $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
+        $this->render('sections.scolarite.eleve.liste_non_inscrit.index', compact( 'route', 'classes',));
+    }
 
     public function getall_person()
     {
@@ -225,6 +241,64 @@ trait EleveControllerTraitCRUD
         return $results;
     }
 
+    
+    public function api_eleve_inscrit()
+    {
+        $code = Request::getSecParam('code', NULL);
+        $filter_by = Request::getSecParam('filter_by', 'ALL');
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE);
+        $data = [];
+        $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
+
+        switch($filter_by){
+            case 'classe':
+                $classe_id = Classe::table()->select('id')->where('code', '=', $code)->where('visibilite', '=', 1)->one()['id'];
+                $data = $this->eleve_repository->getElevesInscris($annee_scolaire_id, $classe_id);
+            break;
+            case 'ALL':
+                $data = $this->eleve_repository->getElevesInscris($annee_scolaire_id);
+            break;
+            default:
+                $data = $this->eleve_repository->getElevesInscris($annee_scolaire_id);
+        }
+
+        $results[API::TAG_DATA] = $data;
+        $results[API::TAG_STATUS] = API::TAG_SUCCESS;
+        $results[API::TAG_DATATABLE_DR] = API::TAG_DATATABLE_VALUE_DR;
+        $results[API::TAG_DATATABLE_RT] = count($data);
+        $results[API::TAG_DATATABLE_RF] = count($data);
+        $results[API::TAG_DATA] = $data;
+        echo Helpers::toJSON($results) ;
+    }
+    
+    public function api_eleve_non_inscrit()
+    {
+        $code = Request::getSecParam('code', NULL);
+        $filter_by = Request::getSecParam('filter_by', 'ALL');
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE);
+        $data = [];
+        $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
+
+        switch($filter_by){
+            case 'classe':
+                $classe_id = Classe::table()->select('id')->where('code', '=', $code)->where('visibilite', '=', 1)->one()['id'];
+                $data = $this->eleve_repository->getElevesNonInscris($annee_scolaire_id, $classe_id);
+            break;
+            case 'ALL':
+                $data = $this->eleve_repository->getElevesNonInscris($annee_scolaire_id);
+            break;
+            default:
+                $data = $this->eleve_repository->getElevesNonInscris($annee_scolaire_id);
+        }
+
+        $results[API::TAG_DATA] = $data;
+        $results[API::TAG_STATUS] = API::TAG_SUCCESS;
+        $results[API::TAG_DATATABLE_DR] = API::TAG_DATATABLE_VALUE_DR;
+        $results[API::TAG_DATATABLE_RT] = count($data);
+        $results[API::TAG_DATATABLE_RF] = count($data);
+        $results[API::TAG_DATA] = $data;
+        echo Helpers::toJSON($results) ;
+    }
 
     /**
      * update : permet de mettre à jour un eleve en base de données grace 

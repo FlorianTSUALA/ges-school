@@ -71,10 +71,10 @@ class Eleve extends Model implements FrequentlyReapeat
           $columns .= '{ "data": "id" },';
           $columns .= '{ "data": "nom_complet" },';
           $columns .= '{ "data": "classe" },';
-          $columns .= '{ "data": "surnom" },';
+          // $columns .= '{ "data": "surnom" },';
           $columns .= '{ "data": "sexe" },';
           $columns .= '{ "data": "date_naissance" },';
-          $columns .= '{ "data": "statut_eleve" },';
+          // $columns .= '{ "data": "statut_eleve" },';
           // $columns .= '{ "data": "photo" },';
           // $columns .= '{ "data": "lieu_naisance" },';
           $columns .= '{ "data": null }';
@@ -82,11 +82,12 @@ class Eleve extends Model implements FrequentlyReapeat
         
         case 'table_eleve_non_inscrit':
           $columns .= '{ "data": "id" },';
-          $columns .= '{ "data": "matricule" },';
           $columns .= '{ "data": "nom_complet" },';
-          $columns .= '{ "data": "surnom" },';
+          // $columns .= '{ "data": "classe" },';
+          // $columns .= '{ "data": "surnom" },';
           $columns .= '{ "data": "sexe" },';
           $columns .= '{ "data": "date_naissance" },';
+          // $columns .= '{ "data": "statut_eleve" },';
           // $columns .= '{ "data": "photo" },';
           // $columns .= '{ "data": "lieu_naisance" },';
           $columns .= '{ "data": null }';

@@ -252,10 +252,10 @@ class EleveRepository extends BaseRepository{
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
             InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom, InfoEleve.prenom as prenom,
+            InfoEleve.sexe as sexe,
+            InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe as classe_parcours,
             InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
             InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
@@ -301,12 +301,6 @@ class EleveRepository extends BaseRepository{
         return $this->toObject($result);
     }
 
-    public static function getFullYear($datetime)
-    {
-        $time = strtotime($datetime);
-        return date("Y", $time);
-    }
-
     public function getElevesdemissioner($annee_scolaire_id){
         $req =
         "
@@ -317,12 +311,12 @@ class EleveRepository extends BaseRepository{
         ";    
         $result = $this->query($req);   
          foreach ($result as $key)
-         $date_passeeD = self::getFullYear($key->debut_annee)-1;
-         $date_passeeF = self::getFullYear($key->debut_annee);
+         $date_passeeD = Helpers::getFullYear($key->debut_annee)-1;
+         $date_passeeF = Helpers::getFullYear($key->debut_annee);
          $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";
-         $date_passeeID = (new AnneeScolaireRepository)->getAnneeScolaireID($date_passee_libelle);
+         $date_passeeID = (new AnneeScolaireRepository)->getAnneeScolaire($date_passee_libelle, 'libelle', 'id');
          $date_passeeID = intval($date_passeeID );
-        }
+    }
          
     
     
@@ -333,33 +327,99 @@ class EleveRepository extends BaseRepository{
      * @version  to_implement
      * @return void
      */
-    public function getElevesNonInscris($annee_scolaire_id){
+    public function getElevesNonInscris($annee_scolaire_id, $classe_id='ALL'){
 
         $anneScolairePrecedenteID = (new AnneeScolaireRepository)->getAnneeScolairePrecedenteID($annee_scolaire_id);
 
         if($anneScolairePrecedenteID == 0)
-          return  (new EleveRepository)->getElevesSansParcours();
+          return  $this->getElevesSansParcours();
               
-         $eleveIscritAnneePreds = (new EleveRepository)->getElevesInscris($anneScolairePrecedenteID) ; // eleves inscrit l'an precedent
-         $eleveIscritAnneeEncours = (new EleveRepository)->getElevesInscris($annee_scolaire_id);
+         $eleveIscritAnneePreds = $this->getElevesInscris($anneScolairePrecedenteID) ; // eleves inscrit l'an precedent
+         $eleveIscritAnneeEncours = $this->getElevesInscris($annee_scolaire_id);
 
-         $datasID = array() ;
-         $datasEleveNonInscrit = array() ;
+         $datasID = [];
+         $datasEleveNonInscrit = [];
 
-         foreach((array)$eleveIscritAnneePreds as $eleveIscritAnneePred){
+         foreach((array)$eleveIscritAnneeEncours as $eleveIscritAnneeEncour)
+                array_push($datasID , $eleveIscritAnneeEncour->id);
 
-             foreach((array)$eleveIscritAnneeEncours as $eleveIscritAnneeEncour)
-             array_push($datasID , $eleveIscritAnneeEncour->id);  
-               
-            if( !(in_array($eleveIscritAnneePred->id, $datasID)) ){
-                array_push($datasEleveNonInscrit , $eleveIscritAnneePred) ;
-
+         foreach((array)$eleveIscritAnneePreds as $eleve_annee_precendete){
+            if( !(in_array($eleve_annee_precendete->id, $datasID)) ){
+                array_push($datasEleveNonInscrit , $eleve_annee_precendete) ;
             } 
          } 
          return $datasEleveNonInscrit;
-        
     }
 
+
+    /**
+     * Undocumented function
+     *@author Frank <fckakambi@gmail.com>
+     * @param [type] $annee_scolaire_id
+     * @version  implemented
+     * @return void
+     */
+    public function getElevesInscris($annee_scolaire_id, $classe_id = 'ALL'){
+        
+        $clause_classe_filter = ($classe_id == 'ALL') ? "" : " and parcours.classe_id = $classe_id";
+        // dd($classe_id);
+        $req =
+        "
+            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
+            InfoEleve.email as email, InfoEleve.ecole as ecole, infoEleve.id as id,
+            InfoEleve.classe_antecedant as classe_antecedant, InfoEleve.telephone as telephone,
+            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
+            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
+            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
+            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom, InfoEleve.prenom as prenom, concat(InfoEleve.nom,' ',InfoEleve.prenom) as nom_complet,
+            InfoEleve.sexe as sexe, InfoEleve.code as id,
+            InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
+            InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe as classe,
+            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
+            from
+            (
+                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
+                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
+                        antecedent_scolaire.classe as classe_antecedant, antecedent_scolaire.telephone as telephone,
+                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
+                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
+                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
+                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
+                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
+                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
+                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id, eleve.code as code
+                from
+                    (
+                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
+                        from dossier_parental
+                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
+                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
+                    ) dp,
+                    eleve
+                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
+                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
+                        left join pays on pays.id = eleve.pays_id
+                where dp.id = eleve.dossier_parental_id 
+
+            ) InfoEleve,
+             (
+                select  parcours.eleve_id as id, parcours.date_inscription as date_inscription, classe.libelle as classe,
+                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
+                from parcours
+                left join classe on classe.id = parcours.classe_id
+                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+                left join annee_scolaire on annee_scolaire.id = parcours.annee_scolaire_id
+                where annee_scolaire.id = $annee_scolaire_id $clause_classe_filter
+             )  InfoParcours
+            where InfoEleve.id = InfoParcours.id
+            order by InfoParcours.date_inscription
+        ";
+        $result = $this->query($req);
+        return $this->toObject($result);
+    }
 
     //eleves sans parcours
 
@@ -368,20 +428,20 @@ class EleveRepository extends BaseRepository{
         "
             select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
             InfoEleve.email as email, InfoEleve.ecole as ecole, infoEleve.id as id,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.classe_antecedant as classe_antecedant, InfoEleve.telephone as telephone,
             InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
             InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom, InfoEleve.prenom as prenom, concat(InfoEleve.nom,' ',InfoEleve.prenom) as nom_complet,
+            InfoEleve.sexe as sexe,
+            InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo
             from
             (
                 select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
                         antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        antecedent_scolaire.classe as classe_antecedant, antecedent_scolaire.telephone as telephone,
                         dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
                         dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
                         dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
@@ -433,10 +493,10 @@ class EleveRepository extends BaseRepository{
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
             InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom, InfoEleve.prenom as prenom,
+            InfoEleve.sexe as sexe,
+            InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe_parcours as classe_parcours,
             InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
             InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
@@ -480,72 +540,6 @@ class EleveRepository extends BaseRepository{
         ";
         $result = (new self)->query($req);
         return (new self)->toObject($result);
-    }
-
-    /**
-     * Undocumented function
-     *@author Frank <fckakambi@gmail.com>
-     * @param [type] $annee_scolaire_id
-     * @version  to_implement
-     * @return void
-     */
-    public function getElevesInscris($annee_scolaire_id){
-        $req =
-        "
-            select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
-            InfoEleve.email as email, InfoEleve.ecole as ecole, infoEleve.id as id,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
-            InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
-            InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
-            InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
-            InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,InfoEleve.code as code,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
-            InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe_parcours as classe_parcours,
-            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
-            from
-            (
-                select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
-                        antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
-                        dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
-                        dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
-                        dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
-                        dossier_medical.email_medecin as email_medecin, dossier_medical.autres as autres,
-                        eleve.matricule as matricule, eleve.nom as nom, eleve.prenom as prenom, eleve.sexe as sexe,
-                        eleve.date_naissance as date_naissance, eleve.lieu_naissance as lieu_naissance,
-                        eleve.anciennete as anciennete, eleve.photo as photo, eleve.id as id, eleve.code as code
-                from
-                    (
-                        select dossier_parental.id as id, pp.libelle as pays_pere, pm.libelle as pays_mere
-                        from dossier_parental
-                        left join pays as pp on pp.id = dossier_parental.pays_pere_id
-                        left join pays as pm on pm.id = dossier_parental.pays_mere_id
-                    ) dp,
-                    eleve
-                        left join antecedent_scolaire on eleve.antecedent_scolaire_id = antecedent_scolaire.id
-                        left join dossier_medical on eleve.dossier_medical_id = dossier_medical.id
-                        left join pays on pays.id = eleve.pays_id
-                where dp.id = eleve.dossier_parental_id 
-
-            ) InfoEleve,
-             (
-                select  parcours.eleve_id as id, parcours.date_inscription as date_inscription, classe.libelle as classe_parcours,
-                        annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
-                from parcours
-                left join classe on classe.id = parcours.classe_id
-                left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
-                left join annee_scolaire on annee_scolaire.id = parcours.annee_scolaire_id
-                where annee_scolaire.id = $annee_scolaire_id
-             )  InfoParcours
-            where InfoEleve.id = InfoParcours.id
-            order by InfoParcours.date_inscription
-        ";
-        $result = $this->query($req);
-        return $this->toObject($result);
     }
 
 
@@ -621,10 +615,10 @@ class EleveRepository extends BaseRepository{
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
             InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom, InfoEleve.prenom as prenom,
+            InfoEleve.sexe as sexe,
+            InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe as classe_parcours,
             InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
             InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
@@ -682,10 +676,10 @@ class EleveRepository extends BaseRepository{
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
             InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-            InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-            InfoEleve.sexe as sexe_eleve,
-            InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-            InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+            InfoEleve.matricule as matricule, InfoEleve.nom as nom, InfoEleve.prenom as prenom,
+            InfoEleve.sexe as sexe,
+            InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+            InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe_parcours as classe_parcours,
             InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
             InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant,
@@ -743,10 +737,10 @@ class EleveRepository extends BaseRepository{
         InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
         InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
         InfoEleve.email_medecin as email_medecin, InfoEleve.autres as autres,
-        InfoEleve.matricule as matricule_eleve, InfoEleve.nom as nom_eleve, InfoEleve.prenom as prenom_eleve,
-        InfoEleve.sexe as sexe_eleve,
-        InfoEleve.date_naissance as date_naissance_eleve, InfoEleve.lieu_naissance as lieu_naissance_eleve,
-        InfoEleve.anciennete as anciennete_eleve, InfoEleve.photo as photo_eleve,
+        InfoEleve.matricule as matricule, InfoEleve.nom as nom, InfoEleve.prenom as prenom,
+        InfoEleve.sexe as sexe,
+        InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
+        InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
         InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe_parcours as classe_parcours,
         InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
         InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
