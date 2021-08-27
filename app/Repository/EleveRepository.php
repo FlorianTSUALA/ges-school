@@ -90,7 +90,7 @@ class EleveRepository extends BaseRepository{
             "                
             select  InfoEleve.pays_mere as pays_mere, InfoEleve.pays_pere as pays_pere,
             InfoEleve.email as email, InfoEleve.ecole as ecole,
-            InfoEleve.classe as classe, InfoEleve.telephone as telephone,
+            InfoEleve.classe_precedente as classe_precedente, InfoEleve.telephone as telephone,
             InfoEleve.allergie as allergie, InfoEleve.groupe_sanguin as groupe_sanguin,
             InfoEleve.maladie_recurrente as maladie_recurrente, InfoEleve.probleme_particulier as probleme_particulier,
             InfoEleve.nom_medecin as nom_medecin, InfoEleve.telephone_medecin as telephone_medecin,
@@ -100,12 +100,12 @@ class EleveRepository extends BaseRepository{
             InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
             InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
             InfoEleve.statut_eleve_id as statut_eleve_id, InfoEleve.statut_eleve as statut_eleve,
-            InfoEleve.code as id
+            InfoEleve.code as id, InfoParcours.classe_parcours as classe, InfoParcours.salle_classe_parcours as salle_classe
             from
             (
                 select  dp.pays_mere as pays_mere, dp.pays_pere as pays_pere,
                         antecedent_scolaire.email as email, antecedent_scolaire.ecole as ecole,
-                        antecedent_scolaire.classe as classe, antecedent_scolaire.telephone as telephone,
+                        antecedent_scolaire.classe as classe_precedente, antecedent_scolaire.telephone as telephone,
                         dossier_medical.allergie as allergie, dossier_medical.groupe_sanguin as groupe_sanguin,
                         dossier_medical.maladie_recurrente as maladie_recurrente, dossier_medical.probleme_particulier as probleme_particulier,
                         dossier_medical.nom_medecin as nom_medecin, dossier_medical.telephone_medecin as telephone_medecin,
@@ -128,7 +128,20 @@ class EleveRepository extends BaseRepository{
                         left join pays on pays.id = eleve.pays_id
                         left join statut_eleve on statut_eleve.id = eleve.statut_eleve_id
                 where dp.id = eleve.dossier_parental_id and eleve.visibilite = 1
-            ) InfoEleve
+            ) InfoEleve,
+            (
+               select  parcours.eleve_id as id, parcours.date_inscription as date_inscription, classe.libelle as classe_parcours,
+                       annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant,
+                       salle_classe.libelle as salle_classe_parcours
+               from parcours
+               left join classe on classe.id = parcours.classe_id
+               left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+               left join salle_classe on salle_classe.id = parcours.salle_classe_id
+               left join annee_scolaire on annee_scolaire.id = parcours.annee_scolaire_id
+               #where annee_scolaire.statut = 1
+            )  InfoParcours
+           where InfoEleve.id = InfoParcours.id
+           order by InfoParcours.date_inscription
         ";
         $result = $this->query($req);
         return $this->toObject($result);
@@ -682,7 +695,7 @@ class EleveRepository extends BaseRepository{
             InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe_parcours as classe_parcours,
             InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
-            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant,
+            InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
 
             
             from
@@ -718,7 +731,7 @@ class EleveRepository extends BaseRepository{
                 left join classe on classe.id = parcours.classe_id
                 left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
                 left join annee_scolaire on annee_scolaire.id = parcours.classe_id
-                #where annee_scolaire.statut = 1
+                where annee_scolaire.statut = 1
             )  InfoParcours
             where InfoEleve.id = InfoParcours.eleve_id
             order by InfoParcours.date_inscription

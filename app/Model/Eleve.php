@@ -58,8 +58,8 @@ class Eleve extends Model implements FrequentlyReapeat
         case 'tout_eleve':
           $columns .= '{ "data": "id" },';
           $columns .= '{ "data": "nom_complet" },';
-          $columns .= '{ "data": "surnom" },';
           $columns .= '{ "data": "sexe" },';
+          $columns .= '{ "data": "salle_classe" },';
           $columns .= '{ "data": "date_naissance" },';
           $columns .= '{ "data": "statut_eleve" },';
           // $columns .= '{ "data": "photo" },';

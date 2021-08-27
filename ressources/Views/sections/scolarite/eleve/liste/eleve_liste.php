@@ -40,10 +40,10 @@ $include_footer_script = ob_get_clean();
 $table_header = "
                     <tr>
                         <th style=\"width: 5px;\">N°</th>
-                        <th>Matricule</th>
-                        <th class=\"word-wrap;\">Nom(s) et Prénom(s)</th>
-                        <th class=\"word-wrap;\">Surnon</th>
-                        <th>Sexe</th>
+                        <th>Nom(s) et Prénom(s)</th>
+                        <th class=\"word-wrap;\">Sexe</th>
+                        <th class=\"word-wrap;\">salle de classe</th>
+                        <th>Date de Naissance</th>
                         <th>Age</th>
                         <th style=\"width: 5px;\">Action</th>
                     </tr>
@@ -100,7 +100,6 @@ $table_header = "
                         <!-- Task List table -->
                         <div class="table-responsive-sm" >
                             <table id="table-eleve"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
-
                             <!-- <table id="table-eleve" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle"> -->
                                 <thead> <?= $table_header ?> </thead>
                                 <tbody> </tbody>
