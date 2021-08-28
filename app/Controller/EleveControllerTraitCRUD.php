@@ -318,9 +318,8 @@ trait EleveControllerTraitCRUD
         $code_eleve = strtoupper($code) ;
 
         $eleve = Eleve::table()->select()->where('code', $code_eleve)->one();
-
         $photo_name = "no-photo.jpg";
-        if(isset($_FILES['photo_eleve']))
+        if(isset($_FILES['photo_eleve']) && ($_FILES['photo_eleve']['size'] != 0) )
         {
             $photo_name = Request::saveImg($eleve["matricule"] . '_photo_profile', 'photo_eleve', 'img/eleve');
             if ($photo_name === 1) {
@@ -412,14 +411,17 @@ trait EleveControllerTraitCRUD
             'date_naissance' => Request::getSecParam('date_naissance_eleve', ''),
             'sexe' => Request::getSecParam('sexe_eleve', ''),
             'pays_id' => $id_pays,
-            'photo' => $photo_name,
             Eleve::PAYS_ID => $this->pays->id(Request::getSecParam('pays_eleve', ''), Pays::LIBELLE),
             'anciennete' => (Request::getSecParam('anciennete_eleve', '') === '')? 0 : Request::getSecParam('anciennete_eleve', ''),
             Eleve::STATUT_ELEVE_ID => $statut_eleve_id,
         ];
 
+        if(isset($_FILES['photo_eleve']) && ($_FILES['photo_eleve']['size'] != 0))
+            $data_eleve['photo'] = $photo_name;
+
         Eleve::table()
-            ->update($data_eleve)
+            ->update()
+            ->set($data_eleve)
             ->where('id', $id_eleve)
             ->execute();
 

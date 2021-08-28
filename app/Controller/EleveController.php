@@ -62,13 +62,7 @@ class EleveController extends AppController
 
     public function index()
     {
-        $route = 'eleve';
-        $this->app->setTitle('Liste des élèves inscrits  - Ges-School');
-        $title = $this->title_page;
-        $eleves = $this->eleve_repository->getEleveInscriptionInfo();
-        $classes = DBTable::getModel(DBTable::CLASSE)->select(['code' => 'id', 'libelle' => 'value'])->where('visibilite', '=', 1)->get();
-        //die();
-        $this->render('sections.eleve.index1', compact('route', 'eleves', 'title', 'classes'));
+        $this->liste();
     }
 
     public function eleve_detail(string $code)
