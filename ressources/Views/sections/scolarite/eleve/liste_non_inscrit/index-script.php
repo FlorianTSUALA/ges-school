@@ -19,7 +19,7 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
 
 
 <script>
-  let msg = 'Bienvenue à la section des paiement cantine'
+  let msg = 'Bienvenue à liste des élèves non inscrits'
   block_notification(msg)
 
   var filter_by = 'ALL'

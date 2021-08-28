@@ -174,10 +174,9 @@ class Request
                 $filename = $name . '_'.time(). '_' . $_FILES[$photo]["name"];
                 $filetype = $_FILES[$photo]["type"];
                 $filesize = $_FILES[$photo]["size"];
-
                 // Verify file extension
                 $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                if(!array_key_exists($ext, $allowed)) die("Erreur: Bien vouloir selectionner le bon format d'image.Actualisez la page  et recommencez");
+                if(!array_key_exists(strtolower($ext), $allowed)) die("Erreur: Bien vouloir selectionner le bon format d'image.Actualisez la page  et recommencez");
 
                 // Verify file size - 5MB maximum
                 $maxsize = 5 * 1024 * 1024;

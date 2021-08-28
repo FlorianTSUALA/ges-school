@@ -39,6 +39,8 @@ class TrancheScolaireController extends AppController
                 type_tranche_scolaire.libelle as type_tranche_scolaire_id, 
                 tranche_scolaire.code as code, 
                 tranche_scolaire.libelle as libelle, 
+                tranche_scolaire.date_debut as date_debut, 
+                tranche_scolaire.date_fin as date_fin, 
                 tranche_scolaire.description as description, 
                 tranche_scolaire.date_fin as date_fin
                 ')

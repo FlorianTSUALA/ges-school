@@ -20,7 +20,7 @@ use App\Controller\PrinterController;
     // $cheque= "N° du chèque";
     // $numero_cheque= "UBA165461646546AA";
     // $total = 165000;
-    // $remise = 15000;
+    // $remise = 1500RL::lin0;
     // $reste = 0;
     // $signataire = "Charbonnier LaRose";
     // $funtion_signataire = "Le Sécrétariat";

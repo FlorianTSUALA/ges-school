@@ -28,7 +28,7 @@ use function Core\Helper\dd;
         <input type="file" class="inputfile" style="display: none;" name="photo_eleve" id="photo_eleve" onchange="readURL(this, '.photo');"   accept="image/x-png,image/jpg,image/jpeg,image/gif,image/png,image/jfif" />
         <label for="photo_eleve" style="  display: block; margin-left: auto; margin-right: auto;">
             <figure>
-                <img width="200px" height="200px"  src="<?= URL::base() ?>assets/app-assets/images/portrait/small/no-photo.jpg" alt="" class="photo" class="center">
+                <img width="200px" height="200px"  src="<?= URL::upload() ?>ressources/uploads/img/eleve/<?= $eleve->photo??"no-photo.jpg" ?>" alt="" class="photo" class="center">
             </figure>
         </label>
     </div>

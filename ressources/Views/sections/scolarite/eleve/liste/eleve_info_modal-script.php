@@ -4,7 +4,12 @@
 
 
 <script>
-
+    function redirectTo(id = false){
+        // console.log(id)
+        id = (id == false) ? $('#recap-id').text(): id;
+        // console.log(id)
+        location.href = '<?= URL::link('eleve_modifier') ?>'+id
+    }
 
     
     // Must use FileSaver.js 2.0.2 because 2.0.3 has issues.

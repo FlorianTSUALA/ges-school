@@ -195,21 +195,25 @@ trait EleveControllerTraitCRUD
     public function liste()
     {
         $route = 'eleve_liste';
-        $this->render('sections.scolarite.eleve.liste.eleve_liste', compact( 'route'));
+        $menu_actif = 'liste';
+        $this->render('sections.scolarite.eleve.liste.index', compact( 'route', 'menu_actif'));
     }
      
     public function liste_inscrit()
     {
         $route = 'eleve_liste';
+        $menu_actif = 'liste_inscrit';
+
         $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
-        $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes',));
+        $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes', 'menu_actif'));
     }
      
     public function liste_non_inscrit()
     {
         $route = 'eleve_liste';
+        $menu_actif = 'liste_non_inscrit';
         $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
-        $this->render('sections.scolarite.eleve.liste_non_inscrit.index', compact( 'route', 'classes',));
+        $this->render('sections.scolarite.eleve.liste_non_inscrit.index', compact( 'route', 'classes', 'menu_actif'));
     }
 
     public function getall_person()
@@ -314,10 +318,11 @@ trait EleveControllerTraitCRUD
         $code_eleve = strtoupper($code) ;
 
         $eleve = Eleve::table()->select()->where('code', $code_eleve)->one();
+
         $photo_name = "no-photo.jpg";
-        if(isset($_FILES['photo']))
+        if(isset($_FILES['photo_eleve']))
         {
-            $photo_name = Request::saveImg($eleve["matricule"] . '_photo_profile', 'photo', 'img/eleve');
+            $photo_name = Request::saveImg($eleve["matricule"] . '_photo_profile', 'photo_eleve', 'img/eleve');
             if ($photo_name === 1) {
                 $photo_name = 'no-photo.jpg';
             }

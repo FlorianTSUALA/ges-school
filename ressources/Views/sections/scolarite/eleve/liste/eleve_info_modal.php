@@ -650,8 +650,8 @@ use App\Helpers\Helpers;
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn grey btn-outline-secondary" data-dismiss="modal">Fermer</button>
-                <button type="button" onclick="redirectTo()" class="btn btn-outline-primary">Modifier</button>
+                <button type="button" class="btn btn-outline-primary" data-dismiss="modal">Fermer</button>
+                <button type="button" onclick="redirectTo()" class="btn btn-outline-secondary">Modifier</button>
             </div>
         </div>
     </div>
