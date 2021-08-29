@@ -40,7 +40,7 @@ class TrancheScolaire extends Model implements FrequentlyReapeat
                 new FormModel(false, self::TYPE_TRANCHE_SCOLAIRE_ID, 'Type de tranche', InputType::SELECT2, $type_tranche_scolaires, '', 
                          'Veuillez selectionnez un type de tranche scolaire', true, 'select2', '', '', '', TypeTrancheScolaire::LIBELLE),
                 new FormModel(true, self::LIBELLE, "Tranche", InputType::TEXT, [], '', '', false),
-                new FormModel(false, self::DESCRIPTION, "Mois concerné(s)", InputType::SELECT2_MULTIPLE, $mois, 'Ex: mois de la tranche(Janvier, Fé...)' , true, 'select2 multiple', '', '', '', DBTable::TRANCHE_SCOLAIRE, Self::DESCRIPTION),
+                new FormModel(false, self::DESCRIPTION, "Mois concerné(s)", InputType::SELECT2_MULTIPLE, $mois, 'Ex: mois de la tranche(Janvier, Fé...)' , true, 'select2 multiple', '', '', '', DBTable::TRANCHE_SCOLAIRE, Self::DESCRIPTION), //"#SELECT2MULTIPLE"
                 // new FormModel(false, self::ANNEE_SCOLAIRE_ID, 'Année scolaire', InputType::SELECT2, $anneeScolaires, '', 
                 //          'Veuillez selectionnez une année scolaire', true, 'select2', '', '', '', AnneeScolaire::LIBELLE),
                 
