@@ -79,6 +79,7 @@ class EleveRepository extends BaseRepository{
         return $model;
         
     }
+
     
     /**
      * using in eleve liste
@@ -390,7 +391,7 @@ class EleveRepository extends BaseRepository{
             InfoEleve.date_naissance as date_naissance, InfoEleve.lieu_naissance as lieu_naissance,
             InfoEleve.anciennete as anciennete, InfoEleve.photo as photo,
             InfoParcours.date_inscription as date_inscription_parcours, InfoParcours.classe as classe,
-            InfoParcours.statut_annee_scolaire as statut_annee_scolaire,
+            InfoParcours.statut_annee_scolaire as statut_annee_scolaire, InfoParcours.parcours_salle_classe as salle_classe,
             InfoParcours.annee_scolaire as annee_scolaire, InfoParcours.statut_apprenant as statut_apprenant
             from
             (
@@ -419,11 +420,12 @@ class EleveRepository extends BaseRepository{
 
             ) InfoEleve,
              (
-                select  parcours.eleve_id as id, parcours.date_inscription as date_inscription, classe.libelle as classe,
+                select  parcours.eleve_id as id, parcours.date_inscription as date_inscription, classe.libelle as classe, salle_classe.libelle as parcours_salle_classe,
                         annee_scolaire.debut_annee as annee_scolaire, annee_scolaire.statut as statut_annee_scolaire, statut_apprenant.libelle as statut_apprenant
                 from parcours
                 left join classe on classe.id = parcours.classe_id
                 left join statut_apprenant on statut_apprenant.id = parcours.statut_apprenant_id
+                left join salle_classe on salle_classe.id = parcours.salle_classe_id
                 left join annee_scolaire on annee_scolaire.id = parcours.annee_scolaire_id
                 where annee_scolaire.id = $annee_scolaire_id $clause_classe_filter
              )  InfoParcours

@@ -26,6 +26,7 @@ use App\Model\AntecedentScolaire;
 use App\Repository\EleveRepository;
 use App\Helpers\TraitCRUDController;
 use App\Repository\ClasseRepository;
+use App\Repository\VersementRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
@@ -216,6 +217,13 @@ trait EleveControllerTraitCRUD
         $this->render('sections.scolarite.eleve.liste_non_inscrit.index', compact( 'route', 'classes', 'menu_actif'));
     }
 
+    // public function detail_scolarite_eleve()
+    // {
+    //     $route = 'eleve_liste';
+    //     $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
+    //     $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes'));
+    // }
+    
     public function getall_person()
     {
         $model = Eleve::table();
@@ -524,6 +532,29 @@ trait EleveControllerTraitCRUD
         $results[API::TAG_DATATABLE_RF] = count($data_info_eleves);
         $results[API::TAG_DATA] = $data_info_eleves;
         echo Helpers::toJSON($results) ;
+    }
+    
+    
+    
+    public function api_eleve_info_api_activite($code)  
+    {
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        $data_info_eleves = (new VersementRepository())->getInfoEleveScolarite($code, $annee_scolaire_id);
+        echo Helpers::toJSON($data_info_eleves) ;
+    }
+
+    public function api_eleve_info_api_cantine($code)  
+    {
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        $data_info_eleves = (new VersementRepository())->getInfoEleveScolarite($code, $annee_scolaire_id);
+        echo Helpers::toJSON($data_info_eleves) ;
+    }
+
+    public function api_eleve_info_api_scolarite($code)  
+    {
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        $data_info_eleves = (new VersementRepository())->getInfoEleveScolarite($code, $annee_scolaire_id);
+        echo Helpers::toJSON($data_info_eleves) ;
     }
 
     public function getApiAllEssentiel()  

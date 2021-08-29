@@ -70,9 +70,10 @@ class Eleve extends Model implements FrequentlyReapeat
         case 'table_eleve_inscrit':
           $columns .= '{ "data": "id" },';
           $columns .= '{ "data": "nom_complet" },';
-          $columns .= '{ "data": "classe" },';
-          // $columns .= '{ "data": "surnom" },';
           $columns .= '{ "data": "sexe" },';
+          $columns .= '{ "data": "salle_classe" },';
+          // $columns .= '{ "data": "surnom" },';
+          
           $columns .= '{ "data": "date_naissance" },';
           // $columns .= '{ "data": "statut_eleve" },';
           // $columns .= '{ "data": "photo" },';

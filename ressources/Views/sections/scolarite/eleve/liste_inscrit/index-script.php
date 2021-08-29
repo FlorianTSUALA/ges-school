@@ -9,6 +9,9 @@ use Core\HTML\Form\InputType;
 
 include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
 
+
+
+  // require "eleve_info_modal_scolarite_script.php";
 ?>
 <!--
     ******  VARIABLES *****
@@ -31,22 +34,6 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
   (function(window, document, $) {
     init_data_table()
   })(window, document, jQuery)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -108,10 +95,12 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
           "render": function(data, type, full, meta){ 
                         return '  '+
                                     '<button id="btnSearchDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="btn btn-info dropdown-toggle"><i class="fa fa-cog"></i></button> <span aria-labelledby="btnSearchDrop2" class="dropdown-menu mt-1 dropdown-menu-right">  ' +
-                                    '<a href="#" class="dropdown-item action action-voir" data-action="action-voir"  data-id="'+data.id+'"  ><i class="ft-eye"></i> voir</a>' +
+                                    '<a href="#" class="dropdown-item action action-voir" data-action="action-voir" data-toggle="modal" data-target="#eleve_modal_info" data-id="'+data.id+'"  ><i class="ft-eye"></i> voir</a>' +
                                     '<a href="#" class="dropdown-item action action-modifier" data-action="action-modifier"  data-id="'+data.id+'"  ><i class="ft-edit-2"></i> modifier</a>' +
-                                    '<a href="#" class="dropdown-item action action-restituer" data-action="action-restituer"  data-id="'+data.id+'"  ><i class="ft-check"></i> restituer</a>' +
-                                    '<a href="#" class="dropdown-item action action-reemprunter" data-action="action-reemprunter"  data-id="'+data.id+'"  ><i class="ft-upload"></i> re-emprunter</a>' +
+                                    '<a href="#" class="dropdown-item action action-scolarite" data-action="action-scolarite"  data-id="'+data.id+'"  ><i class="ft-check"></i> scolarité</a>' +
+                                    '<a href="#" class="dropdown-item action action-cantine" data-action="action-cantine" data-toggle="modal" data-target="#eleve_modal_cantine" data-id="'+data.id+'"  ><i class="ft-upload"></i> cantine</a>' +
+                                    '<a href="#" class="dropdown-item action action-activite" data-action="action-activite" data-toggle="modal" data-target="#eleve_modal_activite" data-id="'+data.id+'"  ><i class="ft-upload"></i> activité</a>' +
+                                    '<a href="#" class="dropdown-item action action-reemprunter" data-action="action-reemprunter"  data-id="'+data.id+'"  ><i class="ft-upload"></i> affecter</a>' +
                                     '<a href="#" class="dropdown-item action action-supprimer" data-action="action-supprimer"  data-id="'+data.id+'"  ><i class="ft-trash"></i> supprimer</a>  </span>' 
           },
         }
@@ -144,27 +133,81 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
     }).draw();
 
     $('#table-eleve tbody').on('click', 'button.action', function() {
-      // var id = $(this).data('id');
-      var action = $(this).data('action');
-      //alert('hello')
-      console.log(action)
-      var data = table.row($(this).parents('tr')).data()
-      console.log(data)
-      let id = data.id
-      console.log(data)
-      console.log(id)
-      // return
+       // var id = $(this).data('id');
+       var action = $(this).data('action');
+              alert('hello')
+              console.log(action)
+              var data = table.row( $(this).parents('tr') ).data()
+              console.log(data)
+              let id = data.id
+              console.log(data)
+              console.log(id)
+              // return
 
-      // let num = data.num
-      // let code_enregistrement = data.code_enregistrement
-      // let titre = data.titre
-      // let eleve = data.eleve
-      // let date_emprunt = data.date_emprunt
-      // let date_expiration = data.date_expiration
-      // let classe = data.classe
-      // let etat_document = data.etat_document
+              // let num = data.num
+              // let code_enregistrement = data.code_enregistrement
+              // let titre = data.titre
+              // let eleve = data.eleve
+              // let date_emprunt = data.date_emprunt
+              // let date_expiration = data.date_expiration
+              // let classe = data.classe
+              // let etat_document = data.etat_document
 
-  
+              switch(action){
+                case 'action-voir':
+                  modal_eleve_detail(id)
+                  // onclick="redirectTo(\''+data.id+'\')"
+                  break;
+                case 'action-scolarite':
+                  modal_eleve_detail_scolarite(id)
+                  // onclick="redirectTo(\''+data.id+'\')"
+                  break;                
+                case 'action-cantine':
+                  modal_eleve_detail(id)
+                  // onclick="redirectTo(\''+data.id+'\')"
+                  break;
+                case 'action-activite':
+                  modal_eleve_detail(id)
+                  // onclick="redirectTo(\''+data.id+'\')"
+                  break;
+                case 'action-modifier':
+                  location.href = '<?= URL::link('eleve_modifier') ?>'+id
+                  // redirectTo(id)
+                  break;
+                case 'action-supprimer':
+                  
+                    // message de notification
+                    swal({
+                        title: "Suppression",
+                        text: "Voulez vous supprimer ce eleve ?",
+                        icon: "warning",
+                        showCancelButton: true,
+                        buttons: {
+                            cancel: {
+                                text: "Non, Annuler.",
+                                value: null,
+                                visible: true,
+                                className: "btn-warning",
+                                closeModal: true,
+                            },
+                            confirm: {
+                                text: "Oui, Supprimer.",
+                                value: true,
+                                visible: true,
+                                className: "",
+                                closeModal: true
+                            }
+                        }
+                    }).then(isConfirm => {
+                        if (isConfirm) {
+                            delete_eleve(id)
+                        } else {
+                          console.log('annuler')  
+                        }
+                    });
+
+                  break;
+              }
 
       // alert( id, num, code_enregistrement, titre, eleve, date_emprunt, date_expiration, classe, etat_document )
     })

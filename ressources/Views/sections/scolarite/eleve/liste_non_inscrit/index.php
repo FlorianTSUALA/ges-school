@@ -83,13 +83,13 @@ $include_footer_script = ob_get_clean();
     <div class="content-wrapper">
         <div class="content-header row">
             <div class="content-header-left col-md-6 col-12">
-                <h3 class="content-header-title">Bibliothèque </h3>
+                <h3 class="content-header-title">Scolarité </h3>
                 <div class="row breadcrumbs-top">
                     <div class="breadcrumb-wrapper col-12">
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= URL::link('accueil') ?>">Accueil</a> </li>
-                            <li class="breadcrumb-item"><a href="<?= URL::link('biblio_accueil') ?>">Bibliothèque</a> </a> </li>
-                            <li class="breadcrumb-item active">Emprunt de documents </li>
+                            <li class="breadcrumb-item"><a href="<?= URL::link('biblio_accueil') ?>">Elèves</a> </a> </li>
+                            <li class="breadcrumb-item active">Elèves non Inscrits</li>
                         </ol>
                     </div>
                 </div>
@@ -103,7 +103,7 @@ $include_footer_script = ob_get_clean();
                             <i class="fa fa-user"> Elèves Inscrits</i>
                         </a>
                     </div>
-                    <div class="btn-group" role="group"><a class="btn btn-outline-info  <?= ($menu_actif == "liste_non_inscrit") ? "active" : "" ?>" href="<?= URL::link('eleve_liste_non_inscrit') ?>" href="<?= URL::link('eleve_liste_inscrit') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="élèves pas encore inscrits au compte de l'année scolaire <?= $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE) ?>" data-bg-color="pink">
+                    <div class="btn-group" role="group"><a class="btn btn-outline-info  <?= ($menu_actif == "liste_non_inscrit") ? "active" : "" ?>" href="<?= URL::link('eleve_liste_non_inscrit') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="élèves pas encore inscrits au compte de l'année scolaire <?= $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE) ?>" data-bg-color="pink">
                             <i class="fa fa-user-secret"> Elèves Non Inscrits</i></a>
                     </div>
                     <div class="btn-group" role="group"><a class="btn btn-outline-info  <?= ($menu_actif == "liste") ? "active" : "" ?>" href="<?= URL::link('eleve_liste') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="listes de tous les élèves ayant fréquentant ou fréquentant dans l'établissement" data-bg-color="pink">
@@ -126,8 +126,8 @@ $include_footer_script = ob_get_clean();
                         <div class="card-header my-0 pb-0">
                             <div class="d-flex">
                                 <div class="p-0  col-md-3 mr-auto ">
-                                    <h4 class="card-title" id="heading-prev-next">Liste des livres empruntés</h4>
-                                    <small class="text-muted">Emprunt, Consulatation, Restitution.</small>
+                                    <h4 class="card-title" id="heading-prev-next">Liste des Elèves non Inscrits.</h4>
+                                    <!-- <small class="text-muted">Emprunt, Consulatation, Restitution.</small> -->
                                 </div>
 
                                 <div class="p-0   ">
@@ -154,7 +154,7 @@ $include_footer_script = ob_get_clean();
                                                 <th>Nom Complet</th>
                                                 <!-- <th>Classe</th> -->
                                                 <th>Sexe</th>
-                                                <th>Age</th>
+                                                <th>Date de Naissance</th>
                                                 <!-- <th>photo</th> -->
                                                 <th>Actions</th>
                                             </tr>
@@ -168,7 +168,7 @@ $include_footer_script = ob_get_clean();
                                                 <th>Nom Complet</th>
                                                 <!-- <th>Classe</th> -->
                                                 <th>Sexe</th>
-                                                <th>Age</th>
+                                                <th>Date de Naissance</th>
                                                 <!-- <th>photo</th> -->
                                                 <th>Actions</th>
                                             </tr>
@@ -190,7 +190,7 @@ $include_footer_script = ob_get_clean();
                 <!-- Predefined Views -->
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">TYPE DE PERSONNEL</h4>
+                        <h4 class="card-title">CLASSE</h4>
                         <div class="heading-elements">
                             <ul class="list-inline mb-0">
                                 <!-- <li><a data-action="collapse"><i class="ft-plus"></i></a></li> -->

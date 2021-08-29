@@ -76,7 +76,7 @@ $table_header = "
           </div>
           <div class="content-header-right col-md-6 col-12">
             <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
-                <div class="btn-group" role="group"><a class="btn btn-outline-info"  href="<?= URL::link('eleve_ajout') ?>"> 
+                <div class="btn-group" role="group"><a class="btn btn-outline-info"  href="<?= URL::link('eleve_ajout') ?>" > 
                     <i class="fa fa-user-plus"> Nouvel Elève</i></a> 
                 </div>
                 <div class="btn-group" role="group"><a class="btn btn-outline-info <?= ($menu_actif == "liste_inscrit")? "active" : "" ?>" 
