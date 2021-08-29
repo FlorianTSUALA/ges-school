@@ -81,7 +81,7 @@ class BulletinController extends AppController
         }
     }
 
-    public function getall(){
+    public function get_all(){
         // echo '<pre>';
         // var_dump($this->{$this->vairant}->all());
         // echo '</pre>';

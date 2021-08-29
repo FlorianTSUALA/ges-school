@@ -34,7 +34,7 @@ class SalleClasseController extends AppController
     }
 
         
-    public function getall(){
+    public function get_all(){
         $model = SalleClasse::table();
         $results = $model->select(' classe.libelle as classe_id, salle_classe.code as external_target, salle_classe.code as code, salle_classe.libelle as libelle')
                     ->where('classe.visibilite', 1)

@@ -4,6 +4,8 @@ namespace Core\HTML\Form;
 
 use App\Helpers\HTMLHelper;
 
+use function Core\Helper\dd;
+
 class FormField implements FormBuilder
 {
 	/** @var array $data Tableau de données pour récupérer les éléments en POST et les mettre dans les formulaires */
@@ -82,9 +84,12 @@ class FormField implements FormBuilder
 	public function select(string $id, string $name, string $label = null, array $options = [], $prefix='', $warning_msg='Velillez effecutuer une selection!!!'):FormBuilder
 	{	
 		$this->prepareFields($id, $name, $label, $options);
+		// dd($this);
 		$required = $this->orequired?HTMLHelper::required_input_text():'';
 		$html = "<label for='".$prefix.$this->oid."'>{$this->olabel} {$required}  :</label>";
-		$html .= "<select name='".$this->oname."' id='".$prefix.$this->oid."' class='{$this->oclass}' $this->orequired>";
+		$multiple = (strpos($options['type'], 'multiple') !== false)? 'multiple="multiple" ' : '';
+		$name = (strpos($options['type'], 'multiple') !== false)? 'name="'.$this->oname.'[]"' : "name=$this->oname";//"#SELECT2MULTIPLE"
+		$html .= "<select $name $multiple id='".$prefix.$this->oid."' class='form-control {$options['type']}' $this->orequired>";//"#SELECT2MULTIPLE"
 
 		// $html .= ' <option value="" disabled>- Choissisez le type de pension concerné -</option>';
 
@@ -105,6 +110,7 @@ class FormField implements FormBuilder
 		$this->html = $html;
 		return $this;
 	}
+
 	public function radio(string $id, string $name, string $label = null, array $options = [], $prefix='', $warning_msg='Ce champs est obligatoire'):FormBuilder
 	{
 		$this->prepareFields($id, $name, $label, $options);
@@ -205,4 +211,5 @@ class FormField implements FormBuilder
 	{
 		return $this->html;
 	}
+	
 }

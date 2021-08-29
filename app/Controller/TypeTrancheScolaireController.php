@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Helpers\TraitCRUDController;
 use App\Model\DBTable;
 use App\Controller\Admin\AppController;
+use App\Model\TypeTrancheScolaire;
 
 class TypeTrancheScolaireController extends AppController
 {
@@ -33,6 +34,23 @@ class TypeTrancheScolaireController extends AppController
     }
 
 
+        
+    public function get_all(){
+        $model = TypeTrancheScolaire::table();
+        
+        $results = $model->select([
+                'annee_scolaire.libelle' => 'annee_scolaire_id', 
+                'annee_scolaire.code' => 'annee_scolaire_code', 
+                'type_tranche_scolaire.code' => 'code', 
+                'type_tranche_scolaire.libelle' => 'libelle', 
+                'type_tranche_scolaire.date_debut' => 'date_debut', 
+                'type_tranche_scolaire.date_fin as date_fin'
+                ])
+                ->join('annee_scolaire', 'type_tranche_scolaire.annee_scolaire_id', '=', 'annee_scolaire.id')
+                ->where('type_tranche_scolaire.visibilite', 1)
+                ->get();
+        return $results;
+    }
 
         
 }

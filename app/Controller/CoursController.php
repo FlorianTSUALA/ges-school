@@ -106,7 +106,7 @@ class CoursController extends AppController
       
     }
 
-    public function getall(){
+    public function get_all(){
         $cours = Helpers::toJSON(
             Cours::table()
                 ->select([  

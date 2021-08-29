@@ -5,4 +5,4 @@ ajax:{
         data.filter_by =  filter_by
     } ,
     type: 'POST'
-},
+}

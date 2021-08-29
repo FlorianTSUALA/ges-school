@@ -37,7 +37,7 @@ class PeriodeController extends AppController
         $this->msg_delete = "Voulez-vous vraiment supprimer cette periode ";
     }
         
-    public function getall(){
+    public function get_all(){
         $model = Periode::table();
         
         $results = $model->select([

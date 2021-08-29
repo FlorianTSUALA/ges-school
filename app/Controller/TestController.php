@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use DateTime;
+use DateHelpers;
 use App\Model\Eleve;
 use Core\Model\Model;
 use App\Model\DBTable;
@@ -9,9 +11,9 @@ use App\Model\Parcours;
 use App\Helpers\Helpers;
 use Core\Helper\DBHelper;
 use Core\Session\Request;
+
 use App\Model\PensionEleve;
 use Core\HTML\FlashMessages;
-
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use Spipu\Html2Pdf\Html2Pdf;
@@ -28,12 +30,11 @@ use App\Repository\PersonnelRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\ExemplaireRepository;
 use App\Repository\AnneeScolaireRepository;
+use App\Repository\TrancheScolaireRepository;
 use Core\HTML\MessageFlash\FlashMessagesStatic;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use App\Repository\AffectationSalleClasseRepository;
-use DateTime;
-use DateHelpers;
 
 
 class TestController extends AppController
@@ -228,7 +229,11 @@ class TestController extends AppController
 
     //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
     
+<<<<<<< Updated upstream
     dd((new EleveRepository )->getInfoEleveScolarite(1,2) );
+=======
+    dd((new TrancheScolaireRepository() )->getTrancheScolaires(3) );
+>>>>>>> Stashed changes
   
     }
 

@@ -34,7 +34,7 @@ class SessionController extends AppController
     }
 
             
-    public function getall(){
+    public function get_all(){
         //PROBLEMATIQUE : DOIT ON FILTRER LES SESSIONS
         //TODO : GENERATION AUTOMATIQUE DE SESSIONS EN SE BASANT SUR CELLE DE L ANNEE ANTERIEURE
         

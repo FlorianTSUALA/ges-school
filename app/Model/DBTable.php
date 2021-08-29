@@ -73,6 +73,7 @@ class DBTable
     const STATUT_ELEVE = 'statut_eleve';
     const TRANCHE_HORAIRE = 'tranche_horaire';
     const TRANCHE_SCOLAIRE = 'tranche_scolaire';
+    const TRANCHE_SCOLAIRE_MOIS = 'tranche_scolaire_mois';
     const TYPE_TRANCHE_SCOLAIRE = 'type_tranche_scolaire';
     const TYPE_PAIEMENT = 'type_paiement';
     const TYPE_PENSION = 'type_pension';
@@ -211,6 +212,8 @@ class DBTable
                 return TrancheHoraire::table();
             case DBTable::TRANCHE_SCOLAIRE:
                 return TrancheScolaire::table();
+            case DBTable::TRANCHE_SCOLAIRE_MOIS:
+                return TrancheScolaireMois::table();
             case DBTable::TYPE_TRANCHE_SCOLAIRE:
                 return TypeTrancheScolaire::table();
             case DBTable::TYPE_PAIEMENT:

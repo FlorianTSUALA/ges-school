@@ -33,7 +33,7 @@ class DocumentController extends AppController
         $this->msg_delete = "Voulez-vous vraiment supprimer ce document ";
     }
 
-    public function getall(){
+    public function get_all(){
         $model = Document::table();
         $results = $model->select('
                 domaine.libelle as domaine_id, 

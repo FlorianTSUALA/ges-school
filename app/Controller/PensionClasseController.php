@@ -32,22 +32,24 @@ class PensionClasseController extends AppController
     }
 
     
-    public function getall(){
+    public function get_all(){
         $model = PensionClasse::table();
-        $results = $model->select(' 
-                                    type_pension.libelle as type_pension_id,
-                                    type_pension.code as type_pension_code,
-                                    classe.code as classe_code,
-                                    classe.libelle as classe_id,
-                                    pension_classe.code as code,
-                                    pension_classe.montant as montant,
-                                    pension_classe.mensualite as mensualite,
-                                    pension_classe.est_mensuel as est_mensuel,
-                                    pension_classe.optionnel as optionnel')
-                    ->where('pension_classe.visibilite', 1)
-                    ->join('type_pension', 'pension_classe.type_pension_id', '=', 'type_pension.id')
-                    ->join('classe', 'pension_classe.classe_id', '=', 'classe.id')->get();
-                    return $results;
+        $results = $model->select(
+            [
+                'type_pension.libelle' => 'type_pension_id',
+                'type_pension.code' => 'type_pension_code',
+                'classe.code' => 'classe_code',
+                'classe.libelle' => 'classe_id',
+                'pension_classe.code' => 'code',
+                'tranche_scolaire.code' => 'tranche_scolaire_code',
+                'tranche_scolaire.libelle' => 'tranche_scolaire_id',
+                'pension_classe.montant' => 'montant'
+            ])
+            ->where('pension_classe.visibilite', 1)
+            ->join('type_pension', 'pension_classe.type_pension_id', '=', 'type_pension.id')
+            ->join('tranche_scolaire', 'pension_classe.tranche_scolaire_id', '=', 'tranche_scolaire.id')
+            ->join('classe', 'pension_classe.classe_id', '=', 'classe.id')->get();
+        return $results;
     }
 
 

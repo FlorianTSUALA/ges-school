@@ -3,17 +3,18 @@
 namespace App\Controller;
 
 use App\Helpers\S;
+use Core\Routing\URL;
 use App\Model\DBTable;
+use App\Helpers\Helpers;
+use Config\Invariant\API;
 use Core\Session\Request;
+use App\Model\TypePension;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use App\Model\AbonnementActivite;
-use App\Model\TypePension;
 use App\Repository\EleveRepository;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
-use Config\Invariant\API;
-use Core\Routing\URL;
 
 class VersementController extends \App\Controller\Admin\AppController
 {
@@ -56,7 +57,7 @@ class VersementController extends \App\Controller\Admin\AppController
       $delete_title = $this->delete_title;
       $msg_delete = $this->msg_delete;
 
-      $eleves = (new EleveRepository() )->getInfoPerso();
+      $eleves = (new EleveRepository() )->getEleve();
 
       $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 

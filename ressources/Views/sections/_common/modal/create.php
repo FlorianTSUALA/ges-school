@@ -2,6 +2,9 @@
 
 use Core\HTML\Form\FormModel;
 
+use function Core\Helper\dd;
+use function Core\Helper\vd;
+
 ?>
 
 <!--
@@ -36,6 +39,7 @@ use Core\HTML\Form\FormModel;
 					</div>
 				<?php
 						foreach($fillables as $key => $fillable){
+
 							$fieldType =  $fillable->{FormModel::FIELDTYPE};
 							$name =  $fillable->{FormModel::NAME};
 							$id =  $fillable->{FormModel::ID};
@@ -48,7 +52,7 @@ use Core\HTML\Form\FormModel;
 							$icon = $fillable->{FormModel::ICON};
 							$warning_msg = $fillable->{FormModel::WARNING_MSG};
 
-
+							// vd($fillable);
 							$field = $this->field->{$fieldType}($id, $name, $label,
 								[
 									'type'=> $type, 'data'=>$data, 'class' =>$class_css, 'placeholder' =>$placeholder,

@@ -80,6 +80,8 @@ class FormModel
 				return FieldType::SELECT;
 			case InputType::SELECT2:
 				return FieldType::SELECT;
+			case InputType::SELECT2_MULTIPLE:
+				return FieldType::SELECT;
 			break;
 			default:
 				return FieldType::INPUT;

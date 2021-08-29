@@ -2,10 +2,23 @@
 
 namespace App\Controller;
 
+use App\Helpers\S;
+use App\Model\Mois;
+use Core\Table\Table;
 use App\Model\DBTable;
-use App\Helpers\TraitCRUDController;
+use App\Helpers\Helpers;
+use Core\Session\Request;
+use App\Helpers\HTMLHelper;
+use App\Model\AnneeScolaire;
+use function Core\Helper\dd;
+use Core\HTML\Form\FormModel;
 use App\Model\TrancheScolaire;
+use App\Model\TrancheScolaireMois;
+use App\Model\TypeTrancheScolaire;
+use App\Helpers\TraitCRUDController;
 use App\Controller\Admin\AppController;
+use App\Repository\TrancheScolaireRepository;
+use ClanCats\Hydrahon\Query\Expression as Ex;
 
 class TrancheScolaireController extends AppController
 {
@@ -31,24 +44,95 @@ class TrancheScolaireController extends AppController
         $this->msg_delete = "Voulez-vous vraiment supprimer la tranche scolaire ";
     }
 
-    public function getall(){
-        $model = TrancheScolaire::table();
-        // annee_scolaire.code as external_target, 
-        $results = $model->select('
-                annee_scolaire.libelle as annee_scolaire_id, 
-                type_tranche_scolaire.libelle as type_tranche_scolaire_id, 
-                tranche_scolaire.code as code, 
-                tranche_scolaire.libelle as libelle, 
-                tranche_scolaire.date_debut as date_debut, 
-                tranche_scolaire.date_fin as date_fin, 
-                tranche_scolaire.description as description, 
-                tranche_scolaire.date_fin as date_fin
-                ')
-                    ->where('tranche_scolaire.visibilite', 1)
-                    ->join('annee_scolaire', 'tranche_scolaire.annee_scolaire_id', '=', 'annee_scolaire.id')
-                    ->join('type_tranche_scolaire', 'tranche_scolaire.type_tranche_scolaire_id', '=', 'tranche_scolaire.id')
-                    ->get();
-        return $results;
+    public function get_all(){
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        return (new TrancheScolaireRepository() )->getAllTrancheScolaires($annee_scolaire_id);
+    }
+
+    public function get_one($code){
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        $result = (new TrancheScolaireRepository() )->getTrancheScolaire($annee_scolaire_id, $code);
+        // dd($result);
+        return $result;
+    }
+
+    public function save()
+    {
+        $description = $_POST['description'];
+        $annee_scolaire_code = Request::getSecParam('annee_scolaire_id');
+        // $type_tranche_scolaire_code = Request::getSecParam('type_tranche_scolaire_id');
+        // $annee_scolaire_id = TypeTrancheScolaire::table()->select('id')->where('code', $type_tranche_scolaire_code)->one()['id'];
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+
+        $libelle = Request::getSecParam('libelle');
+        $tranche_scolaire_code = TrancheScolaire::generateCode();
+        $data_tranche_scolaire = [
+            'code' => $tranche_scolaire_code,
+            'annee_scolaire_id' => AnneeScolaire::table()->select('id')->where('code', $annee_scolaire_code)->one()['id'],
+            'type_tranche_scolaire_id' => $annee_scolaire_id,
+            'libelle' => $libelle,
+        ];
+        TrancheScolaire::table()->insert($data_tranche_scolaire)->execute();
+        $tranche_scolaire_id = TrancheScolaire::table()->select('id')->where('code', $tranche_scolaire_code)->one()['id'];
+        foreach($description as $key => $value){
+            $tranche_scolaire_mois_code = TrancheScolaireMois::generateCode();
+            $data_tranche_scolaire_mois = [
+                'code' => $tranche_scolaire_mois_code,
+                'mois_id' => Mois::table()->select('id')->where('code', $value)->one()['id'],
+                'tranche_scolaire_id' => $tranche_scolaire_id,
+            ];
+            TrancheScolaireMois::table()->insert($data_tranche_scolaire_mois)->execute();                
+        }
+
+        $result = true;
+        if ($result) {
+            $this->sendResponseAndExit(Helpers::toJSON($result, TRUE));
+        } else {
+            $this->sendResponseAndExit($result, false, 400, 'DB Error');
+        }
+    }
+
+    /**
+     *
+     * @param string $code
+     * @return void
+     */
+    public function update($code)
+    {
+        // dd($code);
+        $description = $_POST['description'];
+        $type_tranche_scolaire_code = Request::getSecParam('type_tranche_scolaire_id');
+        // $annee_scolaire_code = Request::getSecParam('annee_scolaire_id');
+        // $annee_scolaire_id = TypeTrancheScolaire::table()->select('id')->where('code', $type_tranche_scolaire_code)->one()['id'];
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+
+        $libelle = Request::getSecParam('libelle');
+        $data_tranche_scolaire = [
+            'annee_scolaire_id' => $annee_scolaire_id,
+            'type_tranche_scolaire_id' => TypeTrancheScolaire::table()->select('id')->where('code', $type_tranche_scolaire_code)->one()['id'],
+            'libelle' => $libelle,
+        ];
+        $tranche_scolaire_id = TrancheScolaire::get_id($code);
+        TrancheScolaire::table()->update($data_tranche_scolaire)->where('id', $tranche_scolaire_id)->execute();
+        TrancheScolaireMois::table()->delete()->where('tranche_scolaire_id', $tranche_scolaire_id)->execute();
+        foreach($description as $key => $value){
+            $tranche_scolaire_mois_code = TrancheScolaireMois::generateCode();
+            $data_tranche_scolaire_mois = [
+                'code' => $tranche_scolaire_mois_code,
+                'mois_id' => Mois::table()->select('id')->where('code', $value)->one()['id'],
+                'tranche_scolaire_id' => $tranche_scolaire_id,
+            ];
+            TrancheScolaireMois::table()->insert($data_tranche_scolaire_mois)->execute();                
+        }
+
+        $result = true;
+        if ($result) {
+            $items = $this->get_all();
+            $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
+            $this->sendResponseAndExit($data);
+        } else {
+            $this->sendResponseAndExit($result, false, 400, 'DB Error');
+        }
     }
 
 

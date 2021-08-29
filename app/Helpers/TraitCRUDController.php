@@ -21,7 +21,7 @@ trait TraitCRUDController
     {
         $this->app->setTitle($this->title_page);
         $title = $this->title_home;
-        $items = $this->getall();
+        $items = $this->get_all();
         $fillables = $this->{$this->vairant}->fillables;
         $class_name = $this->class_name;
         $base_route = $this->base_route;
@@ -47,7 +47,7 @@ trait TraitCRUDController
         $result = DBTable::getModel("$this->vairant")->insert($data)->execute();
         $result = true;
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{
@@ -55,24 +55,27 @@ trait TraitCRUDController
         }
     }
 
-    public function getall(){
+    public function get_all(){
         return json_decode(json_encode(DBTable::getModel($this->vairant)->select()->where('visibilite', 1)->get()));
         // return $this->{$this->vairant}->all();
     }
 
+    public function get_one($code){
+        // $entity = $this->{$this->vairant}->find('code', $code);
+        return DBTable::getModel("$this->vairant")->select()->where('code', '=', $code)->one();
+    }
+
     public function all(){
-        return Helpers::toJSON($this->getall()) ;
+        return Helpers::toJSON($this->get_all()) ;
     }
 
     public function list(){
-        echo Helpers::toJSON($this->getall()) ;
+        echo Helpers::toJSON($this->get_all()) ;
     }
 
     public function show($code)
     {
-        // dd( $this->{$this->vairant}->genCode());
-        // $entity = $this->{$this->vairant}->find('code', $code);
-        $entity = DBTable::getModel("$this->vairant")->select()->where('code', '=', $code)->one();
+        $entity = $this->get_one($code);
         $entity = $this->resolveId2CodeInput($entity, $this->{$this->vairant}->fillables); 
         if($entity){
             $this->sendResponseAndExit(Helpers::toJSON($entity, TRUE));
@@ -84,8 +87,7 @@ trait TraitCRUDController
 
     public function detail($code)
     {
-        // $entity = $this->{$this->vairant}->find('code', $code);
-        $entity = DBTable::getModel("$this->vairant")->select()->where('code', '=', $code)->one();
+        $entity = $this->get_one($code);
         $entity = $this->resolveExternalId2Value($entity, $this->{$this->vairant}->fillables);
 
         if($entity){
@@ -106,7 +108,7 @@ trait TraitCRUDController
         DBTable::getModel("$this->vairant")->update()->set($data)->where($clause)->execute();
         $result = true;
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{
@@ -120,7 +122,7 @@ trait TraitCRUDController
         DBTable::getModel($this->{$this->vairant})->update()->set('visibilite', 0)->where('code', '=', strtoupper($code))->execute();
         $result = true;
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{
@@ -147,8 +149,17 @@ trait TraitCRUDController
             if(isset($resolv) && !$resolv[FormModel::INTERNAL]){
                 $id = $data[$resolv['id']];
                 $model = DBTable::getModel($resolv['table']);
-                
-                $code = $model->select('code')->where('id', $id)->get()[0]['code'];
+                $code = "";
+                if( strpos($resolv[FormModel::TYPE], "multiple") !== false ){//"#SELECT2MULTIPLE"
+                    $code = $data[$resolv[FormModel::EXTERNAL_TARGET].'_code'];
+                    unset($data[$resolv[FormModel::EXTERNAL_TARGET].'_code']);
+                    $to_search = ", ";
+                    $to_replace = ", ";
+                    $code = str_replace($to_search, $to_replace, $code) ;
+                    // $code = "['" . str_replace($to_search, $to_replace, $code) . "']";
+                }else{
+                    $code = $model->select('code')->where('id', $id)->get()[0]['code'];
+                }
                 $data[$resolv['id']] = $code;
             }
             
@@ -169,11 +180,13 @@ trait TraitCRUDController
                     $table = $resolv[FormModel::TABLE];
                     $id = $data[$resolv[FormModel::ID]];
                     $field = $resolv[FormModel::EXTERNAL_TARGET];
-
                     $model = DBTable::getModel($table);
-                    
-                    $value = $model->select($field)->where('id', $id)->last()[$field];
-
+                    $value = "";
+                    if( strpos($resolv[FormModel::TYPE], "multiple") !== false ){//"#SELECT2MULTIPLE"
+                        $value = $id;
+                    }else{
+                        $value = $model->select($field)->where('id', $id)->last()[$field];
+                    }
                     $data[$resolv[FormModel::ID]] = $value;
                 }
             }

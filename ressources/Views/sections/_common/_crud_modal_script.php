@@ -26,7 +26,13 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                     $.ajax({
                          url: "<?= URL::link($base_route.'-create'); ?>",
                          method: "POST",
-                         data: form.serialize(),
+                        data: new FormData(form[0]),//form[0],
+                        enctype: 'multipart/form-data',
+                        dataType: 'json',
+                        processData: false,  // Important!
+                        contentType: false,
+                        cache: false,
+                        // timeout: 600000,
                          beforeSend:function(){
                               $('#button-form-create').hide();
                               $('#loading').show();
@@ -100,6 +106,9 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                                    break;
                                    case InputType::CHECKBOX:
                                         $js .= "$('#upd-{$fillable->name}').val(data.{$fillable->name});";
+                                   break;
+                                   case InputType::SELECT2_MULTIPLE: //"#SELECT2MULTIPLE"
+                                        $js .= "$('#upd-{$fillable->name}').val((data.{$fillable->name}).split(', ')).trigger('change'); console.log((data.{$fillable->name}).split(', '));";
                                    break;
                                    case InputType::SELECT2:
                                    case InputType::SELECT:

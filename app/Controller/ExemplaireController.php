@@ -33,7 +33,7 @@ class ExemplaireController extends AppController
         
     }
 
-    public function getall(){
+    public function get_all(){
         return (new ExemplaireRepository())->getAll();
     }
 

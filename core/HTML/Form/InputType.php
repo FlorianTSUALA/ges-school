@@ -36,5 +36,6 @@ class InputType
 	*/
 	const SELECT = 'select';
 	const SELECT2 = 'select2';
+	const SELECT2_MULTIPLE = 'select2 multiple';
 
 }

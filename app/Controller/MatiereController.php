@@ -32,7 +32,7 @@ class MatiereController extends AppController
     }
 
     
-    public function getall(){
+    public function get_all(){
         $model = Matiere::table();
         $results = $model->select('
                 discipline.libelle as discipline_id, 

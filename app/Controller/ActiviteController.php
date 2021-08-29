@@ -31,7 +31,7 @@ class ActiviteController extends AppController
         $this->msg_delete = "Voulez-vous vraiment supprimer la activite ";
     }
         
-    public function getall(){
+    public function get_all(){
         $model = Activite::table();
         $results = $model->select(' type_activite.libelle as type_activite_id, type_activite.code as external_target, activite.code as code, activite.libelle as libelle, activite.description as description, montant')
                     ->where('activite.visibilite', 1)

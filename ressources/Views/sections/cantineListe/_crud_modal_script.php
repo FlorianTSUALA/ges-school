@@ -85,6 +85,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                                    case InputType::CHECKBOX:
                                         $js .= "$('#upd-{$fillable->name}').val(data.{$fillable->name});";
                                    break;
+                                   case InputType::SELECT2_MULTIPLE:
                                    case InputType::SELECT2:
                                    case InputType::SELECT:
                                         $js .= "$('#upd-{$fillable->name}').val(data.{$fillable->name}).trigger('change');";

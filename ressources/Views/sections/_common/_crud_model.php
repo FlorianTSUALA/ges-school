@@ -3,6 +3,7 @@
 use Core\Routing\URL;
 use App\Helpers\HTMLHelper;
 use Core\HTML\Form\FormModel;
+use App\App;
 
 	ob_start();
 	echo '<script src="'.URL::base().'assets/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>';

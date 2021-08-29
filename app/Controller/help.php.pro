@@ -1,5 +1,6 @@
 <?php
 use App\Helpers\S;
+use App\Model\Eleve;
 use App\Model\Classe;
 use Core\Model\Model;
 use Core\Routing\URL;
@@ -39,3 +40,4 @@ $pension_classe_code = Request::getSecParam('pension_classe_id');
 
 $type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
                 
+

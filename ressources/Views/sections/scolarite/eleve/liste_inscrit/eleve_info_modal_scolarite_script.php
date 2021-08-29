@@ -37,7 +37,7 @@ use Core\Routing\URL;
             },
             error: function (textStatus, errorThrown) {
                 Success = false
-                swal("Erreur", "Erreur de communication avec le serveur :)", "error")
+                swal("Erreur", "Erreur de communication avec le serveur ", "error")
                 console.log(textStatus, errorThrown)
             }
         })    

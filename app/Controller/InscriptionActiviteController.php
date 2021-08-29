@@ -34,7 +34,7 @@ class InscriptionActiviteController extends AppController
     }
 
         
-    public function getall(){
+    public function get_all(){
         $model = InscriptionActivite::table();
         $results = $model->select([
             new Ex("concat(eleve.nom,' ',eleve.prenom) as libelle"),
