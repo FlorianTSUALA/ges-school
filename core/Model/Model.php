@@ -96,6 +96,16 @@ class Model
 		}
 	}
 
+	
+	public function getColumByTagValue($value, $tag='code', $selected_colum='id')
+	{
+		$item = $this->table_0()->select("$selected_colum")->where("$tag", $value)->where('visibilite', 1)->one();
+		if(is_array($item))
+			return $item["$selected_colum"];
+		else
+			return 0;
+	}
+
     public function genCode(){
 		//Sleep because we must want that date must be unique
 		usleep ( 1 );// sleep 1 micro second 

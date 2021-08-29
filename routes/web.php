@@ -56,6 +56,21 @@ use App\Controller\TypeTrancheScolaireController;
 //END
 
 
+/******************************************************** */
+/******************************************************** */
+    
+    /*URL CAN-NOT EXCED 4 Word separated with "/" */
+
+    // eg : of confusion
+    // eleve/api/info/{code}
+    // eleve/api/info/activite/{code}
+
+/******************************************************** */
+/******************************************************** */
+
+
+
+
 //ACCUEIL
 $router->addRoute('accueil', 'accueil', [HomeController::class, 'home']);
 
@@ -90,9 +105,9 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
         $router->addRoute('eleve_salle_classe', 'eleve/salleclasse', [EleveController::class, 'liste_classe']);
         $router->addRoute(' api_eleve_all', 'eleve/api/all', [EleveController::class, 'getApiEleves']);
         $router->addRoute('eleve_api_info', 'eleve/api/info/{code}', [EleveController::class, 'getApiEleve']);
-        $router->addRoute('eleve_api_info_scolarite', 'eleve/api/info/scolarite/{code}', [EleveController::class, 'api_eleve_info_api_scolarite']);
-        $router->addRoute('eleve_api_info_activite', 'eleve/api/info/activite/{code}', [EleveController::class, 'api_eleve_info_api_activite']);
-        $router->addRoute('eleve_api_info_cantine', 'eleve/api/info/cantine/{code}', [EleveController::class, 'api_eleve_info_api_cantine']);
+        $router->addRoute('eleve_api_info_scolarite', 'api/eleve_info/scolarite/{code}', [EleveController::class, 'api_eleve_info_scolarite']);
+        $router->addRoute('eleve_api_info_activite', 'api/eleve_info/activite/{code}', [EleveController::class, 'api_eleve_info_api_activite']);
+        $router->addRoute('eleve_api_info_cantine', 'api/eleve_info/cantine/{code}', [EleveController::class, 'api_eleve_info_api_cantine']);
         
         $router->addRoute('eleve_api_eleve_inscrit', 'eleve/api/inscrit/all', [EleveController::class, 'api_eleve_inscrit']);
         $router->addRoute('eleve_api_eleve_non_inscrit', 'eleve/api/non_inscrit/all', [EleveController::class, 'api_eleve_non_inscrit']);

@@ -13,6 +13,10 @@ $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire co
         
 $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
+
+$eleve_id = Eleve::table()->select('id')->where('code',$code)->where('visibilite', 1)->one()['id'];
+
+
 $code_classe = $this->classe->code(Request::getSecParam('classe_eleve', ''), Classe::LIBELLE) ;
 
 $msg_inscriptpion = 'Inscription Enregistrée avec success';

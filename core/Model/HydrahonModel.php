@@ -3,8 +3,16 @@
 namespace Core\Model;
 
 trait HydrahonModel{
-    
-    
+
+	public static function get_id($code)
+	{
+		$item = self::table()->select('id')->where('code',$code)->where('visibilite', 1)->one();
+		if(is_array($item))
+			return $item['id'];
+		else
+			return 0;
+	}
+	
     public  function __call($method, $arguments) {
 		switch($method){
 			case 'table':

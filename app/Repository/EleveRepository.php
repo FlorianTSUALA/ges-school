@@ -246,7 +246,10 @@ class EleveRepository extends BaseRepository{
             ) InfoEleve
         ";
         $result = $this->query($req);
-        return $this->toObject($result)[0];
+        if(!empty($result)){
+            $result = $this->toObject($result)[0];
+        }
+        return $result;
     }
 
     /**

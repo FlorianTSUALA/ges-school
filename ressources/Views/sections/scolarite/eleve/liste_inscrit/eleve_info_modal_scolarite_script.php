@@ -18,17 +18,20 @@ use Core\Routing\URL;
                 console.log("data")
                 console.log(data)
                 var html_body = ''
-                // for()
-                alert(data)
-                // <tr>
-                //   <th>id</th> 
-                //   <td>1</td>
-                //   <td>premiere tranche</td>
-                //   <td>23 fevrier 2014</td>
-                //   <td>90 000</td>
-                //   <td>Actions</td>
-                // <tr>
+                for (const item of data) { // You can use `let` instead of `const` if you like
+                    console.log(item);
 
+                    html += "<tr>"
+                    html += "   <th>id</th>" 
+                    html += "   <td>"+item.montant +"</td>"
+                    html += "   <td>" + item.date_facture + "</td>"
+                    html += "   <td>" + item.reduction + "</td>"
+                    html += "   <td>" + item.libelle + "</td>"
+                    html += "   <td>Actions</td>"
+                    html += " <tr>"
+
+                }
+               
                 $('#eleve_modal_scolarite').modal('show')
 
             },
