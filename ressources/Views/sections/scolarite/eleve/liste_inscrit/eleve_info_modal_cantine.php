@@ -24,7 +24,7 @@ use App\Helpers\Helpers;
                                 <div >
                                     <!-- ETAPE 01 -->
                                     <div id="heading-etape-01" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01"  aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong>Nom de l'élève concerné</strong></a>
+                                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01"  aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong id ="nom_complet"></strong></a>
                                     </div>
 
                                     <div class="content-detached content-left">
@@ -35,13 +35,13 @@ use App\Helpers\Helpers;
                                                     <div class="card-content my-0 py-0">
                                                         <div class="card-body">
                                                             <div class="table-responsive-sm">
-                                                                <table id="table-eleve" class="table table-white-space table-bordered  table-sm" style="width: 100%;">
+                                                                <table id="table-eleve_cantine" class="table table-white-space table-bordered  table-sm" style="width: 100%;">
                                                                     <thead>
                                                                         <tr>
                                                                             <!-- <th>id</th> -->
                                                                             <th>N°</th>
-                                                                            <th>Tranches</th>
-                                                                            <th>Date de versament</th>
+                                                                            <th>Periode</th>
+                                                                            <th>Date de versement</th>
                                                                             <th>Montant</th>
                                                                             <th>Actions</th>
                                                                         </tr>

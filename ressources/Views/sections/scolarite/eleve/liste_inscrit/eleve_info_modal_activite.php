@@ -27,8 +27,8 @@ use App\Helpers\Helpers;
                             <div class="card collapse-icon panel mb-0 box-shadow-0 border-0">
                                 <!-- ETAPE 01 -->
                                 <div id="heading-etape-01" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                                    <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01" aria-expanded="false" aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong>Nom de l'élève concerné</strong></a>
-                                </div>
+                                <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01"  aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong id ="nom_complet_activite"></strong></a>
+                             </div>
 
                                 <div class="content-detached content-left">
                                         <div class="content-body">
@@ -38,13 +38,14 @@ use App\Helpers\Helpers;
                                                     <div class="card-content my-0 py-0">
                                                         <div class="card-body">
                                                             <div class="table-responsive-sm">
-                                                                <table id="table-eleve" class="table table-white-space table-bordered  table-sm" style="width: 100%;">
+                                                                <table id="table-eleve_activite" class="table table-white-space table-bordered  table-sm" style="width: 100%;">
                                                                     <thead>
                                                                         <tr>
                                                                             <!-- <th>id</th> -->
                                                                             <th>N°</th>
-                                                                            <th>Tranches</th>
-                                                                            <th>Date de versament</th>
+                                                                            <th>Actiivité</th>
+                                                                            <th>Période</th>
+                                                                            <th>Date de versement</th>
                                                                             <th>Montant</th>
                                                                             <th>Actions</th>
                                                                         </tr>

@@ -40,7 +40,7 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
         type: 'POST'
       },
       "columns": [<?= Eleve::getColumns("table_eleve_inscrit") ?>],
-      
+     // console.log()
       order: [
         [1, 'asc']
       ],
@@ -125,6 +125,7 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
               console.log(action)
               var data = table.row( $(this).parents('tr') ).data()
               console.log(data)
+              console.log(data['nom_complet'] )
               let id = data.id
               // console.log(data)
               console.log(id)
@@ -136,15 +137,15 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
                   break;
                 case 'action-scolarite':
                   console.log("scolarite")
-                  modal_eleve_detail_scolarite(id)
+                  modal_eleve_detail_scolarite(id,data.nom_complet)
                   break;                
                 case 'action-cantine':
                   console.log("cantine")
-                  modal_eleve_detail(id)
+                  modal_eleve_detail_cantine(id,data.nom_complet )
                   break;
                 case 'action-activite':
-                  console.log("activite")
-                  modal_eleve_detail(id)
+                  console.log("activite11")
+                  modal_eleve_detail_activite(id,data.nom_complet)
                   break;
                 case 'action-modifier':
                   location.href = '<?= URL::link('eleve_modifier') ?>'+id
