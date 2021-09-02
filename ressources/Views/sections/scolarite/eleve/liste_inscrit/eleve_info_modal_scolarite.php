@@ -24,7 +24,7 @@ use App\Helpers\Helpers;
                                 <div >
                                     <!-- ETAPE 01 -->
                                     <div id="heading-etape-01" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01"  aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong>Nom de l'élève concerné</strong></a>
+                                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01"  aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong id="nom_complet"></strong></a>
                                     </div>
 
                                     <div class="content-detached content-left">
@@ -41,13 +41,12 @@ use App\Helpers\Helpers;
                                                                             <!-- <th>id</th> -->
                                                                             <th>N°</th>
                                                                             <th>Tranches</th>
-                                                                            <th>Date de versament</th>
+                                                                            <th>Date de versement</th>   
                                                                             <th>Montant</th>
-                                                                            <th>Montant1</th>
                                                                             <th>Actions</th>
                                                                         </tr>
                                                                     </thead>
-                                                                    <tbody>
+                                                                    <tbody >
                                                                     <!-- <tr>
                                                                            <th>id</th> 
                                                                             <td>1</td>

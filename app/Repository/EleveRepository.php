@@ -79,7 +79,6 @@ class EleveRepository extends BaseRepository{
         return $model;
         
     }
-
     
     /**
      * using in eleve liste

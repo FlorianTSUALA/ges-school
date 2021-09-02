@@ -536,19 +536,20 @@ trait EleveControllerTraitCRUD
     
     
     
+    
     public function api_eleve_info_api_activite($code)  
     {
         $eleve_id = Eleve::get_id($code);
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        $data_info_eleves = (new VersementRepository())->getInfoEleveScolarite($eleve_id, $annee_scolaire_id);
+        $data_info_eleves = (new VersementRepository())->getInfoEleveActivite($eleve_id, $annee_scolaire_id);
         echo Helpers::toJSON($data_info_eleves) ;
     }
 
-    public function api_eleve_info_api_cantine($code)  
+    public function api_eleve_info_api_cantine($code) 
     {
         $eleve_id = Eleve::get_id($code);
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        $data_info_eleves = (new VersementRepository())->getInfoEleveScolarite($eleve_id, $annee_scolaire_id);
+        $data_info_eleves = (new VersementRepository())->getInfoEleveCantine($eleve_id, $annee_scolaire_id);
         echo Helpers::toJSON($data_info_eleves) ;
     }
 
