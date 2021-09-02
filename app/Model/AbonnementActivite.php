@@ -20,6 +20,8 @@ class AbonnementActivite extends Model implements FrequentlyReapeat
     const MONTANT = "montant";
     const PERIODE = "periode";
 
+    const TYPE_ABONNEMENT = "ACTIVITE";
+
     public function __construct(){
         parent::__construct();
         $inscription_eleves = InscriptionActivite::table()->select([ 'code' => 'id' , 'libelle' => 'value'])->where('visibilite', 1)->get();

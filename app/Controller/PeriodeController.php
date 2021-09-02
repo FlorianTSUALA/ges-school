@@ -46,15 +46,16 @@ class PeriodeController extends AppController
                 'periode.libelle' => 'libelle', 
                 'periode.date_debut' => 'date_debut', 
                 'periode.date_fin as date_fin'
-                ])  ->join('session', 'periode.session_id', '=', 'session.id')
-                    ->where('periode.visibilite', 1)
-                    ->get();
+                ])  
+                ->join('session', 'periode.session_id', '=', 'session.id')
+                ->where('periode.visibilite', 1)
+                ->get();
         return $results;
     }
 
     public function apiPeriodes()
     {
-        $model = ($this->getall());
+        $model = ($this->get_all());
         $this->sendResponseAndExit(Helpers::toJSON($model, TRUE));
 
     }

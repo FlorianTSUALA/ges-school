@@ -53,7 +53,7 @@ class SessionController extends AppController
 
     public function apiListeSession()
     {
-        $model = ($this->getall());
+        $model = ($this->get_all());
         $this->sendResponseAndExit(Helpers::toJSON($model, TRUE));
     }
 

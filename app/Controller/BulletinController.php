@@ -49,7 +49,7 @@ class BulletinController extends AppController
     {
         $this->app->setTitle($this->title_page);
         $title = $this->title_home;
-        $items = $this->getall();
+        $items = $this->get_all();
         $fillables = $this->{$this->vairant}->fillables;
         $class_name = $this->class_name;
         $base_route = $this->base_route;
@@ -73,7 +73,7 @@ class BulletinController extends AppController
 
         $result = $this->{$this->vairant}->save($data);
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{
@@ -91,11 +91,11 @@ class BulletinController extends AppController
     }
 
     public function all(){
-        return Helpers::toJSON($this->getall()) ;
+        return Helpers::toJSON($this->get_all()) ;
     }
 
     public function list(){
-        echo Helpers::toJSON($this->getall()) ;
+        echo Helpers::toJSON($this->get_all()) ;
     }
 
     public function show($code)
@@ -135,7 +135,7 @@ class BulletinController extends AppController
         $result = $this->{$this->vairant}->update($data, $clause);
 
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{
@@ -147,7 +147,7 @@ class BulletinController extends AppController
     {   
         $result = $this->{$this->vairant}->delete('code', $code);
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{

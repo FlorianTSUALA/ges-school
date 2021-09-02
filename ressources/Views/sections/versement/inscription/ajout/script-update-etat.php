@@ -112,7 +112,7 @@ $funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
         $('#recap-funtion_signataire').text(  data_versement['funtion_signataire'] )
 
         $('#section_versement').hide()
-        $('#section_recaputilatif').show()
+        $('#section_recapitulatif').show()
     }
 
     );

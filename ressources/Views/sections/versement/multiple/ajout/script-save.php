@@ -57,7 +57,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
             },
             onBlock: function() {
                 $.ajax({
-                    url: '<?= URL::link('versement-create');?>'+$('#eleve_nom_complet option:selected').val(),
+                    url: '<?= URL::link('versement_multiple-create');?>'+$('#eleve_nom_complet option:selected').val(),
                     type: 'post',
                     data: data,
                     dataType: 'json',

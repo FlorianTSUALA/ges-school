@@ -216,7 +216,7 @@ $readonly = '';
                                   <?php
                                       $mois_selectionnes=array();
                                       $reduction=0;
-                                      $init_recaputilatif="";
+                                      $init_recapitulatif="";
                                       $quantite=0;
 
                                       if (! empty($eleve)) {
@@ -258,7 +258,7 @@ $readonly = '';
                                         }
 
                                         $quantite=count($mois_selectionnes);
-                                        $init_recaputilatif=count($mois_selectionnes)."*".$frais_sco."-".$reduction."=".(count($mois_selectionnes)*$frais_sco - $reduction);
+                                        $init_recapitulatif=count($mois_selectionnes)."*".$frais_sco."-".$reduction."=".(count($mois_selectionnes)*$frais_sco - $reduction);
 
                                       }
 
@@ -270,7 +270,7 @@ $readonly = '';
                                           $reduction=$pentions_facture_inscription[0]['reduction'];
                                           $quantite=count($pentions_facture_inscription);
                                           $frais_inscr=$pentions_facture_inscription[0]['montant'];
-                                          $init_recaputilatif=$quantite."*".$frais_inscr."-".$reduction."=".($quantite*$frais_inscr - $reduction);
+                                          $init_recapitulatif=$quantite."*".$frais_inscr."-".$reduction."=".($quantite*$frais_inscr - $reduction);
                                         }
 
 
@@ -285,7 +285,7 @@ $readonly = '';
                                           $reduction=$pentions_facture_tenue[0]['reduction'];
                                           $quantite=count($pentions_facture_tenue);
                                           $frais_tenue=$pentions_facture_tenue[0]['montant'];
-                                          $init_recaputilatif=$quantite."*".$frais_tenue."-".$reduction."=".($quantite*$frais_tenue - $reduction);
+                                          $init_recapitulatif=$quantite."*".$frais_tenue."-".$reduction."=".($quantite*$frais_tenue - $reduction);
                                         }
 
 
@@ -337,7 +337,7 @@ $readonly = '';
                                         <fieldset class="mb-1">
                                           <h5>Reduction</h5>
                                           <div class="form-group">
-                                            <input type="number" class="form-control reduction"  id="COL5-<?= $item['id'];?>"  name="COL5-<?= $item['id'];?>" value="<?php echo $reduction ?>"   placeholder="" />
+                                            <input type="number" class="form-control reduction"  id="COL_REDUCTION_<?= $item['id'];?>"  name="COL_REDUCTION_<?= $item['id'];?>" value="<?php echo $reduction ?>"   placeholder="" />
                                           </div>
                                         </fieldset>
                                       </div>
@@ -345,9 +345,9 @@ $readonly = '';
 
                                       <div class="col-3">
                                         <fieldset class="mb-1">
-                                          <h5>Recaputilatif</h5>
+                                          <h5>Recapitulatif</h5>
                                           <div class="form-group">
-                                            <input type="text" class="form-control "  id="COL4-<?= $item['id'];?>" value="<?php echo $init_recaputilatif ?>"  name="COL4-<?= $item['id'];?>"   placeholder="" readonly/>
+                                            <input type="text" class="form-control "  id="COL_RECAPITULATIF_<?= $item['id'];?>" value="<?php echo $init_recapitulatif ?>"  name="COL_RECAPITULATIF_<?= $item['id'];?>"   placeholder="" readonly/>
                                           </div>
                                         </fieldset>
                                       </div>
@@ -384,7 +384,7 @@ $readonly = '';
                                       $reduction=$pentions_facture_cantine[0]['reduction'];
                                       $quantite=count($mois_selectionnes);
                                       $frais_cantine=($qte>0)?$tot/$qte:0;
-                                      $init_recaputilatif=$quantite."*".$frais_cantine."-".$reduction."=".($quantite*$frais_cantine - $reduction);
+                                      $init_recapitulatif=$quantite."*".$frais_cantine."-".$reduction."=".($quantite*$frais_cantine - $reduction);
 
 
                                     }
@@ -423,7 +423,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Reduction</h5>
                                         <div class="form-group">
-                                          <input type="number" class="form-control reduction"  id="COL5-Cantine" value="<?php echo $reduction ?>"  name="COL5-Cantine"   placeholder="" />
+                                          <input type="number" class="form-control reduction"  id="COL_REDUCTION_Cantine" value="<?php echo $reduction ?>"  name="COL_REDUCTION_Cantine"   placeholder="" />
                                         </div>
                                       </fieldset>
                                     </div>
@@ -431,9 +431,9 @@ $readonly = '';
 
                                     <div class="col-3">
                                       <fieldset class="mb-1">
-                                        <h5>Recaputilatif</h5>
+                                        <h5>Recapitulatif</h5>
                                         <div class="form-group">
-                                          <input type="text" class="form-control "  id="COL4-Cantine" value="<?php echo $init_recaputilatif ?>"  name="COL4-Cantine"   placeholder="" readonly/>
+                                          <input type="text" class="form-control "  id="COL_RECAPITULATIF_Cantine" value="<?php echo $init_recapitulatif ?>"  name="COL_RECAPITULATIF_Cantine"   placeholder="" readonly/>
                                         </div>
                                       </fieldset>
                                     </div>
@@ -461,7 +461,7 @@ $readonly = '';
                                       if (! empty($acts)) {
                                         $reduction=$acts[0]['reduction'];
                                         //$frais_tenue=$pentions_facture_tenue[0]['montant'];
-                                        $init_recaputilatif=$quantite."*".$frais_tenue."-".$reduction."=".($quantite*$frais_tenue - $reduction);
+                                        $init_recapitulatif=$quantite."*".$frais_tenue."-".$reduction."=".($quantite*$frais_tenue - $reduction);
                                       }
                                       //var_dump($mois); var_dump($activites); die();
                                     ?>
@@ -511,7 +511,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Reduction</h5>
                                         <div class="form-group">
-                                          <input type="number" class="form-control reduction"  id="COL5-Activite" value="0"  name="COL5-Activite"   placeholder="" />
+                                          <input type="number" class="form-control reduction"  id="COL_REDUCTION_Activite" value="0"  name="COL_REDUCTION_Activite"   placeholder="" />
                                         </div>
                                       </fieldset>
                                     </div>
@@ -519,9 +519,9 @@ $readonly = '';
 
                                     <div class="col-3">
                                       <fieldset class="mb-1">
-                                        <h5>Recaputilatif</h5>
+                                        <h5>Recapitulatif</h5>
                                         <div class="form-group">
-                                          <input type="text" class="form-control "  id="COL4-Activite" value="0"  name="COL4-Activite"   placeholder="" readonly/>
+                                          <input type="text" class="form-control "  id="COL_RECAPITULATIF_Activite" value="0"  name="COL_RECAPITULATIF_Activite"   placeholder="" readonly/>
                                         </div>
                                       </fieldset>
                                     </div>
@@ -543,14 +543,14 @@ $readonly = '';
                                       $quantite=1;
                                       $montant=$pentions_facture_pension_autre['montant'];
                                       $reduction=$pentions_facture_pension_autre['reduction'];
-                                      $init_recaputilatif=$montant."-".$reduction."=".($montant - $reduction);
+                                      $init_recapitulatif=$montant."-".$reduction."=".($montant - $reduction);
                                     }
                                      ?>
                                     <div class="col-3 ">
                                       <fieldset class="mb-1">
                                         <h5>Autres</h5>
                                         <div class="form-group">
-                                          <input type="text" class="form-control " value="<?php echo $motif ?>"  id="COL2-Autres"  name="COL2-Autres"  placeholder="" />
+                                          <input type="text" class="form-control " value="<?php echo $motif ?>"  id="COL_LIBELLE_AUTRES"  name="COL_LIBELLE_AUTRES"  placeholder="" />
                                         </div>
                                       </fieldset>
                                     </div>
@@ -559,7 +559,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Montant</h5>
                                         <div class="form-group">
-                                          <input type="number" class="form-control " value="<?php echo $montant ?>"  id="NUMBER-COL3-Autres"  name=""    placeholder="">
+                                          <input type="number" class="form-control " value="<?php echo $montant ?>"  id="COL_MONTANT_AUTRES"  name=""    placeholder="">
                                         </div>
                                       </fieldset>
                                     </div>
@@ -569,7 +569,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Reduction</h5>
                                         <div class="form-group">
-                                          <input type="number" class="form-control reduction"  id="COL5-Autres" value="<?php echo $reduction ?>"  name="COL5-Autres"   placeholder="" />
+                                          <input type="number" class="form-control reduction"  id="COL_REDUCTION_AUTRES" value="<?php echo $reduction ?>"  name="COL_REDUCTION_AUTRES"   placeholder="" />
                                         </div>
                                       </fieldset>
                                     </div>
@@ -577,9 +577,9 @@ $readonly = '';
 
                                     <div class="col-3">
                                       <fieldset class="mb-1">
-                                        <h5>Recaputilatif</h5>
+                                        <h5>Recapitulatif</h5>
                                         <div class="form-group">
-                                          <input type="text" class="form-control "  id="COL4-Autres" value="<?php echo $init_recaputilatif ?>"  name="COL4-Autres"   placeholder="" />
+                                          <input type="text" class="form-control "  id="COL_RECAPITULATIF_AUTRE" value="<?php echo $init_recapitulatif ?>"  name="COL_RECAPITULATIF_AUTRE"   placeholder="" />
                                         </div>
                                       </fieldset>
                                     </div>

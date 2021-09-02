@@ -39,7 +39,7 @@ class CoursController extends AppController
     {
         $this->app->setTitle($this->title_page);
         $title =$this->title_home;
-        $items = $this->getall();
+        $items = $this->get_all();
         $fillables = $this->{$this->vairant}->fillables;
         $class_name = $this->class_name;
         $base_route = $this->base_route;
@@ -102,7 +102,7 @@ class CoursController extends AppController
 
 
     public function list(){
-        $this->sendResponseAndExit($this->getall());
+        $this->sendResponseAndExit($this->get_all());
       
     }
 
@@ -143,7 +143,7 @@ class CoursController extends AppController
         $result = $this->{$this->vairant}->update($data, $clause);
 
         if($result){
-            $this->sendResponseAndExit($this->getall());
+            $this->sendResponseAndExit($this->get_all());
         }else{
             $this->sendResponseAndExit($data, FALSE, 400, 'DB Error');
         }
@@ -153,7 +153,7 @@ class CoursController extends AppController
     {   
         $result = $this->{$this->vairant}->delete('code', $code);
         if($result){
-            $this->sendResponseAndExit($this->getall());
+            $this->sendResponseAndExit($this->get_all());
         }else{
             $this->sendResponseAndExit($code, FALSE, 400, 'DB Error');
         }

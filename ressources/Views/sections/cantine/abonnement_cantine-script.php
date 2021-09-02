@@ -56,7 +56,7 @@ data_facture['total_day']
     // DEFINITION DES ID des elements PHP
 
     var section_versement = $('#section_versement')
-    var section_recaputilatif = $('#section_recaputilatif')
+    var section_recapitulatif = $('#section_recapitulatif')
 
     var btn_preview = $('#btn_preview')
     var btn_save = $('#btn_save')
@@ -378,7 +378,7 @@ data_facture['total_day']
         $('#recap-funtion_signataire').text( "<?= $funtion_signataire; ?>" )
 
         $('#section_versement').hide()
-        $('#section_recaputilatif').show()
+        $('#section_recapitulatif').show()
 
     }
 
@@ -396,12 +396,12 @@ data_facture['total_day']
             montant_total = $('#montant_total').val()
             date_versement = $('#date_versement').val()
             $(section_versement).hide()
-            $(section_recaputilatif).show()
+            $(section_recapitulatif).show()
             
         })
 
         $(btn_back).click(function() {
-            $(section_recaputilatif).hide()
+            $(section_recapitulatif).hide()
             $(section_versement).show()
         })
 

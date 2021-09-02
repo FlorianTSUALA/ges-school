@@ -27,7 +27,7 @@ use App\Helpers\S;
     var montant = $('#montant')
 
     var section_versement = $('#section_versement')
-    var section_recaputilatif = $('#section_recaputilatif')
+    var section_recapitulatif = $('#section_recapitulatif')
 
     var btn_preview = $('#btn_preview')
     var btn_save = $('#btn_save')
@@ -65,11 +65,11 @@ use App\Helpers\S;
 
         $(btn_preview).click(function() {
             $(section_versement).hide()
-            $(section_recaputilatif).show()
+            $(section_recapitulatif).show()
         })
 
         $(btn_back).click(function() {
-            $(section_recaputilatif).hide()
+            $(section_recapitulatif).hide()
             $(section_versement).show()
         })
 

@@ -20,6 +20,8 @@ class AbonnementCantine extends Model implements FrequentlyReapeat
     const MONTANT = "montant";
     const PERIODE = "periode";
 
+    const TYPE_ABONNEMENT = "CANTINE";
+    
     public function __construct(){        
         parent::__construct();
         $periodes = ['JOUR', 'SEMAINE', 'MOIS', 'ANNEE'];

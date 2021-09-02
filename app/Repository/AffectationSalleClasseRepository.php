@@ -13,11 +13,6 @@ class AffectationSalleClasseRepository extends BaseRepository{
         
     public function getEnseignantNonAffecte(){
         $enseignants = DBTable::getModel(DBTable::PERSONNEL)->select(['code' => 'id', 'nom' => 'value'])->where('visibilite', '=', 1)->get();
-        
-        //---Affectation
-
-
-        //-------
 
         return $enseignants;
     }
@@ -54,7 +49,6 @@ class AffectationSalleClasseRepository extends BaseRepository{
                 $data_domaine['documents'] = $_documents??[];
                
                 array_push($documents, $data_domaine);
-                
             }
             
             return $documents;

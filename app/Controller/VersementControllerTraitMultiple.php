@@ -8,14 +8,15 @@ use App\Model\DBTable;
 use App\Model\Facture;
 use App\Helpers\Helpers;
 use Core\Session\Request;
+use App\Model\TypePension;
 use App\Model\PensionEleve;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\AbonnementActivite;
-use App\Model\TypePension;
 use App\Repository\EleveRepository;
+use App\Repository\PensionRepository;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
 
@@ -40,6 +41,7 @@ trait VersementControllerTraitMultiple
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
         
         $eleves = (new EleveRepository() )->getEleve();
+        $prix_scolarite_tranche_classe = (new PensionRepository())->getPensionScolaireClasseGroupByClasse($annee_scolaire_id);
 
         $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
@@ -57,22 +59,24 @@ trait VersementControllerTraitMultiple
                             ->get();
 
         $pension_classe = DBTable::getModel('pension_classe')
-            ->select(
-                [
-                    'classe.code' => 'classe',
-                    'type_pension.code' => 'type_pension',
-                    'pension_classe.code' => 'id',
-                    'pension_classe.montant' => 'montant',
-                    // 'pension_classe.est_mensuel' => 'est_mensuel',
-                    // 'pension_classe.mensualite' => 'mensualite',
-                    'pension_classe.libelle' => 'libelle'
-                ]
-            )
-            ->join('classe', 'classe.id', '=', 'pension_classe.classe_id')
-            ->join('type_pension', 'type_pension.id', '=', 'pension_classe.type_pension_id')
-            ->where('pension_classe.visibilite', '=', 1)
-            ->get();
-
+                            ->select(
+                                [
+                                    'classe.code' => 'classe_id',
+                                    'classe.libelle' => 'classe_libelle',
+                                    'type_pension.code' => 'type_pension',
+                                    'type_pension.paiement_en_tranche' => 'paiement_en_tranche',
+                                    'pension_classe.code' => 'id',
+                                    'pension_classe.montant' => 'montant',
+                                    'pension_classe.libelle' => 'libelle'
+                                ]
+                            )
+                            ->join('classe', 'classe.id', '=', 'pension_classe.classe_id')
+                            ->join('type_pension', 'type_pension.id', '=', 'pension_classe.type_pension_id')
+                            ->where('pension_classe.visibilite', '=', 1)
+                            ->where('type_pension.code', '=', TypePension::SCOLARITE_CODE)
+                            ->where('type_pension.visibilite', '=', 1)
+                            ->get();
+                        
         $pension_classe = json_encode($pension_classe);
 
         $salle_classes = DBTable::getModel('salle_classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
@@ -85,8 +89,8 @@ trait VersementControllerTraitMultiple
                             ->select('prix_abonnement.montant')
                             ->where('visibilite', '=', 1)
                             ->where('periode', '=', 'MOIS')
-                            ->where('type_abonnement', '=', 'CANTINE')
-                            //->where('type_abonnement_id', '=', 0)
+                            ->where('type_abonnement',  AbonnementCantine::TYPE_ABONNEMENT)
+                            //->where('type_abonnement_id', 0)
                             ->one()['montant'];
 
         $prix_abonnement_activites = DBTable::getModel('prix_abonnement')
@@ -98,9 +102,9 @@ trait VersementControllerTraitMultiple
                                     'prix_abonnement.description' => 'description'
                                 ]
                             )
-                            ->where('visibilite', '=', 1)
-                            ->where('type_abonnement', '=', 'ACTIVITE')
-                            //->where('type_abonnement_id', '=', 0)
+                            ->where('visibilite', 1)
+                            ->where('type_abonnement', AbonnementActivite::TYPE_ABONNEMENT)
+                            //->where('type_abonnement_id', 0)
                             ->get();
 
         // Tranche de l'annee scolaire en cours
@@ -123,6 +127,8 @@ trait VersementControllerTraitMultiple
             'data_inscriptpion',
             'title',
             'classes',
+            'statut_apprenants',
+            'prix_scolarite_tranche_classe',
             'statut_apprenants',
             'annee_scolaires',
             'eleves',

@@ -19,7 +19,7 @@ use App\Helpers\S;
     var montant = $('#montant')
 
     var section_versement = $('#section_versement')
-    var section_recaputilatif = $('#section_recaputilatif')
+    var section_recapitulatif = $('#section_recapitulatif')
 
     var btn_preview = $('#btn_preview')
     var btn_save = $('#btn_save')
@@ -86,7 +86,7 @@ use App\Helpers\S;
             msg = sub_total;
             // msg = _recapitulatif+"*"+tmp_montant+"-"+_remise+ " = " +sub_total;
 
-            $('#COL4-'+_type_pension_code).val(msg)
+            $('#COL_RECAPITULATIF_'+_type_pension_code).val(msg)
 
             _montant_total += sub_total;
             
@@ -107,7 +107,7 @@ use App\Helpers\S;
             msg = sub_total
             _montant_total += sub_total
 
-            $('#COL4-Autres').val(msg)
+            $('#COL_RECAPITULATIF_AUTRE').val(msg)
         //Autres
         
         //Cantines
@@ -129,7 +129,7 @@ use App\Helpers\S;
             // msg = _multiplicateur+'*'+_montant+'-'+_remise+ ' = ' +sub_total
             msg = sub_total
 
-            $('#COL4-Cantine').val(msg)
+            $('#COL_RECAPITULATIF_Cantine').val(msg)
             _montant_total += sub_total
         //Cantine
 
@@ -163,7 +163,7 @@ use App\Helpers\S;
 
             msg += sub_total
             // msg += "-"+_remise+ " = " +sub_total
-            $('#COL4-Activite').val(msg)
+            $('#COL_RECAPITULATIF_Activite').val(msg)
             _montant_total += sub_total
         //Activite
 
@@ -209,11 +209,11 @@ use App\Helpers\S;
 
         $(btn_preview).click(function() {
             $(section_versement).hide()
-            $(section_recaputilatif).show()
+            $(section_recapitulatif).show()
         })
 
         $(btn_back).click(function() {
-            $(section_recaputilatif).hide()
+            $(section_recapitulatif).hide()
             $(section_versement).show()
         })
 

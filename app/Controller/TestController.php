@@ -24,6 +24,7 @@ use App\Model\AntecedentScolaire;
 use App\Repository\EleveRepository;
 use App\Repository\ClasseRepository;
 use App\Repository\CantineRepository;
+use App\Repository\PensionRepository;
 use App\Repository\DocumentRepository;
 use App\Model\AffectationClasseMatiere;
 use App\Repository\PersonnelRepository;
@@ -229,13 +230,12 @@ class TestController extends AppController
 
     //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
     
-<<<<<<< Updated upstream
-    dd((new EleveRepository )->getInfoEleveScolarite(1,2) );
-=======
-    dd((new TrancheScolaireRepository() )->getTrancheScolaires(3) );
->>>>>>> Stashed changes
+    // dd((new EleveRepository )->getInfoEleveScolarite(1,2) );
+    // dd((new TrancheScolaireRepository() )->draft() );
+    dd(( new PensionRepository() )->getPensionScolaireClasseGroupByClasse() );
   
     }
+
 
     public function testpdf()
     {

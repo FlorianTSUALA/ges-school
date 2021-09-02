@@ -1,9 +1,11 @@
 <?php
 
 use App\Helpers\Helpers;
+use App\Helpers\S;
 
-$signataire = "Charbonnier LaRose";
-$funtion_signataire = "Le Sécrétariat";
+$signataire = $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM);
+$funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
+
 
 ?>
 
@@ -292,7 +294,7 @@ $funtion_signataire = "Le Sécrétariat";
         $('#recap-funtion_signataire').text(  data_versement['funtion_signataire'] )
 
         $('#section_versement').hide()
-        $('#section_recaputilatif').show()
+        $('#section_recapitulatif').show()
     }
 
     );

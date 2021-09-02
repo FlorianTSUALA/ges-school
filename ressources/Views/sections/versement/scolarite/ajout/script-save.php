@@ -35,10 +35,11 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
                 'nom_eleve':  data_versement['eleve_nom_complet'],
                 'reference':  data_versement['reference'],
                 'date_paiement':  data_versement['date_paiement'],
-         };
+        };
 
 
-        $.blockUI({
+        
+         $.blockUI({
             message: '<div class="semibold"><span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Enregistrement en cours ...</div>',
             fadeIn: 1000,
             timeout: 10000, //unblock after 2 seconds

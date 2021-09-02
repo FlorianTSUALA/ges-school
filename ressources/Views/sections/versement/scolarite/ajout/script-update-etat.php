@@ -1,42 +1,34 @@
 <?php
 
 use App\Helpers\Helpers;
+use App\Helpers\S;
 
-$signataire = "Charbonnier LaRose";
-$funtion_signataire = "Le Sécrétariat";
+$signataire = $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM);
+$funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
 
 ?>
 
 <script>
-
+    var data_versement = []
     var reference = '<?= Helpers::generateReference() ?>'
 
     $(document).on('click', '#btn_preview', function(e)
     {
-
-        data_versement['pension_classe'] =  items
-        data_versement['cantines'] =  cantines
         data_versement['autres'] =  autres
-        data_versement['activites'] =  activites
+        data_versement['activites'] =  scolarites
 
         data_versement['signataire'] = '<?=  $signataire ?>'
         data_versement['funtion_signataire'] = '<?= $funtion_signataire ?>'
 
-        data_versement['reference'] = $('#reference').val()
+        data_versement['reference'] = reference
 
-        data_versement['pension_classe'] = items
-        data_versement['cantines'] = cantines
-        data_versement['autres'] = autres
-        data_versement['activites'] = activites
 
         data_versement['date_paiement'] = $('#date_paiement').val()
 
         data_versement['eleve'] = $('#eleve_nom_complet option:selected').text()
         data_versement['eleve_id'] = $('#eleve_nom_complet option:selected').val()
 
-        data_versement['autres'] = $('#autres').text()
 
-        data_versement['statut_apprenant'] = $('#statut_apprenant option:selected').val()
         data_versement['annee_scolaire'] = $('#annee_scolaire option:selected').val()
 
         data_versement['type_paiement'] = $('#type_paiement option:selected').text()
@@ -61,194 +53,43 @@ $funtion_signataire = "Le Sécrétariat";
         $('#recap-reference').text(data_versement['reference'])
 
         //Pension Scolaire
-            for(var item in items)
             {
-                
-                let current = items[item]
-
-                let _type_pension_code = current['type_pension_code']
-
-                let  _est_mensuel    = parseInt(current['est_mensuel'])
-                let _montant =  parseFloat(current['montant'])
-                let _mensualite = parseFloat(current['mensualite'])
-
-                let  msg = ''
-                let  sub_total = 0
-                let  tmp_montant = 0
-
-                var _recapitulatif = parseFloat(current['recapitulatif'])
-                _recapitulatif = (isNaN(_recapitulatif))? 0 : _recapitulatif
-                if(_recapitulatif == 0) continue
 
                 body += '<tr>'
-                body += '   <th scope="row">'+ (++i) +'</th>'
+                body += '   <th scope="row">'+ 1 +'</th>'
                 body += '       <td>'
-                body += '           <p>Pension : '+current['type_pension']+'</p>'
+                body += '           <p>Pension : '+scolarites['libelle']+'</p>'
 
-                if(_est_mensuel === 1){
+                let j = 0
+                let size = $(tranche).select2('data').length
+                let periode = ''
+                for(var _tranche of ($(tranche).select2('data')) )
+                    periode += _tranche.text + ((size == ++j)? '.' : ', ')  
 
-                        tmp_montant = _mensualite
-
-                        let subdody = ''
-                        let periode  = ' '
-                        var size = current['multiplicateur'].length
-                        let j = 0
-
-                        for(var tranche in current['multiplicateur'])
-                            periode += (current['multiplicateur'][tranche]['value'] + ((size = ++j)? '.' : ', '))
-
-                        body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
-
-                    }else{
-                        _recapitulatif = (isNaN(_recapitulatif))? 1 : _recapitulatif
-                        tmp_montant = _montant
-                }
-
-                //Reste
-                _montant_total -= current['remise']
+                body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
 
                 body += '       </td>'
-                body += '       <td class="text-right">'+tmp_montant +' Fcfa</td>'
-                body += '       <td class="text-right">'+ _recapitulatif +'</td>'
-                sub_total = tmp_montant * _recapitulatif
-                body += '       <td class="text-right">'+ sub_total +' Fcfa</td>'
+                body += '       <td class="text-right">'+ scolarites['montant'] +' Fcfa</td>'
+                body += '       <td class="text-right">'+ size +' tranches(s)</td>'
+                body += '       <td class="text-right">'+ scolarites['montant'] +' Fcfa</td>'
 
                 body += '</tr>'
-                sous_total += sub_total
 
             }
         //Pension Scolaire
 
-        //Cantines
-            current = cantines
-            let _est_mensuel = parseInt(current['est_mensuel'])
-            let _montant = parseFloat(current['montant'])
-            let _mensualite = parseFloat(current['mensualite'])
-            _multiplicateur = parseFloat(current['multiplicateur'])
-            _multiplicateur = (isNaN(_multiplicateur))? 0 : _multiplicateur
-            let _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-            if(_multiplicateur > 0){
-                
-                body += '<tr>'
-                body += '   <th scope="row">'+(++i)+'</th>'
-                body += '       <td>'
-                body += '           <p>Pension : Cantine </p>'
-
-
-
-                msg = ''
-                sub_total = 0
-                tmp_montant = 0
-                tmp_montant = cantine_prix_mois
-                sub_total = tmp_montant * _multiplicateur - _remise
-                msg = _multiplicateur+"*"+tmp_montant+"-"+_remise+ " = " +sub_total
-
-                _montant_total += sub_total
-                let j = 0
-                let periode = ''
-
-                for(var tranche in current['recapitulatif'])
-                    periode += (current['recapitulatif'][tranche]['value'] + ((size = ++j)? '.' : ', '))
-
-                body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
-
-                body += '       </td>'
-                body += '       <td class="text-right">'+tmp_montant +' Fcfa</td>'
-                body += '       <td class="text-right">'+ _multiplicateur +'</td>'
-                sub_total = tmp_montant * _multiplicateur
-                body += '       <td class="text-right">'+ sub_total +' Fcfa</td>'
-
-                    body += '</tr>'
-                }
-        //Cantines
-
-        //Activite
-            let activites_souscrits  = activites['activites']
-            current = activites
-            _est_mensuel = parseInt(current['est_mensuel'])
-            _montant = parseFloat(current['montant'])
-            _mensualite = parseFloat(current['mensualite'])
-            _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-
-            // console.log(current)
-            // console.log(parseInt(current['recapitulatif']))
-
-            let nbre_tranche = parseInt(current['recapitulatif'])
-            nbre_tranche = (isNaN(nbre_tranche))? 0 : nbre_tranche
-            // console.log(parseInt(nbre_tranche))
-
-            sub_total = 0
-            if(nbre_tranche != 0 ){
-            // if(nbre_tranche != 0 && activites_souscrits != undefined && activites_souscrits.length !== 0){
-                // ++i
-                body += '<tr>'
-                body += '   <th scope="row">' + (++i) + '</th>'
-                body += '       <td>'
-
-
-                let tmp_montant = 0
-                let tmp_montant_txt = ''
-                let msg = ''
-
-                for (let j=0; j<activites_souscrits.length; j++) {
-
-                    if (j == activites_souscrits.length - 1) {
-                        msg += activites_souscrits[j]['value'] + '. '
-                        tmp_montant_txt += activites_souscrits[j]['montant']
-                    } else {
-                        msg += activites_souscrits[j]['value'] + ', '
-                        tmp_montant_txt += activites_souscrits[j]['montant'] + ' + '
-                    }
-
-                    tmp_montant += parseFloat( activites_souscrits[j]['montant'] )
-                }
-
-                sub_total += (tmp_montant * nbre_tranche)
-                tmp_montant = (tmp_montant * nbre_tranche)
-                tmp_montant_txt = '(' + tmp_montant_txt+')*' + nbre_tranche
-
-                body += '           <p>Pension des activités : ' + msg + '</p>'
-
-                sub_total = sub_total - _remise
-
-                _montant_total += sub_total
-                let j = 0
-                let periode = ''
-
-                for (var tranche in current['multiplicateur'])
-                    periode += (current['multiplicateur'][tranche]['value'] + ((size = ++j)? '.' : ', '))
-
-
-                body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
-                body += '       </td>'
-                body += '       <td class="text-right">'+tmp_montant_txt +' Fcfa</td>'
-                body += '       <td class="text-right">'+ nbre_tranche +'</td>'
-
-                body += '       <td class="text-right">'+ tmp_montant +' Fcfa</td>'
-                body += '</tr>'
-            }
-        //Activite
 
         //Autres
-            current = autres
-            _montant = parseFloat(current['montant'])
-            _montant = (isNaN(_montant))? 0 : _montant
-            _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-            _montant_total += _montant
 
-            if(_montant !== 0){
-                // ++i
+            if(autres['recapitulatif'] !== 0){
                 body += '<tr>'
-                body += '   <th scope="row">'+(++i)+'</th>'
+                body += '   <th scope="row">'+ 2 +'</th>'
                 body += '       <td>'
-                body += '           <p>Pension : '+ current['type_pension']+'</p>'
+                body += '           <p>Pension : '+ autres['libelle'] +'</p>'
                 body += '       </td>'
-                body += '       <td class="text-right">'+_montant +' Fcfa</td>'
+                body += '       <td class="text-right">'+ autres['montant'] +' Fcfa</td>'
                 body += '       <td class="text-right">  1 </td>'
-                body += '       <td class="text-right">'+ _montant +' Fcfa</td>'
+                body += '       <td class="text-right">'+  autres['montant']  +' Fcfa</td>'
                 body += '</tr>'
             }
         //Autres
@@ -279,22 +120,22 @@ $funtion_signataire = "Le Sécrétariat";
         })
 
 
-        data_versement['reduction'] = reduction
-        data_versement['sous_total'] = data_versement['montant_paye'] -  data_versement['reduction']
+        data_versement['reduction'] =  parseFloat(autres['reduction']) +  parseFloat(scolarites['reduction'])
+        data_versement['sous_total'] = parseFloat(autres['montant']) +  parseFloat(scolarites['montant'])
+        data_versement['montant_paye'] = data_versement['sous_total'] - data_versement['reduction']
 
-
-        $('#recap-total-top').text(   data_versement['montant_paye'] )
+        $('#recap-total-top').text(  parseInt( data_versement['montant_paye'] ) )
         $('#recap-total-bottom').text( data_versement['montant_paye'] )
         $('#recap-reduction').text( data_versement['reduction'] )
-        $('#recap-sous_total').text( parseInt( data_versement['montant_paye'] ) -  data_versement['reduction'] )
+        $('#recap-sous_total').text(   data_versement['sous_total'])
 
         $('#recap-signataire').text( data_versement['signataire'] )
         $('#recap-funtion_signataire').text(  data_versement['funtion_signataire'] )
 
         $('#section_versement').hide()
-        $('#section_recaputilatif').show()
+        $('#section_recapitulatif').show()
     }
 
-    // );
+    );
 
 </script>

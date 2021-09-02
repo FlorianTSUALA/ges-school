@@ -30,7 +30,7 @@ use App\Controller\PrinterController;
 ?>
 
 
-<section class="row" id="section_recaputilatif" style="display: none;">
+<section class="row" id="section_recapitulatif" style="display: none;">
     <div class="col-sm-12">
         <!-- ESPACE DE TRAVAIL -->
         <div id="kick-start" class="border-2 border-warning card box-shadow-2">

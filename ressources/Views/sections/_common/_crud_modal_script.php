@@ -26,13 +26,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                     $.ajax({
                          url: "<?= URL::link($base_route.'-create'); ?>",
                          method: "POST",
-                        data: new FormData(form[0]),//form[0],
-                        enctype: 'multipart/form-data',
-                        dataType: 'json',
-                        processData: false,  // Important!
-                        contentType: false,
-                        cache: false,
-                        // timeout: 600000,
+                         data: form.serialize(),
                          beforeSend:function(){
                               $('#button-form-create').hide();
                               $('#loading').show();
@@ -40,13 +34,10 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                               $('#notification-create').hide();
                          },
                          success:function(data){
-
                               console.log(data);
-
                               form[0].reset();
                               $('#button-form-create').show();
                               $('#upt-loading').hide();
-
                               $('#modal-create').modal('hide');
                               $('#data-table').html(data);
                          },
@@ -59,6 +50,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                                    $('#button-form-create').show();
                                    console.log(textStatus.statusText);
                               }
+                              console.log(textStatus.statusText);
 
                               Success = false;
                          }
@@ -108,7 +100,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                                         $js .= "$('#upd-{$fillable->name}').val(data.{$fillable->name});";
                                    break;
                                    case InputType::SELECT2_MULTIPLE: //"#SELECT2MULTIPLE"
-                                        $js .= "$('#upd-{$fillable->name}').val((data.{$fillable->name}).split(', ')).trigger('change'); console.log((data.{$fillable->name}).split(', '));";
+                                        $js .= "$('#upd-{$fillable->name}').val((data.{$fillable->name}).split(', ')).trigger('change');";
                                    break;
                                    case InputType::SELECT2:
                                    case InputType::SELECT:
@@ -163,7 +155,6 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                               form[0].reset();
                               $('#button-form-update').show();
                               $('#upt-loading').hide();
-
                               $('#modal-update').modal('hide');
                               $('#data-table').html(data);
                          },

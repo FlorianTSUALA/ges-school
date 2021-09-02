@@ -59,8 +59,8 @@ class TrancheScolaireController extends AppController
     public function save()
     {
         $description = $_POST['description'];
-        $annee_scolaire_code = Request::getSecParam('annee_scolaire_id');
-        // $type_tranche_scolaire_code = Request::getSecParam('type_tranche_scolaire_id');
+        $type_tranche_scolaire_code = Request::getSecParam('type_tranche_scolaire_id');
+        // $annee_scolaire_code = Request::getSecParam('annee_scolaire_id');
         // $annee_scolaire_id = TypeTrancheScolaire::table()->select('id')->where('code', $type_tranche_scolaire_code)->one()['id'];
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
 
@@ -68,8 +68,8 @@ class TrancheScolaireController extends AppController
         $tranche_scolaire_code = TrancheScolaire::generateCode();
         $data_tranche_scolaire = [
             'code' => $tranche_scolaire_code,
-            'annee_scolaire_id' => AnneeScolaire::table()->select('id')->where('code', $annee_scolaire_code)->one()['id'],
-            'type_tranche_scolaire_id' => $annee_scolaire_id,
+            'annee_scolaire_id' => $annee_scolaire_id,
+            'type_tranche_scolaire_id' => TypeTrancheScolaire::get_id($type_tranche_scolaire_code),
             'libelle' => $libelle,
         ];
         TrancheScolaire::table()->insert($data_tranche_scolaire)->execute();
@@ -86,7 +86,9 @@ class TrancheScolaireController extends AppController
 
         $result = true;
         if ($result) {
-            $this->sendResponseAndExit(Helpers::toJSON($result, TRUE));
+            $items = $this->get_all();
+            $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
+            $this->sendResponseAndExit($data);
         } else {
             $this->sendResponseAndExit($result, false, 400, 'DB Error');
         }
