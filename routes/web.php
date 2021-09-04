@@ -166,6 +166,8 @@ $router->addRoute('liste_eleve', 'versement/list/eleve', [VersementController::c
 
 $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
+$router->addRoute('versement_totale', 'versement/total', [VersementController::class, 'versement_total']);
+$router->addRoute('versement_api_info', 'versement/api/info/{code}', [VersementController::class, 'api_facture_info_api_paie']);
 $router->addRoute('versement_retard', 'versement/retard', [VersementController::class, 'liste_retard']);
 $router->addRoute('versement_info', 'versement/info/', [VersementController::class, 'info']);
 

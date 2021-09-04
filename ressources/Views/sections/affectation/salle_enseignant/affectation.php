@@ -45,7 +45,7 @@ $include_footer_script = ob_get_clean();
                 <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
                     <div class="btn-group" role="group">
                     </div>
-                        <a class="btn btn-outline-info" href="<?= URL::link('classe') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Gesiton classes</a>
+                        <a class="btn btn-outline-info" href="<?= URL::link('classe') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Gestion classes</a>
                     <a class="btn btn-outline-info" href="<?= URL::link('salle_classe') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Gestion salles de classes</a>
                 </div>
             </div>

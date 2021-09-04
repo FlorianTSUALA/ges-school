@@ -84,8 +84,6 @@ include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
                 $('#recap-quartier_pere').text(eleve.quartier_pere)
                 $('#recap-email_pere').text(eleve.email_pere)
 
-
-
                 $('#recap-pays_eleve').text(eleve.pays)
                 $('#recap-statut_eleve').text(eleve.statut_eleve)
                 $('#recap-classe_eleve').text(eleve.classe_eleve)
@@ -192,11 +190,17 @@ include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
                   "data": null,
                   "render": function(data, type, full, meta){ 
                       // console.log(data);
+
+                      //       <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_read_data btn btn-sm btn-blue"><i class="ft-eye"></i></button>
+                      //      <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_update_data btn btn-sm btn-green"><i class="ft-edit-2"></i></button>
+                      //      <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_delete_data btn btn-sm btn-danger"><i class="ft-trash-2"></i></button>                     
+                           
+
                         return  ' '+
                                 ' <div class="btn-group" role="group" aria-label="Basic example"> '+
-                                '      <button type="button" data-action="action-voir" class="action btn btn-sm btn-icon btn-primary mr-0" title="voir"><i class="ft-eye"></i></button> '+
-                                '      <button type="button" data-action="action-modifier" class="action btn btn-sm btn-icon btn-success mr-0" title="modifier"><i class="ft-edit-2"></i></button> '+
-                                '      <button type="button" data-action="action-supprimer" class="action btn btn-sm btn-icon btn-warning mr-0" title="supprimer"><i class="ft-trash"></i></button> '+
+                                '      <button type="button" data-action="action-voir" class="action btn btn-sm btn-icon btn-blue mr-0" title="voir"><i class="ft-eye"></i></button> '+
+                                '      <button type="button" data-action="action-modifier" class="action btn btn-sm btn-icon btn-green mr-0" title="modifier"><i class="ft-edit-2"></i></button> '+
+                                '      <button type="button" data-action="action-supprimer" class="action btn btn-sm btn-icon btn-danger mr-0" title="supprimer"><i class="ft-trash"></i></button> '+
                                 '  </div>'
 
                     }

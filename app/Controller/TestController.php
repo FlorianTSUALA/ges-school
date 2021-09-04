@@ -24,6 +24,7 @@ use App\Repository\ClasseRepository;
 use App\Repository\CantineRepository;
 use App\Repository\DocumentRepository;
 use App\Model\AffectationClasseMatiere;
+use App\Model\Facture;
 use App\Repository\PersonnelRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\ExemplaireRepository;
@@ -227,9 +228,10 @@ class TestController extends AppController
     public function testSQL()
     {
 
+      dd(Facture::get_paie_facture_activite(4));
     //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
     
-    dd((new VersementRepository )->getInfoEleveActivite(1,2) );
+    //dd((new VersementRepository )->getInfoEleveActivite(1,2) );
   
     }
 

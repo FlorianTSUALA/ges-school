@@ -23,6 +23,7 @@ use App\Helpers\Helpers;
 <script>
 
     var form_id = "form-eleve_ajout"
+    var data1
 
     $(document).ready(function() {
         // Show form
@@ -122,8 +123,6 @@ use App\Helpers\Helpers;
                 $('#recap-quartier_pere').text($('#quartier_pere').val() ? $('#quartier_pere').val() : '<?= Helpers::repeatChar(); ?>');
                 $('#recap-email_pere').text($('#email_pere').val() ? $('#email_pere').val() : '<?= Helpers::repeatChar(); ?>');
 
-
-
                 $('#recap-pays_eleve').text($('#pays_eleve :selected').val() ? $('#pays_eleve :selected').val() : '<?= Helpers::repeatChar(); ?>');
                 $('#recap-statut_eleve').text($('#statut_eleve :selected').val() ? $('#statut_eleve :selected').val() : '<?= Helpers::repeatChar(); ?>');
                 $('#recap-classe_eleve').text($('#classe_eleve :selected').val() ? $('#classe_eleve :selected').val() : '<?= Helpers::repeatChar(); ?>');
@@ -152,12 +151,12 @@ use App\Helpers\Helpers;
                 return form.valid();
             },
             onFinished: function(event, currentIndex) {
-                sauvegarderEleve()
+                sauvegarderEleve(data1)
                 // form.submit();
             }
         });
 
-        function sauvegarderEleve() {
+        function sauvegarderEleve(data1) {
 
             $.blockUI({
                 message: '<div class="semibold"><span class="ft-refresh-cw icon-spin text-left"></span>&nbsp; Enregistrement en cours ...</div>',
@@ -189,7 +188,7 @@ use App\Helpers\Helpers;
                         // timeout: 600000,
                         beforeSend: function() {},
                         success: function(data) {
-
+                            data1 = $('#recap-nom_eleve').text()
                             // message de notification
                             swal({
                                 title: "Enregistrement Réussi",
@@ -198,7 +197,7 @@ use App\Helpers\Helpers;
                                 showCancelButton: true,
                                 buttons: {
                                     cancel: {
-                                        text: "Liste des élèves",
+                                        text: "Pension Inscription",
                                         value: null,
                                         visible: true,
                                         className: "btn-warning",
@@ -220,11 +219,16 @@ use App\Helpers\Helpers;
                                     // window.location.reload();
                                 } else {
                                     // form.reset()
-                                    window.location.href = "<?= URL::link('eleve_liste'); ?>";
+                                    window.location.href = "<?= URL::link('versement_inscription'); ?>";     
+                                    
+                                    console.log(data1)
+                                    console.log('data1')
+                                    $("#eleve_nom_complet").text(data1)
+
                                     // window.location.reload();
                                 }
                             });
-
+                            console.log(data1)
                             console.log(data)
 
                         },

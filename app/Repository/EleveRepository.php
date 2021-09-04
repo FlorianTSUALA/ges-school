@@ -432,7 +432,7 @@ class EleveRepository extends BaseRepository{
                 where annee_scolaire.id = $annee_scolaire_id $clause_classe_filter
              )  InfoParcours
             where InfoEleve.id = InfoParcours.id
-            order by InfoParcours.date_inscription
+            order by nom_complet
         ";
         $result = $this->query($req);
         return $this->toObject($result);

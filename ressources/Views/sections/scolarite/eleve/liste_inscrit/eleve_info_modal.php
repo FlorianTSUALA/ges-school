@@ -6,10 +6,10 @@ use App\Helpers\Helpers;
 ?>
 
 <!-- Modal -->
-<div class="modal  animated zoomIn  text-left" id="eleve_modal_info" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
+<div class="modal  animated zoomIn  text-left" id="eleve_modal_info_inscrit" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background: #f5a663;">
                 <h4 class="modal-title" id="myModalLabel17">Informations générales de l'élève</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
@@ -33,8 +33,8 @@ use App\Helpers\Helpers;
                         <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
                             <div class="card collapse-icon panel mb-0 box-shadow-0 border-0">
                                 <!-- ETAPE 01 -->
-                                <div id="heading-etape-01" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                                    <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01" aria-expanded="false" aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong>Infomations personnelles sur l'élève</strong></a>
+                                <div id="heading-etape-01" role="tab" class="card-header border-bottom-black border-bottom-warning">
+                                    <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01" aria-expanded="false" aria-controls="accordion-etape-01" class="text-uppercase black collapsed"><strong>Infomations personnelles sur l'élève</strong></a>
                                 </div>
 
                                 <div id="accordion-etape-01" role="tabpanel" aria-labelledby="heading-etape-01" class="collapse" aria-expanded="true" style="">
@@ -188,8 +188,8 @@ use App\Helpers\Helpers;
                                 </div>
 
                                 <!-- ETAPE 02 -->
-                                <div id="heading-etape-02" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                                    <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-02" aria-expanded="false" aria-controls="accordion-etape-02" class="text-uppercase blue collapsed"><strong>Dossier parental </strong></a>
+                                <div id="heading-etape-02" role="tab" class="card-header border-bottom-black border-bottom-warning">
+                                    <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-02" aria-expanded="false" aria-controls="accordion-etape-02" class="text-uppercase black collapsed"><strong>Dossier parental </strong></a>
                                 </div>
 
                                 <div id="accordion-etape-02" role="tabpanel" aria-labelledby="heading-etape-02" class="collapse" aria-expanded="true" style="">
@@ -499,8 +499,8 @@ use App\Helpers\Helpers;
 
 
                                 <!-- ETAPE 03 -->
-                                <div id="heading-etape-04" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                                    <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-04" aria-expanded="false" aria-controls="accordion-etape-04" class="text-uppercase blue collapsed"><strong>Dossier médical</strong></a>
+                                <div id="heading-etape-04" role="tab" class="card-header border-bottom-black border-bottom-warning">
+                                    <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-04" aria-expanded="false" aria-controls="accordion-etape-04" class="text-uppercase black collapsed"><strong>Dossier médical</strong></a>
                                 </div>
 
                                 <div id="accordion-etape-04" role="tabpanel" aria-labelledby="heading-etape-04" class="collapse" aria-expanded="false" style="">

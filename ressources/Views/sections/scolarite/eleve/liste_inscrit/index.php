@@ -12,39 +12,20 @@ $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::ba
 $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/vendors/css/forms/selects/select2.min.css">' . "\n";
 $include_res_header .= Helpers::dataTableResponsibleSearchBar() . "\n";
 $include_res_header .=  '<style>
-                        #menu ul, #menu li {list-style-type: none;}
-
-                        #menu div div li a, #menu  div li a, #menu  li{ 
-                            font-size: 100% !important;
-                            line-height: 60% !important;
-                        }
-
-                        #menu div div li a, #menu div div li { 
-                            font-size: 100% !important;
-                            line-height: 50% !important;
-                        }
-
-                        #menu li a:hover { 
-                            background-color: aliceblue;
-                        }
-
-                        #menu li :active:hover { 
-                            background-color: #fff; 
-                            color: #3BAFDA;
-                        }
-
-                        #menu li a:active { 
-                            background-color: #3BAFDA;
-                            color: #fff;
-                        }
-
-                        li.select2-results__option strong.select2-results__group:hover {
-                            background-color: #ddd;
-                            cursor: pointer;
-                        }
-
-                        </style>
                         
+
+                        a.list-group-item.active{
+                            background:#f5a663;
+                            border-color:#f5a663;
+                            }
+
+                            html body a {
+                                color:black;
+                            }
+                            
+  
+                        </style>
+                         
                         
                     ';
 
@@ -133,7 +114,7 @@ $include_footer_script = ob_get_clean();
 
                                 <div class="p-0   ">
                                     <span class="dropdown">
-                                        <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled><i class="icon-settings mr-1"></i>Rapport</button>
+                                        <button class="btn btn-warning btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="icon-settings mr-1"></i>Rapport</button>
                                         <span class="dropdown-menu arrow  dropdown-menu-left">
                                             <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel </a>
                                             <a href="#" class="dropdown-item"><i class="fa fa-file-word-o"></i> Word</a>
