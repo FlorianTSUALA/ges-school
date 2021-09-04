@@ -12,7 +12,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
 
     function sauvegarderVersement(){
         // console.log(activites['multiplicateur'])
-        // console.log(activites['activites']);
+        // console.log(activites['liste']);
         // console.log(activites);
         // console.log(autres);
         

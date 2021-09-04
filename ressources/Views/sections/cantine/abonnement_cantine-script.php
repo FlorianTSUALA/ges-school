@@ -225,7 +225,7 @@ data_facture['total_day']
     var _reduction = 0;
     var _reste = 0;
 
-    // var cantine_prix_mois = abonnement_cantine['montant_total'];
+    // var prix_mensuel_cantine = abonnement_cantine['montant_total'];
 */
 
     function update_etat(){

@@ -118,7 +118,7 @@ class VersementController_old extends AppController
                             //->where('type_abonnement_id', '=', 0)
                             ->one()['montant']; 
                    
-        $prix_abonnement_activites = DBTable::getModel('prix_abonnement')
+        $prix_abonnement_activite = DBTable::getModel('prix_abonnement')
                             ->select(
                                 [
                                     'prix_abonnement.code' => 'id',
@@ -154,7 +154,7 @@ class VersementController_old extends AppController
             'type_pensions',
             'type_paiements',
             'tranche_scolaires',
-            'prix_abonnement_activites',
+            'prix_abonnement_activite',
             'prix_abonnement_cantine'
         ));
     }
@@ -208,7 +208,7 @@ class VersementController_old extends AppController
             $autres = $_POST['autres'];
             $motif = $autres['type_pension'];
             $montant = $autres['montant'];
-            $reduction = $autres['remise'];
+            $reduction = $autres['reduction'];
             
     
             $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
@@ -232,7 +232,7 @@ class VersementController_old extends AppController
         //CANTINE
             $cantines = $_POST['cantines'];
            
-            $items = $cantines['recapitulatif'];
+            $items = $cantines['montant_net'];
             
             $hasDiscountinous = true;
             $i = 0;
@@ -276,7 +276,7 @@ class VersementController_old extends AppController
                     'code' => $code_cantine,
                     'eleve_id' => $eleve_id,
                     'montant_total' => $cantines['montant'] * $cantines['multiplicateur'] ,
-                    'reduction' => $cantines['remise'],
+                    'reduction' => $cantines['reduction'],
                     'date_debut' => $start_date,
                     'date_fin' => $end_date,
                 ];
@@ -346,7 +346,7 @@ class VersementController_old extends AppController
             $activites = $_POST['activites'];
             
             $items = $activites['multiplicateur']??[];
-            $reduction = $activites['remise'];
+            $reduction = $activites['reduction'];
 
             foreach($activites as $activite){
                 $nom_activite = $activite['value'];
@@ -381,8 +381,8 @@ class VersementController_old extends AppController
                     $data_abonnement_activite = [
                         'code' => $code_abonnement_activite,
                         'eleve_id' => $eleve_id,
-                        'montant_total' => $montant_activite * $activites['recapitulatif'] ,
-                        'reduction' => $activites['remise'],
+                        'montant_total' => $montant_activite * $activites['montant_net'] ,
+                        'reduction' => $activites['reduction'],
                         'date_debut' => $start_date,
                         'date_fin' => $end_date,
                     ];
@@ -431,11 +431,11 @@ class VersementController_old extends AppController
 
                 $motif = $data_pension['type_pension'];
                 $montant = $data_pension['montant'];
-                $reduction = $data_pension['remise'];
+                $reduction = $data_pension['reduction'];
                 $type_pension_id = $data_pension['type_pension_code'];
                 $pension_classe_id = $data_pension['pension_classe_code'];
                 $est_mensuel = $data_pension['est_mensuel'];
-                $quantite = $data_pension['recapitulatif'];
+                $quantite = $data_pension['montant_net'];
 
                 if($est_mensuel == 1){    
                     foreach($data_pension['multiplicateur'] as $tranche){
@@ -499,7 +499,7 @@ class VersementController_old extends AppController
         // $prix_unitaire
         // $quantite
         // $total
-        // , compact('date_facturation', 'eleve', 'classe', 'reference', 'remise', 'reste', 'solde_paye', 'sous_total', 'items'), 'facture_cantine'
+        // , compact('date_facturation', 'eleve', 'classe', 'reference', 'reduction', 'reste', 'solde_paye', 'sous_total', 'items'), 'facture_cantine'
         $this->renderPDF('reports.versement' );  
 
     }

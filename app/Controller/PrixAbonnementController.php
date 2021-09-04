@@ -67,7 +67,6 @@ class PrixAbonnementController extends AppController
 
 
         $existe = (DBTable::getModel('prix_abonnement')
-                                //->select('id')
                                 ->select(new F('count', 'prix_abonnement.id'))
                                 ->where('periode', '=', $periode)->where('type_abonnement_id', '=', $type_abonnement_id)
                                 ->where('visibilite', '=', 1)->where('type_abonnement', '=', $type_abonnement)->one());

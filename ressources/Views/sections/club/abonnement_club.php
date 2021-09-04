@@ -147,7 +147,7 @@ $include_res_header .=  '<link rel="stylesheet" type="text/css" href="'.URL::bas
     <fieldset class="mb-1">
         <h5>Activité</h5>
         <div class="form-group">
-            <select class="select2 form-control" multiple="multiple"  id="SELECT-COL2-Activite"  name="SELECT-COL2-Activite"   required>
+            <select class="select2 form-control" multiple="multiple"  id="COL_SELECT_LIBELLE_ACTIVITE"  name="COL_SELECT_LIBELLE_ACTIVITE"   required>
             <?php foreach($activites as $activite){?>
                     <option value="<?= $activite['id']; ?>" title="<?= $activite['montant']; ?>" ><?= $activite['libelle']; ?></option>
             <?php } ?>
@@ -161,7 +161,7 @@ $include_res_header .=  '<link rel="stylesheet" type="text/css" href="'.URL::bas
         <fieldset class="mb-1">
             <h5>Multiplicateur</h5>
             <div class="form-group">
-                <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Activite"  name="SELECT-COL3-Activite"   required>
+                <select class="select2 form-control" multiple="multiple"  id="COL_TRANCHE_SELECT_ACTIVITE"  name="COL_TRANCHE_SELECT_ACTIVITE"   required>
                 <?php foreach($tranche_scolaires as $tranche_scolaire){?>
                         <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
                 <?php } ?>
@@ -174,7 +174,7 @@ $include_res_header .=  '<link rel="stylesheet" type="text/css" href="'.URL::bas
     <fieldset class="mb-1">
         <h5>Reduction</h5>
         <div class="form-group">
-            <input type="number" class="form-control reduction"  id="COL_REDUCTION_Activite" value="0"  name="COL_REDUCTION_Activite"   placeholder="" />
+            <input type="number" class="form-control reduction"  id="COL_REDUCTION_ACTIVITE" value="0"  name="COL_REDUCTION_ACTIVITE"   placeholder="" />
         </div>
     </fieldset>
 </div>
@@ -184,7 +184,7 @@ $include_res_header .=  '<link rel="stylesheet" type="text/css" href="'.URL::bas
     <fieldset class="mb-1">
         <h5>Recapitulatif</h5>
         <div class="form-group">
-            <input type="text" class="form-control "  id="COL_RECAPITULATIF_Activite" value="0"  name="COL_RECAPITULATIF_Activite"   placeholder="" readonly/>
+            <input type="text" class="form-control "  id="COL_RECAPITULATIF_ACTIVITE" value="0"  name="COL_RECAPITULATIF_ACTIVITE"   placeholder="" readonly/>
         </div>
     </fieldset>
 </div>

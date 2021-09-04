@@ -48,12 +48,12 @@ use App\Helpers\S;
     autres['libelle'] = ""
     autres['reduction'] = 0
     autres['montant'] = 0
-    autres['recapitulatif'] = 0
+    autres['montant_net'] = 0
     
     scolarites['libelle'] = "SCOLARITE"
     scolarites['reduction'] = 0
     scolarites['montant'] = 0
-    scolarites['recapitulatif'] = 0
+    scolarites['montant_net'] = 0
 
 
     function init(){
@@ -64,12 +64,12 @@ use App\Helpers\S;
         }
 
         let reduction_familiale = (isNaN($('#RF-reduction').val()))? 0 : $('#RF-reduction').val()
-        let msg = autres['recapitulatif'] + scolarites['recapitulatif'] - reduction_familiale
+        let msg = autres['montant_net'] + scolarites['montant_net'] - reduction_familiale
         $(montant).val(msg)
 
         console.log(msg)
-        console.log( autres['recapitulatif'])
-        console.log(scolarites['recapitulatif'])
+        console.log( autres['montant_net'])
+        console.log(scolarites['montant_net'])
 
     }
 

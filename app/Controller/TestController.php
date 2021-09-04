@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use DateTime;
+use DateHelpers;
 use App\Model\Eleve;
 use Core\Model\Model;
 use App\Model\DBTable;
@@ -9,9 +11,10 @@ use App\Model\Parcours;
 use App\Helpers\Helpers;
 use Core\Helper\DBHelper;
 use Core\Session\Request;
+
+use App\Model\TypePension;
 use App\Model\PensionEleve;
 use Core\HTML\FlashMessages;
-
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use Spipu\Html2Pdf\Html2Pdf;
@@ -25,6 +28,7 @@ use App\Repository\CantineRepository;
 use App\Repository\DocumentRepository;
 use App\Model\AffectationClasseMatiere;
 use App\Repository\PersonnelRepository;
+use App\Repository\VersementRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\ExemplaireRepository;
 use App\Repository\AnneeScolaireRepository;
@@ -32,9 +36,6 @@ use Core\HTML\MessageFlash\FlashMessagesStatic;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use App\Repository\AffectationSalleClasseRepository;
-use App\Repository\VersementRepository;
-use DateTime;
-use DateHelpers;
 
 
 class TestController extends AppController
@@ -227,10 +228,35 @@ class TestController extends AppController
     public function testSQL()
     {
 
-    //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
-    
-    dd((new VersementRepository )->getInfoEleveActivite(1,2) );
-  
+      $date = new \DateTime('now');
+
+      vd($date->format('Y-m-d'));
+      // dd(Helpers::format($date['date']));
+
+      //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
+      $pension_classe = DBTable::getModel('pension_classe')
+      ->select(
+          [
+              'classe.code' => 'classe_id',
+              'classe.libelle' => 'classe_libelle',
+              'type_pension.code' => 'type_pension',
+              'pension_classe.code' => 'id',
+              'pension_classe.montant' => 'montant',
+              // 'pension_classe.est_mensuel' => 'est_mensuel',
+              // 'pension_classe.mensualite' => 'mensualite',
+              'pension_classe.libelle' => 'libelle'
+          ]
+      )
+      ->join('classe', 'classe.id', '=', 'pension_classe.classe_id')
+      ->join('type_pension', 'type_pension.id', '=', 'pension_classe.type_pension_id')
+      ->where('pension_classe.visibilite', '=', 1)
+      ->where('type_pension.code', '=', TypePension::INSCRIPTION_CODE)
+      ->where('type_pension.visibilite', '=', 1)
+      ->get();
+      
+      // dd($pension_classe);
+      dd(json_encode(DBTable::getModel('mois')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get()));
+      // dd((new VersementRepository )->getInfoEleveActivite(1,2) );
     }
 
     public function testpdf()
@@ -245,7 +271,7 @@ class TestController extends AppController
         $solde_paye = '0';
         $sous_total = '0';
         $items = [];
-        $this->renderPDF('reports.cantine', compact('date_facturation', 'eleve', 'classe', 'reference', 'remise', 'reste', 'solde_paye', 'sous_total', 'items'), 'facture_cantine' );  
+        $this->renderPDF('reports.cantine', compact('date_facturation', 'eleve', 'classe', 'reference', 'reduction', 'reste', 'solde_paye', 'sous_total', 'items'), 'facture_cantine' );  
     
     }
 

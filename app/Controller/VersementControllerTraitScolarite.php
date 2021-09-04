@@ -20,7 +20,7 @@ use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\AbonnementActivite;
 use App\Repository\EleveRepository;
-use App\Repository\PensionRepository;
+use App\Repository\PrixPaiementRepository;
 use App\Controller\Admin\AppController;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
@@ -87,9 +87,9 @@ trait VersementControllerTraitScolarite
         $type_pensions   = DBTable::getModel('type_pension')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
         $activites = DBTable::getModel('activite')->select(['code'=>'id', 'libelle' => 'libelle', 'montant' => 'montant'])->where('visibilite', '=', 1)->get();
 
-        $prix_scolarite_tranche_classe = (new PensionRepository())->getPensionScolaireClasseGroupByClasse($annee_scolaire_id);
+        $prix_scolarite_tranche_classe = (new PrixPaiementRepository())->getPensionScolaireClasseGroupByClasse($annee_scolaire_id);
         
-        $prix_abonnement_activites = DBTable::getModel('prix_abonnement')
+        $prix_abonnement_activite = DBTable::getModel('prix_abonnement')
                             ->select(
                                 [
                                     'prix_abonnement.code' => 'id',
@@ -191,7 +191,7 @@ trait VersementControllerTraitScolarite
                     $type_pension_code = $item['type_pension_code'];
                     $pension_classe_code = $item['pension_classe_code'];
                     // $est_mensuel = $item['est_mensuel'];
-                    $quantite = $item['recapitulatif'];
+                    $quantite = $item['montant_net'];
 
                     $type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
                     $pension_classe_id = Model::getId(DBTable::PENSION_CLASSE, $pension_classe_code);
@@ -228,7 +228,7 @@ trait VersementControllerTraitScolarite
                                 }
                             }
                     }else{
-                        if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0") && !empty($item['recapitulatif']))
+                        if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0") && !empty($item['montant_net']))
                         {
                             $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
                             $motif = 'Payement Non periodique';
@@ -263,10 +263,10 @@ trait VersementControllerTraitScolarite
             $activites = $_POST['activites']??[];
 
             $items = $activites['multiplicateur']??[];
-            $reduction = $activites['remise']??[];
+            $reduction = $activites['reduction']??[];
 
             $k = 0;
-            $liste_activite = $activites['activites']??[];
+            $liste_activite = $activites['liste']??[];
             if(  !empty($liste_activite) && !empty($items))
                 foreach($liste_activite as $activite){
                     $nom_activite = $activite['value'];
@@ -321,8 +321,8 @@ trait VersementControllerTraitScolarite
                             'facture_id' => $facure_id,
                             'eleve_id' => $eleve_id,
                             'activite_id' => $activite_id,
-                            'montant_total' => $montant_activite * $activites['recapitulatif'],
-                            'reduction' => $activites['remise'],
+                            'montant_total' => $montant_activite * $activites['montant_net'],
+                            'reduction' => $activites['reduction'],
                             'date_debut' => $start_date,
                             'date_fin' => $end_date,
                         ];
@@ -372,7 +372,7 @@ trait VersementControllerTraitScolarite
 
             $cantines = $_POST['cantines']??[];
             //checker les valeur par defaut de tous les élements
-            $items = is_array($cantines['recapitulatif'])? $cantines['recapitulatif'] : [] ;
+            $items = is_array($cantines['montant_net'])? $cantines['montant_net'] : [] ;
            
             $i = 0;
             $j = 0;
@@ -416,7 +416,7 @@ trait VersementControllerTraitScolarite
                     'facture_id' => $facure_id,
                     'eleve_id' => $eleve_id,
                     'montant_total' => $cantines['montant'] * $cantines['multiplicateur'] ,
-                    'reduction' => $cantines['remise'],
+                    'reduction' => $cantines['reduction'],
                     'date_debut' => $start_date,
                     'date_fin' => $end_date,
                 ];
@@ -457,7 +457,7 @@ trait VersementControllerTraitScolarite
             $autres = $_POST['autres']??[];
             $motif = $autres['type_pension'];
             $montant = $autres['montant'];
-            $reduction = $autres['remise'];
+            $reduction = $autres['reduction'];
 
           
             if(!(empty($montant) || $montant == "0")){

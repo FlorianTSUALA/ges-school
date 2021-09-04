@@ -8,6 +8,7 @@ use App\Model\DBTable;
 use App\Model\Facture;
 use App\Helpers\Helpers;
 use Core\Session\Request;
+use App\Model\Technique\E;
 use App\Model\TypePension;
 use App\Model\PensionEleve;
 use function Core\Helper\dd;
@@ -16,9 +17,8 @@ use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\AbonnementActivite;
 use App\Repository\EleveRepository;
-use App\Repository\PensionRepository;
+use App\Repository\PrixPaiementRepository;
 use App\Repository\AnneeScolaireRepository;
-use ClanCats\Hydrahon\Query\Expression as Ex;
 
 trait VersementControllerTraitMultiple
 {
@@ -29,8 +29,6 @@ trait VersementControllerTraitMultiple
         $route = "versement_multiple";
         $title = "Gestion des frais scolaires";
         $this->app->setTitle($this->title_page);
-        // $fillables = $this->{$this->vairant}->fillables;
-        // $class_name = $this->class_name;
         $base_route = $this->base_route;
         $create_title = $this->create_title;
         $view_title = $this->view_title;
@@ -41,104 +39,52 @@ trait VersementControllerTraitMultiple
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
         
         $eleves = (new EleveRepository() )->getEleve();
-        $prix_scolarite_tranche_classe = (new PensionRepository())->getPensionScolaireClasseGroupByClasse($annee_scolaire_id);
-
-        $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
         //Liste des prix associés aux offres de la cantine
-        //$abonnement_cantine = DBTable::getModel('abonnement_cantine')->select(['code'=>'id', 'libelle' => 'libelle', 'montant'=>'montant'])->where('code', '=', 'MOIS')->where('visibilite', '=', 1)->one();
-        // var_dump($abonnement_cantine); die();
-        $annee_scolaires =  (new AnneeScolaireRepository())->getAll();
 
-
-
-        $statut_apprenants = DBTable::getModel('statut_apprenant')
-                            ->select(['code'=>'id', 'libelle' => 'libelle'])
-                            ->where('visibilite', '=', 1)
-                            ->orderBy('date_creation', 'desc')
-                            ->get();
-
-        $pension_classe = DBTable::getModel('pension_classe')
-                            ->select(
-                                [
-                                    'classe.code' => 'classe_id',
-                                    'classe.libelle' => 'classe_libelle',
-                                    'type_pension.code' => 'type_pension',
-                                    'type_pension.paiement_en_tranche' => 'paiement_en_tranche',
-                                    'pension_classe.code' => 'id',
-                                    'pension_classe.montant' => 'montant',
-                                    'pension_classe.libelle' => 'libelle'
-                                ]
-                            )
-                            ->join('classe', 'classe.id', '=', 'pension_classe.classe_id')
-                            ->join('type_pension', 'type_pension.id', '=', 'pension_classe.type_pension_id')
-                            ->where('pension_classe.visibilite', '=', 1)
-                            ->where('type_pension.code', '=', TypePension::SCOLARITE_CODE)
-                            ->where('type_pension.visibilite', '=', 1)
-                            ->get();
-                        
-        $pension_classe = json_encode($pension_classe);
-
-        $salle_classes = DBTable::getModel('salle_classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
         $type_paiements = DBTable::getModel('type_paiement')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
-        $type_pensions = DBTable::getModel('type_pension')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
+        $mois = DBTable::getModel('mois')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
+        $type_pensions = DBTable::getModel('type_pension')->select(['code'=>'id', 'paiement_en_tranche', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
         $activites = DBTable::getModel('activite')->select(['code'=>'id', 'libelle' => 'libelle', 'montant' => 'montant'])->where('visibilite', '=', 1)->get();
+        $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
-        $prix_abonnement_cantine = DBTable::getModel('prix_abonnement')
-                            ->select('prix_abonnement.montant')
-                            ->where('visibilite', '=', 1)
-                            ->where('periode', '=', 'MOIS')
-                            ->where('type_abonnement',  AbonnementCantine::TYPE_ABONNEMENT)
-                            //->where('type_abonnement_id', 0)
-                            ->one()['montant'];
-
-        $prix_abonnement_activites = DBTable::getModel('prix_abonnement')
-                            ->select(
-                                [
-                                    'prix_abonnement.code' => 'id',
-                                    'prix_abonnement.montant' => 'montant',
-                                    'prix_abonnement.periode' => 'periode',
-                                    'prix_abonnement.description' => 'description'
-                                ]
-                            )
-                            ->where('visibilite', 1)
-                            ->where('type_abonnement', AbonnementActivite::TYPE_ABONNEMENT)
-                            //->where('type_abonnement_id', 0)
-                            ->get();
+        $pension_classe = (new PrixPaiementRepository())->getPensionGroupByClasse($annee_scolaire_id);
+        $prix_scolarite_tranche_classe = (new PrixPaiementRepository())->getPensionScolaireClasseGroupByClasse($annee_scolaire_id);
+        $prix_inscription_tranche_classe = (new PrixPaiementRepository())->getPensionInscriptionClasseGroupByClasse($annee_scolaire_id);
+        $prix_abonnement_cantine = (new PrixPaiementRepository())->getPrixMensuelCantine($annee_scolaire_id);
+        $prix_abonnement_activite = (new PrixPaiementRepository())->getPrixAbonnementActivite($annee_scolaire_id);;
 
         // Tranche de l'annee scolaire en cours
-        $tranche_scolaires = DBTable::getModel('tranche_scolaire')
-        ->select(['code'=>'id', 'libelle' => 'libelle'])
-        // ->join()
-        ->where('visibilite', '=', 1)
-        // ->where('statut', '=', 1)
-        ->get();
+        $tranche_scolaires = DBTable::getModel('tranche_scolaire')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
+
         $data_inscriptpion = null;
         if(isset($_SESSION[S::DATA_TRANSPORT])){
             $data_inscriptpion = $_SESSION[S::DATA_TRANSPORT];
             $_SESSION[S::DATA_TRANSPORT] = null;
         }
+
         $this->render('sections.versement.multiple.ajout.versement_multiple', compact(
-            //'abonnement_cantine',
-            //'class_name', 'base_route', 'title', 'create_title', 'view_title', 'update_title', 'delete_title', 'msg_delete',
             'route',
-            'activites',
-            'data_inscriptpion',
             'title',
-            'classes',
-            'statut_apprenants',
-            'prix_scolarite_tranche_classe',
-            'statut_apprenants',
-            'annee_scolaires',
+
+            'data_inscriptpion',
+
+            'activites',
             'eleves',
-            'pension_classe',
-            'salle_classes',
+            'classes',
+            'mois',
+            'tranche_scolaires',
+
             'type_pensions',
             'type_paiements',
-            'tranche_scolaires',
-            'prix_abonnement_activites',
-            'prix_abonnement_cantine'
+
+            'pension_classe',
+            
+            'prix_scolarite_tranche_classe',
+            'prix_inscription_tranche_classe',
+            'prix_abonnement_cantine',
+            'prix_abonnement_activite'
         ));
     }
 
@@ -206,7 +152,7 @@ trait VersementControllerTraitMultiple
                     $type_pension_code = $item['type_pension_code'];
                     $pension_classe_code = $item['pension_classe_code'];
                     $est_mensuel = $item['est_mensuel'];
-                    $quantite = $item['recapitulatif'];
+                    $quantite = $item['montant_net'];
 
                     $type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
                     $pension_classe_id = Model::getId(DBTable::PENSION_CLASSE, $pension_classe_code);
@@ -243,7 +189,7 @@ trait VersementControllerTraitMultiple
                                 }
                             }
                     }else{
-                        if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0") && !empty($item['recapitulatif']))
+                        if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0") && !empty($item['montant_net']))
                         {
                             $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
                             $motif = 'Payement Non periodique';
@@ -278,10 +224,10 @@ trait VersementControllerTraitMultiple
             $activites = $_POST['activites']??[];
 
             $items = $activites['multiplicateur']??[];
-            $reduction = $activites['remise']??[];
+            $reduction = $activites['reduction']??[];
 
             $k = 0;
-            $liste_activite = $activites['activites']??[];
+            $liste_activite = $activites['liste']??[];
             if(  !empty($liste_activite) && !empty($items))
                 foreach($liste_activite as $activite){
                     $nom_activite = $activite['value'];
@@ -314,8 +260,6 @@ trait VersementControllerTraitMultiple
                         else
                             $j = $i;
 
-
-
                         $offset = $j - 1 - $i;
                         $quantite = $offset + 1;
                         if($debug)  $total = count($items);
@@ -336,8 +280,8 @@ trait VersementControllerTraitMultiple
                             'facture_id' => $facure_id,
                             'eleve_id' => $eleve_id,
                             'activite_id' => $activite_id,
-                            'montant_total' => $montant_activite * $activites['recapitulatif'],
-                            'reduction' => $activites['remise'],
+                            'montant_total' => $montant_activite * $activites['montant_net'],
+                            'reduction' => $activites['reduction'],
                             'date_debut' => $start_date,
                             'date_fin' => $end_date,
                         ];
@@ -387,7 +331,7 @@ trait VersementControllerTraitMultiple
 
             $cantines = $_POST['cantines']??[];
             //checker les valeur par defaut de tous les élements
-            $items = is_array($cantines['recapitulatif'])? $cantines['recapitulatif'] : [] ;
+            $items = is_array($cantines['montant_net'])? $cantines['montant_net'] : [] ;
            
             $i = 0;
             $j = 0;
@@ -431,7 +375,7 @@ trait VersementControllerTraitMultiple
                     'facture_id' => $facure_id,
                     'eleve_id' => $eleve_id,
                     'montant_total' => $cantines['montant'] * $cantines['multiplicateur'] ,
-                    'reduction' => $cantines['remise'],
+                    'reduction' => $cantines['reduction'],
                     'date_debut' => $start_date,
                     'date_fin' => $end_date,
                 ];
@@ -472,7 +416,7 @@ trait VersementControllerTraitMultiple
             $autres = $_POST['autres']??[];
             $motif = $autres['type_pension'];
             $montant = $autres['montant'];
-            $reduction = $autres['remise'];
+            $reduction = $autres['reduction'];
 
           
             if(!(empty($montant) || $montant == "0")){

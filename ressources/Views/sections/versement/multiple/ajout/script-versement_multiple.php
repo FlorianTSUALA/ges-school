@@ -1,13 +1,14 @@
 <?php
 
 use App\Helpers\S;
+use App\Model\Technique\E;
 
 ?>
 
 <script>
     var tranches = []
     var isFirstLoad = true
-    var fromInscription = <?= ($this->session->has(S::DATA_TRANSPORT))? 'true' : 'false' ;?>
+    var fromInscription = <?= ($this->session->has(S::DATA_TRANSPORT)) ? 'true' : 'false'; ?>
 
     var type_pension = $('#type_pension')
     var eleve_nom_complet = $('#eleve_nom_complet')
@@ -33,173 +34,103 @@ use App\Helpers\S;
     var classe_id
     var type_pension_id
     var _montant = 0
-    var _est_mensuel = 0
+    var paiement_en_tranche = 0
     var _mensualite = 0
     // var _reduction = 0
     var _reste = 0
 
-    var cantine_prix_mois = <?= $prix_abonnement_cantine;?>
+    var prix_scolarite_tranche_classe = <?= json_encode($prix_scolarite_tranche_classe) ?>;
+    var prix_inscription_tranche_classe = <?= json_encode($prix_inscription_tranche_classe) ?>;
+    var prix_abonnement_cantine = <?= json_encode($prix_abonnement_cantine) ?>;
+    var prix_abonnement_activite = <?= json_encode($prix_abonnement_activite) ?>;
+    var pension_classe = <?= json_encode($pension_classe); ?>;
 
-    function init(){
+    console.log('prix_scolarite_tranche_classe')
+    console.log(prix_scolarite_tranche_classe)
+    console.log('prix_inscription_tranche_classe')
+    console.log(prix_inscription_tranche_classe)
+    console.log('prix_abonnement_cantine')
+    console.log(prix_abonnement_cantine)
+    console.log('prix_abonnement_activite')
+    console.log(prix_abonnement_activite)
+    console.log('pension_classe')
+    console.log(pension_classe)
+</script>
 
-        if(fromInscription){
-            $(eleve_nom_complet).val("<?= $this->session->get(S::DATA_TRANSPORT, S::VERS_CODE_ELEVE);?>").trigger('change')
-            $(classe).val("<?= $this->session->get(S::DATA_TRANSPORT, S::VERS_CODE_CLASSE);?>").trigger('change')
-            $(statut_apprenant).val("<?= $this->session->get(S::DATA_TRANSPORT, S::VERS_CODE_STATUT_APPRENANT);?>").trigger('change')
+<script>
+    
+    function init() {
+
+        if (fromInscription) {
+            $(eleve_nom_complet).val("<?= $this->session->get(S::DATA_TRANSPORT, S::VERS_CODE_ELEVE); ?>").trigger('change')
             fromInscription = false;
         }
 
-        if(isFirstLoad){
-            trigger($(classe).select2().find(':selected').data('id'))
+        if (isFirstLoad) {
+            trigger_classe($(classe).select2().find(':selected').data('id'))
             isFirstLoad = false;
         }
 
         let _montant_total = 0;
-        let i = 0;
-
-        for(var item in items)
-        {
-            let current = items[item];
-            var _type_pension_code = current['type_pension_code'];
-            
-            let  _est_mensuel    = parseInt(current['est_mensuel'])
-            let _montant =  parseFloat(current['montant'])
-            let _mensualite = parseFloat(current['mensualite'])
-
-            let  msg = "";
-            let  sub_total = 0;
-            let  tmp_montant = 0;
-
-            let _recapitulatif = parseFloat(current['recapitulatif'])
-            if(_est_mensuel === 1){
-                _recapitulatif = (isNaN(_recapitulatif))? 0 : _recapitulatif;
-                tmp_montant = _mensualite;
-            }else{
-                _recapitulatif = (isNaN(_recapitulatif))? 0 : _recapitulatif;
-                tmp_montant = _montant;
+        // Pension scolaire
+            let i = 0;
+            for (var item of items) {
+                let _type_pension_id = item['type_pension_code'];
+                let _recapitulatif = (isNaN(parseFloat(item['montant_net']))) ? 0 : parseFloat(item['montant_net']);
+                $('#COL_RECAPITULATIF_' + _type_pension_id).val(_recapitulatif)
+                _montant_total += _recapitulatif;
             }
-
-            let _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise;
-
-            sub_total = tmp_montant*_recapitulatif - _remise;
-            msg = sub_total;
-            // msg = _recapitulatif+"*"+tmp_montant+"-"+_remise+ " = " +sub_total;
-
-            $('#COL_RECAPITULATIF_'+_type_pension_code).val(msg)
-
-            _montant_total += sub_total;
-            
-        }
-
+        // Pension scolaire
 
         //Autres
-            let current = autres
-            let  msg = ''
-            let  sub_total = 0
-            let _montant = parseFloat(current['montant'])
-            _montant = (isNaN(_montant))? 0 : _montant
-            let _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-
-            sub_total = _montant - _remise
-            // msg = _montant+'-'+_remise+ ' = ' +sub_total
-            msg = sub_total
-            _montant_total += sub_total
-
-            $('#COL_RECAPITULATIF_AUTRE').val(msg)
+            _montant_total += parseFloat(autres['montant_net'])
+            $('#COL_RECAPITULATIF_AUTRE').val(autres['montant_net'])
+            console.log(_montant_total)
         //Autres
-        
+
         //Cantines
-            cantines['montant'] = cantine_prix_mois
-            current = cantines 
-            _montant = cantine_prix_mois
-            msg = ''
-            sub_total = 0
+            cantines['montant'] = prix_abonnement_cantine
+            cantines['montant_brut'] = prix_abonnement_cantine
+            $('#COL_RECAPITULATIF_CANTINE').val(cantines['montant_net'])
+            _montant_total += parseFloat(cantines['montant_net'])
+            console.log(_montant_total)
 
-            _multiplicateur = parseFloat(current['multiplicateur'])
-            _multiplicateur = (isNaN(_multiplicateur))? 0 : _multiplicateur
-
-            _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-            
-            // console.log('MES MES MES '+_remise)
-
-            sub_total = _montant*_multiplicateur - _remise
-            // msg = _multiplicateur+'*'+_montant+'-'+_remise+ ' = ' +sub_total
-            msg = sub_total
-
-            $('#COL_RECAPITULATIF_Cantine').val(msg)
-            _montant_total += sub_total
-        //Cantine
+        //Cantines
 
         //Activite
-            let activites_souscrits  = activites['activites']
-            current = activites
-            _est_mensuel = parseInt(current['est_mensuel'])
-            _montant = parseFloat(current['montant'])
-            _mensualite = parseFloat(current['mensualite'])
-            msg = ''
-            sub_total = 0
-            tmp_montant = 0
-
-            let nbre_tranche = parseInt(current['recapitulatif'])
-            nbre_tranche = (isNaN(nbre_tranche))? 0 : nbre_tranche
-
-            if(activites_souscrits != undefined){
-                for(let i=0; i<activites_souscrits.length; i++){
-                    tmp_montant = activites_souscrits[i]['montant']
-                    sub_total += (tmp_montant*nbre_tranche)
-                    if(i == activites_souscrits.length - 1){
-                        msg += nbre_tranche+"*"+tmp_montant
-                    }else{
-                        msg += nbre_tranche+"*"+tmp_montant+"+"
-                    }
-                }
-            }
-            _remise = parseFloat(current['remise'])
-            _remise = (isNaN(_remise))? 0 : _remise
-            sub_total = sub_total - _remise
-
-            msg += sub_total
-            // msg += "-"+_remise+ " = " +sub_total
-            $('#COL_RECAPITULATIF_Activite').val(msg)
-            _montant_total += sub_total
+            $('#COL_RECAPITULATIF_ACTIVITE').val(activites['montant_net'])
+            _montant_total += (parseFloat(activites['montant_net']) - parseFloat(_reste))
+            console.log(_montant_total)
         //Activite
 
-        // //Reste
-            // _reduction = parseFloat($(reduction).val())
-            // _reste = parseFloat($(reste).val())
-            // _montant_total -= _reduction
-            _montant_total -= _reste
-            let reduction_familiale = (isNaN($('#RF-reduction').val()))? 0 : $('#RF-reduction').val()
-            _montant_total = _montant_total - reduction_familiale
+        //Reuction familiale
+            let reduction_familiale = (isNaN($('#RF-reduction').val()) || !$('#RF-reduction').val()) ? 0 : $('#RF-reduction').val()
+            _montant_total -= parseFloat(reduction_familiale)
+            console.log((reduction_familiale))
+            console.log(_montant_total)
             $(montant).val(_montant_total)
-        // //Reste
+        //Reuction familiale
 
     }
 
-    $(document).ready(function(){
+    $(document).ready(function() {
 
-        $(btn_home).hide()
-        $(btn_print).hide()
-
-        $(eleve_nom_complet).on("select2:select select2:unselecting", function () {
+        $(eleve_nom_complet).on("select2:select select2:unselecting", function() {
             $(eleve_nom_complet).select2('data')
             init()
         })
 
-        $(classe).on("select2:select select2:unselecting", function () {
-            trigger($(classe).select2().find(":selected").data("id"))
+        $(classe).on("select2:select select2:unselecting", function() {
+            trigger_classe($(classe).select2().find(":selected").data("id"))
             init()
         })
 
 
-        $(reduction).on("change paste keyup mouseup", function () {
-            if($(reduction).val() < 0)
-                $(reduction).val(0)
-            init()
-        })
+        // $(reduction).on("change paste keyup mouseup", function() {
+        //     if ($(reduction).val() < 0)
+        //         $(reduction).val(0)
+        //     init()
+        // })
 
         // $(reste).on("change paste keyup mouseup", function () {
         //     if($(reste).val() < 0)
@@ -220,14 +151,14 @@ use App\Helpers\S;
         $(btn_save).click(function() {
             sauvegarderVersement()
         })
-        
+
         $(btn_print).click(function() {
             imprimerRecuVersement()
         })
-        
+        $(btn_home).hide()
+        $(btn_print).hide()
+
         init()
 
     })
-
-
 </script>

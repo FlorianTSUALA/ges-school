@@ -19,7 +19,7 @@ $funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
         data_versement['signataire'] = '<?=  $signataire ?>'
         data_versement['funtion_signataire'] = '<?= $funtion_signataire ?>'
 
-        data_versement['reference'] = $('#reference').val()
+        data_versement['reference'] = refernce
 
         data_versement['date_paiement'] = $('#date_paiement').val()
 

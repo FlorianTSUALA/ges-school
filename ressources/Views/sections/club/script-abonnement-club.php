@@ -38,7 +38,7 @@ use App\Helpers\S;
     // var _reduction = 0
     var _reste = 0
 
-    var cantine_prix_mois = <?= $prix_abonnement_cantine;?>
+    var prix_mensuel_cantine = <?= $prix_abonnement_cantine;?>
 
     function init(){
 
@@ -70,7 +70,7 @@ use App\Helpers\S;
             let  sub_total = 0;
             let  tmp_montant = 0;
 
-            let _recapitulatif = parseFloat(current['recapitulatif'])
+            let _recapitulatif = parseFloat(current['montant_net'])
             if(_est_mensuel === 1){
                 _recapitulatif = (isNaN(_recapitulatif))? 0 : _recapitulatif;
                 tmp_montant = _mensualite;
@@ -79,7 +79,7 @@ use App\Helpers\S;
                 tmp_montant = _montant;
             }
 
-            let _remise = parseFloat(current['remise'])
+            let _remise = parseFloat(current['reduction'])
             _remise = (isNaN(_remise))? 0 : _remise;
 
             sub_total = tmp_montant*_recapitulatif - _remise;
@@ -98,7 +98,7 @@ use App\Helpers\S;
             let  sub_total = 0
             let _montant = parseFloat(current['montant'])
             _montant = (isNaN(_montant))? 0 : _montant
-            let _remise = parseFloat(current['remise'])
+            let _remise = parseFloat(current['reduction'])
             _remise = (isNaN(_remise))? 0 : _remise
 
             sub_total = _montant - _remise
@@ -109,16 +109,16 @@ use App\Helpers\S;
         //Autres
         
         //Cantines
-            cantines['montant'] = cantine_prix_mois
+            cantines['montant'] = prix_mensuel_cantine
             current = cantines 
-            _montant = cantine_prix_mois
+            _montant = prix_mensuel_cantine
             msg = ''
             sub_total = 0
 
             _multiplicateur = parseFloat(current['multiplicateur'])
             _multiplicateur = (isNaN(_multiplicateur))? 0 : _multiplicateur
 
-            _remise = parseFloat(current['remise'])
+            _remise = parseFloat(current['reduction'])
             _remise = (isNaN(_remise))? 0 : _remise
             
             // console.log('MES MES MES '+_remise)
@@ -126,12 +126,12 @@ use App\Helpers\S;
             sub_total = _montant*_multiplicateur - _remise
             msg = _multiplicateur+'*'+_montant+'-'+_remise+ ' = ' +sub_total
 
-            $('#COL_RECAPITULATIF_Cantine').val(msg)
+            $('#COL_RECAPITULATIF_CANTINE').val(msg)
             _montant_total += sub_total
         //Cantine
 
         //Activite
-            let activites_souscrits  = activites['activites']
+            let activites_souscrits  = activites['liste']
             current = activites
             _est_mensuel = parseInt(current['est_mensuel'])
             _montant = parseFloat(current['montant'])
@@ -140,7 +140,7 @@ use App\Helpers\S;
             sub_total = 0
             tmp_montant = 0
 
-            let nbre_tranche = parseInt(current['recapitulatif'])
+            let nbre_tranche = parseInt(current['montant_net'])
             nbre_tranche = (isNaN(nbre_tranche))? 0 : nbre_tranche
 
             if(activites_souscrits != undefined){
@@ -154,12 +154,12 @@ use App\Helpers\S;
                     }
                 }
             }
-            _remise = parseFloat(current['remise'])
+            _remise = parseFloat(current['reduction'])
             _remise = (isNaN(_remise))? 0 : _remise
             sub_total = sub_total - _remise
 
             msg += "-"+_remise+ " = " +sub_total
-            $('#COL_RECAPITULATIF_Activite').val(msg)
+            $('#COL_RECAPITULATIF_ACTIVITE').val(msg)
             _montant_total += sub_total
         //Activite
 

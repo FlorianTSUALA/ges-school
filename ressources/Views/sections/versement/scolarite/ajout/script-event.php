@@ -139,8 +139,8 @@
         scolarites['libelle'] = libelle 
         scolarites['reduction'] = (reduction === undefined)? scolarites['reduction'] : reduction 
         scolarites['montant'] = (montant === undefined)? scolarites['montant'] : montant 
-        scolarites['recapitulatif'] = scolarites['montant'] - scolarites['reduction']
-        $('#COL_RECAPITULATIF_SCOLARITE').val(scolarites['recapitulatif'])
+        scolarites['montant_net'] = scolarites['montant'] - scolarites['reduction']
+        $('#COL_RECAPITULATIF_SCOLARITE').val(scolarites['montant_net'])
         init()
     }
     
@@ -148,8 +148,8 @@
         autres['libelle'] = libelle 
         autres['reduction'] = (reduction === undefined)? autres['reduction'] : reduction  
         autres['montant'] = (montant === undefined)? autres['montant'] : montant 
-        autres['recapitulatif'] = autres['montant'] - autres['reduction']
-        $('#COL_RECAPITULATIF_AUTRE').val(autres['recapitulatif'])
+        autres['montant_net'] = autres['montant'] - autres['reduction']
+        $('#COL_RECAPITULATIF_AUTRE').val(autres['montant_net'])
         init()
     }
 

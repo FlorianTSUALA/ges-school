@@ -7,7 +7,7 @@
             $type_pension_id = Model::getId('type_pension', $item['type_pension_code']);
           
             $multiplicateur = $item['multiplicateur'];
-            $quantite = $item['recapitulatif'];
+            $quantite = $item['montant_net'];
             $montant = $item['montant'];
             $mensualite = $item['mensualite'];
             $est_mensuel = $item['est_mensuel'];
@@ -54,7 +54,7 @@
                 $type_pension_id = Model::getId('type_pension', $item['type_pension_code']);
                 // $type_pension = $item['type_pension_code'];
                 $multiplicateur = $item['multiplicateur'];
-                $quantite = $item['recapitulatif'];
+                $quantite = $item['montant_net'];
                 $montant = $item['montant'];
                 $mensualite = $item['mensualite'];
                 $est_mensuel = $item['est_mensuel'];

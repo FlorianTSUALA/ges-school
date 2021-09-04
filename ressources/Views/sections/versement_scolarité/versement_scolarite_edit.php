@@ -305,11 +305,11 @@ $readonly = '';
 
                                       <?php //var_dump($mois_selectionnes, $tranche_scolaires) ?>
 
-                                      <div id="TYPE-SELECT-<?= $item['id']; ?>" class="col-4">
+                                      <div id="TYPE_SELECT_<?= $item['id']; ?>" class="col-4">
                                         <fieldset class="mb-1">
                                           <h5>Multiplicateur</h5>
                                           <div class="form-group">
-                                            <select class="select2 col-10 form-control" multiple="multiple"  id="SELECT-COL3-<?= $item['id'];?>"  name="SELECT-COL3-<?= $item['id'];?>"   required>
+                                            <select class="select2 col-10 form-control" multiple="multiple"  id="COL_TRANCHE_SELECT_<?= $item['id'];?>"  name="COL_TRANCHE_SELECT_<?= $item['id'];?>"   required>
                                               <?php foreach($tranche_scolaires as $tranche_scolaire){?>
                                                 <option value="<?= $tranche_scolaire['id']; ?>"
                                                   <?php if (in_array($tranche_scolaire['id'],$mois_selectionnes)): ?>
@@ -322,11 +322,11 @@ $readonly = '';
                                         </fieldset>
                                       </div>
 
-                                      <div id="TYPE-NUMBER-<?= $item['id']; ?>" class="col-4">
+                                      <div id="TYPE_NUMBER_<?= $item['id']; ?>" class="col-4">
                                         <fieldset class="mb-1">
 
                                           <h5>Multiplicateur</h5>                                                                         <div class="form-group">
-                                            <input type="number" class="form-control " value="<?php echo $quantite ?>"  id="NUMBER-COL3-<?= $item['id'];?>"  name="NUMBER-COL3-<?= $item['id'];?>"    placeholder="">
+                                            <input type="number" class="form-control " value="<?php echo $quantite ?>"  id="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"  name="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"    placeholder="">
                                           </div>
                                         </fieldset>
                                       </div>
@@ -405,7 +405,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Multiplicateur</h5>
                                         <div class="form-group">
-                                          <select class="select2 form-control col-md-10" multiple="multiple"  id="SELECT-COL3-Cantine"  name="SELECT-COL3-Cantine"   required>
+                                          <select class="select2 form-control col-md-10" multiple="multiple"  id="COL_TRANCHE_SELECT_CANTINE"  name="COL_TRANCHE_SELECT_CANTINE"   required>
                                             <?php foreach($tranche_scolaires as $tranche_scolaire){?>
                                               <option value="<?= $tranche_scolaire['id']; ?>"
                                                 <?php if (in_array($tranche_scolaire['libelle'],$mois_selectionnes)): ?>
@@ -423,7 +423,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Reduction</h5>
                                         <div class="form-group">
-                                          <input type="number" class="form-control reduction"  id="COL_REDUCTION_Cantine" value="<?php echo $reduction ?>"  name="COL_REDUCTION_Cantine"   placeholder="" />
+                                          <input type="number" class="form-control reduction"  id="COL_REDUCTION_CANTINE" value="<?php echo $reduction ?>"  name="COL_REDUCTION_CANTINE"   placeholder="" />
                                         </div>
                                       </fieldset>
                                     </div>
@@ -433,7 +433,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Recapitulatif</h5>
                                         <div class="form-group">
-                                          <input type="text" class="form-control "  id="COL_RECAPITULATIF_Cantine" value="<?php echo $init_recapitulatif ?>"  name="COL_RECAPITULATIF_Cantine"   placeholder="" readonly/>
+                                          <input type="text" class="form-control "  id="COL_RECAPITULATIF_CANTINE" value="<?php echo $init_recapitulatif ?>"  name="COL_RECAPITULATIF_CANTINE"   placeholder="" readonly/>
                                         </div>
                                       </fieldset>
                                     </div>
@@ -470,7 +470,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Activité</h5>
                                         <div class="form-group">
-                                          <select class="select2 col-md-10 form-control" multiple="multiple"  id="SELECT-COL2-Activite"  name="SELECT-COL2-Activite"   required>
+                                          <select class="select2 col-md-10 form-control" multiple="multiple"  id="COL_SELECT_LIBELLE_ACTIVITE"  name="COL_SELECT_LIBELLE_ACTIVITE"   required>
                                             <?php foreach($activites as $activite){?>
                                               <option value="<?= $activite['id']; ?>"
                                                 title="<?= $activite['montant']; ?>"
@@ -492,7 +492,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Multiplicateur</h5>
                                         <div class="form-group">
-                                          <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Activite"  name="SELECT-COL3-Activite"   required>
+                                          <select class="select2 form-control" multiple="multiple"  id="COL_TRANCHE_SELECT_ACTIVITE"  name="COL_TRANCHE_SELECT_ACTIVITE"   required>
                                             <?php foreach($tranche_scolaires as $tranche_scolaire){?>
                                               <option value="<?= $tranche_scolaire['id']; ?>"
                                                 <?php foreach ($mois as $m): ?>
@@ -511,7 +511,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Reduction</h5>
                                         <div class="form-group">
-                                          <input type="number" class="form-control reduction"  id="COL_REDUCTION_Activite" value="0"  name="COL_REDUCTION_Activite"   placeholder="" />
+                                          <input type="number" class="form-control reduction"  id="COL_REDUCTION_ACTIVITE" value="0"  name="COL_REDUCTION_ACTIVITE"   placeholder="" />
                                         </div>
                                       </fieldset>
                                     </div>
@@ -521,7 +521,7 @@ $readonly = '';
                                       <fieldset class="mb-1">
                                         <h5>Recapitulatif</h5>
                                         <div class="form-group">
-                                          <input type="text" class="form-control "  id="COL_RECAPITULATIF_Activite" value="0"  name="COL_RECAPITULATIF_Activite"   placeholder="" readonly/>
+                                          <input type="text" class="form-control "  id="COL_RECAPITULATIF_ACTIVITE" value="0"  name="COL_RECAPITULATIF_ACTIVITE"   placeholder="" readonly/>
                                         </div>
                                       </fieldset>
                                     </div>

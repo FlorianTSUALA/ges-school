@@ -81,7 +81,7 @@ $funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
 
         //Autres
 
-            if(autres['recapitulatif'] !== 0){
+            if(autres['montant_net'] !== 0){
                 body += '<tr>'
                 body += '   <th scope="row">'+ 2 +'</th>'
                 body += '       <td>'
