@@ -317,7 +317,7 @@ class PersonnelController extends AppController
         $result = $this->{$this->vairant}->update($data, $clause);
 
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{
@@ -335,7 +335,7 @@ class PersonnelController extends AppController
 
         $result = $this->{$this->vairant}->save($data);
         if($result){
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         }else{

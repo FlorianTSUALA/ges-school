@@ -17,25 +17,25 @@ $(document).ready(function(){ flash_msg(data) });
     // var item = {"pension_classe_code": '', 'type_pension_code' : '', "multiplicateur": '', "recapitulatif": '', "montant": 0, "mensualite": 0, "est_mensuel": false};
 
     var cantines = {}
-    cantines['remise'] = 0
+    cantines['reduction'] = 0
     cantines['periode'] = 0
     cantines['type_pension'] = 0
     cantines['montant'] = 0
-    cantines['recapitulatif'] = 0
+    cantines['montant_net'] = 0
 
     var autres = {}
-    autres['remise'] = 0
+    autres['reduction'] = 0
     autres['type_pension'] = ''
     autres['montant'] = 0
-    // autres['recapitulatif'] = 0
+    // autres['montant_net'] = 0
 
     var activites = {}
-    activites['remise'] = 0
+    activites['reduction'] = 0
     activites['periode'] = 0
-    activites['activites'] = 0
+    activites['liste'] = 0
     // activites['type_pension'] = 0
     // activites['montant'] = 0
-    // activites['recapitulatif'] = 0
+    // activites['montant_net'] = 0
 
 
     $(document).ready(function(){
@@ -110,7 +110,7 @@ $(document).ready(function(){ flash_msg(data) });
             <?php $i = -1;
                 foreach($type_pensions as $item){ $i++; ?>
                     //TYPE SELECT
-                    $('#SELECT-COL3-<?= $item['id']; ?>').on('select2:close', function () {
+                    $('#COL_TRANCHE_SELECT_<?= $item['id']; ?>').on('select2:close', function () {
                    
                         let select = $(this)
                       
@@ -124,31 +124,31 @@ $(document).ready(function(){ flash_msg(data) });
                         })
 
                         items[<?= $i; ?>]['multiplicateur'] = tranches;
-                        items[<?= $i; ?>]['recapitulatif'] = select.select2('data').length;
+                        items[<?= $i; ?>]['montant_net'] = select.select2('data').length;
 
-                        items[<?= $i; ?>]['reduction'] = $('#COL5-<?= $item['id'];?>').val()
+                        items[<?= $i; ?>]['reduction'] = $('#COL_REDUCTION_<?= $item['id'];?>').val()
                    
                         // init()
                     })
 
                     //TYPE NUMBER
-                    $('#NUMBER-COL3-<?= $item['id']; ?>').on('change paste keyup mouseup', function () {
-                        if($('#NUMBER-COL3-<?= $item['id']; ?>').val() < 0)
-                            $('#NUMBER-COL3-<?= $item['id']; ?>').val(0)
-                        console.log($('#NUMBER-COL3-<?= $item['id']; ?>').val())
-                        items[<?= $i; ?>]['multiplicateur'] = $('#NUMBER-COL3-<?= $item['id']; ?>').val()
-                        items[<?= $i; ?>]['recapitulatif'] = $('#NUMBER-COL3-<?= $item['id']; ?>').val()
-                        items[<?= $i; ?>]['reduction'] = $('#COL5-<?= $item['id'];?>').val()
+                    $('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').on('change paste keyup mouseup', function () {
+                        if($('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val() < 0)
+                            $('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val(0)
+                        console.log($('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val())
+                        items[<?= $i; ?>]['multiplicateur'] = $('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val()
+                        items[<?= $i; ?>]['montant_net'] = $('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val()
+                        items[<?= $i; ?>]['reduction'] = $('#COL_REDUCTION_<?= $item['id'];?>').val()
                      
                         // init()
                     })
 
                     //TYPE NUMBER OF REMISE
-                    $('#COL5-<?= $item['id']; ?>').on('change paste keyup mouseup', function () {
-                        if($('#COL5-<?= $item['id']; ?>').val() < 0)
-                            $('#COL5-<?= $item['id']; ?>').val(0)
-                        items[<?= $i; ?>]['remise'] = $('#COL5-<?= $item['id']; ?>').val()
-                        items[<?= $i; ?>]['reduction'] = $('#COL5-<?= $item['id'];?>').val()
+                    $('#COL_REDUCTION_<?= $item['id']; ?>').on('change paste keyup mouseup', function () {
+                        if($('#COL_REDUCTION_<?= $item['id']; ?>').val() < 0)
+                            $('#COL_REDUCTION_<?= $item['id']; ?>').val(0)
+                        items[<?= $i; ?>]['reduction'] = $('#COL_REDUCTION_<?= $item['id']; ?>').val()
+                        items[<?= $i; ?>]['reduction'] = $('#COL_REDUCTION_<?= $item['id'];?>').val()
                         // init()
                     })
 
@@ -159,7 +159,7 @@ $(document).ready(function(){ flash_msg(data) });
 
         // BEGIN ACTIVITE---------------------------------------
             //COL2 ACTIVITE
-            $('#SELECT-COL2-Activite').on('select2:close', function () {
+            $('#COL_SELECT_LIBELLE_ACTIVITE').on('select2:close', function () {
                 console.log('nous y sommes')
                 let select = $(this)
                 select.trigger('change')
@@ -172,13 +172,13 @@ $(document).ready(function(){ flash_msg(data) });
                 })
 
                 console.log(liste_activite)
-                activites['activites'] = liste_activite;
+                activites['liste'] = liste_activite;
                
                 // init()
             })
 
             //COL-3 TRANCH ESCOLARITE
-            $('#SELECT-COL3-Activite').on('select2:close', function () {
+            $('#COL_TRANCHE_SELECT_ACTIVITE').on('select2:close', function () {
                 let select = $(this)
                 select.trigger('change')
 
@@ -192,35 +192,35 @@ $(document).ready(function(){ flash_msg(data) });
                 // console.log("#### "+tranches.length)
                 console.log('Gloire à Dieu', tranches)
 
-                activites['remise'] = $('#COL5-Activite').val()
+                activites['reduction'] = $('#COL_REDUCTION_ACTIVITE').val()
 
                 activites['multiplicateur'] = tranches;
-                activites['recapitulatif'] = tranches.length;
+                activites['montant_net'] = tranches.length;
                 // init()
             })
 
             //COL5 Activite
 
             
-            $('#COL5-Activite').on('change paste keyup mouseup', function () {
-                if($('#COL5-Activite').val() < 0)
-                    $('#COL5-Activite').val(0)
-                activites['remise'] = $('#COL5-Activite').val()
+            $('#COL_REDUCTION_ACTIVITE').on('change paste keyup mouseup', function () {
+                if($('#COL_REDUCTION_ACTIVITE').val() < 0)
+                    $('#COL_REDUCTION_ACTIVITE').val(0)
+                activites['reduction'] = $('#COL_REDUCTION_ACTIVITE').val()
                 // init()
             })
         // END---------------------------------------
 
         // BEGIN CANTINE---------------------------------------
             //COL5 Cantine
-            $('#COL5-Cantine').on('change paste keyup mouseup', function () {
-                if($('#COL5-Cantine').val() < 0)
-                    $('#COL5-Cantine').val(0)
-                cantines['remise'] = $('#COL5-Cantine').val()
+            $('#COL_REDUCTION_CANTINE').on('change paste keyup mouseup', function () {
+                if($('#COL_REDUCTION_CANTINE').val() < 0)
+                    $('#COL_REDUCTION_CANTINE').val(0)
+                cantines['reduction'] = $('#COL_REDUCTION_CANTINE').val()
                 // init()
             })
 
             //COL 3 Cantine
-            $('#SELECT-COL3-Cantine').on('select2:close', function () {
+            $('#COL_TRANCHE_SELECT_CANTINE').on('select2:close', function () {
                 let select = $(this)
                 select.trigger('change')
 
@@ -232,7 +232,7 @@ $(document).ready(function(){ flash_msg(data) });
                 })
 
                 cantines['multiplicateur'] = select.select2('data').length;
-                cantines['recapitulatif'] = tranches;
+                cantines['montant_net'] = tranches;
                 // init()
             })
         // END---------------------------------------
@@ -240,7 +240,7 @@ $(document).ready(function(){ flash_msg(data) });
         // BEGIN AUTRE---------------------------------------
             //COL2
             //COL 3 Autres
-            $('#NUMBER-COL3-Autres').on('change paste keyup mouseup', function () {
+            $('#COL_MONTANT_AUTRES').on('change paste keyup mouseup', function () {
                 let current = $(this)
                 if(current.val() < 0)
                     current.val(0)
@@ -250,15 +250,15 @@ $(document).ready(function(){ flash_msg(data) });
             })
 
             //COL5 Autre
-            $('#COL5-Autres').on('change paste keyup mouseup', function () {
+            $('#COL_REDUCTION_AUTRES').on('change paste keyup mouseup', function () {
                 let current = $(this)
                 if(current.val() < 0)
                     current.val(0)
-                autres['remise'] = current.val()
+                autres['reduction'] = current.val()
                 // init()
             })
             //COL2 Autre
-            $('#COL2-Autres').on('change paste keyup mouseup', function () {
+            $('#COL_LIBELLE_AUTRES').on('change paste keyup mouseup', function () {
                 let current = $(this)
                 if(current.val() == '')
                     autres['type_pension'] = ''
@@ -277,8 +277,8 @@ $(document).ready(function(){ flash_msg(data) });
         //Initilisation
         <?php   $i = -1;
             foreach($type_pensions as $type_pension){  $i++; ?>
-                let <?= "active_type_$i"; ?> = '#TYPE-NUMBER-<?= $type_pension['id']; ?>'
-                let <?= "inactive_type_$i"; ?> = '#TYPE-SELECT-<?= $type_pension['id']; ?>'
+                let <?= "active_type_$i"; ?> = '#TYPE_NUMBER_<?= $type_pension['id']; ?>'
+                let <?= "inactive_type_$i"; ?> = '#TYPE_SELECT_<?= $type_pension['id']; ?>'
 
                 type_pension_classe.forEach(function(item){
 
@@ -286,17 +286,17 @@ $(document).ready(function(){ flash_msg(data) });
                         
                         items[<?= $i; ?>]['pension_classe_code'] = item.id;
                         items[<?= $i; ?>]['montant'] = item.montant;
-                        items[<?= $i; ?>]['remise'] = item.remise;
+                        items[<?= $i; ?>]['reduction'] = item.remise;
                         items[<?= $i; ?>]['mensualite'] = item.mensualite;
                         items[<?= $i; ?>]['est_mensuel'] = item.est_mensuel;
                         
 
                         if(parseInt(item.est_mensuel) == 1){
-                            <?= "active_type_$i"; ?> = '#TYPE-SELECT-<?= $type_pension['id']; ?>'
-                            <?= "inactive_type_$i"; ?> = '#TYPE-NUMBER-<?= $type_pension['id']; ?>'
+                            <?= "active_type_$i"; ?> = '#TYPE_SELECT_<?= $type_pension['id']; ?>'
+                            <?= "inactive_type_$i"; ?> = '#TYPE_NUMBER_<?= $type_pension['id']; ?>'
                         }else{
-                            <?= "active_type_$i"; ?> = '#TYPE-NUMBER-<?= $type_pension['id']; ?>'
-                            <?= "inactive_type_$i"; ?> = '#TYPE-SELECT-<?= $type_pension['id']; ?>'
+                            <?= "active_type_$i"; ?> = '#TYPE_NUMBER_<?= $type_pension['id']; ?>'
+                            <?= "inactive_type_$i"; ?> = '#TYPE_SELECT_<?= $type_pension['id']; ?>'
                         }
 
                         return item;

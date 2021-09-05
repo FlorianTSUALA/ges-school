@@ -1,0 +1,267 @@
+{
+    "SECTION_1": {
+        "classe_info": {
+            "classe_id": "SECTION_1",
+            "classe": "Petite-section"
+        },
+        "type_pension": {
+            "SCOLARITE": {
+                "type_pension_info": {
+                    "type_pension_id": "SCOLARITE",
+                    "type_pension": "Scolarité",
+                    "paiement_en_tranche": "Oui"
+                },
+                "tranche_info": [
+                    {
+                        "tranche_scolaire_libelle": "1 er Tranche",
+                        "tranche_scolaire_code": "CORE_1630161613000000",
+                        "montant": "900000",
+                        "code": "PENS_1598861726"
+                    },
+                    {
+                        "tranche_scolaire_libelle": "Janvier",
+                        "tranche_scolaire_code": "TRAN_1630101568000000",
+                        "montant": "400000",
+                        "code": "_1630147110000000"
+                    }
+                ]
+            },
+            "INSCRIPTION": {
+                "type_pension_info": {
+                    "type_pension_id": "INSCRIPTION",
+                    "type_pension": "Inscription",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": [
+                    {
+                        "tranche_scolaire_libelle": "Annuelle",
+                        "tranche_scolaire_code": "CORE_1630262364000000",
+                        "montant": "100000",
+                        "code": "PENS_1599093524"
+                    }
+                ]
+            },
+            "TYPE_1610958956": {
+                "type_pension_info": {
+                    "type_pension_id": "TYPE_1610958956",
+                    "type_pension": "Tenue",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": [
+                    {
+                        "tranche_scolaire_libelle": "Annuelle",
+                        "tranche_scolaire_code": "CORE_1630262364000000",
+                        "montant": "500",
+                        "code": "PENS_1610959047"
+                    }
+                ]
+            }
+        }
+    },
+    "SECTION_2": {
+        "classe_info": {
+            "classe_id": "SECTION_2",
+            "classe": "Moyenne-section"
+        },
+        "type_pension": {
+            "SCOLARITE": {
+                "type_pension_info": {
+                    "type_pension_id": "SCOLARITE",
+                    "type_pension": "Scolarité",
+                    "paiement_en_tranche": "Oui"
+                },
+                "tranche_info": []
+            },
+            "INSCRIPTION": {
+                "type_pension_info": {
+                    "type_pension_id": "INSCRIPTION",
+                    "type_pension": "Inscription",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": [
+                    {
+                        "tranche_scolaire_libelle": "Annuelle",
+                        "tranche_scolaire_code": "CORE_1630262364000000",
+                        "montant": "150000",
+                        "code": "_1629903964000000"
+                    }
+                ]
+            },
+            "TYPE_1610958956": {
+                "type_pension_info": {
+                    "type_pension_id": "TYPE_1610958956",
+                    "type_pension": "Tenue",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            }
+        }
+    },
+    "SECTION_3": {
+        "classe_info": {
+            "classe_id": "SECTION_3",
+            "classe": "Grande-section"
+        },
+        "type_pension": {
+            "SCOLARITE": {
+                "type_pension_info": {
+                    "type_pension_id": "SCOLARITE",
+                    "type_pension": "Scolarité",
+                    "paiement_en_tranche": "Oui"
+                },
+                "tranche_info": []
+            },
+            "INSCRIPTION": {
+                "type_pension_info": {
+                    "type_pension_id": "INSCRIPTION",
+                    "type_pension": "Inscription",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": [
+                    {
+                        "tranche_scolaire_libelle": "Annuelle",
+                        "tranche_scolaire_code": "CORE_1630262364000000",
+                        "montant": "900000",
+                        "code": "PENS_1598862208"
+                    }
+                ]
+            },
+            "TYPE_1610958956": {
+                "type_pension_info": {
+                    "type_pension_id": "TYPE_1610958956",
+                    "type_pension": "Tenue",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            }
+        }
+    },
+    "SIL": {
+        "classe_info": {
+            "classe_id": "SIL",
+            "classe": "SIL"
+        },
+        "type_pension": {
+            "SCOLARITE": {
+                "type_pension_info": {
+                    "type_pension_id": "SCOLARITE",
+                    "type_pension": "Scolarité",
+                    "paiement_en_tranche": "Oui"
+                },
+                "tranche_info": []
+            },
+            "INSCRIPTION": {
+                "type_pension_info": {
+                    "type_pension_id": "INSCRIPTION",
+                    "type_pension": "Inscription",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            },
+            "TYPE_1610958956": {
+                "type_pension_info": {
+                    "type_pension_id": "TYPE_1610958956",
+                    "type_pension": "Tenue",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            }
+        }
+    },
+    "CP": {
+        "classe_info": {
+            "classe_id": "CP",
+            "classe": "Cours-Preparatoire"
+        },
+        "type_pension": {
+            "SCOLARITE": {
+                "type_pension_info": {
+                    "type_pension_id": "SCOLARITE",
+                    "type_pension": "Scolarité",
+                    "paiement_en_tranche": "Oui"
+                },
+                "tranche_info": []
+            },
+            "INSCRIPTION": {
+                "type_pension_info": {
+                    "type_pension_id": "INSCRIPTION",
+                    "type_pension": "Inscription",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            },
+            "TYPE_1610958956": {
+                "type_pension_info": {
+                    "type_pension_id": "TYPE_1610958956",
+                    "type_pension": "Tenue",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            }
+        }
+    },
+    "CE1": {
+        "classe_info": {
+            "classe_id": "CE1",
+            "classe": "Cours-Elementaire"
+        },
+        "type_pension": {
+            "SCOLARITE": {
+                "type_pension_info": {
+                    "type_pension_id": "SCOLARITE",
+                    "type_pension": "Scolarité",
+                    "paiement_en_tranche": "Oui"
+                },
+                "tranche_info": []
+            },
+            "INSCRIPTION": {
+                "type_pension_info": {
+                    "type_pension_id": "INSCRIPTION",
+                    "type_pension": "Inscription",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            },
+            "TYPE_1610958956": {
+                "type_pension_info": {
+                    "type_pension_id": "TYPE_1610958956",
+                    "type_pension": "Tenue",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            }
+        }
+    },
+    "CM2": {
+        "classe_info": {
+            "classe_id": "CM2",
+            "classe": "Cours-Moyen"
+        },
+        "type_pension": {
+            "SCOLARITE": {
+                "type_pension_info": {
+                    "type_pension_id": "SCOLARITE",
+                    "type_pension": "Scolarité",
+                    "paiement_en_tranche": "Oui"
+                },
+                "tranche_info": []
+            },
+            "INSCRIPTION": {
+                "type_pension_info": {
+                    "type_pension_id": "INSCRIPTION",
+                    "type_pension": "Inscription",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            },
+            "TYPE_1610958956": {
+                "type_pension_info": {
+                    "type_pension_id": "TYPE_1610958956",
+                    "type_pension": "Tenue",
+                    "paiement_en_tranche": "Non"
+                },
+                "tranche_info": []
+            }
+        }
+    }
+}

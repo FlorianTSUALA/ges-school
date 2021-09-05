@@ -44,7 +44,7 @@ class PrixAbonnementController extends AppController
     {
         $this->app->setTitle($this->title_page);
         $title = $this->title_home;
-        $items = $this->getall();
+        $items = $this->get_all();
         $fillables = $this->{$this->vairant}->fillables;
         $class_name = $this->class_name;
         $base_route = $this->base_route;
@@ -67,7 +67,6 @@ class PrixAbonnementController extends AppController
 
 
         $existe = (DBTable::getModel('prix_abonnement')
-                                //->select('id')
                                 ->select(new F('count', 'prix_abonnement.id'))
                                 ->where('periode', '=', $periode)->where('type_abonnement_id', '=', $type_abonnement_id)
                                 ->where('visibilite', '=', 1)->where('type_abonnement', '=', $type_abonnement)->one());
@@ -89,7 +88,7 @@ class PrixAbonnementController extends AppController
 
         $result = $this->{$this->vairant}->save($data);
         if ($result) {
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         } else {
@@ -99,12 +98,12 @@ class PrixAbonnementController extends AppController
 
     public function all()
     {
-        return Helpers::toJSON($this->getall()) ;
+        return Helpers::toJSON($this->get_all()) ;
     }
 
     public function list()
     {
-        echo Helpers::toJSON($this->getall()) ;
+        echo Helpers::toJSON($this->get_all()) ;
     }
 
     public function show($code)
@@ -189,7 +188,7 @@ class PrixAbonnementController extends AppController
         $result = $this->{$this->vairant}->update($data, $clause);
 
         if ($result) {
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         } else {
@@ -201,7 +200,7 @@ class PrixAbonnementController extends AppController
     {
         $result = $this->{$this->vairant}->delete('code', $code);
         if ($result) {
-            $items = $this->getall();
+            $items = $this->get_all();
             $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
             $this->sendResponseAndExit($data);
         } else {

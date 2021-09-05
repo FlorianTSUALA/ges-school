@@ -1,8 +1,13 @@
 <?php
+
+use App\Model\Technique\E;
     use App\Helpers\S;
     use Core\Routing\URL;
 
-    ob_start();
+use App\Model\TypePension;
+use function Core\Helper\vd;
+
+ob_start();
    
 	echo '<script src="'.URL::base().'assets/app-assets/vendors/js/forms/select/select2.full.min.js"></script>';
     //switch bootstrap https://github.com/Bttstrp/bootstrap-switch [https://github.com/Bttstrp/bootstrap-switch/issues/343]
@@ -86,8 +91,7 @@
                                                         <div class="card-body">
                                                             <form id="form_versement" action="need-validation" class="" novalidate>
                                                                 <fieldset>
-
-                                                                   
+                                                              
 <!-- Nom complet et classe -->
                                                                     <div class="row">
                                                                         <div class="col-md-6">
@@ -96,7 +100,7 @@
                                                                                 <div class="col-8">
                                                                                     <select id="eleve_nom_complet" class="select2 form-control" name="eleve_nom_complet" required>
                                                                                         <?php foreach($eleves as $item){?>
-                                                                                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_eleve'] == $item['id']))? 'selected' : ''; ?>><?= $item['libelle']; ?></option>
+                                                                                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_eleve'] == $item['id']))? 'selected' : ''; ?>><?= $item['nom_complet']; ?></option>
                                                                                         <?php } ?>
                                                                                     </select>
                                                                                 </div>
@@ -116,9 +120,9 @@
                                                                                 <div class="col-8">
 
                                                                                     <select id="classe" class="select2 form-control" name="classe" required>
-                                                                                        <!-- <option value="-----------">---------------</option> -->
+                                                                                        <option  selected value="----"> selecionnez une classe</option>
                                                                                         <?php foreach($classes as $item){?>
-                                                                                                <option data-id="<?= $item['id']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_classe'] == $item['id']))? 'selected' : ''; ?>><?= $item['libelle']; ?></option>
+                                                                                                <option data-id="<?= $item['id']; ?>"  value="<?= $item['id']; ?>" ><?= $item['libelle']; ?></option>
                                                                                         <?php } ?>
                                                                                     </select>
                                                                                 </div>
@@ -130,6 +134,7 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+<!-- Nom complet et classe -->
 
 <!-- Relation familiale -->
                                                                     <div class="row">
@@ -168,6 +173,8 @@
                                                                             </h4>
                                                                         </div>
                                                                     </div>
+<!-- Relation familiale -->
+
 <!-- Scolarite -->
         <?php $i = 0;
             foreach($type_pensions as $item){  ?>
@@ -181,35 +188,44 @@
                             </div>
                         </fieldset>
                     </div>
-
-                    <div id="TYPE-SELECT-<?= $item['id']; ?>" class="col-4">
-                        <fieldset class="mb-1">
-                            <h5>Multiplicateur</h5>
-                            <div class="form-group">
-                                <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-<?= $item['id'];?>"  name="SELECT-COL3-<?= $item['id'];?>"   required>
-                                <?php foreach($tranche_scolaires as $tranche_scolaire){?>
-                                        <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
-                                <?php } ?>
-                                </select>
+                    <?php if( $item['id'] == TypePension::INSCRIPTION_CODE){?>
+                        <div id="TYPE_NUMBER_<?= $item['id']; ?>" class="col-4">
+                            <fieldset class="mb-1">
+                                <h5>Multiplicateur</h5>                                                                         
+                                <div class="form-group">
+                                    <input type="number" readonly class="form-control " value="1"  id="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"  name="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"    placeholder="">
+                                </div>
+                            </fieldset>
+                        </div> 
+                    <?php }else{ ?>
+                        <?php /*if($item[E::PAIEMENT_EN_TRANCHE] == E::OUI){*/?>
+                            <div id="TYPE_SELECT_<?= $item['id']; ?>" class="col-4">
+                                <fieldset class="mb-1">
+                                    <h5>Tranche</h5>
+                                    <div class="form-group">
+                                        <select class="select2 form-control" multiple="multiple"  id="COL_TRANCHE_SELECT_<?= $item['id'];?>"  name="COL_TRANCHE_SELECT_<?= $item['id'];?>"   required>
+                                        </select>
+                                    </div>
+                                </fieldset>
                             </div>
-                        </fieldset>
-                    </div>
-                
-                    <div id="TYPE-NUMBER-<?= $item['id']; ?>" class="col-4">
-                        <fieldset class="mb-1">
-
-                            <h5>Multiplicateur</h5>                                                                         <div class="form-group">
-                                <input type="number" class="form-control " value="0"  id="NUMBER-COL3-<?= $item['id'];?>"  name="NUMBER-COL3-<?= $item['id'];?>"    placeholder="">
-                            </div>
-                        </fieldset>
-                    </div> 
+                        <?php /*}else{ */?>
+                            <div id="TYPE_NUMBER_<?= $item['id']; ?>" class="col-4">
+                                <fieldset class="mb-1">
+                                    <h5>Multiplicateur</h5>                                                                         
+                                    <div class="form-group">
+                                        <input type="number" class="form-control " value="0"  id="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"  name="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"    placeholder="">
+                                    </div>
+                                </fieldset>
+                            </div> 
+                        <?php /*} */?>
+                    <?php } ?>
 
 
                     <div class="col-2">
                         <fieldset class="mb-1">
                             <h5>Reduction</h5>
                             <div class="form-group">
-                                <input type="number" class="form-control reduction"  id="COL5-<?= $item['id'];?>" value="0"  name="COL5-<?= $item['id'];?>"   placeholder="" />
+                                <input type="number" class="form-control reduction"  id="COL_REDUCTION_<?= $item['id'];?>" value="0"  name="COL_REDUCTION_<?= $item['id'];?>"   placeholder="" />
                             </div>
                         </fieldset>
                     </div>
@@ -217,14 +233,16 @@
 
                     <div class="col-3">
                         <fieldset class="mb-1">
-                            <h5>Recaputilatif</h5>
+                            <h5>Recapitulatif</h5>
                             <div class="form-group">
-                                <input type="text" class="form-control "  id="COL4-<?= $item['id'];?>" value="0"  name="COL4-<?= $item['id'];?>"   placeholder="" readonly/>
+                                <input type="text" class="form-control "  id="COL_RECAPITULATIF_<?= $item['id'];?>" value="0"  name="COL_RECAPITULATIF_<?= $item['id'];?>"   placeholder="" readonly/>
                             </div>
                         </fieldset>
                     </div>
                 </div>
         <?php    }  ?>
+<!-- Scolarite -->
+
 <!-- Cantine -->
                                                                     <div class="row">
 
@@ -242,9 +260,9 @@
                                                                                 <fieldset class="mb-1">
                                                                                     <h5>Multiplicateur</h5>
                                                                                     <div class="form-group">
-                                                                                        <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Cantine"  name="SELECT-COL3-Cantine"   required>
-                                                                                        <?php foreach($tranche_scolaires as $tranche_scolaire){?>
-                                                                                                <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
+                                                                                        <select class="select2 form-control" multiple="multiple"  id="COL_TRANCHE_SELECT_CANTINE"  name="COL_TRANCHE_SELECT_CANTINE"   required>
+                                                                                        <?php foreach($mois as $key => $_mois){ ?>
+                                                                                                <option value="<?= $_mois['id']; ?>" ><?= $_mois['libelle']; ?></option>
                                                                                         <?php } ?>
                                                                                         </select>
                                                                                     </div>
@@ -256,7 +274,7 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Reduction</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="number" class="form-control reduction"  id="COL5-Cantine" value="0"  name="COL5-Cantine"   placeholder="" />
+                                                                                    <input type="number" class="form-control reduction"  id="COL_REDUCTION_CANTINE" value="0"  name="COL_REDUCTION_CANTINE"   placeholder="" />
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
@@ -264,13 +282,15 @@
 
                                                                         <div class="col-3">
                                                                             <fieldset class="mb-1">
-                                                                                <h5>Recaputilatif</h5>
+                                                                                <h5>Recapitulatif</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="text" class="form-control "  id="COL4-Cantine" value="0"  name="COL4-Cantine"   placeholder="" readonly/>
+                                                                                    <input type="text" class="form-control "  id="COL_RECAPITULATIF_CANTINE" value="0"  name="COL_RECAPITULATIF_CANTINE"   placeholder="" readonly/>
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
                                                                     </div>
+<!-- Cantine -->
+
 <!-- Activite -->
                                                                     <div class="row">
 
@@ -278,7 +298,7 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Activité</h5>
                                                                                 <div class="form-group">
-                                                                                    <select class="select2 form-control" multiple="multiple"  id="SELECT-COL2-Activite"  name="SELECT-COL2-Activite"   required>
+                                                                                    <select class="select2 form-control" multiple="multiple"  id="COL_SELECT_LIBELLE_ACTIVITE"  name="COL_SELECT_LIBELLE_ACTIVITE"   required>
                                                                                     <?php foreach($activites as $activite){?>
                                                                                             <option value="<?= $activite['id']; ?>" title="<?= $activite['montant']; ?>" ><?= $activite['libelle']; ?></option>
                                                                                     <?php } ?>
@@ -292,9 +312,9 @@
                                                                                 <fieldset class="mb-1">
                                                                                     <h5>Multiplicateur</h5>
                                                                                     <div class="form-group">
-                                                                                        <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Activite"  name="SELECT-COL3-Activite"   required>
-                                                                                        <?php foreach($tranche_scolaires as $tranche_scolaire){?>
-                                                                                                <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
+                                                                                        <select class="select2 form-control" multiple="multiple"  id="COL_TRANCHE_SELECT_ACTIVITE"  name="COL_TRANCHE_SELECT_ACTIVITE"   required>
+                                                                                        <?php foreach($mois as $key => $_mois){ ?>
+                                                                                                <option value="<?= $_mois['id']; ?>" ><?= $_mois['libelle']; ?></option>
                                                                                         <?php } ?>
                                                                                         </select>
                                                                                     </div>
@@ -305,7 +325,7 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Reduction</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="number" class="form-control reduction"  id="COL5-Activite" value="0"  name="COL5-Activite"   placeholder="" />
+                                                                                    <input type="number" class="form-control reduction"  id="COL_REDUCTION_ACTIVITE" value="0"  name="COL_REDUCTION_ACTIVITE"   placeholder="" />
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
@@ -313,15 +333,14 @@
 
                                                                         <div class="col-3">
                                                                             <fieldset class="mb-1">
-                                                                                <h5>Recaputilatif</h5>
+                                                                                <h5>Recapitulatif</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="text" class="form-control "  id="COL4-Activite" value="0"  name="COL4-Activite"   placeholder="" readonly/>
+                                                                                    <input type="text" class="form-control "  id="COL_RECAPITULATIF_ACTIVITE" value="0"  name="COL_RECAPITULATIF_ACTIVITE"   placeholder="" readonly/>
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
                                                                     </div>
-
-                                                                    
+<!-- Activite -->                                                           
                                                                     
 <!-- Autres Informations   -->
                                                                     <div class="row">
@@ -329,7 +348,7 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Autres</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="text" value="" class="form-control " value=""  id="COL2-Autres"  name="COL2-Autres"  placeholder="" />   
+                                                                                    <input type="text" value="" class="form-control " value=""  id="COL_LIBELLE_AUTRES"  name="COL_LIBELLE_AUTRES"  placeholder="" />   
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
@@ -338,7 +357,7 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Montant</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="number" value="" class="form-control " value="0"  id="NUMBER-COL3-Autres"  name=""    placeholder="">
+                                                                                    <input type="number" value="" class="form-control " value="0"  id="COL_MONTANT_AUTRES"  name=""    placeholder="">
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div> 
@@ -348,7 +367,7 @@
                                                                             <fieldset class="mb-1">
                                                                                 <h5>Reduction</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="number" value="" class="form-control reduction"  id="COL5-Autres" value="0"  name="COL5-Autres"   placeholder="" />
+                                                                                    <input type="number" value="" class="form-control reduction"  id="COL_REDUCTION_AUTRES" value="0"  name="COL_REDUCTION_AUTRES"   placeholder="" />
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
@@ -356,9 +375,9 @@
 
                                                                         <div class="col-3">
                                                                             <fieldset class="mb-1">
-                                                                                <h5>Recaputilatif</h5>
+                                                                                <h5>Recapitulatif</h5>
                                                                                 <div class="form-group">
-                                                                                    <input type="text" class="form-control "  id="COL4-Autres" value="0"  name="COL4-Autres"   placeholder="" />
+                                                                                    <input type="text" class="form-control "  id="COL_RECAPITULATIF_AUTRE" value="0"  name="COL_RECAPITULATIF_AUTRE"   placeholder="" />
                                                                                 </div>
                                                                             </fieldset>
                                                                         </div>
@@ -371,6 +390,8 @@
                                                                             </h4>
                                                                         </div>
                                                                     </div>
+<!-- Autres Informations   -->
+
 <!-- Montant à payer -->
                                                                     <div class="row">
                                                                         <div class="col-md-6">
@@ -381,6 +402,8 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
+<!-- Montant à payer -->
+
 <!-- Date de versement -->
                                                                         <div class="col-md-6">
                                                                             <div class="form-group row">
@@ -391,7 +414,9 @@
                                                                             </div>
                                                                         </div>
                                                                     </div>
+<!-- Date de versement -->
 
+<!-- Reste à payer -->
                                                                     <!-- <div class="row">
                                                                         <div class="col-md-12">
                                                                             <h4 class="form-section text-warning" align="">
@@ -399,7 +424,8 @@
                                                                             </h4>
                                                                         </div>
                                                                     </div> -->
-<!-- Reste à payer
+
+                                                                    <!-- Reste à payer
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="form-group row">
@@ -439,10 +465,10 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div> 
--->
+                                                                    </div> -->
+<!-- Reste à payer -->
 
-                                                                    <!-- Type de paiement -->
+<!-- Type de paiement -->
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                             <div class="form-group row">
@@ -468,7 +494,11 @@
                                                                             <a id="btn_preview" type="button" class="btn btn-warning my-1"><i class="fa fa-arrow-right"></i> Suivant</a>
                                                                         </div>
                                                                     </div>
-<!--                 
+<!-- Type de paiement -->
+
+<!-- draft -->
+
+                                                                    <!--                 
                                                                     <div class="row">
                                                                         <div class="col-md-6">
                                                                         </div>
@@ -477,7 +507,7 @@
                                                                             <a id="btn_preview" type="button" class="btn btn-warning my-1"><i class="fa fa-arrow-right"></i> Suivant</a>
                                                                         </div>
                                                                     </div> -->
-
+<!-- draft -->
                                                                     
                                                                 </fieldset>
                                                             </form>
@@ -524,7 +554,7 @@
                         <select id="family-relation" class="select-multiple-2 form-control" name="multi_select[]" id="multi_select" style="width:100%;">
                             <option data-matricule="" data-id="" disabled value="">----------------------</option>
                             <?php foreach($eleves as $item){?>
-                            <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="RF-<?= $item['id']; ?>"><?= $item['libelle']; ?></option>
+                            <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="RF-<?= $item['id']; ?>"><?= $item['nom_complet']; ?></option>
                             <?php } ?>
                         </select>
 

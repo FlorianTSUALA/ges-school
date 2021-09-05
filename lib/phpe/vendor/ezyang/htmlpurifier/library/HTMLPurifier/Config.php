@@ -222,7 +222,7 @@ class HTMLPurifier_Config
         if (!$this->finalized) {
             $this->autoFinalize();
         }
-        $full = $this->getAll();
+        $full = $this->get_all();
         if (!isset($full[$namespace])) {
             $this->triggerError(
                 'Cannot retrieve undefined namespace ' .
@@ -263,7 +263,7 @@ class HTMLPurifier_Config
     public function getSerial()
     {
         if (empty($this->serial)) {
-            $this->serial = sha1(serialize($this->getAll()));
+            $this->serial = sha1(serialize($this->get_all()));
         }
         return $this->serial;
     }

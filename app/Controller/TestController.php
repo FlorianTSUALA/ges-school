@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use DateTime;
+use DateHelpers;
 use App\Model\Eleve;
 use Core\Model\Model;
 use App\Model\DBTable;
@@ -9,9 +11,10 @@ use App\Model\Parcours;
 use App\Helpers\Helpers;
 use Core\Helper\DBHelper;
 use Core\Session\Request;
+
+use App\Model\TypePension;
 use App\Model\PensionEleve;
 use Core\HTML\FlashMessages;
-
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use Spipu\Html2Pdf\Html2Pdf;
@@ -26,6 +29,7 @@ use App\Repository\DocumentRepository;
 use App\Model\AffectationClasseMatiere;
 use App\Model\Facture;
 use App\Repository\PersonnelRepository;
+use App\Repository\VersementRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\ExemplaireRepository;
 use App\Repository\AnneeScolaireRepository;
@@ -33,9 +37,6 @@ use Core\HTML\MessageFlash\FlashMessagesStatic;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use App\Repository\AffectationSalleClasseRepository;
-use App\Repository\VersementRepository;
-use DateTime;
-use DateHelpers;
 
 
 class TestController extends AppController
@@ -247,7 +248,7 @@ class TestController extends AppController
         $solde_paye = '0';
         $sous_total = '0';
         $items = [];
-        $this->renderPDF('reports.cantine', compact('date_facturation', 'eleve', 'classe', 'reference', 'remise', 'reste', 'solde_paye', 'sous_total', 'items'), 'facture_cantine' );  
+        $this->renderPDF('reports.cantine', compact('date_facturation', 'eleve', 'classe', 'reference', 'reduction', 'reste', 'solde_paye', 'sous_total', 'items'), 'facture_cantine' );  
     
     }
 

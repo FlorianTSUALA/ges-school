@@ -57,7 +57,7 @@ class FactureVersement extends Report{
 
                 $tmp_montant = 0;
 
-                $_recapitulatif = $item['recapitulatif'];
+                $_recapitulatif = $item['montant_net'];
                 $periode  = ' ';
                 $size = count($item['multiplicateur']) ;
                 if(isset($item['multiplicateur']) && is_array($item['multiplicateur']) && $size > 0){
@@ -102,9 +102,9 @@ class FactureVersement extends Report{
             $_est_mensuel = $item['est_mensuel'];
             $_montant = $item['montant'];
             $_mensualite = $item['mensualite'];
-            $recapitulatif = $item['recapitulatif'];
+            $recapitulatif = $item['montant_net'];
             $recapitulatif = $recapitulatif? 0 : $recapitulatif;
-            $remise = $item['remise'];
+            $remise = $item['reduction'];
             $remise = $remise? 0 : $remise;
 
             $_est_mensuel    = $item['est_mensuel'];
@@ -113,7 +113,7 @@ class FactureVersement extends Report{
 
             $tmp_montant = 0;
 
-            $_recapitulatif = $item['recapitulatif'];
+            $_recapitulatif = $item['montant_net'];
             $periode  = ' ';
             $size = count($item['multiplicateur']) ;
             if(isset($item['multiplicateur']) && is_array($item['multiplicateur']) && $size > 0){
@@ -151,9 +151,9 @@ class FactureVersement extends Report{
             $_est_mensuel = $item['est_mensuel'];
             $_montant = $item['montant'];
             $_mensualite = $item['mensualite'];
-            $recapitulatif = $item['recapitulatif'];
+            $recapitulatif = $item['montant_net'];
             $recapitulatif = $recapitulatif? 0 : $recapitulatif;
-            $remise = $item['remise'];
+            $remise = $item['reduction'];
             $remise = $remise? 0 : $remise;
 
             $_est_mensuel    = $item['est_mensuel'];
@@ -162,7 +162,7 @@ class FactureVersement extends Report{
 
             $tmp_montant = 0;
 
-            $_recapitulatif = $item['recapitulatif'];
+            $_recapitulatif = $item['montant_net'];
             $periode  = ' ';
             $size = count($item['activites']) ;
             if(isset($item['activites']) && is_array($item['activites']) && $size > 0){
@@ -209,7 +209,7 @@ class FactureVersement extends Report{
         $current = $autres ;
         $_montant = $current['multiplicateur'];
         $_montant = $_montant ? 0 : $_montant;
-        $_remise = $current['remise'];
+        $_remise = $current['reduction'];
         $_remise = $_remise? 0 : $_remise;
         $sub_total = $recapitulatif - $remise;
         if($_montant !== 0){

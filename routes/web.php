@@ -206,7 +206,10 @@ $router->crudRoute('classe', ClasseController::class);
 $router->crudRoute('salle_classe', SalleClasseController::class);
 
 //PENSION CLASSE
-$router->crudRoute('pension_classe', PensionClasseController::class);
+$router->addRoute('pension_classe', 'pension_classe', [PensionClasseController::class, 'index']);
+$router->addRoute('pension_classe_update', 'api/pension_classe/update/', [PensionClasseController::class, 'modifier']);
+$router->addRoute('pension_classe_all', 'api/pension_classe/all', [PensionClasseController::class, 'liste']);
+
 
 //DOCUMENT
 $router->crudRoute('document', DocumentController::class);

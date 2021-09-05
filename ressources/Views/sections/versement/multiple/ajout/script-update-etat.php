@@ -1,9 +1,11 @@
 <?php
 
 use App\Helpers\Helpers;
+use App\Helpers\S;
 
-$signataire = "Charbonnier LaRose";
-$funtion_signataire = "Le Sécrétariat";
+$signataire = $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM);
+$funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
+
 
 ?>
 
@@ -22,7 +24,7 @@ $funtion_signataire = "Le Sécrétariat";
         data_versement['signataire'] = '<?=  $signataire ?>'
         data_versement['funtion_signataire'] = '<?= $funtion_signataire ?>'
 
-        data_versement['reference'] = $('#reference').val()
+        data_versement['reference'] = refernce
 
         data_versement['pension_classe'] = items
         data_versement['cantines'] = cantines
@@ -76,7 +78,7 @@ $funtion_signataire = "Le Sécrétariat";
                 let  sub_total = 0
                 let  tmp_montant = 0
 
-                var _recapitulatif = parseFloat(current['recapitulatif'])
+                var _recapitulatif = parseFloat(current['montant_net'])
                 _recapitulatif = (isNaN(_recapitulatif))? 0 : _recapitulatif
                 if(_recapitulatif == 0) continue
 
@@ -105,7 +107,7 @@ $funtion_signataire = "Le Sécrétariat";
                 }
 
                 //Reste
-                _montant_total -= current['remise']
+                _montant_total -= current['reduction']
 
                 body += '       </td>'
                 body += '       <td class="text-right">'+tmp_montant +' Fcfa</td>'
@@ -126,7 +128,7 @@ $funtion_signataire = "Le Sécrétariat";
             let _mensualite = parseFloat(current['mensualite'])
             _multiplicateur = parseFloat(current['multiplicateur'])
             _multiplicateur = (isNaN(_multiplicateur))? 0 : _multiplicateur
-            let _remise = parseFloat(current['remise'])
+            let _remise = parseFloat(current['reduction'])
             _remise = (isNaN(_remise))? 0 : _remise
             if(_multiplicateur > 0){
                 
@@ -140,7 +142,7 @@ $funtion_signataire = "Le Sécrétariat";
                 msg = ''
                 sub_total = 0
                 tmp_montant = 0
-                tmp_montant = cantine_prix_mois
+                tmp_montant = prix_mensuel_cantine
                 sub_total = tmp_montant * _multiplicateur - _remise
                 msg = _multiplicateur+"*"+tmp_montant+"-"+_remise+ " = " +sub_total
 
@@ -148,8 +150,8 @@ $funtion_signataire = "Le Sécrétariat";
                 let j = 0
                 let periode = ''
 
-                for(var tranche in current['recapitulatif'])
-                    periode += (current['recapitulatif'][tranche]['value'] + ((size = ++j)? '.' : ', '))
+                for(var tranche in current['montant_net'])
+                    periode += (current['montant_net'][tranche]['value'] + ((size = ++j)? '.' : ', '))
 
                 body += '           <em class="text-muted">Concernant les tranches suivantes : '+periode+'.</em>'
 
@@ -164,18 +166,18 @@ $funtion_signataire = "Le Sécrétariat";
         //Cantines
 
         //Activite
-            let activites_souscrits  = activites['activites']
+            let activites_souscrits  = activites['liste']
             current = activites
             _est_mensuel = parseInt(current['est_mensuel'])
             _montant = parseFloat(current['montant'])
             _mensualite = parseFloat(current['mensualite'])
-            _remise = parseFloat(current['remise'])
+            _remise = parseFloat(current['reduction'])
             _remise = (isNaN(_remise))? 0 : _remise
 
             // console.log(current)
-            // console.log(parseInt(current['recapitulatif']))
+            // console.log(parseInt(current['montant_net']))
 
-            let nbre_tranche = parseInt(current['recapitulatif'])
+            let nbre_tranche = parseInt(current['montant_net'])
             nbre_tranche = (isNaN(nbre_tranche))? 0 : nbre_tranche
             // console.log(parseInt(nbre_tranche))
 
@@ -235,7 +237,7 @@ $funtion_signataire = "Le Sécrétariat";
             current = autres
             _montant = parseFloat(current['montant'])
             _montant = (isNaN(_montant))? 0 : _montant
-            _remise = parseFloat(current['remise'])
+            _remise = parseFloat(current['reduction'])
             _remise = (isNaN(_remise))? 0 : _remise
             _montant_total += _montant
 
@@ -292,7 +294,7 @@ $funtion_signataire = "Le Sécrétariat";
         $('#recap-funtion_signataire').text(  data_versement['funtion_signataire'] )
 
         $('#section_versement').hide()
-        $('#section_recaputilatif').show()
+        $('#section_recapitulatif').show()
     }
 
     );

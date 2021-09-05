@@ -28,12 +28,12 @@ var btn_save = $('#btn-abonnement_club_save')
         //     montant_total = $('#montant_total').val()
         //     date_versement = $('#date_versement').val()
         //     $(section_versement).hide()
-        //     $(section_recaputilatif).show()
+        //     $(section_recapitulatif).show()
             
         // })
 
         // $(btn_back).click(function() {
-        //     $(section_recaputilatif).hide()
+        //     $(section_recapitulatif).hide()
         //     $(section_versement).show()
         // })
 

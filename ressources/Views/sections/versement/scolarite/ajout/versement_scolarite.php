@@ -23,22 +23,6 @@ $include_footer_script = ob_get_clean();
 $include_res_header =  '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/app-assets/vendors/css/forms/toggle/bootstrap-switch.min.css">';
 $include_res_header .=  '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/app-assets/css/plugins/loaders/loaders.min.css">';
 
-$readonly = '';
-// if(isset($_SESSION['DATA_TRANSPORT'])){
-//  var_dump($_SESSION['DATA_TRANSPORT']);
-
-// $CODE_ELEVE = $_SESSION['DATA_TRANSPORT']['CODE_ELEVE'];
-// $CODE_CLASSE = $_SESSION['DATA_TRANSPORT']['CODE_CLASSE'];
-// $CODE_PARCOURS = $_SESSION['DATA_TRANSPORT']['CODE_PARCOURS'];
-
-// $MATRICULE = $_SESSION['DATA_TRANSPORT']['MATRICULE'];
-// $NOM = $_SESSION['DATA_TRANSPORT']['NOM'];
-// $PRENOM = $_SESSION['DATA_TRANSPORT']['PRENOM'];
-// $SEXE = $_SESSION['DATA_TRANSPORT']['SEXE'];
-// $DATE_NAISSANCE = $_SESSION['DATA_TRANSPORT']['DATE_NAISSANCE'];
-// $LIEU_NAISSANCE = $_SESSION['DATA_TRANSPORT']['LIEU_NAISSANCE'];
-// }
-
 ?>
 
 
@@ -117,7 +101,6 @@ $readonly = '';
                                                                                 <label for="classe" class="col-1 col-form-label"></label>
                                                                                 <label for="classe" class="col-3 col-form-label">Classe:</label>
                                                                                 <div class="col-8">
-
                                                                                     <select id="classe" class="select2 form-control" name="classe" required>
                                                                                         <!-- <option value="-----------">---------------</option> -->
                                                                                         <?php foreach ($classes as $item) { ?>
@@ -171,201 +154,92 @@ $readonly = '';
                                                                             </h4>
                                                                         </div>
                                                                     </div>
+                                                                    
                                                                     <!-- Scolarite -->
-                                                                    <!-- <?php $i = 0;
-                                                                            foreach ($type_pensions as $item) {  ?>
-                <div class="row">
+                                                                        <div class="row">
 
-                    <div class="col-3 ">
-                        <fieldset class="mb-1">
-                            <h5>Type Pension</h5>
-                            <div class="form-group">
-                            <?= '<input type="text" readonly class="form-control " value="' . $item['libelle'] . '"  id="COL2-' . $item['id'] . '"  name="COL2-' . $item['id'] . '"  placeholder="" />'; ?>
-                            </div>
-                        </fieldset>
-                    </div>
-
-                    <div id="TYPE-SELECT-<?= $item['id']; ?>" class="col-4">
-                        <fieldset class="mb-1">
-                            <h5>Multiplicateur</h5>
-                            <div class="form-group">
-                                <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-<?= $item['id']; ?>"  name="SELECT-COL3-<?= $item['id']; ?>"   required>
-                                <?php foreach ($tranche_scolaires as $tranche_scolaire) { ?>
-                                        <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
-                                <?php } ?>
-                                </select>
-                            </div>
-                        </fieldset>
-                    </div>
-                
-                    <div id="TYPE-NUMBER-<?= $item['id']; ?>" class="col-4">
-                        <fieldset class="mb-1">
-
-                            <h5>Multiplicateur</h5>                                                                         <div class="form-group">
-                                <input type="number" class="form-control " value="0"  id="NUMBER-COL3-<?= $item['id']; ?>"  name="NUMBER-COL3-<?= $item['id']; ?>"    placeholder="">
-                            </div>
-                        </fieldset>
-                    </div> 
-
-
-                    <div class="col-2">
-                        <fieldset class="mb-1">
-                            <h5>Reduction</h5>
-                            <div class="form-group">
-                                <input type="number" class="form-control reduction"  id="COL5-<?= $item['id']; ?>" value="0"  name="COL5-<?= $item['id']; ?>"   placeholder="" />
-                            </div>
-                        </fieldset>
-                    </div>
-
-
-                    <div class="col-3">
-                        <fieldset class="mb-1">
-                            <h5>Recaputilatif</h5>
-                            <div class="form-group">
-                                <input type="text" class="form-control "  id="COL4-<?= $item['id']; ?>" value="0"  name="COL4-<?= $item['id']; ?>"   placeholder="" readonly/>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-        <?php    }  ?> -->
-                                                                    <!-- Scolarite-->
-                                                                    <div class="row">
-
-                                                                        <div class="col-3 ">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Type pension</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="text" class="form-control  " readonly value="Scolarite" id="COL2-Scolarite" COL2-Scolarite" placeholder="" />
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-
-
-                                                                        <div id="" class="col-4">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Tranche scolaire</h5>
-                                                                                <div class="form-group">
-                                                                                    <select class="select2 form-control" multiple="multiple" id="SELECT-COL3-Scolarite" name="SELECT-COL3-Scolarite" required>
-                                                                                        <?php foreach ($tranche_scolaires as $tranche_scolaire) { ?>
-                                                                                            <option value="<?= $tranche_scolaire['id']; ?>"><?= $tranche_scolaire['libelle']; ?></option>
-                                                                                        <?php } ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-
-                                                                        <div class="col-2">
-
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Reduction</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="number" class="form-control reduction" id="COL5-Scolarite" value="0" name="COL5-Scolarite" placeholder="" />
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-
-
-                                                                        <div class="col-3">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Recaputilatif</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="text" class="form-control " id="COL4-Scolarite" value="0" name="COL4-Scolarite" placeholder="" readonly />
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- Activite -->
-                                                                    <!-- <div class="row">
-
-                                                                        <div class="col-3 ">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Activité</h5>
-                                                                                <div class="form-group">
-                                                                                    <select class="select2 form-control" multiple="multiple"  id="SELECT-COL2-Activite"  name="SELECT-COL2-Activite"   required>
-                                                                                    <?php foreach ($activites as $activite) { ?>
-                                                                                            <option value="<?= $activite['id']; ?>" title="<?= $activite['montant']; ?>" ><?= $activite['libelle']; ?></option>
-                                                                                    <?php } ?>
-                                                                                    </select>
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-
-
-                                                                        <div id="" class="col-4">
+                                                                            <div class="col-3 ">
                                                                                 <fieldset class="mb-1">
-                                                                                    <h5>Multiplicateur</h5>
+                                                                                    <h5>Type pension</h5>
                                                                                     <div class="form-group">
-                                                                                        <select class="select2 form-control" multiple="multiple"  id="SELECT-COL3-Activite"  name="SELECT-COL3-Activite"   required>
-                                                                                        <?php foreach ($tranche_scolaires as $tranche_scolaire) { ?>
-                                                                                                <option value="<?= $tranche_scolaire['id']; ?>" ><?= $tranche_scolaire['libelle']; ?></option>
-                                                                                        <?php } ?>
+                                                                                        <input type="text" class="form-control  " readonly value="Scolarite" id="COL_LIBELLE_SCOLARITE" COL_LIBELLE_SCOLARITE" placeholder="" />
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </div>
+
+
+                                                                            <div id="" class="col-4">
+                                                                                <fieldset class="mb-1">
+                                                                                    <h5>Tranche scolaire</h5>
+                                                                                    <div class="form-group">
+                                                                                        <select class="select2 form-control" multiple="multiple" id="COL_TRANCHE_SCOLARITE" name="COL_TRANCHE_SCOLARITE" required>
                                                                                         </select>
                                                                                     </div>
                                                                                 </fieldset>
-                                                                        </div> 
+                                                                            </div>
 
-                                                                        <div class="col-2">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Reduction</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="number" class="form-control reduction"  id="COL5-Activite" value="0"  name="COL5-Activite"   placeholder="" />
-                                                                                </div>
-                                                                            </fieldset>
+                                                                            <div class="col-2">
+                                                                                <fieldset class="mb-1">
+                                                                                    <h5>Reduction</h5>
+                                                                                    <div class="form-group">
+                                                                                        <input type="number" class="form-control reduction" id="COL_REDUCTION_SCOLARITE" value="0" name="COL_REDUCTION_SCOLARITE" placeholder="" />
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </div>
+
+
+                                                                            <div class="col-3">
+                                                                                <fieldset class="mb-1">
+                                                                                    <h5>Recapitulatif</h5>
+                                                                                    <div class="form-group">
+                                                                                        <input type="text" class="form-control " id="COL_RECAPITULATIF_SCOLARITE" value="0" name="COL_RECAPITULATIF_SCOLARITE" placeholder="" readonly />
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </div>
                                                                         </div>
-
-
-                                                                        <div class="col-3">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Recaputilatif</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="text" class="form-control "  id="COL4-Activite" value="0"  name="COL4-Activite"   placeholder="" readonly/>
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-                                                                    </div> -->
-
-
+                                                                    <!-- Scolarite-->
 
                                                                     <!-- Autres Informations   -->
-                                                                    <div class="row">
-                                                                        <div class="col-3 ">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Autres</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="text" value="" class="form-control " value="" id="COL2-Autres" name="COL2-Autres" placeholder="" />
-                                                                                </div>
-                                                                            </fieldset>
+                                                                        <div class="row">
+                                                                            <div class="col-3 ">
+                                                                                <fieldset class="mb-1">
+                                                                                    <h5>Autres</h5>
+                                                                                    <div class="form-group">
+                                                                                        <input type="text" value="" class="form-control " value="" id="COL_LIBELLE_AUTRES" name="COL_LIBELLE_AUTRES" placeholder="" />
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </div>
+
+                                                                            <div id="" class="col-4">
+                                                                                <fieldset class="mb-1">
+                                                                                    <h5>Montant</h5>
+                                                                                    <div class="form-group">
+                                                                                        <input type="number" value="" class="form-control " value="0" id="COL_MONTANT_AUTRES" name="" placeholder="">
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </div>
+
+
+                                                                            <div class="col-2">
+                                                                                <fieldset class="mb-1">
+                                                                                    <h5>Reduction</h5>
+                                                                                    <div class="form-group">
+                                                                                        <input type="number" value="" class="form-control reduction" id="COL_REDUCTION_AUTRES" value="0" name="COL_REDUCTION_AUTRES" placeholder="" />
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </div>
+
+
+                                                                            <div class="col-3">
+                                                                                <fieldset class="mb-1">
+                                                                                    <h5>Recapitulatif</h5>
+                                                                                    <div class="form-group">
+                                                                                        <input type="text" class="form-control " id="COL_RECAPITULATIF_AUTRE" value="0" name="COL_RECAPITULATIF_AUTRE" placeholder="" />
+                                                                                    </div>
+                                                                                </fieldset>
+                                                                            </div>
                                                                         </div>
-
-                                                                        <div id="" class="col-4">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Montant</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="number" value="" class="form-control " value="0" id="NUMBER-COL3-Autres" name="" placeholder="">
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-
-
-                                                                        <div class="col-2">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Reduction</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="number" value="" class="form-control reduction" id="COL5-Autres" value="0" name="COL5-Autres" placeholder="" />
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-
-
-                                                                        <div class="col-3">
-                                                                            <fieldset class="mb-1">
-                                                                                <h5>Recaputilatif</h5>
-                                                                                <div class="form-group">
-                                                                                    <input type="text" class="form-control " id="COL4-Autres" value="0" name="COL4-Autres" placeholder="" />
-                                                                                </div>
-                                                                            </fieldset>
-                                                                        </div>
-                                                                    </div>
+                                                                    <!-- Autres Informations   -->
 
                                                                     <div class="row">
                                                                         <div class="col-md-12">
@@ -395,55 +269,6 @@ $readonly = '';
                                                                         </div>
                                                                     </div>
 
-                                                                    <!-- <div class="row">
-                                                                        <div class="col-md-12">
-                                                                            <h4 class="form-section text-warning" align="">
-                                                                                <strong>Informations complémentaires</strong>
-                                                                            </h4>
-                                                                        </div>
-                                                                    </div> -->
-                                                                    <!-- Reste à payer
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group row">
-                                                                                <label for="reste" class="col-4 col-form-label">Reste à payer&nbsp;:</label>
-                                                                                <div class="col-8">
-                                                                                    <input value="0" type="number" class="form-control" id="reste" name="reste" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-    Montant de reduction 
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group row">
-                                                                                <label for="reduction" class="col-4 col-form-label">Montant de réduction&nbsp;:</label>
-                                                                                <div class="col-8">
-                                                                                    <input placeholder="Renseigner le montant de la réduction" value="0" type="number" class="reduction form-control" id="reduction" name="reduction" />
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-
-    Motif 
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group row">
-                                                                                <label for="motif" class="col-4 col-form-label">Motif :</label>
-                                                                                <div class="col-8">
-                                                                                    <textarea placeholder="Renseigner le motif du versement" class="form-control" style="min-height: 100px; max-height: 100px;" id="motif" name="motif"></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-    Autre détails 
-                                                                        <div class="col-md-6">
-                                                                            <div class="form-group row">
-                                                                                <label for="autres" class="col-4 col-form-label">Autres détails:</label>
-                                                                                <div class="col-8">
-                                                                                    <textarea placeholder="Renseigner toutes autres informations sur ce versement" class="form-control" style="min-height: 100px; max-height: 100px;" id="autres" name="autres"></textarea>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div> 
--->
 
                                                                     <!-- Type de paiement -->
                                                                     <div class="row">
@@ -452,9 +277,7 @@ $readonly = '';
                                                                                 <label for="type_paiement" class="col-4 col-form-label">Type de paiement:</label>
                                                                                 <div class="col-8">
                                                                                     <select id="type_paiement" class="select2 form-control" name="type_paiement" required>
-                                                                                        <?php
-                                                                                        foreach ($type_paiements as $item) {
-                                                                                        ?>
+                                                                                        <?php foreach ($type_paiements as $item) { ?>
                                                                                             <option value="<?= $item['id']; ?>"><?= $item['libelle']; ?></option>
                                                                                         <?php } ?>
                                                                                     </select>
@@ -471,16 +294,6 @@ $readonly = '';
                                                                             <a id="btn_preview" type="button" class="btn btn-warning my-1"><i class="fa fa-arrow-right"></i> Suivant</a>
                                                                         </div>
                                                                     </div>
-                                                                    <!--                 
-                                                                    <div class="row">
-                                                                        <div class="col-md-6">
-                                                                        </div>
-                                                                        <div class="col-md-4"></div>
-                                                                        <div class="col-md-1">
-                                                                            <a id="btn_preview" type="button" class="btn btn-warning my-1"><i class="fa fa-arrow-right"></i> Suivant</a>
-                                                                        </div>
-                                                                    </div> -->
-
 
                                                                 </fieldset>
                                                             </form>
@@ -501,9 +314,7 @@ $readonly = '';
                 </div>
             </section>
 
-
             <?php require "versement_scolarite_etat.php"; ?>
-
 
         </div>
     </div>
@@ -527,7 +338,7 @@ $readonly = '';
                         <select id="family-relation" class="select-multiple-2 form-control" name="multi_select[]" id="multi_select" style="width:100%;">
                             <option data-matricule="" data-id="" disabled value="">----------------------</option>
                             <?php foreach ($eleves as $item) { ?>
-                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né " . $item['date_naissance'] . " à " . $item['lieu_naissance']; ?>" value="RF-<?= $item['id']; ?>"><?= $item['libelle']; ?></option>
+                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né " . $item['date_naissance'] . " à " . $item['lieu_naissance']; ?>" value="RF-<?= $item['id']; ?>"><?= $item['nom_complet']; ?></option>
                             <?php } ?>
                         </select>
 

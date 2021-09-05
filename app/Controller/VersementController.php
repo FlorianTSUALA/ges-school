@@ -107,7 +107,7 @@ class VersementController extends \App\Controller\Admin\AppController
                           //->where('type_abonnement_id', '=', 0)
                           ->one()['montant'];
 
-      $prix_abonnement_activites = DBTable::getModel('prix_abonnement')
+      $prix_abonnement_activite = DBTable::getModel('prix_abonnement')
                           ->select(
                               [
                                   'prix_abonnement.code' => 'id',
@@ -149,7 +149,7 @@ class VersementController extends \App\Controller\Admin\AppController
           'type_pensions',
           'type_paiements',
           'tranche_scolaires',
-          'prix_abonnement_activites',
+          'prix_abonnement_activite',
           'prix_abonnement_cantine',
           'id_fact'
       ));
