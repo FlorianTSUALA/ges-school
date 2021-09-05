@@ -165,7 +165,7 @@ $router->addRoute('versement-detail', 'versement/detail/{code}', [VersementContr
 //new
 $router->addRoute('liste_eleve', 'versement/list/eleve', [VersementController::class, 'liste_abonnee']);
 
-$router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
+// $router->addRoute('versement_liste_test', 'test/versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
 $router->addRoute('versement_retard', 'versement/retard', [VersementController::class, 'liste_retard']);
 $router->addRoute('versement_info', 'versement/info/', [VersementController::class, 'info']);
@@ -174,7 +174,7 @@ $router->addRoute('versement_info', 'versement/info/', [VersementController::cla
 // $router->addRoute('versement_liste', 'versement/list', [VersementController::class, 'liste_abonnee']);
 // $router->addRoute('versement_info', 'versement/info/', [VersementController::class, 'info']);
 
-//facture recap journalier
+//RECAP PAYEMENT PERIODIQUE
 $router->addRoute('facture_totale', 'facture/total', [FactureController::class, 'facture_totale']);
 $router->addRoute('facture_api_info', 'facture/api/info/', [FactureController::class, 'api_facture_info_api_paie']);
 

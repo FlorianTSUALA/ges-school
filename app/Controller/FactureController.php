@@ -31,6 +31,12 @@ class FactureController  extends AppController
         $route = 'facture_totale';
         $menu_actif = 'facture_totale';
 
+        //JOURNEE
+            // * ACTIVITE
+            // * PENSION CLASSES
+            // * CANTINE
+
+
         $this->render('sections.versement.liste.versement_total.index', compact( 'route',  'menu_actif'));
     }
 

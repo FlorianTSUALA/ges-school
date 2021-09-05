@@ -124,7 +124,7 @@ class PersonnelController extends AppController
             ->select(
                 [ 
                     'type_personnel.code' => 'type_personnel_id', 
-                    'pays_id' => 'pays_id', 
+                    'pays.code' => 'pays_id', 
                     'nom' => 'nom', 
                     'prenom' => 'prenom', 
                     'sexe' => 'sexe', 
@@ -145,6 +145,7 @@ class PersonnelController extends AppController
                     
                 ])
                 ->join('type_personnel', 'type_personnel.id', '=', 'personnel.type_personnel_id')
+                ->join('pays', 'pays.id', '=', 'personnel.pays_id')
                 ->where('personnel.code', $code)
                 ->one();
         // dd($personnel);

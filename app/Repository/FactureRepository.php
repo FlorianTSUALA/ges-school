@@ -17,20 +17,17 @@ use ClanCats\Hydrahon\Query\Expression;
 
 class FactureRepository extends BaseRepository{
         
-    public function get_paie_facture_total($personnel_id, $date = Null ){
-
-        if($date == NULL)
-          $date = Helpers::today();      
-        $req =
-        " SELECT facture.personnel_id as id, sum(facture.montant) as total
-          from facture
-          where facture.visibilite = 1  and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
-        ";
-          $result = (new self)->query($req);
-          return (new self)->toObject($result);
-      }
-
-
+  public function get_paie_facture_total($personnel_id, $date = Null ){
+      if($date == NULL)
+        $date = Helpers::today();      
+      $req =
+      " SELECT facture.personnel_id as id, sum(facture.montant) as total
+        from facture
+        where facture.visibilite = 1  and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
+      ";
+        $result = (new self)->query($req);
+        return (new self)->toObject($result);
+  }
       
   public function get_paie_facture_activite($personnel_id, $date = Null ){
 
