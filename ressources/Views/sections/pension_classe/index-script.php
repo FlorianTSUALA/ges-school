@@ -5,7 +5,6 @@ use App\Helpers\Helpers;
 
 ?>
 
-
 <script>
 
 <?php Helpers::jsResponsibleSelect2JsGrid() ?>
@@ -29,12 +28,6 @@ $(document).ready(function() {
                         url: "<?= URL::link('pension_classe_all');?>",
                         data: data
                     });
-            // return $.grep(db.prix_pensions_classes, function(item) {
-            //     return ( 
-            //         (!filter.classe || item.classe === filter.classe  || filter.classe === "Toutes les classes"))
-            //         // && (!filter.type_pension || item.type_pension === filter.type_pension)
-            //         // && (!filter.personnel || item.personnel === filter.personnel)
-            // })
         },
 
         insertItem: function(insertingAffectation) {
@@ -172,38 +165,6 @@ $(document).ready(function() {
         },
         onInit: function(args) {
         }, 
-        
-        rowClick: function(args) {
-            grid = this;
-
-            if(( $(args.event.target.parentNode).find('input.jsgrid-edit-button').length == 1)) {
-                console.log('yes')
-                df = $.Deferred();
-                
-               /* $.ajax({
-                    type: "GET",
-                    url: '<?= URL::link('api_personnel_list');?>'
-                }).done(function(data) {
-                    
-                    db.personnels = [ {
-                        id: null,
-                        value: 'Non affecté'
-                    }]
-
-                    db.personnels.push(...data)
-                    
-                    $("#jsGrid").jsGrid("fieldOption", "personnel", 'items', db.personnels)
-                    
-                    df.resolve()
-                })*/
-                
-                df.then(function (){
-                    grid.editItem(args.item);                    
-                })
-                return df.promise() 
-            }
-        }
-
     })
 
  

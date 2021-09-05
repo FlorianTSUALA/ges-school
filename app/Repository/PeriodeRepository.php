@@ -30,7 +30,7 @@ class PeriodeRepository extends BaseRepository{
         ->where('annee_scolaire_id', '=', $annee_scolaire_id)
         ->get();
 
-        foreach($sessions as $item){
+        foreach($sessions AS $item){
             $tmp = $item;
             $tmp_periodes =  DBTable::getModel(DBTable::PERIODE)->select(
             [   
@@ -44,7 +44,7 @@ class PeriodeRepository extends BaseRepository{
             ->get();
 
             $periodes = [];
-            foreach($tmp_periodes as $periode){
+            foreach($tmp_periodes AS $periode){
                 $periodes[$periode['periode_code']] = $periode;
             }
             

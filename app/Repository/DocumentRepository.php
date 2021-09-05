@@ -31,13 +31,13 @@ class DocumentRepository extends BaseRepository{
         
         $table = Exemplaire::table();
         $request = $table->select('
-            document.titre as document, 
-            document.code as document_id, 
-            etat_document.code as etat_document_id, 
-            etat_document.libelle as etat_document, 
-            exemplaire.code as exemplaire_id, 
-            exemplaire.code_enregistrement as code_enregistrement, 
-            exemplaire.date_acquisition as date_acquisition
+            document.titre AS document, 
+            document.code AS document_id, 
+            etat_document.code AS etat_document_id, 
+            etat_document.libelle AS etat_document, 
+            exemplaire.code AS exemplaire_id, 
+            exemplaire.code_enregistrement AS code_enregistrement, 
+            exemplaire.date_acquisition AS date_acquisition
             ')->where('exemplaire.visibilite','=', 1);
 
         if($disponible)
@@ -52,8 +52,8 @@ class DocumentRepository extends BaseRepository{
         
     public function getEtatDocument(){
         $results = EtatDocument::table()->select('
-                etat_document.code as etat_document_id, 
-                etat_document.libelle as etat_document 
+                etat_document.code AS etat_document_id, 
+                etat_document.libelle AS etat_document 
                 ')
                 ->where('etat_document.visibilite', 1)
                 ->get();
@@ -74,7 +74,7 @@ class DocumentRepository extends BaseRepository{
 
         $documents = [];            
         
-        foreach($domaines as $domaine){
+        foreach($domaines AS $domaine){
             $data_domaine = [
                 'domaine_id' => $domaine['code'],
                 'domaine' => $domaine['libelle'],

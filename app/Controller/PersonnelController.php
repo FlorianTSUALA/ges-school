@@ -123,7 +123,7 @@ class PersonnelController extends AppController
         $personnel = Personnel::table()
             ->select(
                 [ 
-                    'type_personnel_id' => 'type_personnel_id', 
+                    'type_personnel.code' => 'type_personnel_id', 
                     'pays_id' => 'pays_id', 
                     'nom' => 'nom', 
                     'prenom' => 'prenom', 
@@ -140,10 +140,13 @@ class PersonnelController extends AppController
                     'fonction' => 'fonction', 
                     'autres' => 'autres', 
                     'pieces_jointes' => 'pieces_jointes', 
-                    'code' => 'id', 
+                    'personnel.code' => 'id', 
                     'photo' => 'photo' 
                     
-                ])->where('code', $code)->one();
+                ])
+                ->join('type_personnel', 'type_personnel.id', '=', 'personnel.type_personnel_id')
+                ->where('personnel.code', $code)
+                ->one();
         // dd($personnel);
         $this->app->setTitle('Mise à jour d\'un personnel  - Ges-School');
         $type_personnels = TypePersonnel::table()->select([ 'code' => 'id' , 'libelle' => 'value'])->where('visibilite', 1)->get();
@@ -351,7 +354,7 @@ class PersonnelController extends AppController
         
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
-        $data_info_personnels = (new PersonnelRepository())->getInfoPersonnels($annee_scolaire_id);
+        $data_info_personnels = (new PersonnelRepository())->getElevennels($annee_scolaire_id);
 
         // dd($data_info_personnels);
         $this->render('sections.personnel.personnel_salle_classe', compact( 'classes','data_info_personnels'));
@@ -368,7 +371,7 @@ class PersonnelController extends AppController
     {
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
-        $data_info_personnels = (new PersonnelRepository())->getInfoPersonnel($annee_scolaire_id, $code);
+        $data_info_personnels = (new PersonnelRepository())->getInfoPersonnels($annee_scolaire_id, $code);
 
         // vd( Helpers::toJSON($data_info_personnels));
         echo Helpers::toJSON($data_info_personnels);

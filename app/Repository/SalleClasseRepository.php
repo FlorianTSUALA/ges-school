@@ -25,7 +25,7 @@ class SalleClasseRepository extends BaseRepository{
         ->where('visibilite', '=', 1)
         ->get();
 
-        foreach($classes as $classe){
+        foreach($classes AS $classe){
             $data_salle = [
                 'classe_id' => $classe['code'],
                 'classe' => $classe['libelle'],

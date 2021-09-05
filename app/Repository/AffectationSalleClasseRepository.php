@@ -31,7 +31,7 @@ class AffectationSalleClasseRepository extends BaseRepository{
     
             $documents = [];            
             
-            foreach($domaines as $domaine){
+            foreach($domaines AS $domaine){
                 $data_domaine = [
                     'domaine_id' => $domaine['code'],
                     'domaine' => $domaine['libelle'],
