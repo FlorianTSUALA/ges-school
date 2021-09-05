@@ -26,7 +26,7 @@ class PersonnelRepository extends BaseRepository{
 
         $results = [];            
         
-        foreach($type_personnels as $type_personnel)    {
+        foreach($type_personnels AS $type_personnel)    {
             $_data_type_personnel = [
                 'type_personnel_id' => $type_personnel['code'],
                 'type_personnel' => $type_personnel['libelle'],
@@ -63,7 +63,7 @@ class PersonnelRepository extends BaseRepository{
                 // 'salle_classe.libelle'=> 'classe', 
                 'type_personnel.libelle'=> 'fonction', 
                 // 'salle_classe.code'=> 'salle_classe_id', 
-                new Expression("concat(personnel.nom,' ',personnel.prenom) as nom_complet"),
+                new Expression("concat(personnel.nom,' ',personnel.prenom) AS nom_complet"),
                 // 'type_personnel.code' => 'type_personnel_id',
                 // 'type_personnel.libelle' => 'type_personnel',
                 // 'pays.id' => 'pays_id', 
@@ -107,7 +107,7 @@ class PersonnelRepository extends BaseRepository{
                 'salle_classe.libelle'=> 'classe', 
                 'type_personnel.libelle'=> 'fonction', 
                 'salle_classe.code'=> 'salle_classe_id', 
-                new Expression("concat(personnel.nom,' ',personnel.prenom) as nom_complet"),
+                new Expression("concat(personnel.nom,' ',personnel.prenom) AS nom_complet"),
                 'type_personnel.code' => 'type_personnel_id',
                 'type_personnel.libelle' => 'type_personnel',
                 'pays.id' => 'pays_id', 
@@ -147,7 +147,7 @@ class PersonnelRepository extends BaseRepository{
                 'personnel.nom'=> 'nom',
                 'personnel.prenom'=> 'prenom',
                 'type_personnel.libelle'=> 'fonction', 
-                new Expression("concat(personnel.nom,' ',personnel.prenom) as nom_complet"),
+                new Expression("concat(personnel.nom,' ',personnel.prenom) AS nom_complet"),
                 'type_personnel.code' => 'type_personnel_id',
                 'type_personnel.libelle' => 'type_personnel',
                 'pays.id' => 'pays_id', 

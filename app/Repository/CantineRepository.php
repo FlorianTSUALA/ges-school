@@ -9,7 +9,7 @@ use function Core\Helper\dd;
 use App\Model\AbonnementCantine;
 
 use Core\Repository\BaseRepository;
-use ClanCats\Hydrahon\Query\Sql\Func as F;
+use ClanCats\Hydrahon\Query\Sql\Func AS F;
 
 class CantineRepository extends BaseRepository{
     
@@ -51,7 +51,7 @@ class CantineRepository extends BaseRepository{
             ->join('parcours','parcours.eleve_id','=','eleve.id')
             ->join('salle_classe','parccours.salle_classe_id','=','salle_classe.id')
             ->where($day)
-            -> BETWEEN ('abonnement_cantine.date_debut'  AND 'abonnement_cantine.date_fin');
+            -> BETWEEN ('abonnement_cantine.date_debut'   AND 'abonnement_cantine.date_fin');
 
         }
        else {
@@ -60,7 +60,7 @@ class CantineRepository extends BaseRepository{
         ->join('parcours','parcours.eleve_id','=','eleve.id')
         ->join('salle_classe','parccours.salle_classe_id','=','salle_classe.id')
         ->where($day)
-        -> BETWEEN ('abonnement_cantine.date_debut'  AND 'abonnement_cantine.date_fin')
+        -> BETWEEN ('abonnement_cantine.date_debut'   AND 'abonnement_cantine.date_fin')
         ->where('salle_class.id','=','$salle_classe_id');
        
        }

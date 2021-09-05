@@ -30,7 +30,7 @@ class EnseignementRepository extends BaseRepository{
         ->where('visibilite', '=', 1)
         ->get();
 
-        foreach($classes as $classe){
+        foreach($classes AS $classe){
             
             $data_salles_classes = [];
             $salle_classes =  DBTable::getModel(DBTable::SALLE_CLASSE)->select(
@@ -43,7 +43,7 @@ class EnseignementRepository extends BaseRepository{
             ->where('classe_id', '=', $classe['id'])
             ->get();
 
-            foreach ($salle_classes as $salle_classe) {
+            foreach ($salle_classes AS $salle_classe) {
                 $tmp_salle_classe = [
                     'salle_classe_id' => $salle_classe['salle_classe_id'],
                     'salle_classe_code' => $salle_classe['salle_classe_code'],
@@ -113,7 +113,7 @@ class EnseignementRepository extends BaseRepository{
         ->where('visibilite', '=', 1)
         ->get();
 
-        foreach($classes as $classe){
+        foreach($classes AS $classe){
             $data_salle = [
                 'classe_id' => $classe['code'],
                 'classe' => $classe['libelle'],
@@ -180,7 +180,7 @@ class EnseignementRepository extends BaseRepository{
                 
                 'eleve.id' => 'eleve_id',
                 'eleve.code' => 'eleve_code',
-                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
             ])
         ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'classe.id', '=', 'parcours.classe_id')
@@ -211,7 +211,7 @@ class EnseignementRepository extends BaseRepository{
                 
                 'eleve.id' => 'eleve_id',
                 'eleve.code' => 'eleve_code',
-                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
             ])
         ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'classe.id', '=', 'parcours.classe_id')
@@ -227,7 +227,7 @@ class EnseignementRepository extends BaseRepository{
         $affectation_salle_eleve = [];
         $index = 0;
         $arr_index = [];
-        foreach($data_classes as $salle_classe){
+        foreach($data_classes AS $salle_classe){
             $arr_index[$salle_classe['salle_classe_id']] = $index;
             $affectation_salle_eleve[$index] = [];
             $affectation_salle_eleve[$index]['salle_classe_id'] = $salle_classe['salle_classe_id'];
@@ -238,7 +238,7 @@ class EnseignementRepository extends BaseRepository{
         }
 
         if(empty($data_classes) && !empty($eleve_affecte)){
-            // Alors on a des eleves qui ont été mal affectée
+            // Alors ON a des eleves qui ont été mal affectée
             //Faut changer leurs statut et le cas échéants leur retirer de 
             //affectation à une salle de classe.</> ou au deux. 
 
@@ -254,7 +254,7 @@ class EnseignementRepository extends BaseRepository{
 
        
 
-        foreach($eleve_affecte as $eleve){
+        foreach($eleve_affecte AS $eleve){
             $tmp = [];
             $tmp['eleve_id'] = $eleve['eleve_id'];
             $tmp['eleve_code'] = $eleve['eleve_code'];
@@ -320,7 +320,7 @@ class EnseignementRepository extends BaseRepository{
                 
                 'eleve.id' => 'eleve_id',
                 'eleve.code' => 'eleve_code',
-                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
             ])
         ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'classe.id', '=', 'parcours.classe_id')
@@ -336,7 +336,7 @@ class EnseignementRepository extends BaseRepository{
         $affectation_salle_eleve = [];
         $index = 0;
         $arr_index = [];
-        foreach($data_classes as $salle_classe){
+        foreach($data_classes AS $salle_classe){
             $arr_index[$salle_classe['salle_classe_id']] = $index;
             $affectation_salle_eleve[$index] = [];
             $affectation_salle_eleve[$index]['salle_classe_id'] = $salle_classe['salle_classe_id'];
@@ -347,7 +347,7 @@ class EnseignementRepository extends BaseRepository{
         }
 
         if(empty($data_classes) && !empty($eleve_affecte)){
-            // Alors on a des eleves qui ont été mal affectée
+            // Alors ON a des eleves qui ont été mal affectée
             //Faut changer leurs statut et le cas échéants leur retirer de 
             //affectation à une salle de classe.</> ou au deux. 
 
@@ -363,7 +363,7 @@ class EnseignementRepository extends BaseRepository{
 
        
 
-        foreach($eleve_affecte as $eleve){
+        foreach($eleve_affecte AS $eleve){
             $tmp = [];
             $tmp['eleve_id'] = $eleve['eleve_id'];
             $tmp['eleve_code'] = $eleve['eleve_code'];

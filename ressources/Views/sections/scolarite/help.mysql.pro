@@ -12,7 +12,7 @@ GROUP_CONCAT(DISTINCT country
         ORDER BY country)
 
 ********************************************************************/
-                    
+// ->where('annee_scolaire_id', '=', $annee_scolaire_id)                    
 
 $eleves = DBTable::getModel('eleve')
             ->select(

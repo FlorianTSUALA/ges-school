@@ -66,7 +66,7 @@ class ClubController extends \App\Controller\Admin\AppController
         $delete_title = $this->delete_title;
         $msg_delete = $this->msg_delete;
 
-        $eleves = (new EleveRepository() )->getInfoPerso();
+        $eleves = (new EleveRepository() )->getEleve();
 
         $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 

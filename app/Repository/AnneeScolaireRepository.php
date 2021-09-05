@@ -29,7 +29,7 @@ class AnneeScolaireRepository extends BaseRepository{
         }
     }
     
-    public function getAnneeScolaire($value, $tag = 'id', $what_select = 'all'){
+    public function getAnneeScolaire($value, $tag = 'id', $what_SELECT = 'all'){
         $model =  DBTable::getModel(DBTable::ANNEE_SCOLAIRE)
         ->select(['code'=>'id', 'libelle', 'debut_annee', 'fin_annee'])
         ->where('visibilite', '=', 1)

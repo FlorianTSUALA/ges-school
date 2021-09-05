@@ -58,6 +58,8 @@ class PensionClasseController extends AppController
                 'pension_classe.montant' => 'montant'
             ])
             ->where('pension_classe.visibilite', 1)
+            ->where('pension_classe.annee_scolaire_id', $annee_scolaire_id)
+            ->where('tranche_scolaire.annee_scolaire_id', $annee_scolaire_id)
             ->join('type_pension', 'pension_classe.type_pension_id', '=', 'type_pension.id')
             ->join('tranche_scolaire', 'pension_classe.tranche_scolaire_id', '=', 'tranche_scolaire.id')
             ->join('classe', 'pension_classe.classe_id', '=', 'classe.id')
@@ -79,7 +81,7 @@ class PensionClasseController extends AppController
         //Il peut survenir que l'on cree ou modifie une salle de classe
         $types_pensions = (DBTable::getModel('type_pension')->select(['id', 'paiement_en_tranche'])->where('visibilite', '=', 1)->get());
         $classes = (DBTable::getModel('classe')->select(['id'])->where('visibilite', '=', 1)->get());
-        $tranches_scolaires = (DBTable::getModel('tranche_scolaire')->select(['id'])->where('visibilite', '=', 1)->get());
+        $tranches_scolaires = (DBTable::getModel('tranche_scolaire')->select(['id'])->where('annee_scolaire_id', '=', $annee_scolaire_id)->where('visibilite', '=', 1)->get());
 
         foreach ($types_pensions as $type_pension)
         {
@@ -115,7 +117,7 @@ class PensionClasseController extends AppController
                         ->where('classe_id', '=', $classe['id'])
                         ->where('type_pension_id', $type_pension['id'])
                         ->where('annee_scolaire_id', $annee_scolaire_id)
-                        // ->where('visibilite', '=', 1)
+                        ->whereNull('tranche_scolaire_id')
                         ->exists();
                     
                     if(!$is_exists){
@@ -138,10 +140,12 @@ class PensionClasseController extends AppController
     public function modifier()
     {
         
-        $tranche_scolaire_id  = Request::getSecParam('tranche_scolaire_id');
-        $type_pension_id  = Request::getSecParam('type_pension_id');
-        $classe_id  = Request::getSecParam('classe_id');
-        $montant  = Request::getSecParam('montant');
+        $tranche_scolaire_id  = Request::getSecParam('tranche_scolaire_id', NULL);
+        $type_pension_id  = Request::getSecParam('type_pension_id', NULL);
+        $classe_id  = Request::getSecParam('classe_id', NULL);
+        $montant  = Request::getSecParam('montant', NULL);
+
+        $montant = ($montant === NULL) ? 0 : $montant;
 
         $data = [
             'tranche_scolaire_id'  => $tranche_scolaire_id, 
@@ -153,13 +157,16 @@ class PensionClasseController extends AppController
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
 
         {
-            PensionClasse::table()
+            $model = PensionClasse::table()
             ->update($data)
-            ->where('tranche_scolaire_id', $tranche_scolaire_id)
             ->where('type_pension_id', $type_pension_id)
             ->where('classe_id', $classe_id)
-            ->where('annee_scolaire_id', $annee_scolaire_id)
-            ->execute();
+            ->where('annee_scolaire_id', $annee_scolaire_id);
+
+            if(!is_null($tranche_scolaire_id))
+                $model = $model->where('tranche_scolaire_id', $tranche_scolaire_id);
+
+            $model->execute();
 
             $data[API::TAG_REPORT] = true;
             $data[API::TAG_DATA] = 'Enregistrée avec success';
@@ -179,16 +186,25 @@ class PensionClasseController extends AppController
 
         $model = PensionClasse::table()->select(
             [
-                'type_pension.id' => 'type_pension',
-                'classe.id' => 'classe',
-                'tranche_scolaire.id' => 'tranche_scolaire',
+                'pension_classe.type_pension_id' => 'type_pension',
+                'pension_classe.classe_id' => 'classe',
+                'pension_classe.tranche_scolaire_id' => 'tranche_scolaire',
                 'pension_classe.montant' => 'montant'
             ])
-            ->where('pension_classe.visibilite', 1)
-            ->where('pension_classe.annee_scolaire_id', $annee_scolaire_id)
             ->join('type_pension', 'pension_classe.type_pension_id', '=', 'type_pension.id')
             ->join('tranche_scolaire', 'pension_classe.tranche_scolaire_id', '=', 'tranche_scolaire.id')
-            ->join('classe', 'pension_classe.classe_id', '=', 'classe.id');
+            ->where('pension_classe.visibilite', 1)
+           ->where(
+                function($q) 
+                {
+                    $q->where(function($q) 
+                    {
+                        $q->where('tranche_scolaire.annee_scolaire_id', $this->session->get(S::ANNEE_SCOLAIRE));
+                        $q->orWhere('type_pension.paiement_en_tranche', E::NON);
+                    });
+                }
+            )
+            ->where('pension_classe.annee_scolaire_id', $annee_scolaire_id);
         
         if(!is_null($classe_id))       
             $model = $model->where('pension_classe.classe_id', $classe_id);

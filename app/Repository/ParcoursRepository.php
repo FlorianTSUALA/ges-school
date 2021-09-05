@@ -55,7 +55,7 @@ class ParcoursRepository extends BaseRepository{
                 
                 'eleve.id' => 'eleve_id',
                 'eleve.code' => 'eleve_code',
-                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
             ])
         ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'classe.id', '=', 'parcours.classe_id')
@@ -86,7 +86,7 @@ class ParcoursRepository extends BaseRepository{
                 
                 'eleve.id' => 'eleve_id',
                 'eleve.code' => 'eleve_code',
-                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
             ])
         ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'classe.id', '=', 'parcours.classe_id')
@@ -102,7 +102,7 @@ class ParcoursRepository extends BaseRepository{
         $affectation_salle_eleve = [];
         $index = 0;
         $arr_index = [];
-        foreach($salle_classes as $salle_classe){
+        foreach($salle_classes AS $salle_classe){
             $arr_index[$salle_classe['salle_classe_id']] = $index;
             $affectation_salle_eleve[$index] = [];
             $affectation_salle_eleve[$index]['salle_classe_id'] = $salle_classe['salle_classe_id'];
@@ -113,7 +113,7 @@ class ParcoursRepository extends BaseRepository{
         }
 
         if(empty($salle_classes) && !empty($eleve_affecte)){
-            // Alors on a des eleves qui ont été mal affectée
+            // Alors ON a des eleves qui ont été mal affectée
             //Faut changer leurs statut et le cas échéants leur retirer de 
             //affectation à une salle de classe.</> ou au deux. 
 
@@ -129,7 +129,7 @@ class ParcoursRepository extends BaseRepository{
 
        
 
-        foreach($eleve_affecte as $eleve){
+        foreach($eleve_affecte AS $eleve){
             $tmp = [];
             $tmp['eleve_id'] = $eleve['eleve_id'];
             $tmp['eleve_code'] = $eleve['eleve_code'];
@@ -199,7 +199,7 @@ class ParcoursRepository extends BaseRepository{
                 
                 'eleve.id' => 'eleve_id',
                 'eleve.code' => 'eleve_code',
-                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
             ])
         ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'classe.id', '=', 'parcours.classe_id')
@@ -230,7 +230,7 @@ class ParcoursRepository extends BaseRepository{
                 
                 'eleve.id' => 'eleve_id',
                 'eleve.code' => 'eleve_code',
-                new Expression("concat(eleve.nom,' ',eleve.prenom) as nom_complet"),
+                new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
             ])
         ->join('eleve', 'eleve.id', '=', 'parcours.eleve_id')
         ->join('classe', 'classe.id', '=', 'parcours.classe_id')
@@ -246,7 +246,7 @@ class ParcoursRepository extends BaseRepository{
         $affectation_salle_eleve = [];
         $index = 0;
         $arr_index = [];
-        foreach($salle_classes as $salle_classe){
+        foreach($salle_classes AS $salle_classe){
             $arr_index[$salle_classe['salle_classe_id']] = $index;
             $affectation_salle_eleve[$index] = [];
             $affectation_salle_eleve[$index]['salle_classe_id'] = $salle_classe['salle_classe_id'];
@@ -257,7 +257,7 @@ class ParcoursRepository extends BaseRepository{
         }
 
         if(empty($salle_classes) && !empty($eleve_affecte)){
-            // Alors on a des eleves qui ont été mal affectée
+            // Alors ON a des eleves qui ont été mal affectée
             //Faut changer leurs statut et le cas échéants leur retirer de 
             //affectation à une salle de classe.</> ou au deux. 
 
@@ -273,7 +273,7 @@ class ParcoursRepository extends BaseRepository{
 
        
 
-        foreach($eleve_affecte as $eleve){
+        foreach($eleve_affecte AS $eleve){
             $tmp = [];
             $tmp['eleve_id'] = $eleve['eleve_id'];
             $tmp['eleve_code'] = $eleve['eleve_code'];
@@ -308,7 +308,7 @@ class ParcoursRepository extends BaseRepository{
         ->get();
 
         $index = 0;
-        foreach($classes as $classe){
+        foreach($classes AS $classe){
             $affectation_classe_eleve[$index++] = $this->getAffectationEleveByClasse($classe['id'], $annee_scolaire_id);    
         }
 
@@ -317,6 +317,6 @@ class ParcoursRepository extends BaseRepository{
 
     
 
-    // where eleve.id  NOT IN
-    // (select  parcours.eleve_id from parcours)
+    // WHERE eleve.id  NOT IN
+    // (SELECT  parcours.eleve_id FROM parcours)
 }

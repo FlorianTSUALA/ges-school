@@ -88,7 +88,7 @@ class BiblioController extends AppController
         $exemplaire_disponibles = (new DocumentRepository())->getExemplaire($disponible = true);
         $exemplaires = (new DocumentRepository())->getExemplaire();
         $etat_documents = (new DocumentRepository())->getEtatDocument();
-        $eleves = (new EleveRepository() )->getInfoPerso();
+        $eleves = (new EleveRepository() )->getEleve();
         $this->render('sections.biblio.emprunt_exemplaire', compact('route', 'domaines', 'eleves', 'exemplaires', 'exemplaire_disponibles', 'documents', 'etat_documents'));
     }
 

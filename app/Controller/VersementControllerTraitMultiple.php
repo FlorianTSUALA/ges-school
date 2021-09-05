@@ -18,7 +18,6 @@ use App\Model\AbonnementCantine;
 use App\Model\AbonnementActivite;
 use App\Repository\EleveRepository;
 use App\Repository\PrixPaiementRepository;
-use App\Repository\AnneeScolaireRepository;
 
 trait VersementControllerTraitMultiple
 {

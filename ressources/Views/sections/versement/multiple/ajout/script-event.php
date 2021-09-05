@@ -415,18 +415,15 @@ use App\Model\TypePension;
             // let type_pension_info = item.type_pension 
             let classe_info = type_pension.classe_info
             for (type_pension_id in type_pension) {
+                console.log('type_pension_id')
+                console.log(type_pension_id)
                 let tranche_info = type_pension['' + type_pension_id].tranche_info
                 let type_pension_info = type_pension['' + type_pension_id].type_pension_info
                 console.log(type_pension['' + type_pension_id])
                 items['' + type_pension_id]['reduction'] = 0
                 items['' + type_pension_id]['paiement_en_tranche'] = type_pension_info.paiement_en_tranche
 
-                if (tranche_info.length == 0) {
-                    $('#COL_TRANCHE_SELECT_' + type_pension_id).val(null)
-                    $('#COL_TRANCHE_SELECT_' + type_pension_id).empty()
-                    continue
-                }
-
+           
                 if (type_pension_info.paiement_en_tranche == '<?= E::OUI ?>') {
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).val(null)
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).empty()
@@ -465,10 +462,10 @@ use App\Model\TypePension;
                         items['' + type_pension_id]['montant'] = 0
                         $('#COL_TRANCHE_NUMERIC_' + type_pension_id).prop("readonly", true);
                     }
-                    items['' + type_pension_id]['montant_brut'] = 0
                     items['' + type_pension_id]['mensualite'] = []
                     items['' + type_pension_id]['multiplicateur'] = 0
-                    items['' + type_pension_id]['montant_net'] = items['' + type_pension_id]['montant'] * items['' + type_pension_id]['multiplicateur'] - items['' + type_pension_id]['reduction']
+                    items['' + type_pension_id]['montant_brut'] = items['' + type_pension_id]['montant'] * items['' + type_pension_id]['multiplicateur']
+                    items['' + type_pension_id]['montant_net'] = items['' + type_pension_id]['montant_brut'] - items['' + type_pension_id]['reduction']
                     $('#COL_TRANCHE_NUMERIC_' + type_pension_id).val(items['' + type_pension_id]['multiplicateur'])
                 }
 
@@ -484,7 +481,7 @@ use App\Model\TypePension;
                 $('#COL_REDUCTION_' + type_pension_id).val(items['' + type_pension_id]['reduction'])
                 $('#COL_RECAPITULATIF_' + type_pension_id).val(items['' + type_pension_id]['montant_net'])
                 console.log(type_pension_id)
-                console.log(items['' + type_pension_id]['montant_net'])
+            console.log(items['' + type_pension_id]['montant_net'])
             }
         }
     }
