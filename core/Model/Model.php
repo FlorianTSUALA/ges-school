@@ -108,7 +108,7 @@ class Model
 
     public function genCode(){
 		//Sleep because we must want that date must be unique
-		usleep ( 1 );// sleep 1 micro second 
+		usleep ( 3 );// sleep 1 micro second 
 		//Date('u') get current micro second
 		//Date('U') get second since 1970
         return strtoupper(substr( $this->class, 0, 4)."_".Date('U').Date('u'));

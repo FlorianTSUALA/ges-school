@@ -4,12 +4,9 @@ namespace App\Controller;
 
 use App\Helpers\S;
 use App\Model\Mois;
-use Core\Table\Table;
 use App\Model\DBTable;
-use App\Helpers\Helpers;
 use Core\Session\Request;
 use App\Helpers\HTMLHelper;
-use App\Model\AnneeScolaire;
 use function Core\Helper\dd;
 use Core\HTML\Form\FormModel;
 use App\Model\TrancheScolaire;

@@ -38,11 +38,11 @@ class PrixPaiementRepository extends BaseRepository{
                     'type_pension' => $type_pension['libelle'],
                     'paiement_en_tranche' => $type_pension['paiement_en_tranche'],
                 ];
-                $tranches_scolaires =  DBTable::getModel(DBTable::PENSION_CLASSE)->select(
+                $pension_classe[$classe['code']]['type_pension'][$type_pension['code']]['tranche_info'] =  DBTable::getModel(DBTable::PENSION_CLASSE)->select(
                 [   
                     'tranche_scolaire.libelle' => 'tranche_scolaire_libelle',
                     'tranche_scolaire.code' => 'tranche_scolaire_code',
-                    'montant' => 'montant',
+                    'pension_classe.montant' => 'montant',
                     'pension_classe.code' => 'id',
                     'type_pension.paiement_en_tranche' => 'paiement_en_tranche',
                 ])
@@ -63,9 +63,7 @@ class PrixPaiementRepository extends BaseRepository{
                     }
                 )
                 ->where('pension_classe.visibilite', '=', 1)
-                ->get();
-                
-                $pension_classe[$classe['code']]['type_pension'][$type_pension['code']]['tranche_info'] = $tranches_scolaires??[];
+                ->get()??[];
             }
         }
         return $pension_classe;

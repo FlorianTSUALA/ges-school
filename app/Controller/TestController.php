@@ -9,6 +9,7 @@ use Core\Model\Model;
 use App\Model\DBTable;
 use App\Model\Parcours;
 use App\Helpers\Helpers;
+use App\Helpers\S;
 use Core\Helper\DBHelper;
 use Core\Session\Request;
 
@@ -36,7 +37,7 @@ use Core\HTML\MessageFlash\FlashMessagesStatic;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use App\Repository\AffectationSalleClasseRepository;
-
+use App\Repository\PrixPaiementRepository;
 
 class TestController extends AppController
 {
@@ -227,6 +228,8 @@ class TestController extends AppController
 
     public function testSQL()
     {
+
+      dd((new PrixPaiementRepository())->getPensionGroupByClasse($this->session->get(S::ANNEE_SCOLAIRE)));
 
       $date = new \DateTime('now');
 
