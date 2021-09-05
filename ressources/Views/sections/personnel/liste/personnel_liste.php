@@ -12,15 +12,25 @@ $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::ba
 $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/vendors/css/forms/selects/select2.min.css">' . "\n";
 // $include_res_header .= Helpers::dataTableResponsibleSearchBar() . "\n";
 
-$include_res_header .= '
-                        <style>
-                            #menu .list-group a.list-group-item:hover{
-                                background-color: #3bafda;
-                                color: white;
-                            }
-                        </style>
+$include_res_header .=  '<style>
+                        
 
-' . "\n";
+                        a.list-group-item.active{
+                            background:#f5a663;
+                            border-color:#f5a663;
+                            }
+
+                            html body a {
+                                color:black;
+                            }
+                            
+  
+                        </style>
+                         
+                        
+                    '. "\n";
+
+
 $include_res_header .= '' . "\n";
 
 $include_res_footer = '' . "\n";
@@ -97,11 +107,11 @@ $table_header = "
                                         <h4 class="card-title" id="heading-prev-next">Enregistrement personnel</h4><small class="text-muted">Consultation, modification et suppression du personnel.</small>
                                     </div>
                                     <div class="p-0 mr-1   ">
-                                        <a class="btn btn-primary"  href="<?= URL::link('ajout_personnel') ?>"><i class="ft-plus white"></i> Nouveau Personnel</a>
+                                        <a class="btn btn-warning btn-block "  href="<?= URL::link('ajout_personnel') ?>"><i class="ft-plus white"></i> Nouveau Personnel</a>
                                     </div>
                                     <div class="p-0   ">
                                         <span class="dropdown">
-                                            <button disabled class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-settings mr-1"></i>Rapport</button>
+                                            <button class="btn btn-warning btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="icon-settings mr-1"></i>Rapport</button>
                                             <span class="dropdown-menu arrow  dropdown-menu-left">
                                                 <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel </a>
                                                 <a href="#" class="dropdown-item"><i class="fa fa-file-word-o"></i> Word</a>

@@ -431,8 +431,8 @@ class EleveRepository extends BaseRepository{
                 LEFT  JOIN  annee_scolaire ON annee_scolaire.id = parcours.annee_scolaire_id
                 WHERE annee_scolaire.id = $annee_scolaire_id $clause_classe_filter
              )  InfoParcours
-            WHERE InfoEleve.id = InfoParcours.id
-            ORDER BY InfoParcours.date_inscription
+            where InfoEleve.id = InfoParcours.id
+            order by nom_complet
         ";
         $result = $this->query($req);
         return $this->toObject($result);

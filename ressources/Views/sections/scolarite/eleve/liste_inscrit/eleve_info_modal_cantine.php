@@ -9,7 +9,7 @@ use App\Helpers\Helpers;
 <div class="modal  animated zoomIn  text-left" id="eleve_modal_cantine" tabindex="-1" role="dialog" aria-labelledby="myModalLabel17" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="background: #f5a663;">
                 <h4 class="modal-title" id="myModalLabel17"></h4>
                 
                 <h4 class="modal-title" id="myModalLabel17" style="text-align:center">Informations relarives à la cantine de l'élève</h4>
@@ -23,8 +23,8 @@ use App\Helpers\Helpers;
                             <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
                                 <div >
                                     <!-- ETAPE 01 -->
-                                    <div id="heading-etape-01" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01"  aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong id ="nom_complet"></strong></a>
+                                    <div id="heading-etape-01" role="tab" class="card-header border-bottom-black border-bottom-warning">
+                                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01"  aria-controls="accordion-etape-01" class="text-uppercase black collapsed"><strong id ="nom_complet"></strong></a>
                                     </div>
 
                                     <div class="content-detached content-left">

@@ -16,42 +16,7 @@ use App\Model\Eleve;
     $include_res_header .= '<link rel="stylesheet" type="text/css" href="'.URL::base().'assets/vendors/css/ui/jquery-ui.min.css">'. "\n";
     $include_res_header .= '<link rel="stylesheet" type="text/css" href="'.URL::base().'assets/vendors/css/forms/selects/select2.min.css">'. "\n";
     $include_res_header .= Helpers::dataTableResponsibleSearchBar() . "\n";
-    $include_res_header .=  '<style>
-                        #menu ul, #menu li {list-style-type: none;}
-
-                        #menu div div li a, #menu  div li a, #menu  li{
-                            font-size: 100% !important;
-                            line-height: 60% !important;
-                        }
-
-                        #menu div div li a, #menu div div li {
-                            font-size: 100% !important;
-                            line-height: 50% !important;
-                        }
-
-                        #menu li a:hover {
-                            background-color: aliceblue;
-                        }
-
-                        #menu li :active:hover {
-                            background-color: #fff;
-                            color: #3BAFDA;
-                        }
-
-                        #menu li a:active {
-                            background-color: #3BAFDA;
-                            color: #fff;
-                        }
-
-                        li.select2-results__option strong.select2-results__group:hover {
-                            background-color: #ddd;
-                            cursor: pointer;
-                        }
-
-                        </style>
-
-
-                    ';
+  
 
     $include_res_footer = ''. "\n";
     $include_res_footer .= '<script src="'.URL::base().'assets/app-assets/vendors/js/tables/jquery.dataTables.min.js"></script>'. "\n";
@@ -92,52 +57,60 @@ $include_footer_script = ob_get_clean();
 
 
 <div class="app-content content">
+<div class="content-wrapper">
+
+  <div class="content-header row">
+            <div class="content-header-left col-md-6 col-12">
+                <div class="row breadcrumbs-top">
+                    <div class="breadcrumb-wrapper col-12">
+                        <h3 class="content-header-title">Tableau de versements </h3>
+                        <small class="text-muted">Consultation, Génération de reçus, filtré par période.</small>
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="<?= URL::link('accueil') ?>">Accueil</a>
+                            </li>
+                            
+                            <li class="breadcrumb-item active">Versements
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+            <div class="content-header-right col-md-6 col-12">
+                <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+                    <div class="btn-group" role="group">
+                    </div>
+                        <a class="btn btn-outline-info" href="<?= URL::link('versement_liste') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Liste des versements</a>
+                    <a class="btn btn-outline-info" href="<?= URL::link('versement_totale') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
+                </div>
+            </div>
+            <div class="content-header-lead col-12 mt-2">
+            </div>
+        </div>
         <div>
-        <!-- <div class="content-detached "> -->
+
             <div class="content-body">
                 <section class="row">
                     <div class="col-12">
                         <div class="card">
 
-                            <div class="card-header my-0 pb-0">
-                                <div class="d-flex">
-                                    <div class="p-0  col-md-3 mr-auto ">
-                                        <h4 class="card-title" id="heading-prev-next">Tableu de versements</h4>
-                                        <small class="text-muted">Consultation, Generation de recus, filtre par periode.</small>
-                                    </div>
-                                    <div class="p-0 mr-1   ">
-                                        <button class="btn btn-primary " onclick="window.location.href='<?= URL::link('versement') ?>'"  >
-                                            <i class="ft-plus white"></i> Nouveau versement
-                                        </button>
-                                    </div>
                                     <div class="p-0 mr-1 ">
                                         <fieldset class="input-group">
-                                            <!-- <div class="input-group-prepend">
-                                            <span class="input-group-text">L &nbsp; <span class="fa fa-calendar"></span></span>
-                                            </div> -->
+                                
                                             <input id="localization" type='text' class="form-control form-control-sm localeRange" />
                                             <div class="input-group-append">
-                                            <span class="input-group-text">Date &nbsp; <span class="fa fa-calendar"></span></span>
+                                            <span class="input-group-text">Date   <span class="fa fa-calendar"></span></span>
                                             </div>
                                             <!-- <small class="text-muted">Allows you to provide.</small> -->
                                         </fieldset>
                                     </div>
 
-                                    <div class="p-0   ">
-                                        <span class="dropdown">
-                                            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled><i class="icon-settings mr-1"></i>Rapport</button>
-                                            <span class="dropdown-menu arrow  dropdown-menu-left">
-                                                <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel </a>
-                                                <a href="#" class="dropdown-item"><i class="fa fa-file-word-o"></i> Word</a>
-                                                <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF </a>
-                                            </span>
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="d-flex  mt-1 ">
+                          
+                                 
+                                 
+                                  <div class="d-flex  mt-1 ">
                                 </div>
 
-                            </div>
+
 
                               <?php if (isset($_SESSION['message'])){
                                   $message=$_SESSION['message'];
@@ -153,7 +126,7 @@ $include_footer_script = ob_get_clean();
                                        <table  id="datatable" class="table table-bordered table-striped table-hover table-sm">
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>N</th>
                                                    
                                                     <th>Montant</th>
                                                     <th>Réduction</th>
@@ -256,9 +229,15 @@ $include_footer_script = ob_get_clean();
                                                      ?>
 
                                                   </td>
-                                                  <td style="width: 13%;">
+                                                  <td style="width: 15%;">
 
-                                                    <a href="javascript:void(0)" data-action="action-voir" data-toggle="modal" data-target="#details_facture<?php echo $facture['id'] ?>" title="voir" style="color: blue;"><i class="ft-eye"></i></a> &nbsp;&nbsp;&nbsp;
+                                                  <!-- <div class="btn-group" role="group" aria-label="Basic example"> '+
+                                '      <button type="button" data-action="action-voir" class=" btn_read_data btn btn-sm btn-blue" title="voir"><i class="ft-eye"></i></button> '+
+                                '      <button type="button" data-action="action-modifier" class=" btn_update_data btn btn-sm btn-green" title="modifier"><i class="ft-edit-2"></i></button> '+
+                                '      <button type="button" data-action="action-supprimer" class=" btn_delete_data btn btn-sm btn-danger" title="supprimer"><i class="ft-trash"></i></button> '+
+                                '  </div>' -->
+                                                  
+                                                    <a href="javascript:void(0)" data-action="action-voir" data-toggle="modal" data-target="#details_facture<?php echo $facture['id'] ?>" class=" btn_read_data btn btn-sm btn-blue" title="voir"><i class="ft-eye"></i></a>  
 
                                                     <div class="modal fade" id="details_facture<?php echo $facture['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                       <div class="modal-dialog modal-dialog modal-lg" role="document">
@@ -563,7 +542,7 @@ $include_footer_script = ob_get_clean();
                                                                         </div>
                                                                         <div class="row">
                                                                             <div class="col-md-6 col-sm-12 text-center text-md-left">
-                                                                                <p class="lead">Mode de paiement:&nbsp;<strong id="recap-mode_paiement"><?= $mode_paiement??"";?></strong></p>
+                                                                                <p class="lead">Mode de paiement: <strong id="recap-mode_paiement"><?= $mode_paiement??"";?></strong></p>
                                                                                 <div class="row">
                                                                                     <div class="col-md-8">
                                                                                         <table class="table table-borderless table-sm">
@@ -621,7 +600,7 @@ $include_footer_script = ob_get_clean();
 
                                                           </div>
                                                           <div class="modal-footer">
-                                                            <button type="button" class="btn btn-info" style=" border: none;" data-dismiss="modal">Imprimer</button> &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <button type="button" class="btn btn-info" style=" border: none;" data-dismiss="modal">Imprimer</button>  
                                                             <button type="button" class="btn btn-secondary" style="background: #f5a663; border: none;" data-dismiss="modal">Fermer</button>
                                                           </div>
                                                         </div>
@@ -629,10 +608,10 @@ $include_footer_script = ob_get_clean();
                                                     </div>
 
 
-                                                    <a href="<?php echo  URL::base().'versement/modification/'.$facture['id'] ?>" data-action="action-modifier" class="" title="modifier" style="color: green;"><i class="ft-edit-2"></i></a>&nbsp;&nbsp;&nbsp;
+                                                    <a href="<?php echo  URL::base().'versement/modification/'.$facture['id'] ?>" data-action="action-modifier" title="modifier" class=" btn_update_data btn btn-sm btn-green"><i class="ft-edit-2"></i></a> 
 
 
-                                                    <a href="javascript:void(0)" data-action="action-supprimer" class="" title="supprimer" data-toggle="modal" data-target="#suppression_facture<?php echo $facture['id'] ?>" style="color: red;"><i class="ft-trash"></i></a>
+                                                    <a href="javascript:void(0)" data-action="action-supprimer"  title="supprimer" data-toggle="modal" data-target="#suppression_facture<?php echo $facture['id'] ?>" class=" btn_delete_data btn btn-sm btn-danger"><i class="ft-trash"></i></a>
 
                                                     <div class="modal fade" id="suppression_facture<?php echo $facture['id'] ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
                                                       <div class="modal-dialog modal-dialog modal-lg modal-dialog-centered" role="document">
@@ -661,7 +640,7 @@ $include_footer_script = ob_get_clean();
                                             </tbody>
                                             <tfoot>
                                                 <tr>
-                                                  <th>#</th>
+                                                  <th>N</th>
                                                  
                                                   <th>Montant</th>
                                                   <th>Réduction</th>
@@ -683,7 +662,8 @@ $include_footer_script = ob_get_clean();
 
 
     </div>
-</div>
+    </div>
+    </div>
 
 
 

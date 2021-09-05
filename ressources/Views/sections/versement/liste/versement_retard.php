@@ -110,7 +110,7 @@ $include_footer_script = ob_get_clean();
                                         <small class="text-muted">Consultation, Generation de recus, filtre par periode.</small>
                                     </div>
                                     <div class="p-0 mr-1   ">
-                                        <button class="btn btn-primary " onclick="window.location.href='<?= URL::link('versement') ?>'"  >
+                                        <button class="btn btn-warning btn-block " onclick="window.location.href='<?= URL::link('versement_retard') ?>'"  >
                                             <i class="ft-plus white"></i> Nouveau versement
                                         </button>
                                     </div>
@@ -134,7 +134,7 @@ $include_footer_script = ob_get_clean();
 
                                     <div class="p-0   ">
                                         <span class="dropdown">
-                                            <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" disabled><i class="icon-settings mr-1"></i>Rapport</button>
+                                            <button class="btn btn-warning btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="icon-settings mr-1"></i>Rapport</button>
                                             <span class="dropdown-menu arrow  dropdown-menu-left">
                                                 <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel </a>
                                                 <a href="#" class="dropdown-item"><i class="fa fa-file-word-o"></i> Word</a>
@@ -170,7 +170,8 @@ $include_footer_script = ob_get_clean();
                                             </thead>
                                             <tbody>
 
-                                            <?php $comp=0; $eleve_retards=Facture::get_retard_paie_scolarite(); 
+                                            <?php $comp=0; $eleve_retards = Facture::get_retard_paie_scolarite();
+                                            
                                                   foreach ($eleve_retards as $eleve_retard): ?>
                                               <tr>
                                                   <td><?php $comp++; echo $comp; ?></td>

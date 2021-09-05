@@ -28,6 +28,7 @@ use App\Repository\ClasseRepository;
 use App\Repository\CantineRepository;
 use App\Repository\DocumentRepository;
 use App\Model\AffectationClasseMatiere;
+use App\Model\Facture;
 use App\Repository\PersonnelRepository;
 use App\Repository\VersementRepository;
 use ClanCats\Hydrahon\Query\Expression;
@@ -260,6 +261,11 @@ class TestController extends AppController
       // dd($pension_classe);
       dd(json_encode(DBTable::getModel('mois')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get()));
       // dd((new VersementRepository )->getInfoEleveActivite(1,2) );
+      dd(Facture::get_paie_facture_activite(4));
+    //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
+    
+    //dd((new VersementRepository )->getInfoEleveActivite(1,2) );
+  
     }
 
     public function testpdf()
@@ -283,6 +289,7 @@ class TestController extends AppController
         $filter_by = 'ALL';
         $code = '';
         $start_date = '2022-01-01';
+        $date = 
         // $end_date = '';
         
         $cantine_repository = new CantineRepository();

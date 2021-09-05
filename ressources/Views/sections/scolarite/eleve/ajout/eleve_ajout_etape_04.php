@@ -9,7 +9,7 @@ use Core\Routing\URL;
 <fieldset>
     <div class="row">
         <div class="col-md-12">
-            <h4 class="form-section text-warning" align="center">
+            <h4 class="form-section " align="center">
                 <strong>Vérification des informations saisies</strong>
             </h4>
         </div>
@@ -20,8 +20,8 @@ use Core\Routing\URL;
             <div id="accordionWrap1" role="tablist" aria-multiselectable="true">
                 <div class="card collapse-icon panel mb-0 box-shadow-0 border-0">
                     <!-- ETAPE 01 -->
-                    <div id="heading-etape-01" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01" aria-expanded="false" aria-controls="accordion-etape-01" class="text-uppercase blue collapsed"><strong>Infomations personnelles sur l'élève</strong></a>
+                    <div id="heading-etape-01" role="tab" class="card-header border-bottom-black border-bottom-warning">
+                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-01" aria-expanded="false" aria-controls="accordion-etape-01" class="text-uppercase black collapsed"><strong>Infomations personnelle sur l'élève</strong></a>
                     </div>
 
                     <div id="accordion-etape-01" role="tabpanel" aria-labelledby="heading-etape-01" class="collapse" aria-expanded="true" style="">
@@ -182,8 +182,8 @@ use Core\Routing\URL;
                     </div>
 
                     <!-- ETAPE 02 -->
-                    <div id="heading-etape-02" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-02" aria-expanded="false" aria-controls="accordion-etape-02" class="text-uppercase blue collapsed"><strong>Dossier parental </strong></a>
+                    <div id="heading-etape-02" role="tab" class="card-header border-bottom-black border-bottom-warning">
+                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-02" aria-expanded="false" aria-controls="accordion-etape-02" class="text-uppercase black collapsed"><strong>Dossier parental </strong></a>
                     </div>
 
                     <div id="accordion-etape-02" role="tabpanel" aria-labelledby="heading-etape-02" class="collapse" aria-expanded="true" style="">
@@ -492,8 +492,8 @@ use Core\Routing\URL;
 
 
                     <!-- ETAPE 03 -->
-                    <div id="heading-etape-04" role="tab" class="card-header border-bottom-blue border-bottom-warning">
-                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-04" aria-expanded="false" aria-controls="accordion-etape-04" class="text-uppercase blue collapsed"><strong>Dossier médical</strong></a>
+                    <div id="heading-etape-04" role="tab" class="card-header border-bottom-black border-bottom-warning">
+                        <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-04" aria-expanded="false" aria-controls="accordion-etape-04" class="text-uppercase black collapsed"><strong>Dossier médical</strong></a>
                     </div>
 
                     <div id="accordion-etape-04" role="tabpanel" aria-labelledby="heading-etape-04" class="collapse" aria-expanded="false" style="">

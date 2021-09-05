@@ -3617,6 +3617,13 @@ fieldset:disabled a.btn
     pointer-events: none;
 }
 
+.btn-pegal
+{
+    color: #fff;
+    border-color: #967adc; 
+    background-color: #967adc;
+}
+
 .btn-primary
 {
     color: #fff;
@@ -4067,6 +4074,8 @@ fieldset:disabled a.btn
     -webkit-box-shadow: 0 0 0 .2rem rgba(55, 188, 155, .5);
             box-shadow: 0 0 0 .2rem rgba(55, 188, 155, .5);
 }
+
+#f5a663
 
 .btn-outline-info
 {
