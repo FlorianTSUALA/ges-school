@@ -18,28 +18,23 @@ include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
 
 
 <script> 
-  var code = ''
-  var filter_by = 'ALL'
-
   let msg  = 'Bienvenue à la section qui liste de tous les élèves de l\'établissement de toutes les années confondues'
   block_notification(msg)
-
-    function redirectTo(id = false){
-        id = (id == false) ? $('#recap-id').text(): id;
-        location.href = '<?= URL::link('eleve_modifier') ?>'+id
-    }
-
-
+  
+  var filter_by = 'ALL'
+  var date = '<?= Helpers::today() ?>'
+  var table
+ 
   function init_data_table() {
         // $('#table-eleve').append('<caption style="caption-side: top-right">Table caption</caption>');
 
-          table = $('#table-versement1').DataTable({
+          table = $('#table-recap_versement_journalier').DataTable({
               //"serverSide": true,
               //Server-side processing is useful when working with large data sets (typically >50'000 records) as it means a database engine can be used to perform the sorting etc calculations - operations that modern database engines are highly optimised for, allowing use of DataTables with massive data sets (millions of rows).
               ajax:{
-                  url: '<?= URL::link(' versement_api_info') ?>',
+                  url: '<?= URL::link('facture_api_info') ?>',
                   data: function(data){
-                      data.code =  code,
+                      data.date =  date,
                       data.filter_by =  filter_by
                   } ,
                   type: 'POST'
@@ -50,6 +45,8 @@ include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
               scrollX:        true,
               scrollCollapse: true,
               // paging:         false,
+
+            
               fixedColumns: true,
               "columnDefs": [
                 {
@@ -60,32 +57,13 @@ include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
                   "class": "index",
                    
                 },      
-                
-                {
-                  "targets": 2,
-                  width: '10%', 
-                },
-                
-                {
-                  "targets": -2,
-                  width: '2%', 
-                  "data": null,
-                  "render": function(data, type, full, meta){ 
-                      // console.log(data);
-                      function _calculateAge(birthday) { // birthday is a date
-                          var ageDifMs = Date.now() - birthday.getTime();
-                          var ageDate = new Date(ageDifMs); // miliseconds from epoch
-                          return Math.abs(ageDate.getUTCFullYear() - 1970);
-                      }
-                      return _calculateAge(new Date(data))
-                    }
-                },
+            
                 {
                   "targets": -1,
                   width: '7%', 
                   "data": null,
                   "render": function(data, type, full, meta){ 
-                      // console.log(data);
+                       console.log(data);
 
                       //       <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_read_data btn btn-sm btn-blue"><i class="ft-eye"></i></button>
                       //      <button data-id="'. $model[FrequentlyReapeat::CODE] .'" type="button" class=" btn_update_data btn btn-sm btn-green"><i class="ft-edit-2"></i></button>

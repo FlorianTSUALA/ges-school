@@ -18,7 +18,7 @@ use ClanCats\Hydrahon\Query\Expression as Ex;
 
 class VersementController extends \App\Controller\Admin\AppController
 {
-    use VersementControllerTraitInscription, VersementControllerTraitScolarite, VersementControllerTraitMultiple , FactureControllerTraitCRUD;
+    use VersementControllerTraitInscription, VersementControllerTraitScolarite, VersementControllerTraitMultiple;
 
     public function __construct()
     {

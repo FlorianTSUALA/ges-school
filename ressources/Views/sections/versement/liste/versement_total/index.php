@@ -46,13 +46,23 @@ $include_res_footer .= "";
 ob_start();
 // include 'versement_detail_modal-script.php';
 // include 'versement_liste-script_new.php';
-// include 'index-script.php';
+ include 'index-script.php';
 $include_footer_script = ob_get_clean();
 
 $table_header = "
                     <tr>
                         <th style=\"width: 5px;\">N°</th>
                        
+                        <th class=\"word-wrap;\">total</th>
+                        <th style=\"width: 5px;\">Action</th>
+                    </tr>
+";
+
+$table_header2 = "
+                    <tr>
+                        <th style=\"width: 5px;\">N°</th>
+                       
+                        <th class=\"word-wrap;\">Activité</th>
                         <th class=\"word-wrap;\">total</th>
                         <th style=\"width: 5px;\">Action</th>
                     </tr>
@@ -90,7 +100,7 @@ $table_header = "
                     <div class="btn-group" role="group">
                     </div>
                         <a class="btn btn-outline-info" href="<?= URL::link('versement_liste') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Liste des versements</a>
-                    <a class="btn btn-outline-info" href="<?= URL::link('versement_totale') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
+                    <a class="btn btn-outline-info" href="<?= URL::link('facture_totale') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
                 </div>
             </div>
             <div class="content-header-lead col-12 mt-2">
@@ -104,11 +114,20 @@ $table_header = "
                     <div class="card-body">
                         <!-- Task List table -->
                         <div class="table-responsive-sm" >
-                            <table id="table-versement1"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
+                            <table id="table-recap_versement_journalier"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
                             <!-- <table id="table-eleve" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle"> -->
                                 <thead> <?= $table_header ?> </thead>
                                 <tbody> </tbody>
                                 <tfoot> <?= $table_header ?> </tfoot>
+                            </table>
+                        </div>
+
+                        <div class="table-responsive-sm" >
+                            <table id="table-recap_versement_journalier_activite"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
+                            <!-- <table id="table-eleve" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle"> -->
+                                <thead> <?= $table_header2 ?> </thead>
+                                <tbody> </tbody>
+                                <tfoot> <?= $table_header2 ?> </tfoot>
                             </table>
                         </div>
                     </div>

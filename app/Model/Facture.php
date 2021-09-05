@@ -52,7 +52,9 @@ class Facture extends Model implements FrequentlyReapeat
     public static function getColumnsomme()
     {
         $columns = '';
+        $columns .= '{ "data": "id" },';
         $columns .= '{ "data": "total" },';;
+        $columns .= '{ "data": null }';
         return $columns;
     }
 
@@ -134,111 +136,7 @@ class Facture extends Model implements FrequentlyReapeat
 
     }
     
-// somme des paies
 
-  public static function get_paie_facture_total($personnel_id, $date = Null ){
-
-    if($date == NULL){
-      $date = new \DateTime('now');
-      $date =  $date->format('Y-m-d'); 
-    }
-    $req =
-    " SELECT sum(facture.montant) as total
-      from facture
-      where facture.visibilite = 1  and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
-   
-    ";
-      $result = (new self)->query($req);
-      return (new self)->toObject($result);
-
-  }
-
-  public static function get_paie_facture_activite($personnel_id, $date = Null ){
-
-    if($date == NULL){
-      $date = new \DateTime('now');
-      $date =  $date->format('Y-m-d'); 
-    }
-       $req =
-       " SELECT sum(abonnement_detail.total) as total, activite.libelle 
-       from abonnement_activite 
-       INNER JOIN facture on facture.id = abonnement_activite.facture_id
-       INNER JOIN abonnement_detail on abonnement_activite.id = abonnement_detail.abonnement_id
-       INNER JOIN activite on activite.id = abonnement_activite.activite_id
-       where facture.visibilite = 1  and abonnement_detail.type_abonnement = 'ACTIVITE' and facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
-       group by activite.libelle 
-      ";
-
-      $result = (new self)->query($req);
-      return (new self)->toObject($result);
-  }
-
-  public static function get_paie_facture_cantine($personnel_id, $date = Null ){
-   
-    if($date == NULL){
-      $date = new \DateTime('now');
-      $date =  $date->format('Y-m-d'); 
-    }
-    $req =
-      " SELECT sum(abonnement_detail.total) as total
-        from abonnement_cantine
-        INNER JOIN facture on facture.id = abonnement_cantine.facture_id
-        INNER JOIN abonnement_detail on abonnement_cantine.id = abonnement_detail.abonnement_id
-        where facture.visibilite = 1  and abonnement_detail.type_abonnement = 'CANTINE' 
-        and  facture.date_paiement = '$date' 
-        and facture.personnel_id = $personnel_id
-        ";
-
-        $result = (new self)->query($req);
-        return (new self)->toObject($result);
-  }
-
-  public static function get_paie_facture_scolarite($personnel_id, $date = Null ){
-
-    if($date == NULL){
-      $date = new \DateTime('now');
-      $date =  $date->format('Y-m-d'); 
-    }
-    $req =
-        " SELECT sum(facture.montant) as total
-        from
-        (select  pension_eleve.montant, facture.date_paiement, pension_eleve.reduction, tranche_scolaire.libelle
-        from facture
-        left join pension_eleve  on facture.id = pension_eleve.facture_id
-        left join tranche_scolaire on tranche_scolaire.id = pension_eleve.tranche_scolaire_id
-        left join type_pension on type_pension.id = pension_eleve.type_pension_id
-        where  facture.visibilite = 1 and type_pension.code = 'SCOLARITE' and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
-        order by facture.date_paiement)";
-
-        $result = (new self)->query($req);
-        return (new self)->toObject($result);
- }
-
-  public static function get_paie_facture_inscription($personnel_id, $date = Null ){
-
-    if($date == NULL){
-      $date = new \DateTime('now');
-      $date =  $date->format('Y-m-d'); 
-    }
-
-    $req =
-        " SELECT sum(facture.montant) as total
-        from
-        (select  pension_eleve.montant, facture.date_paiement, pension_eleve.reduction, tranche_scolaire.libelle
-        from facture
-        left join pension_eleve  on facture.id = pension_eleve.facture_id
-        left join tranche_scolaire on tranche_scolaire.id = pension_eleve.tranche_scolaire_id
-        left join type_pension on type_pension.id = pension_eleve.type_pension_id
-        where  facture.visibilite = 1 and type_pension.code = 'INSCRIPTION' and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
-        order by facture.date_paiement)";
-
-      $result = (new self)->query($req);
-      return (new self)->toObject($result);
-
-   
-  }
-  
-// somme des paies end
 
     public static function get_pensions_facture($fact_id)
     {

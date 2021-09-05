@@ -17,6 +17,10 @@ trait DateHelpers
 
     public static function addDays($date, $days){
         return date('Y-m-d', strtotime($date. " + {$days} days"));
+    }    
+    
+    public static function today($format = 'Y-m-d'){
+        return (new \DateTime('now'))->format($format);
     }
     
     public static function swapDate(&$date1, &$date2)

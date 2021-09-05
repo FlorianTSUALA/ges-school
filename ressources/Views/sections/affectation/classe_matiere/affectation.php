@@ -10,12 +10,21 @@ $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::ba
 $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/app-assets/vendors/css/tables/jsgrid/jsgrid.min.css">';
 
 $include_res_header .= '
-                        <style>
-                            #menu .list-group a.list-group-item:hover{
-                                background-color: #3bafda;
-                                color: white;
-                            }
-                        </style>
+    <style>
+                            
+
+    a.list-group-item.active{
+        background:#f5a663;
+        border-color:#f5a663;
+        }
+
+        html body a {
+            color:black;
+        }
+        
+
+    </style>
+    
 
 ' . "\n";
 $include_res_header .= '' . "\n";

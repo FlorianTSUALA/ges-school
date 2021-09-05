@@ -256,6 +256,7 @@ class TestController extends AppController
         $filter_by = 'ALL';
         $code = '';
         $start_date = '2022-01-01';
+        $date = 
         // $end_date = '';
         
         $cantine_repository = new CantineRepository();

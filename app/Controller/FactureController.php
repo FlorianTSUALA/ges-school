@@ -1,0 +1,61 @@
+<?php
+
+namespace App\Controller;
+
+use App\Helpers\S;
+use App\Model\DBTable;
+use App\Model\Facture;
+use App\Helpers\Helpers;
+
+
+use App\Model\Personnel;
+use Config\Invariant\API;
+use Core\Session\Request;
+use App\Model\StatutEleve;
+
+use App\Helpers\HTMLHelper;
+use function Core\Helper\dd;
+use function Core\Helper\vd;
+use Core\HTML\Form\FormModel;
+use App\Helpers\TraitCRUDController;
+use App\Repository\ClasseRepository;
+use App\Repository\FactureRepository;
+use App\Controller\Admin\AppController;
+use App\Repository\VersementRepository;
+
+class FactureController  extends AppController
+{
+
+    public function facture_totale()
+    {
+        $route = 'facture_totale';
+        $menu_actif = 'facture_totale';
+
+        $this->render('sections.versement.liste.versement_total.index', compact( 'route',  'menu_actif'));
+    }
+
+    public function api_facture_info_api_paie() 
+    {
+        $date = Request::getSecParam('date', NULL);
+        $filter_by = Request::getSecParam('filter_by', 'ALL');
+
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        $personnel_code = $this->session->get(S::PERS_CODE); 
+        $personnel_id = Personnel::get_id($personnel_code);
+        $data = [];
+        if($filter_by === 'ALL'){
+          $data = (new FactureRepository())->get_paie_facture_total($personnel_id, $date);
+         // $data1 = (new FactureRepository())->get_paie_facture_activite($personnel_id, $date);
+        }else{
+        }
+        $results[API::TAG_STATUS] = API::TAG_SUCCESS;
+        $results[API::TAG_DATATABLE_DR] = API::TAG_DATATABLE_VALUE_DR;
+        $results[API::TAG_DATATABLE_RT] = count($data);
+        $results[API::TAG_DATATABLE_RF] = count($data);
+        $results[API::TAG_DATA] = $data;
+        echo Helpers::toJSON($results) ;
+    }
+
+  
+
+}

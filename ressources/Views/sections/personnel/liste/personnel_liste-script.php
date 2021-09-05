@@ -110,9 +110,9 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
                       // console.log(data);
                         return  ' '+
                                 ' <div class="btn-group" role="group" aria-label="Basic example"> '+
-                                '      <button type="button" data-action="action-voir" class="action btn btn-sm btn-icon btn-primary mr-0" title="voir"><i class="ft-eye"></i></button> '+
-                                '      <button type="button" data-action="action-modifier" class="action btn btn-sm btn-icon btn-success mr-0" title="modifier"><i class="ft-edit-2"></i></button> '+
-                                '      <button type="button" data-action="action-supprimer" class="action btn btn-sm btn-icon btn-warning mr-0" title="supprimer"><i class="ft-trash"></i></button> '+
+                                '      <button type="button" data-action="action-voir" class="action btn btn-sm btn-icon btn-blue mr-0" title="voir"><i class="ft-eye"></i></button> '+
+                                '      <button type="button" data-action="action-modifier" class="action btn btn-sm btn-icon btn-green mr-0" title="modifier"><i class="ft-edit-2"></i></button> '+
+                                '      <button type="button" data-action="action-supprimer" class="action btn btn-sm btn-icon btn-danger mr-0" title="supprimer"><i class="ft-trash"></i></button> '+
                                 '  </div>'
 
                     }
