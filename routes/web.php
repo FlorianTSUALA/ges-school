@@ -149,7 +149,7 @@ $router->addRoute('versement_scolarite-create', 'versement/scolarite/create/{cod
 $router->addRoute('versement_multiple_facture', 'versement/multiple/print/{code}', [VersementController::class, 'impriner_facture_multiple']);
 $router->addRoute('versement_inscription_facture', 'versement/inscription/print/{code}', [VersementController::class, 'impriner_facture_inscription']);
 $router->addRoute('versement_scolarite_facture', 'versement/scolarite/print/{code}', [VersementController::class, 'impriner_facture_scolarite']);
-$router->addRoute('versement_facture', 'versement/print/{code}', [VersementController::class, 'imprimer_facture']);
+// $router->addRoute('versement_facture', 'versement/print/{code}', [VersementController::class, 'imprimer_facture']);
 $router->addRoute('versement-preview', 'versement/preview/{code}', [VersementController::class, 'preview']);
 
 $router->addRoute('versement-suppression', 'versement/suppression/{id_fact}', [VersementController::class, 'suppression']);

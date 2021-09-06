@@ -486,6 +486,9 @@ trait VersementControllerTraitMultiple
 
         $this->renderPDF('reports.facture_multiple', compact('data'), 'facture_versement' );
 
+
+        $this->renderPDF('reports.versement', compact('data'), 'facture_versement' );
+
     }
 
 }
