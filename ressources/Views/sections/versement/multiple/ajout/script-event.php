@@ -174,6 +174,7 @@ use App\Model\TypePension;
                             let type_pension_code = element.id
                             data = pension_classe['' + classe_id].type_pension['<?= $item['id']; ?>'].tranche_info
                             for (k of data) {
+                                console.log(k)
                                 if (k.tranche_scolaire_code === element.id) {
                                     tranches.push({
                                         'tranche_scolaire_code': k.tranche_scolaire_code,
@@ -241,7 +242,7 @@ use App\Model\TypePension;
         $('#COL_SELECT_LIBELLE_ACTIVITE').on('select2:close', function() {
             let select = $(this)
             select.trigger('change')
-            console.log('   ')
+            // console.log('   ')
             var data = JSON.parse(JSON.stringify(select.select2('data')))
 
             var liste_activite = [];
@@ -267,10 +268,10 @@ use App\Model\TypePension;
             activites['montant_net'] = activites['montant_brut'] - activites['reduction']
             $('#COL_RECAPITULATIF_ACTIVITE').val(activites['montant_net'])
     
-            console.log( activites['montant_net'])
-            console.log( activites['montant'])
-            console.log( activites['multiplicateur'])
-            console.log( activites['reduction'])
+            // console.log( activites['montant_net'])
+            // console.log( activites['montant'])
+            // console.log( activites['multiplicateur'])
+            // console.log( activites['reduction'])
 
             init()
         })
@@ -279,7 +280,7 @@ use App\Model\TypePension;
         $('#COL_TRANCHE_SELECT_ACTIVITE').on('select2:close', function() {
             let select = $(this)
             select.trigger('change')
-            console.log('COL_TRANCHE_SELECT_ACTIVITE')
+            // console.log('COL_TRANCHE_SELECT_ACTIVITE')
             var tranches = [];
             
             JSON.parse(JSON.stringify($('#COL_TRANCHE_SELECT_ACTIVITE').select2('data'))).forEach(function(element) {
@@ -299,10 +300,10 @@ use App\Model\TypePension;
             activites['montant_net'] = activites['montant_brut'] - activites['reduction']
             $('#COL_RECAPITULATIF_ACTIVITE').val(activites['montant_net'])
             
-            console.log( activites['montant_net'])
-            console.log( activites['montant'])
-            console.log( activites['multiplicateur'])
-            console.log( activites['reduction'])
+            // console.log( activites['montant_net'])
+            // console.log( activites['montant'])
+            // console.log( activites['multiplicateur'])
+            // console.log( activites['reduction'])
 
             init()
             
@@ -318,10 +319,10 @@ use App\Model\TypePension;
             activites['montant_net'] = activites['montant_brut'] - activites['reduction']
             $('#COL_RECAPITULATIF_ACTIVITE').val(activites['montant_net'])
             
-            console.log( activites['montant_net'])
-            console.log( activites['montant'])
-            console.log( activites['multiplicateur'])
-            console.log( activites['reduction'])
+            // console.log( activites['montant_net'])
+            // console.log( activites['montant'])
+            // console.log( activites['multiplicateur'])
+            // console.log( activites['reduction'])
             init()
         })
         // END---------------------------------------
@@ -354,13 +355,13 @@ use App\Model\TypePension;
 
             cantines['montant'] = prix_abonnement_cantine
             cantines['tranche'] = tranches;
-            console.log(cantines['mensualite'])
+            // console.log(cantines['mensualite'])
             cantines['multiplicateur'] = select.select2('data').length;
-            console.log(cantines['multiplicateur'])
+            // console.log(cantines['multiplicateur'])
             cantines['montant_brut'] = cantines['montant'] * cantines['multiplicateur']
-            console.log(cantines['montant_brut'])
+            // console.log(cantines['montant_brut'])
             cantines['montant_net'] = cantines['montant_brut'] - cantines['reduction']
-            console.log(cantines['montant_net'])
+            // console.log(cantines['montant_net'])
             $('#COL_RECAPITULATIF_CANTINE').val(cantines['montant_net'])
             init()
         })
@@ -373,7 +374,7 @@ use App\Model\TypePension;
             let current = $(this)
             if (current.val() < 0)
                 current.val(0)
-            console.log(current.val())
+            // console.log(current.val())
             autres['montant'] = current.val()
             autres['montant_brut'] = autres['montant']
             autres['montant_net'] = autres['montant_brut'] - autres['reduction'] 
@@ -438,6 +439,7 @@ use App\Model\TypePension;
                 items['' + type_pension_id]['reduction'] = 0
                 items['' + type_pension_id]['paiement_en_tranche'] = type_pension_info.paiement_en_tranche
 
+                items['' + type_pension_id]['tranche_info'] = tranche_info
            
                 if (type_pension_info.paiement_en_tranche == '<?= E::OUI ?>') {
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).val(null)
@@ -497,8 +499,10 @@ use App\Model\TypePension;
 
                 $('#COL_REDUCTION_' + type_pension_id).val(items['' + type_pension_id]['reduction'])
                 $('#COL_RECAPITULATIF_' + type_pension_id).val(items['' + type_pension_id]['montant_net'])
-                console.log(type_pension_id)
-                console.log(items['' + type_pension_id]['montant_net'])
+
+                console.log(items['' + type_pension_id]['type_pension'] )
+                console.log(items['' + type_pension_id]['pension_classe_code'] )
+                console.log(items['' + type_pension_id]['tranche_info'] )
             }
         }
     }

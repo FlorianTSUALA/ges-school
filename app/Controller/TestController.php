@@ -4,17 +4,20 @@ namespace App\Controller;
 
 use DateTime;
 use DateHelpers;
+use App\Helpers\S;
+use App\Model\Pays;
 use App\Model\Eleve;
 use Core\Model\Model;
 use App\Model\DBTable;
+use App\Model\Facture;
 use App\Model\Parcours;
 use App\Helpers\Helpers;
-use App\Helpers\S;
+
 use Core\Helper\DBHelper;
 use Core\Session\Request;
-
 use App\Model\TypePension;
 use App\Model\PensionEleve;
+use App\Model\PensionClasse;
 use Core\HTML\FlashMessages;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
@@ -28,17 +31,16 @@ use App\Repository\ClasseRepository;
 use App\Repository\CantineRepository;
 use App\Repository\DocumentRepository;
 use App\Model\AffectationClasseMatiere;
-use App\Model\Facture;
 use App\Repository\PersonnelRepository;
 use App\Repository\VersementRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\ExemplaireRepository;
+use App\Repository\PrixPaiementRepository;
 use App\Repository\AnneeScolaireRepository;
 use Core\HTML\MessageFlash\FlashMessagesStatic;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
 use App\Repository\AffectationSalleClasseRepository;
-use App\Repository\PrixPaiementRepository;
 
 class TestController extends AppController
 {
@@ -225,7 +227,6 @@ class TestController extends AppController
         return date("Y", $time);
     }
 
-  
 
     public function testSQL()
     {

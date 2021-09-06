@@ -2,6 +2,9 @@
 
 namespace Core\Model;
 
+use function Core\Helper\dd;
+use function Core\Helper\vd;
+
 trait HydrahonModel{
 
 	public static function get_id($code)
@@ -73,6 +76,12 @@ trait HydrahonModel{
 			default:
 		}
     } 
+	
 
+    public static function generateCode()
+    {
+          $class_name = ( explode( '\\', __CLASS__ )[ count( explode( '\\', __CLASS__ )??[] ) - 1]);
+          return CodeSeqGenerator::getInstance()->uniqueCode($class_name);
+    }
 
 }

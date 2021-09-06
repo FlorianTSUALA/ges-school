@@ -16,6 +16,20 @@ use function Core\Helper\vd;
 */
 class Model 
 {	
+
+	private static $singleton;
+
+    public static function getInstance($par){
+
+        if(is_null(self::$singleton)){
+
+            self::$singleton = new $this ($par);
+
+        }
+
+        return self::$singleton;
+
+    }
 	
 	use Table, HydrahonModel;
 	/** @var string $table Nom de la Table en ligne */
@@ -107,19 +121,7 @@ class Model
 	}
 
     public function genCode(){
-		//Sleep because we must want that date must be unique
-		usleep ( 3 );// sleep 1 micro second 
-		//Date('u') get current micro second
-		//Date('U') get second since 1970
-        return strtoupper(substr( $this->class, 0, 4)."_".Date('U').Date('u'));
-	}
-
-	public static function generateCode(){
-		//Sleep because we must want that date must be unique
-		usleep ( 3 );// sleep 1 micro second 
-		//Date('U') get second since 1970
-		//Date('u') get current micro second
-        return strtoupper(substr( __CLASS__, 0, 4)."_".Date('U').Date('u'));
+		return CodeSeqGenerator::getInstance()->uniqueCode($this->class);
 	}
 	
 }
