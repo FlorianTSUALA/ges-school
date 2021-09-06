@@ -6,6 +6,8 @@ use DateTime;
 use App\Model\DBTable;
 use App\Model\AnneeScolaire;
 use function Core\Helper\dd;
+use function Core\Helper\vd;
+
 use Core\Repository\BaseRepository;
 use Core\helper\DateHelpers;
 
@@ -29,9 +31,9 @@ class AnneeScolaireRepository extends BaseRepository{
         }
     }
     
-    public function getAnneeScolaire($value, $tag = 'id', $what_SELECT = 'all'){
+    public function getAnneeScolaire($value, $tag = 'id', $what_select = 'all'){
         $model =  DBTable::getModel(DBTable::ANNEE_SCOLAIRE)
-        ->select(['code'=>'id', 'libelle', 'debut_annee', 'fin_annee'])
+        ->select(['id'=>'id', 'code'=>'code', 'libelle', 'debut_annee', 'fin_annee'])
         ->where('visibilite', '=', 1)
         ->where("$tag", '=', "$value")
         ->one();
@@ -80,9 +82,11 @@ class AnneeScolaireRepository extends BaseRepository{
 
     public  function getAnneeScolairePrecedenteID($annee_scolaire_id){
         $debut_annee = $this->getAnneeScolaire($annee_scolaire_id, 'id', 'debut_annee');
+        if(!$debut_annee) return 0;
         $date_passeeF = DateHelpers::getFullYear($debut_annee);
         $date_passeeD = $date_passeeF - 1;
         $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";
         return intval($this->getAnneeScolaire($date_passee_libelle, 'libelle', 'id'));
     }
+    
 }

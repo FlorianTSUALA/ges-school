@@ -24,6 +24,7 @@ use App\Model\AbonnementActivite;
 use App\Repository\EleveRepository;
 use App\Repository\ParcoursRepository;
 use App\Repository\PrixPaiementRepository;
+use App\Repository\StatutApprenantRepository;
 
 trait VersementControllerTraitMultiple
 {
@@ -239,7 +240,7 @@ trait VersementControllerTraitMultiple
                                 'date_inscription' => (new DateTime('NOW'))->format('Y-m-d H:i:s'),
                                 Parcours::ELEVE_ID => $eleve_id,
                                 Parcours::CLASSE_ID => $classe_id,
-                                Parcours::STATUT_APPRENANT_ID => (new StatutApprenantRepository())->getStatutApprenantId(),
+                                Parcours::STATUT_APPRENANT_ID => (new StatutApprenantRepository())->getStatutApprenantId($eleve_id, $classe_id, $annee_scolaire_id),
                             ];
                             $model_parcours->insert($data_parcours)->execute();
                         }

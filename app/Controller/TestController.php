@@ -231,6 +231,10 @@ class TestController extends AppController
     public function testSQL()
     {
 
+
+
+
+      dd((new AnneeScolaireRepository())->getAnneeScolairePrecedenteID(3));
       dd((new PrixPaiementRepository())->getPensionGroupByClasse($this->session->get(S::ANNEE_SCOLAIRE)));
 
       $date = new \DateTime('now');

@@ -37,7 +37,6 @@ class StatutEleveController extends AppController
     public function actualiserstatut($eleve_id, $annee_scolaire_id){
 
         $date_precedenteID = (new AnneeScolaireRepository)->getAnneeScolairePrecedenteID($annee_scolaire_id);
-    
         
         $eleve_affecte = Parcours::table()
         ->select(
