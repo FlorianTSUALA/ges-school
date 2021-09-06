@@ -3,10 +3,12 @@
 namespace App\Controller;
 
 use App\Helpers\S;
+use App\Model\Eleve;
 use Core\Model\Model;
 use App\Model\DBTable;
 use App\Model\Facture;
 use App\Helpers\Helpers;
+use App\Model\Personnel;
 use Core\Session\Request;
 use App\Model\Technique\E;
 use App\Model\TypePension;
@@ -21,7 +23,6 @@ use App\Repository\PrixPaiementRepository;
 
 trait VersementControllerTraitMultiple
 {
-
 
     public function index_multiple()
     {
@@ -92,13 +93,13 @@ trait VersementControllerTraitMultiple
     */
     public function save_multiple($code)
     {
-        $debug = false;
+        $debug = true;
         $ids_pension_eleve = [];
         $ids_pension_abonnement_detail = [];
         $ids_pension_cantine = [];
         $ids_pension_activite = [];
 
-        $eleve = DBTable::getModel('eleve')->select()->find($code, 'code')['id'];
+        $eleve = DBTable::getModel('eleve')->select()->find($code, 'code');
         $eleve_id = $eleve['id'];
         $nom_eleve =  $eleve['nom'] ." ".$eleve['prenom'];
 
@@ -124,6 +125,9 @@ trait VersementControllerTraitMultiple
                 'libelle' => 'Facture versment',
                 'reference' => $reference,
                 'beneficiaire' => $nom_eleve,
+                'personnel_id' => Personnel::get_id($this->session->get(S::PERS_CODE)),
+                'eleve_id' => Eleve::get_id($code),
+                'annee_scolaire_id' => ($this->session->get(S::ANNEE_SCOLAIRE)),
                 'gestionnaire' => $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM),
                 'montant' => $montant_paye,
                 'reduction' => $reduction,
@@ -136,27 +140,33 @@ trait VersementControllerTraitMultiple
         //Facture
         if($debug)   vd('ok Facture');
 
-
-
         //PENSION ELEVE
                 $data_pension = $_POST['pension_classe'];
                 $data_pension = is_array($data_pension)? $data_pension : [];
 
-                // if($debug) vd( $data_pension );
+                if($debug) vd( $data_pension );
+                
                 foreach ($data_pension??[] as $item) {
-
-                    $motif = $item['type_pension'];
-                    $montant = $item['montant'];
-                    $reduction = $item['reduction']??0;
-                    $type_pension_code = $item['type_pension_code'];
                     $pension_classe_code = $item['pension_classe_code'];
-                    $est_mensuel = $item['est_mensuel'];
-                    $quantite = $item['montant_net'];
+                    $type_pension_code = $item['type_pension_code'];
+                    $type_pension = $item['type_pension'];
+                    $montant = $item['montant'];
+                    $tranche = $item['tranche'];
+                    $paiement_en_tranche = $item['paiement_en_tranche'];
+                    $reduction = $item['reduction'];
 
+                    vd($item);
+
+                    $multiplicateur = $item['multiplicateur'];
+                    $recapitulatif = $item['recapitulatif'];
+                    $montant_net = $item['montant_net'];
+                    $montant_brut = $item['montant_brut'];
+                    $remise = $item['remise'];
+                    
                     $type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
                     $pension_classe_id = Model::getId(DBTable::PENSION_CLASSE, $pension_classe_code);
 
-                    if($est_mensuel == 1){
+                    if($paiement_en_tranche == E::OUI ){
                         if(isset($item['multiplicateur']) && is_array($item['multiplicateur'])) //sinon aucune donnée n'a été renseigner pour le payement de la scolatité
                             foreach($item['multiplicateur']??[] as $tranche){
                                 {
@@ -165,7 +175,7 @@ trait VersementControllerTraitMultiple
                                     $tranche_scolaire_code = $tranche['id'];
                                     $tranche_scolaire_id = Model::getId(DBTable::TRANCHE_SCOLAIRE, $tranche_scolaire_code);
 
-                                    $motif = 'Payement Periodique - '.$tranche['value'];
+                                    $type_pension = 'Payement Periodique - '.$tranche['value'];
                                     $code_pension_eleve = PensionEleve::generateCode();
 
                                     $data_pension_eleve = [
@@ -178,7 +188,7 @@ trait VersementControllerTraitMultiple
                                         'eleve_id' => $eleve_id,
                                         'montant' => $montant,
                                         'reduction' => $reduction,
-                                        'motif' => $motif,
+                                        'motif' => $type_pension,
                                         'quantite' => 1
                                     ];
 
@@ -191,7 +201,7 @@ trait VersementControllerTraitMultiple
                         if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0") && !empty($item['montant_net']))
                         {
                             $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
-                            $motif = 'Payement Non periodique';
+                            $type_pension = 'Payement Non periodique';
                             $code_pension_eleve = PensionEleve::generateCode();
 
                             $data_pension_eleve_autre = [
@@ -204,7 +214,7 @@ trait VersementControllerTraitMultiple
                                 'eleve_id' => $eleve_id,
                                 'montant' => $montant,
                                 'reduction' => $reduction,
-                                'motif' => $motif,
+                                'motif' => $type_pension,
                                 'quantite' => $quantite
                             ];
 
@@ -413,7 +423,7 @@ trait VersementControllerTraitMultiple
 
         //AUTRES
             $autres = $_POST['autres']??[];
-            $motif = $autres['type_pension'];
+            $type_pension = $autres['type_pension'];
             $montant = $autres['montant'];
             $reduction = $autres['reduction'];
 
@@ -421,7 +431,7 @@ trait VersementControllerTraitMultiple
             if(!(empty($montant) || $montant == "0")){
                 $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
                 
-                $motif = empty($motif)? "Autres" :$motif;
+                $type_pension = empty($type_pension)? "Autres" :$type_pension;
 
                 $data_pension_eleve_autre = [
                     'code' => PensionEleve::generateCode(),
@@ -433,7 +443,7 @@ trait VersementControllerTraitMultiple
                     'eleve_id' => $eleve_id,
                     'montant' => $montant,
                     'reduction' => $reduction,
-                    'motif' => $motif,
+                    'motif' => $type_pension,
                     'quantite' => 1
                 ];
                 $model_pension_eleve->insert($data_pension_eleve_autre)->execute();
@@ -452,9 +462,6 @@ trait VersementControllerTraitMultiple
         }
 
     }
-
-    
-
 
     public function impriner_facture_multiple(){
 

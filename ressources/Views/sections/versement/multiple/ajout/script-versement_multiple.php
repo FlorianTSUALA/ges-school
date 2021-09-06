@@ -74,12 +74,15 @@ use App\Model\Technique\E;
         let _montant_total = 0;
         // Pension scolaire
             let i = 0;
-            for (var item of items) {
-                let _type_pension_id = item['type_pension_code'];
+            for (var index_item in items) {
+                let _type_pension_id = index_item 
+                let item = items[''+index_item]
                 let _recapitulatif = (isNaN(parseFloat(item['montant_net']))) ? 0 : parseFloat(item['montant_net']);
                 $('#COL_RECAPITULATIF_' + _type_pension_id).val(_recapitulatif)
                 _montant_total += _recapitulatif;
             }
+            console.log(_montant_total)
+
         // Pension scolaire
 
         //Autres

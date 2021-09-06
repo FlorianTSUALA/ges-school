@@ -21,7 +21,7 @@ use App\Model\TypePension;
 
 
 
-    var items = []
+    var items = {}
     var data_versement = {
         'cantine': {},
         'activite': {},
@@ -116,8 +116,12 @@ use App\Model\TypePension;
                 "type_pension": '<?= $item['libelle']; ?>',
                 "multiplicateur": 0,
                 "recapitulatif": '',
+                "montant_net": 0,
+                "montant_brut": 0,
                 "montant": 0,
                 "remise": 0,
+                "liste": [],
+                "tranche": [],
                 "mensualite": 0,
                 "paiement_en_tranche": false
             };
@@ -141,17 +145,23 @@ use App\Model\TypePension;
                     if ($('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val() < 0)
                         $('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val(0)
                     console.log($('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val())
+                    
+
                     items['<?= $item['id'] ?>']['multiplicateur'] = $('#COL_TRANCHE_NUMERIC_<?= $item['id']; ?>').val()
                     items['<?= $item['id'] ?>']['reduction'] = $('#COL_REDUCTION_<?= $item['id']; ?>').val()
                     items['<?= $item['id'] ?>']['montant_brut'] = items['<?= $item['id'] ?>']['multiplicateur'] * items['<?= $item['id'] ?>']['montant']
                     items['<?= $item['id'] ?>']['montant_net'] = items['<?= $item['id'] ?>']['montant_brut'] - items['<?= $item['id'] ?>']['reduction']
+                    $('#COL_RECAPITULATIF_<?= $item['id'] ?>' ).val(items['<?= $item['id'] ?>']['montant_net'])
+                   
                     console.log(items['<?= $item['id'] ?>']['montant_net'])
                     init()
+                    console.log(items['<?= $item['id'] ?>'])
+
                 })
             <?php } else { ?>
                 <?php if ($item[E::PAIEMENT_EN_TRANCHE] == E::OUI) { ?>
                     console.log(items)
-                    items['<?= $item['id'] ?>'].paiement_en_tranche = '<?= E::OUI ?>';
+                    items['<?= $item['id'] ?>']['paiement_en_tranche'] = '<?= E::OUI ?>';
                     $('#COL_TRANCHE_SELECT_<?= $item['id']; ?>').on('select2:close', function() {
 
                         let select = $(this)
@@ -164,12 +174,13 @@ use App\Model\TypePension;
                             let type_pension_code = element.id
                             data = pension_classe['' + classe_id].type_pension['<?= $item['id']; ?>'].tranche_info
                             for (k of data) {
-                                if (k.code = element.id) {
+                                if (k.tranche_scolaire_code === element.id) {
                                     tranches.push({
                                         'tranche_scolaire_code': k.tranche_scolaire_code,
-                                        'pension_classe_id': k.code,
+                                        'pension_classe_id': k.id,
                                         'value': element.text,
-                                        'montant': k.montant
+                                        'montant': k.montant,
+                                        'pension_classe_code': k.code
                                     })
                                     _total += parseFloat(k.montant)
                                     break;
@@ -180,11 +191,13 @@ use App\Model\TypePension;
 
                         items['<?= $item['id'] ?>']['reduction'] = $('#COL_REDUCTION_<?= $item['id']; ?>').val()
                         items['<?= $item['id'] ?>']['tranche'] = tranches;
+                        items['<?= $item['id'] ?>']['multiplicateur'] = tranches.length;
                         items['<?= $item['id'] ?>']['montant'] = _total;
                         items['<?= $item['id'] ?>']['montant_brut'] = _total;
                         items['<?= $item['id'] ?>']['montant_net'] = parseFloat(items['<?= $item['id'] ?>']['montant']) - parseFloat(items['<?= $item['id'] ?>']['reduction']);
                         $('#COL_RECAPITULATIF_<?= $item['id']; ?>').val(items['<?= $item['id'] ?>']['montant_net'])
                         init()
+                        console.log(items['<?= $item['id'] ?>'])
                     })
 
                 <?php } else { ?>
@@ -200,6 +213,8 @@ use App\Model\TypePension;
                         items['<?= $item['id'] ?>']['montant_net'] = items['<?= $item['id'] ?>']['montant_brut'] - items['<?= $item['id'] ?>']['reduction']
                         $('#COL_RECAPITULATIF_<?= $item['id']; ?>').val(items['<?= $item['id'] ?>']['montant_net'])
                         init()
+                        console.log(items['<?= $item['id'] ?>'])
+
                     })
                 <?php } ?>
             <?php } ?>
@@ -290,6 +305,7 @@ use App\Model\TypePension;
             console.log( activites['reduction'])
 
             init()
+            
         })
 
         //COL5 Activite
@@ -337,7 +353,7 @@ use App\Model\TypePension;
             })
 
             cantines['montant'] = prix_abonnement_cantine
-            cantines['mensualite'] = tranches;
+            cantines['tranche'] = tranches;
             console.log(cantines['mensualite'])
             cantines['multiplicateur'] = select.select2('data').length;
             console.log(cantines['multiplicateur'])
@@ -378,9 +394,9 @@ use App\Model\TypePension;
         //COL2 Autre
         $('#COL_LIBELLE_AUTRES').on('change paste keyup mouseup', function() {
             let current = $(this)
-            if (current.val() == '')
-                autres['type_pension'] = ''
-            autres['libelle'] = current.val()
+            // if (current.val() == '')
+            //     autres['type_pension'] = ''
+            autres['type_pension'] = current.val()
         })
         // END---------------------------------------
 
@@ -395,7 +411,6 @@ use App\Model\TypePension;
         // console.log('pension_classe')
         // console.log(pension_classe)
         <?php foreach ($type_pensions as $type_pension) {   ?>
-
             <?php if ($type_pension['paiement_en_tranche'] == E::OUI) { ?>
                 <?= "active_type_{$type_pension['id']}"; ?> = '#TYPE_SELECT_<?= $type_pension['id']; ?>'
                 <?= "inactive_type_{$type_pension['id']}"; ?> = '#TYPE_NUMBER_<?= $type_pension['id']; ?>'
@@ -440,8 +455,9 @@ use App\Model\TypePension;
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).empty()
                     if (tranche_info.length !== 0) {
                         tranche_info.forEach(function(subitem) {
+                            // console.log(subitem)
                             var data = {
-                                id: subitem.code,
+                                id: subitem.tranche_scolaire_code,
                                 text: subitem.tranche_scolaire_libelle
                             }
                             var new_option = new Option(data.text, data.id, false, false);
@@ -450,7 +466,7 @@ use App\Model\TypePension;
                     }
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).trigger('change');
                 } else {
-                    if (tranche_info.length !== 0) {
+                    if (tranche_info.length > 0) {
                         items['' + type_pension_id]['pension_classe_code'] = tranche_info[0].code
                         items['' + type_pension_id]['montant'] = parseFloat(tranche_info[0].montant)
                         items['' + type_pension_id]['montant_brut'] = 0
@@ -467,6 +483,7 @@ use App\Model\TypePension;
                     items['' + type_pension_id]['montant_brut'] = items['' + type_pension_id]['montant'] * items['' + type_pension_id]['multiplicateur']
                     items['' + type_pension_id]['montant_net'] = items['' + type_pension_id]['montant_brut'] - items['' + type_pension_id]['reduction']
                     $('#COL_TRANCHE_NUMERIC_' + type_pension_id).val(items['' + type_pension_id]['multiplicateur'])
+                    
                 }
 
                 if (type_pension_id == '<?= TypePension::INSCRIPTION_CODE ?>') {
@@ -481,7 +498,7 @@ use App\Model\TypePension;
                 $('#COL_REDUCTION_' + type_pension_id).val(items['' + type_pension_id]['reduction'])
                 $('#COL_RECAPITULATIF_' + type_pension_id).val(items['' + type_pension_id]['montant_net'])
                 console.log(type_pension_id)
-            console.log(items['' + type_pension_id]['montant_net'])
+                console.log(items['' + type_pension_id]['montant_net'])
             }
         }
     }

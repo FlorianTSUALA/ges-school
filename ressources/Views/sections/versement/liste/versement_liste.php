@@ -80,7 +80,7 @@ $include_footer_script = ob_get_clean();
                     <div class="btn-group" role="group">
                     </div>
                         <a class="btn btn-outline-info" href="<?= URL::link('versement_liste') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Liste des versements</a>
-                    <a class="btn btn-outline-info" href="<?= URL::link('versement_totale') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
+                    <a class="btn btn-outline-info" href="<?= URL::link('versement_liste') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
                 </div>
             </div>
             <div class="content-header-lead col-12 mt-2">

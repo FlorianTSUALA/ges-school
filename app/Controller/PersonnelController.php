@@ -372,10 +372,10 @@ class PersonnelController extends AppController
     {
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
-        $data_info_personnels = (new PersonnelRepository())->getInfoPersonnels($annee_scolaire_id, $code);
+        $data_info_personnel = (new PersonnelRepository())->getInfoPersonnel($annee_scolaire_id, $code);
 
-        // vd( Helpers::toJSON($data_info_personnels));
-        echo Helpers::toJSON($data_info_personnels);
+        // vd( Helpers::toJSON($data_info_personnel));
+        echo Helpers::toJSON($data_info_personnel);
     }
 
 

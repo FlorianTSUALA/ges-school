@@ -11,7 +11,8 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
 
 
     function sauvegarderVersement(){
-        // console.log(cantines);
+        console.log(items);
+        console.log(cantines);
         // console.log(activites);
         // console.log(autres);
         
@@ -27,7 +28,6 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
                 'annee_scolaire_id':  data_versement['annee_scolaire'],
                 'type_paiement_id':  data_versement['type_paiement_id'],
                 'motif':  data_versement['motif'],
-                // "reste":  $('#reste').val(),
                 'autre':  data_versement['autres'],
                 'montant_paye':  data_versement['montant_paye'],
                 'sous_total':  data_versement['sous_total'],
