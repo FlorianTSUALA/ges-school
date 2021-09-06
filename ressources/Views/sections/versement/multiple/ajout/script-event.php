@@ -122,7 +122,7 @@ use App\Model\TypePension;
                 "remise": 0,
                 "liste": [],
                 "tranche": [],
-                "mensualite": 0,
+                // "mensualite": 0,
                 "paiement_en_tranche": false
             };
         <?php } ?>
@@ -174,14 +174,14 @@ use App\Model\TypePension;
                             let type_pension_code = element.id
                             data = pension_classe['' + classe_id].type_pension['<?= $item['id']; ?>'].tranche_info
                             for (k of data) {
-                                console.log(k)
                                 if (k.tranche_scolaire_code === element.id) {
+
                                     tranches.push({
                                         'tranche_scolaire_code': k.tranche_scolaire_code,
                                         'pension_classe_id': k.id,
                                         'value': element.text,
                                         'montant': k.montant,
-                                        'pension_classe_code': k.code
+                                        'pension_classe_code': k.id
                                     })
                                     _total += parseFloat(k.montant)
                                     break;
@@ -439,15 +439,15 @@ use App\Model\TypePension;
                 items['' + type_pension_id]['reduction'] = 0
                 items['' + type_pension_id]['paiement_en_tranche'] = type_pension_info.paiement_en_tranche
 
-                items['' + type_pension_id]['tranche_info'] = tranche_info
+                //items['' + type_pension_id]['tranche_info'] = tranche_info
            
                 if (type_pension_info.paiement_en_tranche == '<?= E::OUI ?>') {
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).val(null)
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).empty()
 
-                    items['' + type_pension_id]['pension_classe_code'] = 0
+                    items['' + type_pension_id]['pension_classe_code'] = -1
                     items['' + type_pension_id]['montant'] = 0
-                    items['' + type_pension_id]['mensualite'] = tranche_info
+                    // items['' + type_pension_id]['mensualite'] = tranche_info
                     items['' + type_pension_id]['multiplicateur'] = []
                     items['' + type_pension_id]['montant_net'] = 0
                     items['' + type_pension_id]['montant_brut'] = 0
@@ -455,7 +455,7 @@ use App\Model\TypePension;
 
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).val(null)
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).empty()
-                    if (tranche_info.length !== 0) {
+                    if (tranche_info.length > 0) {
                         tranche_info.forEach(function(subitem) {
                             // console.log(subitem)
                             var data = {
@@ -469,18 +469,18 @@ use App\Model\TypePension;
                     $('#COL_TRANCHE_SELECT_' + type_pension_id).trigger('change');
                 } else {
                     if (tranche_info.length > 0) {
-                        items['' + type_pension_id]['pension_classe_code'] = tranche_info[0].code
+                        items['' + type_pension_id]['pension_classe_code'] = tranche_info[0].id
                         items['' + type_pension_id]['montant'] = parseFloat(tranche_info[0].montant)
                         items['' + type_pension_id]['montant_brut'] = 0
                         console.log('____________|||||||||||||||______________')
                         console.log(type_pension_id)
                         $('#COL_TRANCHE_NUMERIC_' + type_pension_id).prop("readonly", false);
                     } else {
-                        items['' + type_pension_id]['pension_classe_code'] = 0
+                        items['' + type_pension_id]['pension_classe_code'] = -1
                         items['' + type_pension_id]['montant'] = 0
                         $('#COL_TRANCHE_NUMERIC_' + type_pension_id).prop("readonly", true);
                     }
-                    items['' + type_pension_id]['mensualite'] = []
+                    // items['' + type_pension_id]['mensualite'] = []
                     items['' + type_pension_id]['multiplicateur'] = 0
                     items['' + type_pension_id]['montant_brut'] = items['' + type_pension_id]['montant'] * items['' + type_pension_id]['multiplicateur']
                     items['' + type_pension_id]['montant_net'] = items['' + type_pension_id]['montant_brut'] - items['' + type_pension_id]['reduction']
@@ -490,7 +490,8 @@ use App\Model\TypePension;
 
                 if (type_pension_id == '<?= TypePension::INSCRIPTION_CODE ?>') {
                     $('#COL_TRANCHE_NUMERIC_' + type_pension_id).prop("readonly", true);
-                    items['' + type_pension_id]['mensualite'] = []
+                    // items['' + type_pension_id]['mensualite'] = []
+                    items['' + type_pension_id]['pension_classe_code'] = tranche_info[0].id
                     items['' + type_pension_id]['multiplicateur'] = 1
                     items['' + type_pension_id]['montant_brut'] = items['' + type_pension_id]['montant'] * items['' + type_pension_id]['multiplicateur']
                     items['' + type_pension_id]['montant_net'] = items['' + type_pension_id]['montant_brut'] - items['' + type_pension_id]['reduction']

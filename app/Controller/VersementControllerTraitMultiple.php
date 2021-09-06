@@ -93,7 +93,7 @@ trait VersementControllerTraitMultiple
     */
     public function save_multiple($code)
     {
-        $debug = true;
+        $debug = false;
         $ids_pension_eleve = [];
         $ids_pension_abonnement_detail = [];
         $ids_pension_cantine = [];
@@ -147,15 +147,12 @@ trait VersementControllerTraitMultiple
                 if($debug) vd( $data_pension );
                 
                 foreach ($data_pension??[] as $item) {
-                    $pension_classe_code = $item['pension_classe_code'];
                     $type_pension_code = $item['type_pension_code'];
                     $type_pension = $item['type_pension'];
                     $montant = $item['montant'];
-                    $tranche = $item['tranche'];
                     $paiement_en_tranche = $item['paiement_en_tranche'];
                     $reduction = $item['reduction'];
 
-                    vd($item);
 
                     $multiplicateur = $item['multiplicateur'];
                     $recapitulatif = $item['recapitulatif'];
@@ -164,16 +161,22 @@ trait VersementControllerTraitMultiple
                     $remise = $item['remise'];
                     
                     $type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
-                    $pension_classe_id = Model::getId(DBTable::PENSION_CLASSE, $pension_classe_code);
+                    // vd($item);
 
                     if($paiement_en_tranche == E::OUI ){
-                        if(isset($item['multiplicateur']) && is_array($item['multiplicateur'])) //sinon aucune donnée n'a été renseigner pour le payement de la scolatité
-                            foreach($item['multiplicateur']??[] as $tranche){
-                                {
-                                    $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
+                        // $tranche = $item['tranche'];
 
-                                    $tranche_scolaire_code = $tranche['id'];
+                        if(isset($item['tranche']) && is_array($item['tranche'])) //sinon aucune donnée n'a été renseigner pour le payement de la scolatité
+                            foreach($item['tranche']??[] as $key => $tranche){
+                                {
+
+                                    $pension_classe_code = $tranche['pension_classe_code'];
+                                    $tranche_scolaire_code = $tranche['tranche_scolaire_code'];
+                
                                     $tranche_scolaire_id = Model::getId(DBTable::TRANCHE_SCOLAIRE, $tranche_scolaire_code);
+                                    $pension_classe_id = Model::getId(DBTable::PENSION_CLASSE, $pension_classe_code);
+
+                                    $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
 
                                     $type_pension = 'Payement Periodique - '.$tranche['value'];
                                     $code_pension_eleve = PensionEleve::generateCode();
@@ -198,8 +201,12 @@ trait VersementControllerTraitMultiple
                                 }
                             }
                     }else{
+
                         if(isset($item['multiplicateur']) && ($item['multiplicateur'] != "0") && !empty($item['montant_net']))
                         {
+                            $pension_classe_code = $item['pension_classe_code'];
+                            $pension_classe_id = Model::getId(DBTable::PENSION_CLASSE, $pension_classe_code);
+
                             $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
                             $type_pension = 'Payement Non periodique';
                             $code_pension_eleve = PensionEleve::generateCode();
@@ -215,7 +222,7 @@ trait VersementControllerTraitMultiple
                                 'montant' => $montant,
                                 'reduction' => $reduction,
                                 'motif' => $type_pension,
-                                'quantite' => $quantite
+                                'quantite' => 1
                             ];
 
                             $model_pension_eleve->insert($data_pension_eleve_autre)->execute();
