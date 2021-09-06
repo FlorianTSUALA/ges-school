@@ -19,6 +19,7 @@ class S //Alias of Sessions
     const VERS_LIEU_NAISSANCE = 'LIEU_NAISSANCE';
     const VERS_DATE_NAISSANCE = 'DATE_NAISSANCE';
     const VERS_AGE = 'AGE';
+    const VERS_MSG_INSCRIPTION = 'VERS_MSG_INSCRIPTION';
     const VERS_CODE_STATUT_APPRENANT = 'CODE_STATUT_APPRENANT';
 
     //Connexion de l'utilisateur

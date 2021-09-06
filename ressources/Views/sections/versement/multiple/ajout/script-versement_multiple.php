@@ -2,13 +2,11 @@
 
 use App\Helpers\S;
 use App\Model\Technique\E;
-
 ?>
 
 <script>
     var tranches = []
     var isFirstLoad = true
-    var fromInscription = <?= ($this->session->has(S::DATA_TRANSPORT)) ? 'true' : 'false'; ?>
 
     var type_pension = $('#type_pension')
     var eleve_nom_complet = $('#eleve_nom_complet')
@@ -60,11 +58,8 @@ use App\Model\Technique\E;
 <script>
     
     function init() {
-
-        if (fromInscription) {
-            $(eleve_nom_complet).val("<?= $this->session->get(S::DATA_TRANSPORT, S::VERS_CODE_ELEVE); ?>").trigger('change')
-            fromInscription = false;
-        }
+        if(<?= (isset($data_inscriptpion)) ? 'true' : 'false' ?>)
+            flash_msg("<?= $data_inscriptpion[S::VERS_MSG_INSCRIPTION] ?>")
 
         if (isFirstLoad) {
             trigger_classe($(classe).select2().find(':selected').data('id'))

@@ -219,7 +219,7 @@ use App\Helpers\Helpers;
                                     // window.location.reload();
                                 } else {
                                     // form.reset()
-                                    window.location.href = "<?= URL::link('versement_inscription'); ?>";     
+                                    window.location.href = "<?= URL::link('versement_multiple'); ?>";     
                                     
                                     console.log(data1)
                                     console.log('data1')

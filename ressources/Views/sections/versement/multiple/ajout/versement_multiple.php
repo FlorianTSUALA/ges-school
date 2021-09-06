@@ -100,7 +100,7 @@ ob_start();
                                                                                 <div class="col-8">
                                                                                     <select id="eleve_nom_complet" class="select2 form-control" name="eleve_nom_complet" required>
                                                                                         <?php foreach($eleves as $item){?>
-                                                                                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion['code_eleve'] == $item['id']))? 'selected' : ''; ?>><?= $item['nom_complet']; ?></option>
+                                                                                                <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>" <?= (isset($data_inscriptpion) && ($data_inscriptpion[S::VERS_CODE_ELEVE] == $item['id']))? 'selected' : ''; ?>><?= $item['nom_complet']; ?></option>
                                                                                         <?php } ?>
                                                                                     </select>
                                                                                 </div>

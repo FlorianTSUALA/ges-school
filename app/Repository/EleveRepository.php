@@ -183,10 +183,6 @@ class EleveRepository extends BaseRepository{
             InfoEleve.nom_personne_urgence AS nom_personne_urgence, InfoEleve.prenom_personne_urgence AS prenom_personne_urgence, 
             InfoEleve.telephone_personne_urgence AS telephone_personne_urgence, InfoEleve.lien AS lien,
             InfoEleve.statut_eleve_id AS statut_eleve_id, InfoEleve.statut_eleve AS statut_eleve
-
-
-            
-            
             from
             (
                 SELECT  dp.pays_mere AS pays_mere, dp.pays_pere AS pays_pere,
@@ -747,21 +743,21 @@ class EleveRepository extends BaseRepository{
 
     public function getEleveClass($classe_id){
         $req =
-        "                SELECT  InfoEleve.pays_mere AS pays_mere, InfoEleve.pays_pere AS pays_pere,
-        InfoEleve.email AS email, InfoEleve.ecole AS ecole,
-        InfoEleve.classe AS classe, InfoEleve.telephone AS telephone,
-        InfoEleve.allergie AS allergie, InfoEleve.groupe_sanguin AS groupe_sanguin,
-        InfoEleve.maladie_recurrente AS maladie_recurrente, InfoEleve.probleme_particulier AS probleme_particulier,
-        InfoEleve.nom_medecin AS nom_medecin, InfoEleve.telephone_medecin AS telephone_medecin,
-        InfoEleve.email_medecin AS email_medecin, InfoEleve.autres AS autres,
-        InfoEleve.matricule AS matricule, InfoEleve.nom AS nom, InfoEleve.prenom AS prenom,
-        InfoEleve.sexe AS sexe,
-        InfoEleve.date_naissance AS date_naissance, InfoEleve.lieu_naissance AS lieu_naissance,
-        InfoEleve.anciennete AS anciennete, InfoEleve.photo AS photo,
-        InfoParcours.date_inscription AS date_inscription_parcours, InfoParcours.classe_parcours AS classe_parcours,
-        InfoParcours.statut_annee_scolaire AS statut_annee_scolaire,
-        InfoParcours.annee_scolaire AS annee_scolaire, InfoParcours.statut_apprenant AS statut_apprenant
-        from
+        "   SELECT  InfoEleve.pays_mere AS pays_mere, InfoEleve.pays_pere AS pays_pere,
+                    InfoEleve.email AS email, InfoEleve.ecole AS ecole,
+                    InfoEleve.classe AS classe, InfoEleve.telephone AS telephone,
+                    InfoEleve.allergie AS allergie, InfoEleve.groupe_sanguin AS groupe_sanguin,
+                    InfoEleve.maladie_recurrente AS maladie_recurrente, InfoEleve.probleme_particulier AS probleme_particulier,
+                    InfoEleve.nom_medecin AS nom_medecin, InfoEleve.telephone_medecin AS telephone_medecin,
+                    InfoEleve.email_medecin AS email_medecin, InfoEleve.autres AS autres,
+                    InfoEleve.matricule AS matricule, InfoEleve.nom AS nom, InfoEleve.prenom AS prenom,
+                    InfoEleve.sexe AS sexe,
+                    InfoEleve.date_naissance AS date_naissance, InfoEleve.lieu_naissance AS lieu_naissance,
+                    InfoEleve.anciennete AS anciennete, InfoEleve.photo AS photo,
+                    InfoParcours.date_inscription AS date_inscription_parcours, InfoParcours.classe_parcours AS classe_parcours,
+                    InfoParcours.statut_annee_scolaire AS statut_annee_scolaire,
+                    InfoParcours.annee_scolaire AS annee_scolaire, InfoParcours.statut_apprenant AS statut_apprenant
+        FROM
         (
             SELECT  dp.pays_mere AS pays_mere, dp.pays_pere AS pays_pere,
                     antecedent_scolaire.email AS email, antecedent_scolaire.ecole AS ecole,
@@ -795,10 +791,9 @@ class EleveRepository extends BaseRepository{
             LEFT  JOIN  statut_apprenant ON statut_apprenant.id = parcours.statut_apprenant_id
             LEFT  JOIN  annee_scolaire ON annee_scolaire.id = parcours.classe_id
             WHERE parcours.classe_id="+ $classe_id +
-        ")  InfoParcours
-        WHERE InfoEleve.id = InfoParcours.eleve_id
-        ORDER BY InfoParcours.date_inscription
-
+    "  )  InfoParcours
+            WHERE InfoEleve.id = InfoParcours.eleve_id
+            ORDER BY InfoParcours.date_inscription
         ";
         $result = $this->query($req);
         return $this->toObject($result);

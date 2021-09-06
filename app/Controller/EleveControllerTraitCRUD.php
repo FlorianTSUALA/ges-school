@@ -28,6 +28,7 @@ use App\Helpers\TraitCRUDController;
 use App\Repository\ClasseRepository;
 use App\Repository\VersementRepository;
 use ClanCats\Hydrahon\Query\Expression;
+use App\Repository\SalleClasseRepository;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
 
@@ -89,6 +90,7 @@ trait EleveControllerTraitCRUD
             'classe' => Request::getSecParam('classe', ''),
             'ecole' => Request::getSecParam('ecole', '')
         ];
+
         $result_antecedent_scolaire = $this->antecedent_scolaire->save($data_antecedent_scolaire);
         $id_antecedent_scolaire = $this->antecedent_scolaire->id($code_antecedent_scolaire);
 
@@ -187,6 +189,21 @@ trait EleveControllerTraitCRUD
 
 
         if ($result_antecedent_scolaire && $result_dossier_medical && $result_dossier_parental && $result_eleve /*&& $result_parcours*/) {
+            
+            $code_classe = $this->classe->code(Request::getSecParam('classe_eleve', ''), Classe::LIBELLE) ;
+
+            $msg_inscriptpion = 'Inscription Enregistrée avec success';
+            $data_inscriptpion = [];
+            $data_inscriptpion[S::VERS_MSG_INSCRIPTION] = $msg_inscriptpion;
+            $data_inscriptpion[S::VERS_CODE_CLASSE] = $code_classe;
+            $data_inscriptpion[S::VERS_CODE_ELEVE] = $code_eleve;
+            $data_inscriptpion[S::VERS_PRENOM] = Request::getSecParam('nom_eleve', '') ;
+            $data_inscriptpion[S::VERS_NOM] = Request::getSecParam('prenom_eleve', '') ;
+            $_SESSION[S::DATA_TRANSPORT] = $data_inscriptpion;
+            // $_SESSION[S::VERS_CODE_ELEVE] = $code_eleve;
+
+
+            
             $this->sendResponseAndExit(Helpers::toJSON($result_eleve, TRUE));
         } else {
             $this->sendResponseAndExit($result_eleve, false, 400, 'DB Error');
@@ -444,18 +461,18 @@ trait EleveControllerTraitCRUD
     }
 
     public function apiDeleteEleve($code){
-            $data_eleve['visibilite'] = 0;
+        $data_eleve['visibilite'] = 0;
 
-            $result_eleve = Eleve::table()  ->update($data_eleve)
-                                                    ->where('code', $code)
-                                                    ->execute();
-            $result_eleve = true;
-    
-            if ($result_eleve) {
-                $this->sendResponseAndExit(Helpers::toJSON('Suppression réalisée avec sucess !!!', TRUE));
-            } else {
-                $this->sendResponseAndExit($result_eleve, false, 400, 'DB Error');
-            }
+        $result_eleve = Eleve::table()  ->update($data_eleve)
+                                                ->where('code', $code)
+                                                ->execute();
+        $result_eleve = true;
+
+        if ($result_eleve) {
+            $this->sendResponseAndExit(Helpers::toJSON('Suppression réalisée avec sucess !!!', TRUE));
+        } else {
+            $this->sendResponseAndExit($result_eleve, false, 400, 'DB Error');
+        }
     }
 
     /**
@@ -464,7 +481,7 @@ trait EleveControllerTraitCRUD
      * @param string $code
      * @return void
      */
-    public function index_update($code)
+    /*public function index_update($code)
     {
         $data = Request::getSecPostParam($this->{$this->vairant}->fillables);
         $data = $this->resolveCode2IdInput($data, $this->fillExternal($this->{$this->vairant}->fillables));
@@ -481,14 +498,14 @@ trait EleveControllerTraitCRUD
         }else{
             $this->sendResponseAndExit($data, FALSE, 400, 'DB Error');
         }
-    }
+    }*/
 
 
     public function liste_classe()
     {
 
         // $eleves = $this->eleve_repository->getEleveGroupByTypeEleve();   
-        $classes = (new ClasseRepository())->getSalleClasseGroupByClasse();
+        $classes = (new SalleClasseRepository())->getSalleClasseGroupByClasse();
         
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 

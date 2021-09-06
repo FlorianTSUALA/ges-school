@@ -61,7 +61,7 @@ trait VersementControllerTraitMultiple
         $data_inscriptpion = null;
         if(isset($_SESSION[S::DATA_TRANSPORT])){
             $data_inscriptpion = $_SESSION[S::DATA_TRANSPORT];
-            $_SESSION[S::DATA_TRANSPORT] = null;
+            // $_SESSION[S::DATA_TRANSPORT] = null;
         }
 
         $this->render('sections.versement.multiple.ajout.versement_multiple', compact(
@@ -430,15 +430,14 @@ trait VersementControllerTraitMultiple
 
         //AUTRES
             $autres = $_POST['autres']??[];
-            $type_pension = $autres['type_pension'];
             $montant = $autres['montant'];
             $reduction = $autres['reduction'];
 
           
-            if(!(empty($montant) || $montant == "0")){
+            if(isset($autres['type_pension']) && !( empty($montant) || $montant == "0")){
                 $model_pension_eleve = DBTable::getModel(DBTable::PENSION_ELEVE);
                 
-                $type_pension = empty($type_pension)? "Autres" :$type_pension;
+                $type_pension = (isset($autres['type_pension']) && empty($type_pension))? "Autres" :$type_pension;
 
                 $data_pension_eleve_autre = [
                     'code' => PensionEleve::generateCode(),
@@ -458,6 +457,10 @@ trait VersementControllerTraitMultiple
         //AUTRES
 
         //vd('ok Autres');
+
+        if(isset($_SESSION[S::DATA_TRANSPORT])){
+            $_SESSION[S::DATA_TRANSPORT] = null;
+        }
 
         //vd($result_pension_eleve , $result_abonnement_detail , $result_abonnement_cantine , $result_facture);
         // $result = $result_pension_eleve && $result_abonnement_detail && $result_abonnement_cantine && $result_facture ;

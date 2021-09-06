@@ -17,20 +17,6 @@ use function Core\Helper\vd;
 class Model 
 {	
 
-	private static $singleton;
-
-    public static function getInstance($par){
-
-        if(is_null(self::$singleton)){
-
-            self::$singleton = new $this ($par);
-
-        }
-
-        return self::$singleton;
-
-    }
-	
 	use Table, HydrahonModel;
 	/** @var string $table Nom de la Table en ligne */
 	protected $table;
