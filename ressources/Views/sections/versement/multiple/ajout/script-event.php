@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\S;
 use App\Model\Technique\E;
 use App\Model\TypePension;
 
@@ -11,7 +12,7 @@ use App\Model\TypePension;
     let data = 'Bienvenue à la section dédiée aux versements scolaires'
 
     <?php if (isset($data_inscriptpion)) { ?>
-        data = "<?= 'L\'élève ' . $data_inscriptpion['nom_eleve'] . ' ' . $data_inscriptpion['prenom_eleve'] . ' a été inscrit avec success à l\année scolaire ' . $data_inscriptpion['annee_scolaire'] . ' !!! ' ?>"
+        data = "<?= 'L\'élève ' . $data_inscriptpion[S::VERS_NOM] . ' ' . $data_inscriptpion[S::VERS_PRENOM] . ' a été bien enregistré comme Veuillez l\'inscrire pour le compte de l\'année scolaire ' . $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE) . ' !!! ' ?>"
     <?php } ?>
 
 
@@ -489,7 +490,11 @@ use App\Model\TypePension;
                 }
 
                 if (type_pension_id == '<?= TypePension::INSCRIPTION_CODE ?>') {
+                        
                     $('#COL_TRANCHE_NUMERIC_' + type_pension_id).prop("readonly", true);
+                    if ('<?= !(isset($data_inscriptpion)) ?>')
+                        $('#COL_TRANCHE_NUMERIC_' + type_pension_id).prop("readonly", false);
+                    
                     // items['' + type_pension_id]['mensualite'] = []
                     items['' + type_pension_id]['pension_classe_code'] = tranche_info[0].id
                     items['' + type_pension_id]['multiplicateur'] = 1

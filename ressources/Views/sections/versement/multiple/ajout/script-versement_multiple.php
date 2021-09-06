@@ -58,8 +58,6 @@ use App\Model\Technique\E;
 <script>
     
     function init() {
-        if(<?= (isset($data_inscriptpion)) ? 'true' : 'false' ?>)
-            flash_msg("<?= $data_inscriptpion[S::VERS_MSG_INSCRIPTION] ?>")
 
         if (isFirstLoad) {
             trigger_classe($(classe).select2().find(':selected').data('id'))

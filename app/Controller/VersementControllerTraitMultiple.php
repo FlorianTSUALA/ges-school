@@ -2,11 +2,14 @@
 
 namespace App\Controller;
 
+use DateTime;
 use App\Helpers\S;
 use App\Model\Eleve;
+use App\Model\Classe;
 use Core\Model\Model;
 use App\Model\DBTable;
 use App\Model\Facture;
+use App\Model\Parcours;
 use App\Helpers\Helpers;
 use App\Model\Personnel;
 use Core\Session\Request;
@@ -19,6 +22,7 @@ use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\AbonnementActivite;
 use App\Repository\EleveRepository;
+use App\Repository\ParcoursRepository;
 use App\Repository\PrixPaiementRepository;
 
 trait VersementControllerTraitMultiple
@@ -154,11 +158,7 @@ trait VersementControllerTraitMultiple
                     $reduction = $item['reduction'];
 
 
-                    $multiplicateur = $item['multiplicateur'];
-                    $recapitulatif = $item['recapitulatif'];
-                    $montant_net = $item['montant_net'];
-                    $montant_brut = $item['montant_brut'];
-                    $remise = $item['remise'];
+                  
                     
                     $type_pension_id = Model::getId(DBTable::TYPE_PENSION, $type_pension_code);
                     // vd($item);
@@ -229,6 +229,21 @@ trait VersementControllerTraitMultiple
                             $pension_eleve_id = Model::getId(DBTable::PENSION_ELEVE, $code_pension_eleve);
                             array_push($ids_pension_eleve, $pension_eleve_id);
                         }
+
+                        if($type_pension_code == TypePension::INSCRIPTION_CODE){
+                            $model_parcours = Parcours::table();
+                            $code_parcours = Parcours::generateCode();
+                            $data_parcours = [
+                                'code' => $code_parcours,
+                                Parcours::ANNEE_SCOLAIRE_ID => $this->session->get(S::ANNEE_SCOLAIRE),
+                                'date_inscription' => (new DateTime('NOW'))->format('Y-m-d H:i:s'),
+                                Parcours::ELEVE_ID => $eleve_id,
+                                Parcours::CLASSE_ID => $classe_id,
+                                Parcours::STATUT_APPRENANT_ID => (new StatutApprenantRepository())->getStatutApprenantId(),
+                            ];
+                            $model_parcours->insert($data_parcours)->execute();
+                        }
+
                     }
                 }
             if($debug)  vd('ok Pension eleve');

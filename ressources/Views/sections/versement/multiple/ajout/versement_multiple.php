@@ -193,7 +193,7 @@ ob_start();
                             <fieldset class="mb-1">
                                 <h5>Multiplicateur</h5>                                                                         
                                 <div class="form-group">
-                                    <input type="number" readonly class="form-control " value="1"  id="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"  name="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"    placeholder="">
+                                    <input type="number"  min="0" max="1" <?= (isset($data_inscriptpion))? 'readonly' : ''; ?> class="form-control " value="<?= (isset($data_inscriptpion))? '1' : '0'; ?>"  id="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"  name="COL_TRANCHE_NUMERIC_<?= $item['id'];?>"    placeholder="">
                                 </div>
                             </fieldset>
                         </div> 
