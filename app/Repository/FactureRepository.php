@@ -21,7 +21,7 @@ class FactureRepository extends BaseRepository{
       if($date == NULL)
         $date = Helpers::today();      
       $req =
-      " SELECT facture.personnel_id as id, sum(facture.montant) as total
+      " SELECT  sum(facture.montant) as total
         from facture
         where facture.visibilite = 1  and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
       ";
@@ -41,6 +41,24 @@ class FactureRepository extends BaseRepository{
        INNER JOIN activite on activite.id = abonnement_activite.activite_id
        where facture.visibilite = 1  and abonnement_detail.type_abonnement = 'ACTIVITE' and facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
        group by activite.libelle 
+      ";
+
+      $result = (new self)->query($req);
+      return (new self)->toObject($result);
+  }
+
+  public function get_paie_facture_activite_total($personnel_id, $date = Null ){
+
+    if($date == NULL)
+    $date = Helpers::today(); 
+       $req =
+       " SELECT sum(abonnement_detail.total) as total 
+       from abonnement_activite 
+       INNER JOIN facture on facture.id = abonnement_activite.facture_id
+       INNER JOIN abonnement_detail on abonnement_activite.id = abonnement_detail.abonnement_id 
+       INNER JOIN activite on activite.id = abonnement_activite.activite_id
+       where facture.visibilite = 1  and abonnement_detail.type_abonnement = 'ACTIVITE' and facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
+      
       ";
 
       $result = (new self)->query($req);
@@ -68,19 +86,18 @@ class FactureRepository extends BaseRepository{
   public function get_paie_facture_scolarite($personnel_id, $date = Null ){
 
     if($date == NULL)
-          $date = Helpers::today(); 
+          $date = Helpers::today();   
     $req =
         " SELECT sum(facture.montant) as total
-        from
-        (select  pension_eleve.montant, facture.date_paiement, pension_eleve.reduction, tranche_scolaire.libelle
-        from facture
+       from facture
         left join pension_eleve  on facture.id = pension_eleve.facture_id
         left join tranche_scolaire on tranche_scolaire.id = pension_eleve.tranche_scolaire_id
         left join type_pension on type_pension.id = pension_eleve.type_pension_id
         where  facture.visibilite = 1 and type_pension.code = 'SCOLARITE' and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
-        order by facture.date_paiement)";
+        order by facture.date_paiement";
 
-        $result = (new self)->query($req);
+
+$result = (new self)->query($req);
         return (new self)->toObject($result);
  }
 
@@ -90,14 +107,13 @@ class FactureRepository extends BaseRepository{
           $date = Helpers::today(); 
     $req =
         " SELECT sum(facture.montant) as total
-        from
-        (select  pension_eleve.montant, facture.date_paiement, pension_eleve.reduction, tranche_scolaire.libelle
-        from facture
+    
+       from facture
         left join pension_eleve  on facture.id = pension_eleve.facture_id
         left join tranche_scolaire on tranche_scolaire.id = pension_eleve.tranche_scolaire_id
         left join type_pension on type_pension.id = pension_eleve.type_pension_id
         where  facture.visibilite = 1 and type_pension.code = 'INSCRIPTION' and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
-        order by facture.date_paiement)";
+        order by facture.date_paiement";
 
       $result = (new self)->query($req);
       return (new self)->toObject($result);
