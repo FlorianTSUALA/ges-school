@@ -21,9 +21,10 @@ class FactureRepository extends BaseRepository{
       if($date == NULL)
         $date = Helpers::today();      
       $req =
-      " SELECT  sum(facture.montant) as total
+      " SELECT  sum(facture.montant) as total 
         from facture
         where facture.visibilite = 1  and  facture.date_paiement = '$date' and facture.personnel_id = $personnel_id
+       
       ";
         $result = (new self)->query($req);
         return (new self)->toObject($result);
@@ -88,8 +89,8 @@ class FactureRepository extends BaseRepository{
     if($date == NULL)
           $date = Helpers::today();   
     $req =
-        " SELECT sum(facture.montant) as total
-       from facture
+        " SELECT sum(pension_eleve.montant) as total
+        from facture
         left join pension_eleve  on facture.id = pension_eleve.facture_id
         left join tranche_scolaire on tranche_scolaire.id = pension_eleve.tranche_scolaire_id
         left join type_pension on type_pension.id = pension_eleve.type_pension_id
@@ -106,9 +107,9 @@ $result = (new self)->query($req);
     if($date == NULL)
           $date = Helpers::today(); 
     $req =
-        " SELECT sum(facture.montant) as total
+        " SELECT sum(pension_eleve.montant) as total
     
-       from facture
+        from facture
         left join pension_eleve  on facture.id = pension_eleve.facture_id
         left join tranche_scolaire on tranche_scolaire.id = pension_eleve.tranche_scolaire_id
         left join type_pension on type_pension.id = pension_eleve.type_pension_id

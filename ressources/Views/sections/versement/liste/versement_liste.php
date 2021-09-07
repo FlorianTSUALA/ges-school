@@ -76,11 +76,11 @@ $include_footer_script = ob_get_clean();
                 </div>
             </div>
             <div class="content-header-right col-md-6 col-12">
-                <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
+            <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
                     <div class="btn-group" role="group">
                     </div>
-                        <a class="btn btn-outline-info" href="<?= URL::link('versement_liste') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Liste des versements</a>
-                    <a class="btn btn-outline-info" href="<?= URL::link('versement_liste') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
+                        <a class="btn btn-outline-info <?= ($menu_actif == "liste_abonnee")? "active" : "" ?>" href="<?= URL::link('versement_liste') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Liste des versements</a>
+                    <a class="btn btn-outline-info <?= ($menu_actif == "facture_totale")? "active" : "" ?>" href="<?= URL::link('facture_totale') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
                 </div>
             </div>
             <div class="content-header-lead col-12 mt-2">
@@ -127,11 +127,10 @@ $include_footer_script = ob_get_clean();
                                             <thead>
                                                 <tr>
                                                     <th>N</th>
-                                                   
+                                                    <th>Elève concerné</th>
                                                     <th>Montant</th>
                                                     <th>Réduction</th>
-                                                    <th>Date</th>
-                                                    <th>Elève concerné</th>
+                                                    <th>Date</th>                                              
                                                     <th>Actions</th>
                                                 </tr>
                                             </thead>
@@ -140,9 +139,6 @@ $include_footer_script = ob_get_clean();
                                             <?php $comp=0; foreach ($factures as $facture): ?>
                                               <tr>
                                                   <td><?php $comp++; echo $comp; ?></td>
-                                                  <td><?php echo number_format($facture['montant'],0,',',' ').' Fcfa' ?></td>
-                                                  <td><?php echo number_format($facture['reduction'],0,',',' ').' Fcfa' ?></td>
-                                                  <td><?php $date = new DateTime($facture['date_facture']); echo $date->format('d/m/Y'); ?></td>
                                                   <td>
                                                     <?php
                                                         $eleve=Facture::get_eleve_by_facture($facture['id']);
@@ -229,6 +225,10 @@ $include_footer_script = ob_get_clean();
                                                      ?>
 
                                                   </td>
+                                                  <td><?php echo number_format($facture['montant'],0,',',' ').' Fcfa' ?></td>
+                                                  <td><?php echo number_format($facture['reduction'],0,',',' ').' Fcfa' ?></td>
+                                                  <td><?php $date = new DateTime($facture['date_facture']); echo $date->format('d/m/Y'); ?></td>
+                                                 
                                                   <td style="width: 15%;">
 
                                                   <!-- <div class="btn-group" role="group" aria-label="Basic example"> '+
@@ -641,12 +641,11 @@ $include_footer_script = ob_get_clean();
                                             <tfoot>
                                                 <tr>
                                                   <th>N</th>
-                                                 
+                                                  <th>Elève concerné</th>
                                                   <th>Montant</th>
                                                   <th>Réduction</th>
-                                                  <th>Date</th>
-                                                  <th>Elève concerné</th>
-                                                  <th>Actions</th>
+                                                  <th>Date</th>                                                 
+                                                 <th>Actions</th>
                                                 </tr>
                                             </tfoot>
                                         </table>
