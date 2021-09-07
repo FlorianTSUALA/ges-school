@@ -51,6 +51,8 @@ $funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
         data_versement['long_date_facture'] = "<?= Helpers::getFullDate(date("Y-m-d H:i:s")) ?>"
 
         data_versement['montant_paye'] =  $('#montant').val()
+        data_versement['fonction_gestionnaire'] =  "<?= $this->session->get(S::PERS_TYPE_PERSONNEL) ?>"
+        data_versement['gestionnaire'] =  "<?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?>"
 
         let classe = $( "#classe option:selected" ).text()
 

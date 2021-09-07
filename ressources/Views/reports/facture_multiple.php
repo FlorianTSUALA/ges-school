@@ -156,12 +156,12 @@ th, tr, td {
     </tr>
     <tr>
         <td style="text-align: left; padding: 4px;"><b>Conditions générales</b></td>
-        <td style="text-align: right; ">Charbonnier LaRose</td>
+        <td style="text-align: right; "> <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> </td>
         
     </tr>
     <tr>
         <td style="text-align: left;"><i>Après paiement, votre argent est non-remboursable.</i></td>
-        <td style="text-align: center; ">Le Sécrétariat </td>
+        <td style="text-align: center; "><?= $this->session->get(S::PERS_TYPE_PERSONNEL) ?></td>
     </tr>
     
 
@@ -266,12 +266,12 @@ th, tr, td {
     </tr>
     <tr>
         <td style="text-align: left; padding: 4px;"><b>Conditions générales</b></td>
-        <td style="text-align: right; ">Charbonnier LaRose</td>
+        <td style="text-align: right; "> <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> </td>
         
     </tr>
     <tr>
         <td style="text-align: left;"><i>Après paiement, votre argent est non-remboursable.</i></td>
-        <td style="text-align: center; ">Le Sécrétariat </td>
+        <td style="text-align: center; "><?= $this->session->get(S::PERS_TYPE_PERSONNEL) ?></td>
     </tr>
     
 
@@ -285,7 +285,7 @@ th, tr, td {
         </tr>
         <tr>
             <td style="text-align: left;"></td>
-            <td style="text-align: center;" colspan="2" >Charbonnier LaRose</td>
+            <td style="text-align: center;" colspan="2" > <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> </td>
         </tr>
         <tr>
             <td style="text-align: left;"></td>

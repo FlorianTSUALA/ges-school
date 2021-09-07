@@ -99,7 +99,7 @@
                     <div class="text-center">
                         <p>Personne habilitée</p>
                         <!-- <img src="http://127.0.0.1/ges-school/public/assets/app-assets/images/pages/signature-scan.png" alt="signature" class="height-100"/> -->
-                        <h6 id="recap-signataire">Charbonnier LaRose</h6>
+                        <h6 id="recap-signataire"> <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> </h6>
                         <p class="text-muted" id="recap-funtion_signataire">Le Sécrétariat</p>
                     </div>
                 </div>

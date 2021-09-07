@@ -22,7 +22,7 @@ use App\Controller\PrinterController;
     // $total = 165000;
     // $reduction = 15000;
     // $reste = 0;
-    // $signataire = "Charbonnier LaRose";
+    // $signataire = " <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> ";
     // $funtion_signataire = "Le Sécrétariat";
     // $numero_ligne = 1;
     // $sous_total = 180000;

@@ -170,7 +170,7 @@
                                                         <div class="text-center">
                                                             <p>Personne habilitée</p>
                                                             <img src="app-assets/images/pages/signature-scan.png" alt="signature" class="height-100"/>
-                                                            <h6>Charbonnier LaRose</h6>
+                                                            <h6> <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> </h6>
                                                             <p class="text-muted">Le Sécrétariat</p>
                                                         </div>
                                                     </div>

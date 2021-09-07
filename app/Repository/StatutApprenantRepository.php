@@ -2,8 +2,6 @@
 
 namespace App\Repository;
 
-use App\Model\Eleve;
-use App\Model\DBTable;
 use App\Model\Parcours;
 use function Core\Helper\dd;
 

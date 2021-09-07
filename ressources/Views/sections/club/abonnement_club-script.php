@@ -2,7 +2,7 @@
 
     use App\Helpers\Helpers;
 
-    $signataire = 'Charbonnier LaRose';
+    $signataire = ' <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> ';
     $funtion_signataire = 'Le Sécrétariat';
 
 ?>

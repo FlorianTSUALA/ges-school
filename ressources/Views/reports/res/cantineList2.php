@@ -150,7 +150,7 @@ th, td {
         </tr>
         <tr>
             <td style="text-align: left;"></td>
-            <td style="text-align: center;" colspan="2" >Charbonnier LaRose</td>
+            <td style="text-align: center;" colspan="2" > <?= $this->session->get(S::PERS_NOM) . " " . $this->session->get(S::PERS_PRENOM) ?> </td>
         </tr>
         <tr>
             <td style="text-align: left;"></td>
