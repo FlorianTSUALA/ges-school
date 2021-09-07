@@ -60,6 +60,8 @@ class Facture extends Model implements FrequentlyReapeat
 
 
 
+    
+
     public static function get_retard_paie_scolarite($mois_encours = NULL,  $jour_delai = 1)
     {
           $tab_eleve_id = array();
@@ -304,16 +306,6 @@ class Facture extends Model implements FrequentlyReapeat
                 //->where('abonnement_detail.visibilite', '=', 1)
                 ->orderBy('abonnement_cantine.id', 'ASC')
                 ->get();
-
-      // $pension_cantine = DBTable::getModel('abonnement_detail')
-      //           ->select()
-      //           ->join('abonnement_cantine', 'abonnement_cantine.id', '=', 'abonnement_detail.abonnement_id')
-      //           ->where('abonnement_cantine.facture_id', '=', $fact_id)
-      //           ->where('abonnement_cantine.eleve_id', '=', $ele_id)
-      //           ->where('abonnement_cantine.visibilite', '=', 1)
-      //           ->where('abonnement_detail.visibilite', '=', 1)
-      //           ->orderBy('abonnement_detail.id', 'ASC')
-      //           ->get();
 
 
         return $pension_cantine;

@@ -106,8 +106,8 @@ $table_header2 = "
                 <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
                     <div class="btn-group" role="group">
                     </div>
-                        <a class="btn btn-outline-info" href="<?= URL::link('versement_liste') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Liste des versements</a>
-                    <a class="btn btn-outline-info" href="<?= URL::link('facture_totale') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
+                        <a class="btn btn-outline-info <?= ($menu_actif == "liste_abonnee")? "active" : "" ?>" href="<?= URL::link('versement_liste') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Liste des versements</a>
+                    <a class="btn btn-outline-info <?= ($menu_actif == "facture_totale")? "active" : "" ?>" href="<?= URL::link('facture_totale') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Tous les Entrées</a>
                 </div>
             </div>
             <div class="content-header-lead col-12 mt-2">
@@ -210,7 +210,7 @@ $table_header2 = "
                                   <br><br><br>
 
                             <div id="heading-etape-04" role="tab" class="card-header border-bottom-black border-bottom-warning">
-                               <a data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-04" aria-expanded="false" aria-controls="accordion-etape-04" class="text-uppercase black collapsed"><strong>Entrées Journalière</strong></a>
+                               <a  data-toggle="collapse" data-parent="#accordionWrap1" href="#accordion-etape-04" aria-expanded="false" aria-controls="accordion-etape-04" class="text-uppercase black collapsed"><strong>Entrées Journalière</strong></a>
                             </div>
                                     <div class="row">
                                    

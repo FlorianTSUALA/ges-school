@@ -125,7 +125,7 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
 
 //INSCRIPTION
     //$router->addRoute('inscrire', 'inscription', [InscriptionController::class, 'index']);
-$router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
+    $router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
 
 // TEST SAVING WITH EXCEL
 $router->addRoute('excell', 'excell', [ExcelController::class, 'excell']);

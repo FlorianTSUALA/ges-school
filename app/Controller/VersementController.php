@@ -188,6 +188,7 @@ class VersementController extends \App\Controller\Admin\AppController
     public function liste_abonnee()
     {
         $route = 'versement_liste';
+        $menu_actif = 'liste_abonnee';
 
         $factures = DBTable::getModel('facture')
                   ->select()
@@ -195,7 +196,7 @@ class VersementController extends \App\Controller\Admin\AppController
                   ->orderBy('id', 'DESC')
                   ->get();
 
-        $this->render('sections.versement.liste.versement_liste', compact('route', 'factures'));
+        $this->render('sections.versement.liste.versement_liste', compact('route', 'menu_actif', 'factures'));
     }
 
     public function liste_retard()
