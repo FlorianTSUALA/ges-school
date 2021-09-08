@@ -15,6 +15,7 @@ class TrancheScolaire extends Model implements FrequentlyReapeat
     const ANNEE_SCOLAIRE_ID = "annee_scolaire_id";
     const TYPE_TRANCHE_SCOLAIRE_ID = "type_tranche_scolaire_id";
     const MOIS = 'mois';
+    const DATE_LIMITE_PAIEMENT = 'date_limite_paiement';
     const DATE_DEBUT = "date_debut";
     const DATE_FIN = "date_fin";
 
@@ -43,7 +44,7 @@ class TrancheScolaire extends Model implements FrequentlyReapeat
                 new FormModel(false, self::DESCRIPTION, "Mois concerné(s)", InputType::SELECT2_MULTIPLE, $mois, 'Ex: mois de la tranche(Janvier, Fé...)' , true, 'select2 multiple', '', '', '', DBTable::TRANCHE_SCOLAIRE, Self::DESCRIPTION), //"#SELECT2MULTIPLE"
                 // new FormModel(false, self::ANNEE_SCOLAIRE_ID, 'Année scolaire', InputType::SELECT2, $anneeScolaires, '', 
                 //          'Veuillez selectionnez une année scolaire', true, 'select2', '', '', '', AnneeScolaire::LIBELLE),
-                
+                new FormModel(true, self::DATE_LIMITE_PAIEMENT, 'Date de limite de paiement', InputType::DATE),
                 // new FormModel(true, self::DATE_DEBUT , 'Date de début', InputType::DATE),
                 // new FormModel(true, self::DATE_FIN ,'Date de fin',InputType::DATE ),
             ];

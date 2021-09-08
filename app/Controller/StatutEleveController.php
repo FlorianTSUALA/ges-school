@@ -3,10 +3,11 @@
 namespace App\Controller;
     
 use App\Model\DBTable;
+use App\Model\Parcours;
 use Core\Session\Request;
+use App\Model\StatutEleve;
 use App\Helpers\TraitCRUDController;
 use App\Controller\Admin\AppController;
-use App\Model\Parcours;
 use App\Repository\AnneeScolaireRepository;
 
 class StatutEleveController extends AppController 
@@ -56,6 +57,26 @@ class StatutEleveController extends AppController
             ->where('parcours.eleve_id',$annee_scolaire_id)
             ->orderBy('parcours.annee_scolaire_id')
             ->get();
+
+
+
+        $status;
+        switch($status){
+            case StatutEleve::NOUVEAU_CODE:
+
+            break;
+            
+            case StatutEleve::ANCIEN_CODE:
+
+            break;
+            case StatutEleve::DEMISSINAIRE_CODE:
+
+            break;
+            case StatutEleve::FIN_CYCLE_CODE:
+
+            break;
+
+        }
     } 
 
 }

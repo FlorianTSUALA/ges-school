@@ -6,6 +6,7 @@ use App\Model\DBTable;
 use Core\Session\Request;
 use App\Helpers\HTMLHelper;
 use Core\HTML\Form\FormModel;
+use FFI\CData;
 
 use function Core\Helper\dd;
 use function Core\Helper\vd;
@@ -158,7 +159,9 @@ trait TraitCRUDController
                     $code = str_replace($to_search, $to_replace, $code) ;
                     // $code = "['" . str_replace($to_search, $to_replace, $code) . "']";
                 }else{
-                    $code = $model->select('code')->where('id', $id)->get()[0]['code'];
+                    $tmp = $model->select('code')->where('id', $id)->get();
+                    if($tmp)
+                        $code = $tmp[0]['code'];
                 }
                 $data[$resolv['id']] = $code;
             }
@@ -185,7 +188,9 @@ trait TraitCRUDController
                     if( strpos($resolv[FormModel::TYPE], "multiple") !== false ){//"#SELECT2MULTIPLE"
                         $value = $id;
                     }else{
-                        $value = $model->select($field)->where('id', $id)->last()[$field];
+                        $tmp = $model->select($field)->where('id', $id)->last();
+                        if($tmp)
+                            $value = $tmp[$field];
                     }
                     $data[$resolv[FormModel::ID]] = $value;
                 }

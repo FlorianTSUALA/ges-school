@@ -146,6 +146,8 @@ $router->addRoute('versement_multiple-create', 'versement/multiple/create/{code}
 $router->addRoute('versement_inscription-create', 'versement/inscription/create/{code}', [VersementController::class, 'save_inscription']);
 $router->addRoute('versement_scolarite-create', 'versement/scolarite/create/{code}', [VersementController::class, 'save_scolarite']);
 // $router->addRoute('versement-create', 'versement/create/{code}', [VersementController::class, 'save']);
+$router->addRoute('versement_cantine_facture', 'versement/cantine/print/{code}', [VersementController::class, 'impriner_facture_cantine']);
+$router->addRoute('versement_activite_facture', 'versement/activite/print/{code}', [VersementController::class, 'impriner_facture_activite']);
 $router->addRoute('versement_multiple_facture', 'versement/multiple/print/{code}', [VersementController::class, 'impriner_facture_multiple']);
 $router->addRoute('versement_inscription_facture', 'versement/inscription/print/{code}', [VersementController::class, 'impriner_facture_inscription']);
 $router->addRoute('versement_scolarite_facture', 'versement/scolarite/print/{code}', [VersementController::class, 'impriner_facture_scolarite']);
@@ -156,7 +158,6 @@ $router->addRoute('versement-suppression', 'versement/suppression/{id_fact}', [V
 $router->addRoute('versement-modification', 'versement/modification/{id_fact}', [VersementController::class, 'v_modification']);
 
 //LISTE VERSEMENT
-
 $router->addRoute('versement-list_all', 'versement/list/all', [VersementController::class, 'list_all']);
 //$router->addRoute('liste_versement', 'versement/list', [VersementController::class, 'detail']);
 // $router->addRoute('versement-list_info', 'versement/list/_info{code}', [VersementController::class, 'preview']);
@@ -180,6 +181,10 @@ $router->addRoute('facture_api_info', 'facture/api/info/', [FactureController::c
 
 //PRINTER REPORT
 $router->addRoute('print', 'print/{model}', [PrinterController::class, 'index']);
+
+//GROUPE FAMILIAL
+$router->addRoute('api_get_goupe_familial_eleve', 'api/get/goupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_get_groupe_familial']);
+$router->addRoute('api_save_goupe_familial_eleve', 'api/save/goupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_save_groupe_familial']);
 
 //ACTVITE
 $router->crudRoute('activite', ActiviteController::class);

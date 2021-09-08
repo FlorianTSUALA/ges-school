@@ -118,11 +118,11 @@ data_facture['total_day']
 
     function imprimerRecuVersement(){
  
-        gotoUrl('<?= URL::link('facture_cantine');?>'+$('#eleve_nom_complet option:selected').val(), data_facture);
+        gotoUrl('<?= URL::link('versement_cantine_facture');?>'+$('#eleve_nom_complet option:selected').val(), data_facture);
         console.log(data_facture);
 
         /*$.ajax({
-            url: '<?= URL::link('facture_cantine');?>'+$('#eleve_nom_complet option:selected').val(),
+            url: '<?= URL::link('versement_cantine_facture');?>'+$('#eleve_nom_complet option:selected').val(),
             type: 'post',
             data: data_facture,
             dataType: 'json',

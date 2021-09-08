@@ -17,6 +17,11 @@ use App\Controller\Admin\AppController;
 use App\Repository\TrancheScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
 
+/**
+ * TrancheScolaire controller
+ * 
+ * @feature considering annee scolaire in request
+ */
 class TrancheScolaireController extends AppController
 {
     use TraitCRUDController;
@@ -57,6 +62,7 @@ class TrancheScolaireController extends AppController
     {
         $description = $_POST['description'];
         $type_tranche_scolaire_code = Request::getSecParam('type_tranche_scolaire_id');
+        $date_limite_paiement = Request::getSecParam('date_limite_paiement');
         // $annee_scolaire_code = Request::getSecParam('annee_scolaire_id');
         // $annee_scolaire_id = TypeTrancheScolaire::table()->select('id')->where('code', $type_tranche_scolaire_code)->one()['id'];
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
@@ -66,6 +72,7 @@ class TrancheScolaireController extends AppController
         $data_tranche_scolaire = [
             'code' => $tranche_scolaire_code,
             'annee_scolaire_id' => $annee_scolaire_id,
+            'date_limite_paiement' => $date_limite_paiement,
             'type_tranche_scolaire_id' => TypeTrancheScolaire::get_id($type_tranche_scolaire_code),
             'libelle' => $libelle,
         ];
@@ -101,6 +108,7 @@ class TrancheScolaireController extends AppController
         // dd($code);
         $description = $_POST['description'];
         $type_tranche_scolaire_code = Request::getSecParam('type_tranche_scolaire_id');
+        $date_limite_paiement = Request::getSecParam('date_limite_paiement');
         // $annee_scolaire_code = Request::getSecParam('annee_scolaire_id');
         // $annee_scolaire_id = TypeTrancheScolaire::table()->select('id')->where('code', $type_tranche_scolaire_code)->one()['id'];
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
@@ -108,6 +116,7 @@ class TrancheScolaireController extends AppController
         $libelle = Request::getSecParam('libelle');
         $data_tranche_scolaire = [
             'annee_scolaire_id' => $annee_scolaire_id,
+            'date_limite_paiement' => $date_limite_paiement,
             'type_tranche_scolaire_id' => TypeTrancheScolaire::table()->select('id')->where('code', $type_tranche_scolaire_code)->one()['id'],
             'libelle' => $libelle,
         ];

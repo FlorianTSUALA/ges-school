@@ -24,6 +24,8 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 // use App\Controller\Admin\AppController;
+// https://jsfiddle.net/GlennSuperdude/4u6xp3t3/88
+// https://github.com/tabalinas/jsgrid
 
 class ExcelController extends AppController
 {

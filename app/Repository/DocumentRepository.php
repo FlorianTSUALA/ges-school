@@ -3,7 +3,7 @@
 namespace App\Repository;
 
 use App\Model\DBTable;
-use App\Model\EnumModel;
+use App\Model\Technique\EnumModel;
 use App\Model\EnumStatutDocument;
 use App\Model\Exemplaire;
 use App\Model\EtatDocument;

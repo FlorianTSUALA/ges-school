@@ -16,6 +16,7 @@ class TrancheScolaireRepository extends BaseRepository{
                         tranche_scolaire.id,           
                         annee_scolaire.libelle AS annee_scolaire_id, 
                         type_tranche_scolaire.libelle AS type_tranche_scolaire_id, 
+                        tranche_scolaire.date_limite_paiement AS date_limite_paiement, 
                         tranche_scolaire.code AS code, tranche_scolaire.libelle AS libelle
                 FROM 
                 tranche_scolaire 
@@ -42,6 +43,7 @@ class TrancheScolaireRepository extends BaseRepository{
                         tranche_scolaire.id,           
                         annee_scolaire.libelle AS annee_scolaire_id, 
                         type_tranche_scolaire.libelle AS type_tranche_scolaire_id, 
+                        tranche_scolaire.date_limite_paiement AS date_limite_paiement, 
                         tranche_scolaire.code AS code, tranche_scolaire.libelle AS value
                 FROM 
                 tranche_scolaire 
@@ -71,6 +73,7 @@ class TrancheScolaireRepository extends BaseRepository{
                         annee_scolaire.libelle AS annee_scolaire_id, 
                         type_tranche_scolaire.id AS type_tranche_scolaire_id,
                         type_tranche_scolaire.libelle AS type_tranche_scolaire_libelle, 
+                        tranche_scolaire.date_limite_paiement AS date_limite_paiement, 
                         tranche_scolaire.code AS code, tranche_scolaire.libelle AS libelle
                 FROM 
                  
