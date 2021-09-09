@@ -75,6 +75,8 @@ class DBTable
     const TRANCHE_SCOLAIRE = 'tranche_scolaire';
     const TRANCHE_SCOLAIRE_MOIS = 'tranche_scolaire_mois';
     const TYPE_TRANCHE_SCOLAIRE = 'type_tranche_scolaire';
+    const GROUPE_FAMILIAL = 'groupe_familial';
+    const GROUPE_FAMILIAL_REDUCTION = 'groupe_familial_reduction';
     const TYPE_PAIEMENT = 'type_paiement';
     const TYPE_PENSION = 'type_pension';
     const TYPE_PERSONNEL = 'type_personnel';
@@ -212,6 +214,10 @@ class DBTable
                 return TrancheHoraire::table();
             case DBTable::TRANCHE_SCOLAIRE:
                 return TrancheScolaire::table();
+            case DBTable::GROUPE_FAMILIAL:
+                return GroupeFamilial::table();
+            case DBTable::GROUPE_FAMILIAL_REDUCTION:
+                return GroupeFamilialReduction::table();
             case DBTable::TRANCHE_SCOLAIRE_MOIS:
                 return TrancheScolaireMois::table();
             case DBTable::TYPE_TRANCHE_SCOLAIRE:

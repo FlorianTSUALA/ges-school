@@ -234,7 +234,7 @@ class TestController extends AppController
 
 
 
-      dd((new AnneeScolaireRepository())->getAnneeScolairePrecedenteID(3));
+      dd((new AnneeScolaireRepository())->get_annee_scolaire_precedente_id(3));
       dd((new PrixPaiementRepository())->getPensionGroupByClasse($this->session->get(S::ANNEE_SCOLAIRE)));
 
       $date = new \DateTime('now');

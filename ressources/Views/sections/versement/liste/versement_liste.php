@@ -141,7 +141,7 @@ $include_footer_script = ob_get_clean();
                                                   <td><?php $comp++; echo $comp; ?></td>
                                                   <td>
                                                     <?php
-                                                        $eleve=Facture::get_eleve_by_facture($facture['id']);
+                                                        $eleve=Facture::get_eleve_by_facture($facture['eleve_id']);
                                                         $ele_id=(! empty($eleve))?$eleve['id']:0;
                                                         if (! empty($eleve)) {
                                                           ?>

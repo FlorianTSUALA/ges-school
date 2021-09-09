@@ -13,6 +13,7 @@ use ClanCats\Hydrahon\Query\Expression;
 use Core\helper\DateHelpers;
 
 use function Core\Helper\dd;
+use App\Helpers\S;
 
 class EleveRepository extends BaseRepository{
     
@@ -152,7 +153,7 @@ class EleveRepository extends BaseRepository{
      * @author Prodigit <prodigit7@gmail.com>
      * @return void
      */
-    public function getInfoEleve($eleve_code){
+    public function getInfoEleve($value, $tag = 'code'){
        
         $req =
             "                
@@ -237,7 +238,7 @@ class EleveRepository extends BaseRepository{
                         LEFT  JOIN  dossier_medical ON eleve.dossier_medical_id = dossier_medical.id
                         LEFT  JOIN  pays ON pays.id = eleve.pays_id
                         LEFT  JOIN  statut_eleve ON statut_eleve.id = eleve.statut_eleve_id
-                WHERE dp.id = eleve.dossier_parental_id  AND eleve.code = '$eleve_code'   AND eleve.visibilite = 1
+                WHERE dp.id = eleve.dossier_parental_id  AND eleve.$tag = '$value'   AND eleve.visibilite = 1
             ) InfoEleve
         ";
         $result = $this->query($req);
@@ -341,7 +342,7 @@ class EleveRepository extends BaseRepository{
      */
     public function getElevesNonInscris($annee_scolaire_id, $classe_id='ALL'){
 
-        $anneScolairePrecedenteID = (new AnneeScolaireRepository)->getAnneeScolairePrecedenteID($annee_scolaire_id);
+        $anneScolairePrecedenteID = (new AnneeScolaireRepository)->get_annee_scolaire_precedente_id($annee_scolaire_id);
 
         if($anneScolairePrecedenteID == 0)
           return  $this->getElevesSansParcours();
@@ -847,6 +848,36 @@ class EleveRepository extends BaseRepository{
         }elseif($number < 100){
             $number = "0".$number;
         }
+    }
+
+    public function get_parcours_eleve($id_eleve, $annee_scolaire_id = null)
+    {
+        if(is_null($annee_scolaire_id)){
+            $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE);
+        }
+
+        $parcours_classe_eleve = DBTable::getModel('parcours')
+                                                        ->select(
+                                                                [
+                                                                    'classe.libelle'=>'libelle', 
+                                                                    'classe.id' => 'classe_id',
+                                                                    'salle_classe.libelle'=>'libelle', 
+                                                                    'salle_classe.id' => 'salle_classe_id',
+                                                                ])
+                                                        ->join('salle_classe', 'salle_classe.id', '=', 'parcours.salle_classe_id')
+                                                        ->join('classe', 'classe.id', '=', 'parcours.classe_id')
+                                                        ->where('parcours.visibilite', '=', 1)
+                                                        ->where('parcours.annee_scolaire_id', '=', $annee_scolaire_id)
+                                                        ->where('salle_classe.visibilite', '=', 1)
+                                                        ->where('parcours.eleve_id', '=', $id_eleve)
+                                                        ->last();
+
+      if (!empty($parcours_classe_eleve)) {
+        return $parcours_classe_eleve;
+      }
+      else {
+        return [];
+      }
     }
     
 }

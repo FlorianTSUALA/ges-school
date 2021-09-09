@@ -13,6 +13,7 @@ use App\Model\Parcours;
 use App\Helpers\Helpers;
 use App\Model\Personnel;
 use Core\Session\Request;
+use App\Model\StatutEleve;
 use App\Model\Technique\E;
 use App\Model\TypePension;
 use App\Model\PensionEleve;
@@ -232,17 +233,34 @@ trait VersementControllerTraitMultiple
                         }
 
                         if($type_pension_code == TypePension::INSCRIPTION_CODE){
-                            $model_parcours = Parcours::table();
-                            $code_parcours = Parcours::generateCode();
-                            $data_parcours = [
-                                'code' => $code_parcours,
-                                Parcours::ANNEE_SCOLAIRE_ID => $this->session->get(S::ANNEE_SCOLAIRE),
-                                'date_inscription' => (new DateTime('NOW'))->format('Y-m-d H:i:s'),
-                                Parcours::ELEVE_ID => $eleve_id,
-                                Parcours::CLASSE_ID => $classe_id,
-                                Parcours::STATUT_APPRENANT_ID => (new StatutApprenantRepository())->getStatutApprenantId($eleve_id, $classe_id, $annee_scolaire_id),
-                            ];
-                            $model_parcours->insert($data_parcours)->execute();
+                            //  ##region INSCRIPTION PARCOURS 
+
+                                $model_parcours = Parcours::table();
+                                $code_parcours = Parcours::generateCode();
+                                $data_parcours = [
+                                    'code' => $code_parcours,
+                                    Parcours::ANNEE_SCOLAIRE_ID => $this->session->get(S::ANNEE_SCOLAIRE),
+                                    'date_inscription' => (new DateTime('NOW'))->format('Y-m-d H:i:s'),
+                                    Parcours::ELEVE_ID => $eleve_id,
+                                    Parcours::CLASSE_ID => $classe_id,
+                                    Parcours::STATUT_APPRENANT_ID => (new StatutApprenantRepository())->getStatutApprenantId($eleve_id, $classe_id, $annee_scolaire_id),
+                                ];
+                                $model_parcours->insert($data_parcours)->execute();
+
+                                //MISE A JOUR DU #STATUT_ELEVE#
+                                if(is_null($eleve['statut_eleve_id'])){
+                                    Eleve::table()->update()->set(['statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE)])->where('eleve_id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                                }else{
+                                    $statut_eleve_code = StatutEleve::table()->select('code')->where('eleve.statut_eleve_id', $eleve['statut_eleve_id'])->one()['code'];
+                                    if($statut_eleve_code == StatutEleve::DEMISSINAIRE_CODE){
+                                        Eleve::table()->update()->set(['statut_eleve_id', StatutEleve::get_id(StatutEleve::ANCIEN_CODE)])->where('eleve_id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                                    }else{
+                                        Eleve::table()->update()->set(['statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE)])->where('eleve_id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                                    }
+                                }
+                                
+                            //  ##endregion INSCRIPTION PARCOURS 
+
                         }
 
                     }

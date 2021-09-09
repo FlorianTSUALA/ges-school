@@ -80,13 +80,23 @@ class AnneeScolaireRepository extends BaseRepository{
         return $id_annee_scolaire;
     }
 
-    public  function getAnneeScolairePrecedenteID($annee_scolaire_id){
-        $debut_annee = $this->getAnneeScolaire($annee_scolaire_id, 'id', 'debut_annee');
-        if(!$debut_annee) return 0;
-        $date_passeeF = DateHelpers::getFullYear($debut_annee);
-        $date_passeeD = $date_passeeF - 1;
-        $date_passee_libelle = "{$date_passeeD}-{$date_passeeF}";
-        return intval($this->getAnneeScolaire($date_passee_libelle, 'libelle', 'id'));
+    /**
+     * get_annee_scolaire_precedente_id
+     *
+     * @param int $annee_scolaire_id
+     * @return 0 if not exist and number even not
+     */
+    public  function get_annee_scolaire_precedente_id($annee_scolaire_id){
+        $date_debut_annee = $this->getAnneeScolaire($annee_scolaire_id, 'id', 'debut_annee');
+
+        if(!$date_debut_annee) 
+            return 0;
+        
+        $annee_courante = DateHelpers::getFullYear($date_debut_annee);
+        $annee_precedente = $annee_courante - 1;
+        $libelle_annee_scolaire_precedente = "{$annee_precedente}-{$annee_courante}";
+        
+        return intval($this->getAnneeScolaire($libelle_annee_scolaire_precedente, 'libelle', 'id'));
     }
     
 }

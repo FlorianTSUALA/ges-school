@@ -109,10 +109,17 @@ use App\Model\Technique\E;
 
     }
 
+    function update_groupe_familial(){
+        $('#RFT-reduction').val(" Reduction : " + $('#RF-reduction').val())
+        $('#montant').val(parseFloat($('#montant').val()) - parseFloat($('#RFT-reduction').val()))
+        $('#relation_familial_input').html(_text)
+    }
+
     $(document).ready(function() {
 
         $(eleve_nom_complet).on("select2:select select2:unselecting", function() {
             $(eleve_nom_complet).select2('data')
+            update_groupe_familial(trigger_classe($(classe).select2().find(":selected").val()))
             init()
         })
 
