@@ -1,5 +1,5 @@
 <?php
-namespace App\Model;
+namespace App\Model\Technique;
 
 class EnumModel{
     const PERIODE = ['JOUR', 'SEMAINE', 'MOIS', 'ANNEE'];

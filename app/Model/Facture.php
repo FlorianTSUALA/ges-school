@@ -2,15 +2,16 @@
 
 namespace App\Model;
 
-use Core\Model\Model;
-use Core\HTML\Form\FormModel;
-use Core\Model\HydrahonModel;
-use ClanCats\Hydrahon\Query\Expression;
-use Core\Helper\DateHelpers;
 use App\Model\now;
-
+use Core\Model\Model;
+use Core\Helper\DateHelpers;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
+use Core\HTML\Form\FormModel;
+
+use Core\Model\HydrahonModel;
+use App\Repository\EleveRepository;
+use ClanCats\Hydrahon\Query\Expression;
 
 class Facture extends Model implements FrequentlyReapeat
 {
@@ -136,6 +137,11 @@ class Facture extends Model implements FrequentlyReapeat
     }
     
 
+
+    public static function get_eleve_by_facture($eleve_id)
+    {
+      return Eleve::table()->select()->where('id', $eleve_id)->one();
+    }
 
     public static function get_pensions_facture($fact_id)
     {

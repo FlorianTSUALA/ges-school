@@ -541,7 +541,7 @@ ob_start();
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title" id="myModalLabel40">Affectation des relations familiales </h4>
+                <h4 class="modal-title" id="myModalLabel40">Réduction du groupe familial </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -550,19 +550,26 @@ ob_start();
             <form  class="needs-validation" id="create-form" method="POST"  action="" novalidate>
                 <div class="modal-body">
                     <div class="form-group">
-
+                        <label for="family-relation">Membre du groupe familial</label>
                         <select id="family-relation" class="select-multiple-2 form-control" name="multi_select[]" id="multi_select" style="width:100%;">
                             <option data-matricule="" data-id="" disabled value="">----------------------</option>
                             <?php foreach($eleves as $item){?>
-                            <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="RF-<?= $item['id']; ?>"><?= $item['nom_complet']; ?></option>
+                            <option data-matricule="<?= $item['matricule']; ?>" data-id="<?= $item['id']; ?>" title="<?= "Né ".$item['date_naissance']." à ".$item['lieu_naissance']; ?>" value="<?= $item['id']; ?>"><?= $item['nom_complet']; ?></option>
                             <?php } ?>
                         </select>
 
                     </div>
 
                     <div class="form-group">
-                        <input type="number" id="RF-reduction" class="form-control" >
-                        <input type="hidden" id="OLD-RF-reduction" class="reduction form-control" >
+                        <label for="famille">Nom de la famille</label>
+                        <input type="text" id="famille" class="form-control" >
+                        <input type="hidden" id="old-famille" class="form-control" >
+                    </div>
+
+                    <div class="form-group">
+                        <label for="OLD-RF-reduction">Montant Reduction</label>
+                        <input type="number" id="RF-reduction" value='0' class="reduction form-control" >
+                        <input type="hidden" id="OLD-RF-reduction" class="form-control" >
                     </div>
 
                 </div>

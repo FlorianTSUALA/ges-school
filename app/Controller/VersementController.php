@@ -185,6 +185,43 @@ class VersementController extends \App\Controller\Admin\AppController
 
     }
 
+    
+    public function impriner_facture_activite(){
+
+        $data = $_POST;
+
+        //encodage des tables qui seront transferer dans une variable de session avec pour clé la reference de la facture du versement
+        $data['pension_classe'] = json_decode($data['pension_classe'], true);
+        $data['cantines'] = json_decode($data['cantines'], true);
+        $data['autres'] = json_decode($data['autres'], true);
+        $data['activites'] = json_decode($data['activites'], true);
+
+        //Acces au données de la facture par session et dans les cookies()
+        $_SESSION[$data['reference']] = $data;
+        // setcookie($data['reference'], $data, TIME_COOKIE_LONG, URL::link('facture_cantine'));
+
+        $this->renderPDF('reports.versement', compact('data'), 'facture_versement' );
+
+    }
+
+    public function impriner_facture_cantine(){
+
+        $data = $_POST;
+
+        //encodage des tables qui seront transferer dans une variable de session avec pour clé la reference de la facture du versement
+        $data['pension_classe'] = json_decode($data['pension_classe'], true);
+        $data['cantines'] = json_decode($data['cantines'], true);
+        $data['autres'] = json_decode($data['autres'], true);
+        $data['activites'] = json_decode($data['activites'], true);
+
+        //Acces au données de la facture par session et dans les cookies()
+        $_SESSION[$data['reference']] = $data;
+        // setcookie($data['reference'], $data, TIME_COOKIE_LONG, URL::link('facture_cantine'));
+
+        $this->renderPDF('reports.versement', compact('data'), 'facture_versement' );
+
+    }
+
     public function liste_abonnee()
     {
         $route = 'versement_liste';

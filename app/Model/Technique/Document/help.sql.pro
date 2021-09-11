@@ -10,3 +10,7 @@ UPDATE pension_classe
 SET montant = FLOOR( ( (RAND() *9) * 1000) + (RAND() * 5000))
 WHERE true
 
+
+
+
+SHOW ENGINE INNODB STATUS;

@@ -20,4 +20,10 @@ class StatutEleve extends Model implements FrequentlyReapeat
 
             ];
     }
+
+    const NOUVEAU_CODE = 'NOUVEAU';
+    const ANCIEN_CODE = 'ANCIEN';
+    const DEMISSINAIRE_CODE = 'DEMISSINAIRE';
+    const FIN_CYCLE_CODE = 'FIN_CYCLE';
+
 }

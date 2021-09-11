@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\S;
+use Core\Routing\URL;
 use App\Model\Technique\E;
 ?>
 
@@ -109,10 +110,73 @@ use App\Model\Technique\E;
 
     }
 
+    function update_groupe_familial(){
+        $.ajax({
+            url: '<?= URL::link('api_get_goupe_familial_eleve');?>'+$('#eleve_nom_complet option:selected').val(),
+            type: 'post',
+            data: data,
+            dataType: 'json',
+            beforeSend:function(){
+                // $(loading).show();
+            },
+            success:function(data){
+                if(data == 'empty'){
+                    return
+                }
+                else{
+
+                    console.log(data)
+                    // $(loading).hide()
+                    let values  = []
+                    for(eleve of data.eleves){
+                        values.push(''+eleve.id)
+                    }
+                    console.log(values)
+                    $('#family-relation').val(values).trigger('change')
+                    
+                    $('#famille').val(data.groupe_familial_info.famille)
+                    $('#old-famille').val(data.groupe_familial_info.famille)
+
+                    if(!data.reduction){
+                        $('#RF-reduction').val(data.reduction)
+                    }else{
+                        $('#RF-reduction').val(data.reduction).trigger('change')
+                    }
+
+                    groupe_familial.famille = data.famille
+                    groupe_familial.membres = values
+                    groupe_familial.reduction = data.reduction
+
+                    console.log("REL FAMILIAL")
+                    console.log("Groupe familial")
+                    console.log(groupe_familial)
+                    console.log("values")
+                    console.log(values)
+                    console.log("data")
+                    console.log(data)
+                }
+            },
+            error: function (textStatus, errorThrown) {
+                alert("Erreur d'enregistrement de votre versement")
+                console.log('Ici ya erreu demandé 1', data)
+                Success = false;
+                console.log(textStatus, errorThrown);
+            }
+        });  
+
+        $('#montant').val(parseFloat($('#montant').val()) - parseFloat($('#RFT-reduction').val()))
+
+    }
+
     $(document).ready(function() {
 
         $(eleve_nom_complet).on("select2:select select2:unselecting", function() {
             $(eleve_nom_complet).select2('data')
+            // $('#family-relation').val(null).trigger('change')
+            let values  = []
+            values.push(''+$(eleve_nom_complet).select2().find(":selected").val())
+           $('#family-relation').val(values).trigger('change')
+            update_groupe_familial(($(eleve_nom_complet).select2().find(":selected").val()))
             init()
         })
 

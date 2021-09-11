@@ -35,6 +35,7 @@ use App\Repository\PersonnelRepository;
 use App\Repository\VersementRepository;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\ExemplaireRepository;
+use App\Repository\StatutEleveRepository;
 use App\Repository\PrixPaiementRepository;
 use App\Repository\AnneeScolaireRepository;
 use Core\HTML\MessageFlash\FlashMessagesStatic;
@@ -128,6 +129,11 @@ class TestController extends AppController
      return $tab_eleve_retard ;
     }
 
+    public function actualiser_statut_eleve(){
+      $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+      (new StatutEleveRepository())->actualiser_statut( $annee_scolaire_id);
+      echo "Good Job";
+    }
 
     public function test11( )
     {
@@ -234,7 +240,7 @@ class TestController extends AppController
 
 
 
-      dd((new AnneeScolaireRepository())->getAnneeScolairePrecedenteID(3));
+      dd((new AnneeScolaireRepository())->get_annee_scolaire_precedente_id(3));
       dd((new PrixPaiementRepository())->getPensionGroupByClasse($this->session->get(S::ANNEE_SCOLAIRE)));
 
       $date = new \DateTime('now');

@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Core\Model\Model;
 use App\Model\Document;
-use App\Model\EnumModel;
+use App\Model\Technique\EnumModel;
 use App\Model\EtatDocument;
 use Core\HTML\Form\FormModel;
 use Core\HTML\Form\InputType;

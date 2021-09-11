@@ -1,6 +1,8 @@
 <?php 
 
+use App\Helpers\S;
 use Core\Routing\URL;   
+
 ?>
 
 <!-- <link rel="stylesheet" type="text/css" href="http://127.0.0.1/ges-school/public/assets/app-assets/images/logo/cantineList2.css"> -->

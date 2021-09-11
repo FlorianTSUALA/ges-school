@@ -109,25 +109,5 @@ class Eleve extends Model implements FrequentlyReapeat
       }
       return $columns;
     }
-
-
-    public static function get_parcours_eleve($id_eleve)
-    {
-      $parcours_classe_eleve = DBTable::getModel('salle_classe')->select(['salle_classe.libelle'=>'libelle', 'salle_classe.id' => 'classe_id'])
-                ->join('parcours', 'salle_classe.id', '=', 'parcours.salle_classe_id')
-                ->where('parcours.visibilite', '=', 1)
-                ->where('salle_classe.visibilite', '=', 1)
-                ->where('parcours.eleve_id', '=', $id_eleve)
-                ->orderBy('parcours.id', 'DESC')
-                ->get();
-
-      if (!empty($parcours_classe_eleve)) {
-        return $parcours_classe_eleve[0];
-      }
-      else {
-        return array();
-      }
-    }
-
     
 }

@@ -228,7 +228,8 @@ $funtion_signataire = $this->session->get(S::PERS_TYPE_PERSONNEL);
         $('#recap-nom_banque').hide()
         $('#recap-numero_cheque').hide()
 
-        reduction = 0
+        reduction = 0;//(isNaN($('#RF-reduction').val()) || !$('#RF-reduction').val()) ? 0 : $('#RF-reduction').val()
+
 
         $('.reduction').each(function()
         {

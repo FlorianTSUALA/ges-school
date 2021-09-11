@@ -7,7 +7,7 @@ use App\Model\DBTable;
 use App\Model\Emprunt;
 use Config\Invariant\API;
 use App\Helpers\Helpers;
-use App\Model\EnumModel;
+use App\Model\Technique\EnumModel;
 use App\Model\Exemplaire;
 use Core\Session\Request;
 use function Core\Helper\dd;

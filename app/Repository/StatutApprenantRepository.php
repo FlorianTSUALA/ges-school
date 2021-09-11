@@ -14,7 +14,7 @@ class StatutApprenantRepository extends BaseRepository{
 
     public function getStatutApprenantId($eleve_id, $classe_id, $annee_scolaire_id){
 
-        $annee_scolaire_precedente_id = (new AnneeScolaireRepository)->getAnneeScolairePrecedenteID($annee_scolaire_id);
+        $annee_scolaire_precedente_id = (new AnneeScolaireRepository)->get_annee_scolaire_precedente_id($annee_scolaire_id);
         
         if( !$annee_scolaire_precedente_id ) 
             return StatutApprenant::get_id(StatutApprenant::NOUVEAU_CODE);

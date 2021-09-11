@@ -21,7 +21,11 @@ use App\Model\TypePension;
     });
 
 
-
+    var groupe_familial = {
+        'famille' : '', 
+        'membres' : [],
+        'reduction' : 0
+    }
     var items = {}
     var data_versement = {
         'cantine': {},
@@ -86,11 +90,27 @@ use App\Model\TypePension;
 
         })
 
+        // $('#famille').on('change paste keyup mouseup', function() {
+        //     if ($('#famille').val().length > 0)
+        //         $('#famille').val($('#old-famille').val())
+        //         groupe_familial.famille = $('#famille').val()
+        //     init()
+            
+        // })
+
         $(document).on('click', '#btn-save-family-relation', function(e) {
             $('#RFT-reduction').val(" Reduction : " + $('#RF-reduction').val())
             $('#montant').val(parseFloat($('#montant').val()) - parseFloat($('#RFT-reduction').val()))
             $('#relation_familial_input').html(_text)
+
+            //if ($('#famille').val().length > 0)
+            // $('#famille').val($('#old-famille').val())
+            groupe_familial.famille = $('#famille').val()
+            groupe_familial.reduction = $('#RF-reduction').val()
+            groupe_familial.membres = $('#family-relation').val()
+
             console.log(_text);
+            console.log(groupe_familial);
             init();
         })
 
@@ -98,12 +118,14 @@ use App\Model\TypePension;
         //Sauvegarde permanente de la valeur à mettre à jour
         $(document).on('click', '#btn-open-modal-familyship', function(e) {
             $('#OLD-RF-reduction').val($('#RF-reduction').val())
+            $('#old-famille').val($('#famille').val())
             $('family-relation').select2('data')
         })
 
         //Restauration en cas de desistement
         $(document).on('click', '#btn-cancel-family-relation', function(e) {
             $('#RF-reduction').val($('#OLD-RF-reduction').val())
+            $('#famille').val($('#old-famille').val())
             $('family-relation').val(data_select_relation_ship)
         })
 
@@ -512,4 +534,5 @@ use App\Model\TypePension;
             }
         }
     }
+
 </script>

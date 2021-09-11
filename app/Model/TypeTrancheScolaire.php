@@ -29,7 +29,7 @@ class TypeTrancheScolaire extends Model implements FrequentlyReapeat
         $this->fillables =
             [
                 new FormModel(true, self::LIBELLE ),
-                new FormModel(false, self::ANNEE_SCOLAIRE_ID, 'Année scolaire', InputType::SELECT2, $annee_scolaires, '', 'Veuillez selectionnez une année scolaire'),
+                // new FormModel(false, self::ANNEE_SCOLAIRE_ID, 'Année scolaire', InputType::SELECT2, $annee_scolaires, '', 'Veuillez selectionnez une année scolaire'),
             ];
 
     }

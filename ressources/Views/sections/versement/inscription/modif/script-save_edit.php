@@ -96,7 +96,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
 
 
     function imprimerRecuVersement(){
-        gotoUrl('<?= URL::link('versement_facture');?>'+$('#eleve_nom_complet option:selected').val(), data_versement);
+        gotoUrl('<?= URL::link('versement_inscription_facture');?>'+$('#eleve_nom_complet option:selected').val(), data_versement);
         console.log(data_versement);
     }
 

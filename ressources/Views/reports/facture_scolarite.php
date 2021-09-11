@@ -1,5 +1,6 @@
 <?php 
 
+use App\Helpers\S;
 use Core\Routing\URL; 
 
 /*
