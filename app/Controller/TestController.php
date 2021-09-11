@@ -38,6 +38,7 @@ use App\Repository\ExemplaireRepository;
 use App\Repository\StatutEleveRepository;
 use App\Repository\PrixPaiementRepository;
 use App\Repository\AnneeScolaireRepository;
+use App\Repository\GroupeFamilialRepository;
 use Core\HTML\MessageFlash\FlashMessagesStatic;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
@@ -237,9 +238,7 @@ class TestController extends AppController
     public function testSQL()
     {
 
-
-
-
+      dd((new GroupeFamilialRepository())->get_all_groupe_familial_reduction());
       dd((new AnneeScolaireRepository())->get_annee_scolaire_precedente_id(3));
       dd((new PrixPaiementRepository())->getPensionGroupByClasse($this->session->get(S::ANNEE_SCOLAIRE)));
 
@@ -250,33 +249,33 @@ class TestController extends AppController
 
       //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
       $pension_classe = DBTable::getModel('pension_classe')
-      ->select(
-          [
-              'classe.code' => 'classe_id',
-              'classe.libelle' => 'classe_libelle',
-              'type_pension.code' => 'type_pension',
-              'pension_classe.code' => 'id',
-              'pension_classe.montant' => 'montant',
-              // 'pension_classe.est_mensuel' => 'est_mensuel',
-              // 'pension_classe.mensualite' => 'mensualite',
-              'pension_classe.libelle' => 'libelle'
-          ]
-      )
-      ->join('classe', 'classe.id', '=', 'pension_classe.classe_id')
-      ->join('type_pension', 'type_pension.id', '=', 'pension_classe.type_pension_id')
-      ->where('pension_classe.visibilite', '=', 1)
-      ->where('type_pension.code', '=', TypePension::INSCRIPTION_CODE)
-      ->where('type_pension.visibilite', '=', 1)
-      ->get();
+        ->select(
+            [
+                'classe.code' => 'classe_id',
+                'classe.libelle' => 'classe_libelle',
+                'type_pension.code' => 'type_pension',
+                'pension_classe.code' => 'id',
+                'pension_classe.montant' => 'montant',
+                // 'pension_classe.est_mensuel' => 'est_mensuel',
+                // 'pension_classe.mensualite' => 'mensualite',
+                'pension_classe.libelle' => 'libelle'
+            ]
+        )
+        ->join('classe', 'classe.id', '=', 'pension_classe.classe_id')
+        ->join('type_pension', 'type_pension.id', '=', 'pension_classe.type_pension_id')
+        ->where('pension_classe.visibilite', '=', 1)
+        ->where('type_pension.code', '=', TypePension::INSCRIPTION_CODE)
+        ->where('type_pension.visibilite', '=', 1)
+        ->get();
       
       // dd($pension_classe);
       dd(json_encode(DBTable::getModel('mois')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get()));
       // dd((new VersementRepository )->getInfoEleveActivite(1,2) );
       dd(Facture::get_paie_facture_activite(4));
-    //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
+      //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
+      
+      //dd((new VersementRepository )->getInfoEleveActivite(1,2) );
     
-    //dd((new VersementRepository )->getInfoEleveActivite(1,2) );
-  
     }
 
     public function testpdf()

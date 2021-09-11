@@ -147,6 +147,22 @@ return[
                 "hasChildren" => false,
                 "children" => [],
             ],
+            
+            
+            "GROUPE_FAMILIAL" => [
+                "title" => "Groupe Familial",
+                "icon" => "",
+                "msg_page" => "",
+                "menu_explication" => "",
+                "full_url" => URL::link("groupe_familial"),
+                "action" => "groupe_familial",
+                "alt" => "",
+                "class" => "",
+                "isActive" => "",
+                "alwaysVisible" => true,
+                "hasChildren" => false,
+                "children" => [],
+            ],
       
         ],
     ],

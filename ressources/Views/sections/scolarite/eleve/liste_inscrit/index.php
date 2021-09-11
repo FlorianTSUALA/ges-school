@@ -48,6 +48,7 @@ $include_res_footer .= "";
 
 ob_start();
 include 'index-script.php';
+include 'eleve_info_modal-script.php';
 include 'eleve_info_modal_scolarite_script.php';
 include 'eleve_info_modal_cantine_script.php';
 include 'eleve_info_modal_activite_script.php';

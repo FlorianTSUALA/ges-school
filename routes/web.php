@@ -184,6 +184,7 @@ $router->addRoute('facture_api_info', 'facture/api/info/', [FactureController::c
 $router->addRoute('print', 'print/{model}', [PrinterController::class, 'index']);
 
 //GROUPE FAMILIAL
+$router->crudRoute('groupe_familial', GroupeFamilialController::class);
 $router->addRoute('api_get_goupe_familial_eleve', 'api/get/goupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_get_groupe_familial']);
 $router->addRoute('api_save_goupe_familial_eleve', 'api/save/goupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_save_groupe_familial']);
 
@@ -272,6 +273,7 @@ $router->crudRoute('tranche_scolaire', TrancheScolaireController::class);
 
 //TYPE TRANCHE_SCOLAIRE
 $router->crudRoute('type_tranche_scolaire', TypeTrancheScolaireController::class);
+
 
 //TRANCHE_HORAIRE
 $router->crudRoute('tranche_horaire', TrancheHoraireController::class);

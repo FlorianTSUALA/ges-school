@@ -29,7 +29,43 @@ use App\Repository\TrancheScolaireRepository;
 
 class GroupeFamilialController  extends AppController
 {
+
+    use TraitCRUDController;
     
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->vairant = DBTable::GROUPE_FAMILIAL;
+        $this->folder_view_index = 'groupe_familial.index';
+
+        $this->loadModel($this->vairant);
+        $this->model = GroupeFamilial::table();
+       
+        $this->base_route = 'groupe_familial';
+        $this->class_name = 'groupe_familial';
+
+        $this->title_page = 'Gestion des groupes familiaux - Ges-School';
+        $this->title_home = 'Gestion des groupes familiaux';
+        $this->create_title = "Creation d'un groupe familial";
+        $this->view_title = "Information d'un groupe familial";
+        $this->update_title = "Mise à jour d'un groupe familial";
+        $this->delete_title = "Suppression d'un groupe familial";
+        $this->msg_delete = "Voulez-vous vraiment supprimer le groupe familial ";
+    }
+
+    public function get_all(){
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        return (new GroupeFamilialRepository() )->get_all_groupe_familial_reduction($annee_scolaire_id);
+    }
+
+    public function get_one($code){
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        $result = (new GroupeFamilialRepository() )->get_one_groupe_familial_reduction($annee_scolaire_id, $code);
+        // dd($result);
+        return $result;
+    }
+   
     public function api_get_groupe_familial($code) 
     {
         $groupe_familial_id = Eleve::table()->select('groupe_familial_id')->where('visibilite', 1)->where('eleve.code', $code)->one()['groupe_familial_id'];

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Model\Eleve;
+use App\Model\StatutEleve;
 use App\Model\GroupeFamilial;
 use Core\Repository\BaseRepository;
 
@@ -12,8 +13,28 @@ class GroupeFamilialRepository extends BaseRepository{
         $this->model = GroupeFamilial::table();
     }
 
-    public function get_all_groupe_familial_reduction(){
-        
+    public function get_all_groupe_familial_reduction($annee_scolaire_id = null){
+        $req = "SELECT  GROUP_CONCAT( CONCAT(eleve.nom, ' ', eleve.prenom) SEPARATOR ', ') AS description, 
+                        groupe_familial.id,           
+                        groupe_familial.famille AS famille, 
+                        groupe_familial.code AS code, 
+                        -- groupe_familial.libelle AS libelle
+                FROM    groupe_familial 
+                LEFT  JOIN  eleve ON eleve.eleve_id = groupe_familial.id
+                -- LEFT  JOIN  annee_scolaire ON annee_scolaire.id = groupe_familial.annee_scolaire_id
+                -- LEFT  JOIN  type_groupe_familial ON type_groupe_familial.id = groupe_familial.type_groupe_familial_id
+                -- LEFT JOIN (
+                --     SELECT mois.libelle AS libelle, groupe_familial_mois.groupe_familial_id AS id 
+                --     FROM groupe_familial_mois 
+                --     LEFT  JOIN  mois ON groupe_familial_mois.mois_id = mois.id    
+                -- ) AS tr ON tr.id = groupe_familial.id
+                WHERE 
+                        groupe_familial.visibilite = 1  AND 
+                        eleve.statut_eleve_id not in ( " . StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE) . ", ". StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE) .")
+                GROUP  BY groupe_familial.id
+            ";
+        $result = $this->query($req);
+        return $result;
     }
 
     public function get_one_groupe_familial_reduction(){
