@@ -4,4 +4,4 @@
 	And Crud will be !!!
 -->
 
-<?php require dirname(__DIR__)."/_common/_crud_model.php" ?>
+<?php require "_crud_model.php" ?>

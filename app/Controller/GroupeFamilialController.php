@@ -3,29 +3,20 @@
 namespace App\Controller;
 
 use App\Helpers\S;
-use App\Model\Mois;
 use App\Model\Eleve;
-
-
 use App\Model\DBTable;
 use App\Helpers\Helpers;
-use App\Model\Personnel;
-use Config\Invariant\API;
 use Core\Session\Request;
 use App\Model\StatutEleve;
 use App\Helpers\HTMLHelper;
-use App\Model\GroupeFamilial;
 use Core\HTML\Form\FormModel;
-use App\Model\TrancheScolaire;
+use App\Model\GroupeFamilial;
 use function Core\Helper\dd;
-use App\Model\TrancheScolaireMois;
-use App\Model\TypeTrancheScolaire;
 use App\Helpers\TraitCRUDController;
 use App\Model\ReductionFamiliale;
 use App\Controller\Admin\AppController;
 use ClanCats\Hydrahon\Query\Expression;
 use App\Repository\GroupeFamilialRepository;
-use App\Repository\TrancheScolaireRepository;
 
 class GroupeFamilialController  extends AppController
 {
@@ -37,7 +28,7 @@ class GroupeFamilialController  extends AppController
         parent::__construct();
 
         $this->vairant = DBTable::GROUPE_FAMILIAL;
-        $this->folder_view_index = 'groupe_familial.index';
+        $this->folder_view_index = 'groupe_familial.liste.index';
 
         $this->loadModel($this->vairant);
         $this->model = GroupeFamilial::table();
@@ -61,8 +52,7 @@ class GroupeFamilialController  extends AppController
 
     public function get_one($code){
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        $result = (new GroupeFamilialRepository() )->get_one_groupe_familial_reduction($annee_scolaire_id, $code);
-        // dd($result);
+        $result = (new GroupeFamilialRepository() )->get_one_groupe_familial_reduction($code);
         return $result;
     }
    
@@ -127,5 +117,66 @@ class GroupeFamilialController  extends AppController
 
         echo Helpers::toJSON($data) ;
     }
+
+     
+
+    public function save()
+    {
+        $description = $_POST['description'];
+        $famille = Request::getSecParam('famille');
+
+        $groupe_familial_code = GroupeFamilial::generateCode();
+        $data_groupe_familial = [
+            'code' => $groupe_familial_code,
+            'famille' => $famille,
+        ];
+        GroupeFamilial::table()->insert($data_groupe_familial)->execute();
+        $groupe_familial_id = GroupeFamilial::get_id($groupe_familial_code);
+
+        foreach($description as $key => $value)
+            Eleve::table()->update()->set('groupe_familial_id', $groupe_familial_id)->where('code', $value)->execute();
+
+        $result = true;
+        if ($result) {
+            $items = $this->get_all();
+            $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
+            $this->sendResponseAndExit($data);
+        } else {
+            $this->sendResponseAndExit($result, false, 400, 'DB Error');
+        }
+    }
+
+    /**
+     *
+     * @param string $code
+     * @return void
+     */
+    public function update($code)
+    {
+        // dd($code);
+        $description = $_POST['description'];
+        $famille = Request::getSecParam('famille');
+
+        $groupe_familial_id = GroupeFamilial::get_id($code);
+
+        GroupeFamilial::table()->update()->set('famille', $famille)->where('id', $groupe_familial_id)->execute();
+        
+        $old_eleves = Eleve::table()  ->select('id')->where('groupe_familial_id', $groupe_familial_id)->where('visibilite', 1)->get();
+        foreach ($old_eleves as $eleve_id) 
+            Eleve::table()->update()->set('groupe_familial_id', null)->where('groupe_familial_id', $groupe_familial_id)->execute();
+
+        foreach($description as $key => $value)
+            Eleve::table()->update()->set('groupe_familial_id', $groupe_familial_id)->where('code', $value)->execute();
+
+        $result = true;
+        if ($result) {
+            $items = $this->get_all();
+            $data = HTMLHelper::genBodyTable($items, $this->class_name, $this->fill(['label','name', 'type', FormModel::EXTERNAL_TYPE], $this->{$this->vairant}->fillables));
+            $this->sendResponseAndExit($data);
+        } else {
+            $this->sendResponseAndExit($result, false, 400, 'DB Error');
+        }
+    }
+   
 
 }

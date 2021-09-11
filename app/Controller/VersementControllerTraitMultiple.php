@@ -507,7 +507,7 @@ trait VersementControllerTraitMultiple
         //REDUCTION GROUPE FAMILIAL
             $groupe_familial = $_POST['groupe_familial'];
             // vd($groupe_familial);
-            if($groupe_familial['reduction'] != "0"){
+            if(isset($groupe_familial['reduction']) && $groupe_familial['reduction'] != "0" && $groupe_familial['reduction'] != ""){
                 $groupe_familial_exists = (new GroupeFamilialRepository())->groupe_familial_exists($eleve_id);
                 $data_groupe_familial = [];
                 $groupe_familial_id = 0;

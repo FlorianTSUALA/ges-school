@@ -53,7 +53,7 @@ use App\App;
 						</div>
 
 						<div class="card-footer border-top-2 border-top-warning">
-							<span><? App::SCHOOLL_NAME; ?></span>
+							<span><? App::ORGANISATION; ?></span>
 						</div>
 					</div>
 				</div>

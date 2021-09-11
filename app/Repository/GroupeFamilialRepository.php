@@ -20,17 +20,10 @@ class GroupeFamilialRepository extends BaseRepository{
         $req = "SELECT  GROUP_CONCAT( CONCAT(eleve.nom, ' ', eleve.prenom) SEPARATOR ', ') AS description, 
                         groupe_familial.id,           
                         groupe_familial.famille AS famille, 
-                        groupe_familial.code AS code, 
+                        groupe_familial.code AS code
                         -- groupe_familial.libelle AS libelle
                 FROM    groupe_familial 
                 LEFT  JOIN  eleve ON eleve.groupe_familial_id = groupe_familial.id
-                -- LEFT  JOIN  annee_scolaire ON annee_scolaire.id = groupe_familial.annee_scolaire_id
-                -- LEFT  JOIN  type_groupe_familial ON type_groupe_familial.id = groupe_familial.type_groupe_familial_id
-                -- LEFT JOIN (
-                --     SELECT mois.libelle AS libelle, groupe_familial_mois.groupe_familial_id AS id 
-                --     FROM groupe_familial_mois 
-                --     LEFT  JOIN  mois ON groupe_familial_mois.mois_id = mois.id    
-                -- ) AS tr ON tr.id = groupe_familial.id
                 WHERE 
                         groupe_familial.visibilite = 1  AND 
                         eleve.statut_eleve_id not in ($demission_id, $fin_cyle_id)
@@ -40,8 +33,25 @@ class GroupeFamilialRepository extends BaseRepository{
         return $result;
     }
 
-    public function get_one_groupe_familial_reduction(){
+    public function get_one_groupe_familial_reduction($code){
+        $demission_id = StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE);
+        $fin_cyle_id = StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE);
 
+        $req = " SELECT GROUP_CONCAT(CONCAT(eleve.nom, ' ', eleve.prenom)  SEPARATOR ', ') AS description, 
+                        GROUP_CONCAT(eleve.code SEPARATOR ', ') AS description_code,
+                        groupe_familial.id,           
+                        groupe_familial.famille AS famille, 
+                        groupe_familial.code AS code
+                FROM    groupe_familial 
+                LEFT  JOIN  eleve ON eleve.groupe_familial_id = groupe_familial.id
+                WHERE 
+                        groupe_familial.visibilite = 1  AND 
+                        groupe_familial.code = '$code'  AND 
+                        eleve.statut_eleve_id not in ($demission_id, $fin_cyle_id)
+                GROUP  BY groupe_familial.id
+                ";
+            $result = (array)$this->query($req)[0];
+            return $result;
     }
 
     public function get_groupe_familial($groupe_familial_id, $annee_scolaire_id, $code){
@@ -66,11 +76,22 @@ class GroupeFamilialRepository extends BaseRepository{
         return $results;
     }
 
-
+    /**
+     * ok
+     *
+     * @param [type] $eleve_id
+     * @return void
+     */
     public function groupe_familial_exists($eleve_id){
         return Eleve::table()->select()->where('eleve.id', $eleve_id)->exists();
     }
 
+    /**
+     * ok
+     *
+     * @param [type] $eleve_id
+     * @return void
+     */
     public function groupe_familial_by_eleve_id($eleve_id){
         return Eleve::table()->select('groupe_familial_id')->where('eleve.id', $eleve_id)->one()['groupe_familial_id'];
     }
