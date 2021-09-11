@@ -19,12 +19,16 @@ use App\Model\TypePension;
 use App\Model\PensionEleve;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
+use App\Model\GroupeFamilial;
 use App\Model\AbonnementDetail;
 use App\Model\AbonnementCantine;
 use App\Model\AbonnementActivite;
+use App\Model\GroupeReductionFamiliale;
 use App\Repository\EleveRepository;
+use App\Model\ReductionFamiliale;
 use App\Repository\ParcoursRepository;
 use App\Repository\PrixPaiementRepository;
+use App\Repository\GroupeFamilialRepository;
 use App\Repository\StatutApprenantRepository;
 
 trait VersementControllerTraitMultiple
@@ -122,6 +126,7 @@ trait VersementControllerTraitMultiple
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE);
 
         $type_paiement_id = Model::getId(DBTable::TYPE_PAIEMENT, Request::getSecParam('type_paiement_id', ''));
+        
         //Facture
             $model_facture = DBTable::getModel(DBTable::FACTURE);
             $code_facture = Facture::generateCode();
@@ -144,6 +149,7 @@ trait VersementControllerTraitMultiple
             $model_facture->insert($data_facture)->execute();
             $facure_id = Model::getId(DBTable::FACTURE, $code_facture);
         //Facture
+        
         if($debug)   vd('ok Facture');
 
         //PENSION ELEVE
@@ -248,16 +254,25 @@ trait VersementControllerTraitMultiple
                                 $model_parcours->insert($data_parcours)->execute();
 
                                 //MISE A JOUR DU #STATUT_ELEVE#
+                                // vd('#STATUT_ELEVE#');
+                                // vd(StatutEleve::get_id(StatutEleve::NOUVEAU_CODE));
+                                // vd(StatutEleve::get_id(StatutEleve::ANCIEN_CODE));
+                                // vd($eleve);
+                                // vd(is_null($eleve['statut_eleve_id']));
+
                                 if(is_null($eleve['statut_eleve_id'])){
-                                    Eleve::table()->update()->set(['statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE)])->where('eleve_id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                                    // vd('#STATUT_ELEVE1#');
+                                    Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                                    // vd('#STATUT_ELEVE2#');
                                 }else{
-                                    $statut_eleve_code = StatutEleve::table()->select('code')->where('eleve.statut_eleve_id', $eleve['statut_eleve_id'])->one()['code'];
+                                    $statut_eleve_code = StatutEleve::table()->select('code')->where('statut_eleve.id', $eleve['statut_eleve_id'])->one()['code'];
                                     if($statut_eleve_code == StatutEleve::DEMISSINAIRE_CODE){
-                                        Eleve::table()->update()->set(['statut_eleve_id', StatutEleve::get_id(StatutEleve::ANCIEN_CODE)])->where('eleve_id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::ANCIEN_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                                     }else{
-                                        Eleve::table()->update()->set(['statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE)])->where('eleve_id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                                     }
                                 }
+                                // vd('#STATUT_ELEVE#');
                                 
                             //  ##endregion INSCRIPTION PARCOURS 
 
@@ -376,7 +391,6 @@ trait VersementControllerTraitMultiple
 
         //ACTIVITE
 
-
         //CANTINE
 
             $cantines = $_POST['cantines']??[];
@@ -461,7 +475,6 @@ trait VersementControllerTraitMultiple
 
         //CANTINE
 
-
         //AUTRES
             $autres = $_POST['autres']??[];
             $montant = $autres['montant'];
@@ -489,18 +502,78 @@ trait VersementControllerTraitMultiple
                 $model_pension_eleve->insert($data_pension_eleve_autre)->execute();
             }
         //AUTRES
+        // vd('REDUCTION GROUPE FAMILIAL');
 
-        //vd('ok Autres');
+        //REDUCTION GROUPE FAMILIAL
+            $groupe_familial = $_POST['groupe_familial'];
+            // vd($groupe_familial);
+            if($groupe_familial['reduction'] != "0"){
+                $groupe_familial_exists = (new GroupeFamilialRepository())->groupe_familial_exists($eleve_id);
+                $data_groupe_familial = [];
+                $groupe_familial_id = 0;
+                
+                if(!$groupe_familial_exists){
+                    $groupe_familial_id = (new GroupeFamilialRepository())->groupe_familial_by_eleve_id($eleve_id);
+                }else{
+                    $groupe_familial_code = GroupeFamilial::generateCode();
+                    
+                    $data_groupe_familial = [
+                        'code' => $groupe_familial_code,
+                        'famille' => $groupe_familial['famille'],
+                    ];
+
+                    GroupeFamilial::table()->insert($data_groupe_familial)->execute();
+
+                    $groupe_familial_id = GroupeFamilial::get_id($groupe_familial_code);
+                }
+
+                $old_eleve_groupe_familial = []; //On ne retire jamais une personne de sa famille sans l'avoir affecté à une autre; meme s'il n'est plus de l'étanlissement
+                
+                // vd($groupe_familial_id);
+                foreach ($groupe_familial['membres'] as $key => $eleve_code){
+                    Eleve::table()->update()->set('groupe_familial_id', $groupe_familial_id)->where('code', $eleve_code)->execute();
+                    // vd($eleve_code);
+                }
+
+                $reduction_groupe_familial_code = ReductionFamiliale::generateCode(); 
+                ReductionFamiliale::table()->insert([
+                    'code' => $reduction_groupe_familial_code,
+                    'annee_scolaire_id' => $this->session->get(S::ANNEE_SCOLAIRE),
+                    'groupe_familial_id' => $groupe_familial_id,
+                    'eleve_id' => $eleve_id,
+                    'facture_id' => $facure_id,
+                    'montant' => $groupe_familial['reduction']
+                ])->execute();
+
+                $reduction_groupe_familial_id = ReductionFamiliale::get_id($reduction_groupe_familial_code);
+
+                foreach ($groupe_familial['membres'] as $eleve_code){
+                    GroupeReductionFamiliale::table()->insert([
+                        'code' => GroupeReductionFamiliale::generateCode(),
+                        'eleve_id' => Eleve::get_id($eleve_code),
+                        'reduction_familiale_id' => $reduction_groupe_familial_id,
+                    ])->execute();
+                }
+
+            }
+
+        //REDUCTION GROUPE FAMILIAL
+
+        // vd('REDUCTION GROUPE FAMILIAL');
 
         if(isset($_SESSION[S::DATA_TRANSPORT])){
             $_SESSION[S::DATA_TRANSPORT] = null;
         }
+        // vd('REDUCTION GROUPE FAMILIAL');
 
         //vd($result_pension_eleve , $result_abonnement_detail , $result_abonnement_cantine , $result_facture);
         // $result = $result_pension_eleve && $result_abonnement_detail && $result_abonnement_cantine && $result_facture ;
         $result = true;
+        // vd('REDUCTION GROUPE FAMILIAL');
+
         if($result){
-            $this->sendResponseAndExit(Helpers::toJSON('Versement enregistré avec sucess', TRUE));
+            // echo Helpers::toJSON('Versement enregistré avec sucess', TRUE);
+            $this->sendResponseAndExit(Helpers::toJSON('Versement enregistré avec sucess'));
         }else{
             $this->sendResponseAndExit(Helpers::toJSON('Erreur d\'enregistement à la base de données !!!', TRUE), false, 400, 'BD error : data '. $code);
         }

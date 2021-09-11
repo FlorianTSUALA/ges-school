@@ -17,6 +17,7 @@ use App\Model\AbonnementCantine;
 use App\Model\InscriptionActivite;
 use App\Model\TypeTrancheScolaire;
 use App\Model\AffectationClasseMatiere;
+use App\Model\GroupeReductionFamiliale;
 use App\Model\AffectationPersonnelSalleClasse;
 
 class DBTable
@@ -76,7 +77,8 @@ class DBTable
     const TRANCHE_SCOLAIRE_MOIS = 'tranche_scolaire_mois';
     const TYPE_TRANCHE_SCOLAIRE = 'type_tranche_scolaire';
     const GROUPE_FAMILIAL = 'groupe_familial';
-    const GROUPE_FAMILIAL_REDUCTION = 'groupe_familial_reduction';
+    const REDUCTION_FAMILIALE = 'reduction_familiale';
+    const GROUPE_REDUCTION_FAMILIALE = 'groupe_reduction_familiale';
     const TYPE_PAIEMENT = 'type_paiement';
     const TYPE_PENSION = 'type_pension';
     const TYPE_PERSONNEL = 'type_personnel';
@@ -216,8 +218,10 @@ class DBTable
                 return TrancheScolaire::table();
             case DBTable::GROUPE_FAMILIAL:
                 return GroupeFamilial::table();
-            case DBTable::GROUPE_FAMILIAL_REDUCTION:
-                return GroupeFamilialReduction::table();
+            case DBTable::GROUPE_REDUCTION_FAMILIALE:
+                return GroupeReductionFamiliale::table();
+            case DBTable::REDUCTION_FAMILIALE:
+                return ReductionFamiliale::table();
             case DBTable::TRANCHE_SCOLAIRE_MOIS:
                 return TrancheScolaireMois::table();
             case DBTable::TYPE_TRANCHE_SCOLAIRE:

@@ -4,6 +4,7 @@ use App\Controller\MoisController;
 use App\Controller\ExcelController;
 use App\Controller\FactureController;
 use App\Controller\StatutEleveController;
+use App\Controller\GroupeFamilialController;
 use App\Controller\TypeTrancheScolaireController;
 
 //START
@@ -386,6 +387,7 @@ $router->crudRoute('emploie_temps', EmploieTempsController::class);
 
 // FOR DEVELOPEMENT TEST FUNCTION
 $router->addRoute('test', 'test', [TestController::class, 'test']);
+$router->addRoute('actualiser_statut_eleve', 'actualiser/statut_eleve', [TestController::class, 'actualiser_statut_eleve']);
 $router->addRoute('testr', 'testr', [TestController::class, 'testr']);
 $router->addRoute('test-sql', 'testsql', [TestController::class, 'testSQL']);
 $router->addRoute('test-pdf', 'testpdf', [TestController::class, 'testpdf']);

@@ -12,7 +12,15 @@ class GroupeFamilialRepository extends BaseRepository{
         $this->model = GroupeFamilial::table();
     }
 
-    public function get_groupe_familial($groupe_familial_id, $annee_scolaire_id){
+    public function get_all_groupe_familial_reduction(){
+        
+    }
+
+    public function get_one_groupe_familial_reduction(){
+
+    }
+
+    public function get_groupe_familial($groupe_familial_id, $annee_scolaire_id, $code){
 
         $groupe_familial_id = Eleve::table()->select('groupe_familial_id')->where('code', $code)->where('visibilite', 1)->one()['groupe_familial_id'];
 
@@ -32,6 +40,15 @@ class GroupeFamilialRepository extends BaseRepository{
                                 ->where('eleve.visibilite', 1)
                                 ->get();
         return $results;
+    }
+
+
+    public function groupe_familial_exists($eleve_id){
+        return Eleve::table()->select()->where('eleve.id', $eleve_id)->exists();
+    }
+
+    public function groupe_familial_by_eleve_id($eleve_id){
+        return Eleve::table()->select('groupe_familial_id')->where('eleve.id', $eleve_id)->one()['groupe_familial_id'];
     }
 
     public function get_groupe_famille_info($eleve_id){

@@ -6,7 +6,7 @@ use Core\Model\Model;
 use Core\HTML\Form\FormModel;        
 use Core\Model\HydrahonModel;
 
-class GroupeFamilialReduction extends Model implements FrequentlyReapeat
+class ReductionFamiliale extends Model implements FrequentlyReapeat
 {
     use HydrahonModel;
     protected $entity;   

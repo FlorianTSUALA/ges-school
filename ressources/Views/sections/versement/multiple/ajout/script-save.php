@@ -22,6 +22,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
                 'cantines': cantines,
                 'autres': autres,
                 'activites': activites,
+                'groupe_familial': groupe_familial,
                 'eleve_id':  data_versement['eleve_id'],
                 'classe_id':  data_versement['classe_id'],
                 'statut_apprenant_id':  data_versement['statut_apprenant'],
@@ -87,7 +88,7 @@ echo '<script src="'.URL::base().'assets/app-assets/vendors/js/jquery-print/jQue
                         Success = false;
                         console.log(textStatus, errorThrown);
                     }
-                });               
+                })              
             }
         });
 
