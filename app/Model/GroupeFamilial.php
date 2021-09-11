@@ -24,17 +24,17 @@ class GroupeFamilial extends Model implements FrequentlyReapeat
                                                                         ->where('visibilite', 1)
                                                                         ->get();
 
-        $type_tranche_scolaires = TypeTrancheScolaire::table()  ->select([ 'code' => 'id', 'libelle' => 'value'])
-                                                                ->where('visibilite', 1)
-                                                                ->get();
+        // $type_tranche_scolaires = TypeTrancheScolaire::table()  ->select([ 'code' => 'id', 'libelle' => 'value'])
+        //                                                         ->where('visibilite', 1)
+        //                                                         ->get();
 
-        $eleves = Eleve::table()->select(['code' => 'id', 'libelle' => 'value'])->where('visibilite', 1)->get();
+        // $eleves = Eleve::table()->select(['code' => 'id', 'libelle' => 'value'])->where('visibilite', 1)->get();
                                                                       
         $this->fillables =
             [
                 new FormModel(true, self::REFENCE),
                 new FormModel(true, self::FAMILLE),
-                new FormModel(false, self::DESCRIPTION, "Elève(s) concerné(s)", InputType::SELECT2_MULTIPLE, $eleves, '' , true, 'select2 multiple', '', '', '', DBTable::GROUPE_FAMILIAL, Self::DESCRIPTION), //"#SELECT2MULTIPLE"
+                // new FormModel(false, self::DESCRIPTION, "Elève(s) concerné(s)", InputType::SELECT2_MULTIPLE, $eleves, '' , true, 'select2 multiple', '', '', '', DBTable::GROUPE_FAMILIAL, Self::DESCRIPTION), //"#SELECT2MULTIPLE"
             ];
     }
 
