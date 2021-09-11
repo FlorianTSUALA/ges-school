@@ -119,6 +119,10 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     
     // PAIEMENT
 
+
+
+    $router->addRoute('eleve_liste_integrer', 'eleve/integrations', [EleveController::class, 'nothing']);
+
         // VERSEMENT
 
         // LISTE

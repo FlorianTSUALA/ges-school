@@ -60,9 +60,6 @@ class Facture extends Model implements FrequentlyReapeat
     }
 
 
-
-    
-
     public static function get_retard_paie_scolarite($mois_encours = NULL,  $jour_delai = 1)
     {
           $tab_eleve_id = array();

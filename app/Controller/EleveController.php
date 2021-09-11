@@ -64,6 +64,14 @@ class EleveController extends AppController
     {
         $this->liste();
     }
+    public function nothing()
+    {
+        $route = 'eleve_liste_integrer';
+    
+        $this->render('sections.inegration_eleve.index', compact('route'));
+        //ressources\Views\sections\inegration_eleve\index.php
+        
+    }
 
     public function eleve_detail(string $code)
     {
