@@ -1,6 +1,7 @@
 <?php
   // include "excelVariables.php";
    //include "connect.php";
+   require_once "connect.php";
    require_once "Date.php";
 
     function genCode($value1){

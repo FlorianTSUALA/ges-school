@@ -64,25 +64,25 @@ $i = 0;
 
 			$classe = salleDeClasseToClass($salle_classe);
   
-		// 	List ($pays_id,$salle_classe_id,$annee_scolaire_id,$classe_id) = initialise_id();
-		// 	List ($code_parcours, $code_antecedent_scolaire, $code, $matricule) = initialise_code();
+			List ($pays_id,$salle_classe_id,$annee_scolaire_id,$classe_id) = initialise_id();
+			List ($code_parcours, $code_antecedent_scolaire, $code, $matricule) = initialise_code();
 
-		// 	$antecedent_scolaire_data = new Antecedent_scolaire($classe,$code_antecedent_scolaire);
-		//    //insertion dans la bdd
-		//    $antecedent_scolaire_id = $antecedent_scolaire_data->insertAntecedent_scolaire();
+			$antecedent_scolaire_data = new Antecedent_scolaire($classe,$code_antecedent_scolaire);
+		   //insertion dans la bdd
+		   $antecedent_scolaire_id = $antecedent_scolaire_data->insertAntecedent_scolaire();
 		
-		// 	$eleve_data = new Eleve($code,$pays_id,$antecedent_scolaire_id,$matricule,$nom,$prenom,$sexe,$date_naissance,$lieu_naissance);
-		// 	  //insertion dans la bdd
-		//     $eleve_id = $eleve_data->insertEleve();
+			$eleve_data = new Eleve($code,$pays_id,$antecedent_scolaire_id,$matricule,$nom,$prenom,$sexe,$date_naissance,$lieu_naissance);
+			  //insertion dans la bdd
+		    $eleve_id = $eleve_data->insertEleve();
 			
-		//    echo $classe_id .' '.$salle_classe_id.' '.$eleve_id.' '.$annee_scolaire_id.' '.$code_parcours;
+		   //echo $classe_id .' '.$salle_classe_id.' '.$eleve_id.' '.$annee_scolaire_id.' '.$code_parcours;
 		   
-		// 	$parcours_data = new Parcours($classe_id ,$salle_classe_id,$eleve_id,$annee_scolaire_id,$code_parcours);
+			$parcours_data = new Parcours($classe_id ,$salle_classe_id,$eleve_id,$annee_scolaire_id,$code_parcours);
 
-		// 	//insertion dans la bdd
-		// 	$parcours_data->insertParcours();
+			//insertion dans la bdd
+			$parcours_data->insertParcours();
 
-        //     var_dump($antecedent_scolaire_id);			
+            //var_dump($antecedent_scolaire_id);			
  
 		}
 		 

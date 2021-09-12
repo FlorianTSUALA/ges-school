@@ -1,5 +1,6 @@
 <?php
-     // include "connect.php"; 
+        require_once "connect.php";
+
 
 class Parcours {
  
