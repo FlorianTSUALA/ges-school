@@ -1,0 +1,159 @@
+CREATE TABLE IF NOT EXISTS `classe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `personnel` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(254) DEFAULT NULL,
+  `nom` varchar(254) DEFAULT NULL,
+  `prenom` varchar(254) DEFAULT NULL,
+  `sexe` enum('H','F') DEFAULT 'H',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `salle_classe` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `classe_id` int(11) NOT NULL,
+  `personnel_id` int(11) DEFAULT NULL,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_classe_salle_classe` (`classe_id`),
+  KEY `FK_salle_classe_affectation_personnel` (`personnel_id`),
+  CONSTRAINT `FK_salle_classe_personnel` FOREIGN KEY (`personnel_id`) REFERENCES `personnel` (`id`),
+  CONSTRAINT `fk_classe_salle_classe` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `matiere` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `discipline_id` int(11) NOT NULL,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_discipline_matiere` (`discipline_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `annee_scolaire` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(254) DEFAULT NULL,
+   `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `affectation_classe_matiere` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(254) DEFAULT NULL,
+  `matiere_id` int(11) NOT NULL,
+  `classe_id` int(11) NOT NULL,
+    PRIMARY KEY (`id`),
+  `annee_scolaire_id` int(11) NOT NULL,
+  KEY `fk_classe_affecter` (`classe_id`),
+  KEY `fk_matiere_affecter` (`matiere_id`),
+  KEY `FK_affectation_classe_matiere_annee_scolaire` (`annee_scolaire_id`),
+  CONSTRAINT `FK_affectation_classe_matiere_annee_scolaire` FOREIGN KEY (`annee_scolaire_id`) REFERENCES `annee_scolaire` (`id`),
+  CONSTRAINT `fk_classe_affecter` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`),
+  CONSTRAINT `fk_matiere_affecter` FOREIGN KEY (`matiere_id`) REFERENCES `matiere` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `cours` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `affecter_classe_matiere_id` int(11) NOT NULL,
+  `salle_classe_id` int(11) NOT NULL,
+  `matiere_id` int(11) NOT NULL,
+  `personnel_id` int(11) NOT NULL,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_est_enseignee_classe` (`affecter_classe_matiere_id`),
+  KEY `fk_est_enseignee_salle_classe` (`salle_classe_id`),
+  KEY `fk_est_dispensee` (`matiere_id`),
+  KEY `fk_professeur_cours` (`personnel_id`),
+  CONSTRAINT `fk_est_dispensee` FOREIGN KEY (`matiere_id`) REFERENCES `matiere` (`id`),
+  CONSTRAINT `fk_est_enseignee_classe` FOREIGN KEY (`affecter_classe_matiere_id`) REFERENCES `affectation_classe_matiere` (`id`),
+  CONSTRAINT `fk_est_enseignee_salle_classe` FOREIGN KEY (`salle_classe_id`) REFERENCES `salle_classe` (`id`),
+  CONSTRAINT `fk_professeur_cours` FOREIGN KEY (`personnel_id`) REFERENCES `personnel` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS `pays` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `antecedent_scolaire` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `classe` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=utf8mb4;
+
+
+CREATE TABLE IF NOT EXISTS `eleve` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `code` varchar(254) NOT NULL DEFAULT '',
+  `pays_id` int(11) DEFAULT NULL,
+  `antecedent_scolaire_id` int(11) NOT NULL,
+  `matricule` varchar(254) DEFAULT NULL,
+  `nom` varchar(254) DEFAULT NULL,
+  `prenom` varchar(254) DEFAULT NULL,
+  `prenom_usage` varchar(50) DEFAULT NULL,
+  `sexe` enum('F','M') DEFAULT 'M',
+  `date_naissance` datetime DEFAULT NULL,
+  `lieu_naissance` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_eleve_antecedent_scolaire` (`antecedent_scolaire_id`),
+  KEY `fk_pays_eleve` (`pays_id`),
+  CONSTRAINT `fk_eleve_antecedent_scolaire` FOREIGN KEY (`antecedent_scolaire_id`) REFERENCES `antecedent_scolaire` (`id`),
+  CONSTRAINT `fk_pays_eleve` FOREIGN KEY (`pays_id`) REFERENCES `pays` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=95 DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `trimestre` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `annee_scolaire_id` int(11) NOT NULL,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_annee_scolaire_trimestre` (`annee_scolaire_id`),
+  CONSTRAINT `fk_annee_scolaire_trimestre` FOREIGN KEY (`annee_scolaire_id`) REFERENCES `annee_scolaire` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `periode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `trimestre_id` int(11) NOT NULL,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_trimestreperiode` (`trimestre_id`),
+  CONSTRAINT `fk_trimestre_periode` FOREIGN KEY (`trimestre_id`) REFERENCES `trimestre` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE IF NOT EXISTS `composer` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `classe_id` int(11) NOT NULL,
+  `matiere_id` int(11) NOT NULL,
+  `cours_id` int(11) NOT NULL,
+  `eleve_id` int(11) NOT NULL,
+  `periode_id` int(11) NOT NULL,
+  `personnel_id` int(11) NOT NULL,
+  `code` varchar(254) DEFAULT NULL,
+  `libelle` varchar(254) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_classe_compose` (`classe_id`),
+  KEY `fk_matiere_compose` (`matiere_id`),
+  KEY `fk_eleve_compose` (`eleve_id`),
+  KEY `fk_est_compose` (`cours_id`),
+  KEY `fk_periode_compose` (`periode_id`),
+  KEY `fk_enseignant_compose` (`personnel_id`),
+  CONSTRAINT `fk_classe_compose` FOREIGN KEY (`classe_id`) REFERENCES `classe` (`id`),
+  CONSTRAINT `fk_eleve_compose` FOREIGN KEY (`eleve_id`) REFERENCES `eleve` (`id`),
+  CONSTRAINT `fk_enseignant_compose` FOREIGN KEY (`personnel_id`) REFERENCES `personnel` (`id`),
+  CONSTRAINT `fk_est_compose` FOREIGN KEY (`cours_id`) REFERENCES `cours` (`id`),
+  CONSTRAINT `fk_matiere_compose` FOREIGN KEY (`matiere_id`) REFERENCES `matiere` (`id`),
+  CONSTRAINT `fk_periode_compose` FOREIGN KEY (`periode_id`) REFERENCES `periode` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+DROP TABLE composer 

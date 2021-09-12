@@ -86,7 +86,7 @@ $table_header = "
                     <div class="card-body">
                         <!-- Task List table -->
                         <div class="table-responsive-sm" >
-                            <table id="table-eleve"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
+                            <table id="table-eleve1"  class="table table-white-space table-bordered  table-sm" style="width: 100%;">
                             <!-- <table id="table-eleve" class="table table-white-space table-bordered row-grouping display no-wrap icheck table-middle"> -->
                                 <thead> <?= $table_header ?> </thead>
                                 <tbody> </tbody>
