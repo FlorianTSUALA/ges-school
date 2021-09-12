@@ -6,7 +6,7 @@
         "email": "prodigit7@gmail.com"
     }],
     "autoload": {
-        "files": ["config/Invariant/constants.php"],
+        "files": ["config/Invariant/constants.php", "lib/spreadsheet/vendor/autoload.php"],
         "psr-4": {
             "App\\": "app/",
             "ClanCats\\Hydrahon\\": "lib/Hydrahon/src/",

@@ -5,6 +5,7 @@ use App\Controller\ExcelController;
 use App\Controller\FactureController;
 use App\Controller\StatutEleveController;
 use App\Controller\GroupeFamilialController;
+use App\Controller\ReductionFamilialeController;
 use App\Controller\TypeTrancheScolaireController;
 
 //START
@@ -133,7 +134,7 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     $router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
 
 // TEST SAVING WITH EXCEL
-$router->addRoute('excell', 'excell', [ExcelController::class, 'excell']);
+$router->addRoute('excell', 'excell', [ExcelController::class, 'index']);
 
 //ELEVE LIVE SEARCH
 $router->addRoute('eleve-list-class', 'eleve/list/class/{code}', [EleveController::class, 'eleve_classe']);
@@ -189,8 +190,14 @@ $router->addRoute('print', 'print/{model}', [PrinterController::class, 'index'])
 
 //GROUPE FAMILIAL
 $router->crudRoute('groupe_familial', GroupeFamilialController::class);
-$router->addRoute('api_get_goupe_familial_eleve', 'api/get/goupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_get_groupe_familial']);
-$router->addRoute('api_save_goupe_familial_eleve', 'api/save/goupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_save_groupe_familial']);
+$router->addRoute('api_get_groupe_familial_eleve', 'api/get/groupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_get_groupe_familial']);
+$router->addRoute('api_save_groupe_familial_eleve', 'api/save/groupe_familial/eleve/{code}', [GroupeFamilialController::class, 'api_save_groupe_familial']);
+
+//HISTORIQUE REDUCTION FAMILIALE
+$router->addRoute('reduction_familiale', 'reduction_familiale', [ReductionFamilialeController::class, 'index']);
+$router->addRoute('api_get_reduction_familiale', 'api/get/reduction_familiale/{code}', [ReductionFamilialeController::class, 'api_get_reduction_familiale']);
+$router->addRoute('api_get_facture_reduction_familial', 'api/get/facture_reduction_familial/{code}', [ReductionFamilialeController::class, 'api_get_facture_reduction_familial']);
+
 
 //ACTVITE
 $router->crudRoute('activite', ActiviteController::class);

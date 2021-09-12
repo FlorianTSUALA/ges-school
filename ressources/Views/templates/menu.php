@@ -155,7 +155,7 @@ return[
                 "msg_page" => "",
                 "menu_explication" => "",
                 "full_url" => URL::link("groupe_familial"),
-                "action" => "groupe_familial",
+                "action" => ["groupe_familial", "reduction_familiale"],
                 "alt" => "",
                 "class" => "",
                 "isActive" => "",

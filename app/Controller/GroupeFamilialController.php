@@ -28,7 +28,7 @@ class GroupeFamilialController  extends AppController
         parent::__construct();
 
         $this->vairant = DBTable::GROUPE_FAMILIAL;
-        $this->folder_view_index = 'groupe_familial.liste.index';
+        $this->folder_view_index = 'groupe_familial.index';
 
         $this->loadModel($this->vairant);
         $this->model = GroupeFamilial::table();
@@ -44,6 +44,25 @@ class GroupeFamilialController  extends AppController
         $this->delete_title = "Suppression d'un groupe familial";
         $this->msg_delete = "Voulez-vous vraiment supprimer le groupe familial ";
     }
+
+    public function index_groupe_familial()
+    {
+        $this->app->setTitle($this->title_page);
+        $title = $this->title_home;
+        $items = $this->get_all();
+        $fillables = $this->{$this->vairant}->fillables;
+        $class_name = $this->class_name;
+        $base_route = $this->base_route;
+        $route = $this->base_route;
+        $sub_route = "groupe_familial";
+        $create_title = $this->create_title;
+        $view_title = $this->view_title;
+        $update_title = $this->update_title;
+        $delete_title = $this->delete_title;
+        $msg_delete = $this->msg_delete;
+        $this->render('sections.'.$this->folder_view_index, compact('route', 'items', 'class_name', 'fillables', 'base_route', 'title', 'create_title', 'view_title', 'update_title', 'delete_title', 'msg_delete'));
+    }
+
 
     public function get_all(){
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante

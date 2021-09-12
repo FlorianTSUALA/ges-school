@@ -21,7 +21,7 @@ use Core\Routing\URL;
                     <div class="row">
                         <label for="photo" style="  display: block; margin-left: auto; margin-right: auto;">
                             <figure>
-                                <img title="photo du personnel" id="recap-photo" width="200px" height="200px"  src="<?= URL::upload() ?>ressources/uploads/img/personnel/no-photo.jpg" alt="" class="photo" class="center">
+                                <img title="photo du personnel" id="recap-photo" width="200px" height="200px"  src="<?= URL::upload() ?>img/personnel/no-photo.jpg" alt="" class="photo" class="center">
                             </figure>
                         </label>
                     </div>

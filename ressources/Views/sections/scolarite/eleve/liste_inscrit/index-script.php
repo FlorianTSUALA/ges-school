@@ -92,10 +92,10 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
 
 
                 $("#recap-sexe_eleve").text( (eleve.sexe == 'M')? 'Masculin' : 'Féminin' )
-                $("#recap-photo").attr('src', "<?= URL::upload() ?>ressources/uploads/img/eleve/"+eleve.photo)
+                $("#recap-photo").attr('src', "<?= URL::upload() ?>img/eleve/"+eleve.photo)
 
                 $('#recap-pieces_jointes').on('click', function(e) {
-                    download("<?= URL::upload() ?>ressources/uploads/img/eleve/"+eleve.pieces_jointes)
+                    download("<?= URL::upload() ?>img/eleve/"+eleve.pieces_jointes)
                 })
 
                 $('#eleve_modal_info_inscrit').modal('show')

@@ -82,14 +82,14 @@ $include_footer_script = ob_get_clean();
                     <div class="btn-group" role="group"><a class="btn btn-outline-info" href="<?= URL::link('eleve_ajout') ?>">
                             <i class="fa fa-user-plus"> Nouvel Elève</i></a>
                     </div>
-                    <div class="btn-group" role="group"><a class="btn btn-outline-info <?= ($menu_actif == "liste_inscrit") ? "active" : "" ?>" href="<?= URL::link('eleve_liste_inscrit') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="élèves inscrits au compte de l'année scolaire <?= $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE) ?>" data-bg-color="pink">
+                    <div class="btn-group" role="group"><a class="btn btn-outline-info <?= ($sub_route == "liste_inscrit") ? "active" : "" ?>" href="<?= URL::link('eleve_liste_inscrit') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="élèves inscrits au compte de l'année scolaire <?= $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE) ?>" data-bg-color="pink">
                             <i class="fa fa-user"> Elèves Inscrits</i>
                         </a>
                     </div>
-                    <div class="btn-group" role="group"><a class="btn btn-outline-info  <?= ($menu_actif == "liste_non_inscrit") ? "active" : "" ?>" href="<?= URL::link('eleve_liste_non_inscrit') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="élèves pas encore inscrits au compte de l'année scolaire <?= $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE) ?>" data-bg-color="pink">
+                    <div class="btn-group" role="group"><a class="btn btn-outline-info  <?= ($sub_route == "liste_non_inscrit") ? "active" : "" ?>" href="<?= URL::link('eleve_liste_non_inscrit') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="élèves pas encore inscrits au compte de l'année scolaire <?= $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE) ?>" data-bg-color="pink">
                             <i class="fa fa-user-secret"> Elèves Non Inscrits</i></a>
                     </div>
-                    <div class="btn-group" role="group"><a class="btn btn-outline-info  <?= ($menu_actif == "liste") ? "active" : "" ?>" href="<?= URL::link('eleve_liste') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="listes de tous les élèves ayant fréquentant ou fréquentant dans l'établissement" data-bg-color="pink">
+                    <div class="btn-group" role="group"><a class="btn btn-outline-info  <?= ($sub_route == "liste") ? "active" : "" ?>" href="<?= URL::link('eleve_liste') ?>" data-toggle="tooltip" data-popup="tooltip-custom" data-original-title="listes de tous les élèves ayant fréquentant ou fréquentant dans l'établissement" data-bg-color="pink">
                             <i class="fa fa-users"> Tous les élèves</i></a>
                     </div>
                 </div>

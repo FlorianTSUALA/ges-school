@@ -24,7 +24,7 @@ use function Core\Helper\dd;
         <input type="file" class="inputfile" style="display: none;"  accept="image/*" name="photo" id="photo" onchange="readURL(this, '.photo');" />
         <label for="photo" style="  display: block; margin-left: auto; margin-right: auto;">
             <figure>
-                <img title="cliquer pour modifier une photo" width="200px" height="200px"  src="<?= URL::upload() ?>ressources/uploads/img/personnel/<?= $personnel['photo']??"no-photo.jpg" ?>" alt="" class="photo" class="center">
+                <img title="cliquer pour modifier une photo" width="200px" height="200px"  src="<?= URL::upload() ?>img/personnel/<?= $personnel['photo']??"no-photo.jpg" ?>" alt="" class="photo" class="center">
             </figure>
         </label>
     </div>
@@ -216,7 +216,7 @@ use function Core\Helper\dd;
         <input type="file" class="inputfile"  accept="image/*" style="display: none;" name="photo_autres" id="photo_autres" onchange="readURL(this, '.photo_autres');" />
         <label for="photo_autres" style="  display: block; margin-left: auto; margin-right: auto;">
             <figure>
-                <img title="cliquer pour modifier une piece jointe" width="200px" height="200px"  src="<?= URL::upload() ?>ressources/uploads/img/personnel/<?= $personnel['pieces_jointes']??"attachement.jpg" ?>" alt="" class="photo_autres " >
+                <img title="cliquer pour modifier une piece jointe" width="200px" height="200px"  src="<?= URL::upload() ?>img/personnel/<?= $personnel['pieces_jointes']??"attachement.jpg" ?>" alt="" class="photo_autres " >
             </figure>
         </label>
     </div>

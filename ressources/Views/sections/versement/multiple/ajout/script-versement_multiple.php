@@ -112,7 +112,7 @@ use App\Model\Technique\E;
 
     function update_groupe_familial(){
         $.ajax({
-            url: '<?= URL::link('api_get_goupe_familial_eleve');?>'+$('#eleve_nom_complet option:selected').val(),
+            url: '<?= URL::link('api_get_groupe_familial_eleve');?>'+$('#eleve_nom_complet option:selected').val(),
             type: 'post',
             data: data,
             dataType: 'json',

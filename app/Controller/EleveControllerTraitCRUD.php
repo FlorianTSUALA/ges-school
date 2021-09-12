@@ -213,25 +213,25 @@ trait EleveControllerTraitCRUD
     public function liste()
     {
         $route = 'eleve_liste';
-        $menu_actif = 'liste';
-        $this->render('sections.scolarite.eleve.liste.index', compact( 'route', 'menu_actif'));
+        $sub_route = 'liste';
+        $this->render('sections.scolarite.eleve.liste.index', compact( 'route', 'sub_route'));
     }
      
     public function liste_inscrit()
     {
         $route = 'eleve_liste';
-        $menu_actif = 'liste_inscrit';
+        $sub_route = 'liste_inscrit';
 
         $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
-        $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes', 'menu_actif'));
+        $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes', 'sub_route'));
     }
      
     public function liste_non_inscrit()
     {
         $route = 'eleve_liste';
-        $menu_actif = 'liste_non_inscrit';
+        $sub_route = 'liste_non_inscrit';
         $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
-        $this->render('sections.scolarite.eleve.liste_non_inscrit.index', compact( 'route', 'classes', 'menu_actif'));
+        $this->render('sections.scolarite.eleve.liste_non_inscrit.index', compact( 'route', 'classes', 'sub_route'));
     }
 
     // public function detail_scolarite_eleve()

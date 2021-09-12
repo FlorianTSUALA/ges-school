@@ -48,7 +48,13 @@ class  URL{
 
     public static function upload(): string
     {
-        return str_replace('public', '', App::base_url());
+        return str_replace('public', '', App::base_url()). "ressources/uploads/";
+    }
+
+    public static function storage($folder=""): string
+    {
+        $folder = (empty($folder)) ? "": $folder."/";
+        return dirname(__DIR__).'/../' . "ressources/storage/$folder";
     }
 
     public static function res(): string

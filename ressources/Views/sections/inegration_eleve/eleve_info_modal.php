@@ -22,7 +22,7 @@ use App\Helpers\Helpers;
                     <div class="row">
                         <label for="photo" style="  display: block; margin-left: auto; margin-right: auto;">
                             <figure>
-                                <img title="photo du eleve" id="recap-photo" width="200px" height="200px" src="<?= URL::upload() ?>ressources/uploads/img/eleve/no-photo.jpg" alt="" class="photo" class="center">
+                                <img title="photo du eleve" id="recap-photo" width="200px" height="200px" src="<?= URL::upload() ?>img/eleve/no-photo.jpg" alt="" class="photo" class="center">
                             </figure>
                         </label>
                     </div>

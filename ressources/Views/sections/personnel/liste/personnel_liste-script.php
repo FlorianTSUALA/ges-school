@@ -54,10 +54,10 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
                 $("#recap-autres").text(personnel.autres)
                 $("#recap-fonciton").text(personnel.fonction)
                 $("#recap-salle_classe").text(personnel.salle_classe)
-                $("#recap-photo").attr('src', "<?= URL::upload() ?>ressources/uploads/img/personnel/"+personnel.photo)
+                $("#recap-photo").attr('src', "<?= URL::upload() ?>img/personnel/"+personnel.photo)
 
                 $('#recap-pieces_jointes').on('click', function(e) {
-                    download("<?= URL::upload() ?>ressources/uploads/img/personnel/"+personnel.pieces_jointes)
+                    download("<?= URL::upload() ?>img/personnel/"+personnel.pieces_jointes)
                 })
 
                 $('#personnel_modal_info').modal('show')

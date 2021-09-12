@@ -29,7 +29,7 @@ class FactureController  extends AppController
     public function facture_totale()
     {
         $route = 'facture_totale';
-        $menu_actif = 'facture_totale';
+        $sub_route = 'facture_totale';
 
         $date = Request::getSecParam('date', NULL);
         $personnel_code = $this->session->get(S::PERS_CODE); 
@@ -41,7 +41,7 @@ class FactureController  extends AppController
         $data_inscription = (new FactureRepository())->get_paie_facture_inscription($personnel_id, $date);
         $data_activite_total = (new FactureRepository())->get_paie_facture_activite_total($personnel_id, $date);
 
-        $this->render('sections.versement.liste.versement_total.index', compact( 'route',  'menu_actif', 'data_total', 'data_cantine', 'data_activite', 'data_scolarite', 'data_inscription','data_activite_total'));
+        $this->render('sections.versement.liste.versement_total.index', compact( 'route',  'sub_route', 'data_total', 'data_cantine', 'data_activite', 'data_scolarite', 'data_inscription','data_activite_total'));
        
     }
 
