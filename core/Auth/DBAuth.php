@@ -88,7 +88,9 @@ class DBAuth
 
 				$_SESSION[S::ANNEE_SCOLAIRE] = $annee_scolaire['id'];
 				$_SESSION[S::ANNEE_SCOLAIRE_LIBELLE] = $annee_scolaire['libelle'];
-					
+				
+				$_SESSION[S::LAST_ACTIVITY] = time();
+
 				return true;
 			}
 		}
@@ -107,11 +109,12 @@ class DBAuth
 	}
 
 	public function logged() {
-		return isset($_SESSION['auth']);
+		return (isset($_SESSION[S::LAST_ACTIVITY]) && (time() - $_SESSION[S::LAST_ACTIVITY] > 30*60));//30 minutes
 	}
 
 	public function disconnect()
 	{
+		// last request was more than 30 minutes ago
 		if ($this->logged()) {
 			unset($_SESSION[S::PERS_CODE]);
 			unset($_SESSION[S::PERS_TYPE_PERSONNEL]);
@@ -130,7 +133,10 @@ class DBAuth
 			unset($_SESSION[S::PERS_DATE_HEURE_CONNEXION]);
 			unset($_SESSION[S::PERS_IP]);
 			unset($_SESSION[S::DATA_TRANSPORT]);
+			unset($_SESSION[S::LAST_ACTIVITY]);
 			unset($_SESSION['auth']);
 		}
+		session_unset();     // unset $_SESSION variable for the run-time 
+		session_destroy();   // destroy session data in storage
 	}
 }
