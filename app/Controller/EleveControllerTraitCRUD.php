@@ -268,7 +268,7 @@ trait EleveControllerTraitCRUD
     public function api_facture_liste_inscrit($code)
     {
 
-        $filter_by = ($code = "ALL")? "ALL" : "classe";
+        $filter_by = ($code == "ALL")? "ALL" : "classe";
 
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE);
         $data = [];
