@@ -114,12 +114,12 @@ $include_footer_script = ob_get_clean();
                                 </div> 
 
                                 <div class="p-0   ">
-                                    <span class="dropdown">
-                                        <button class="btn btn-warning btn-block dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="icon-settings mr-1"></i>Rapport</button>
-                                        <span class="dropdown-menu arrow  dropdown-menu-left">
-                                            <a href="#" class="dropdown-item"><i class="fa fa-file-excel-o"></i> Excel </a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-file-word-o"></i> Word</a>
-                                            <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF </a>
+                                    <span class="btn-group" role="group">
+                                        <button class="btn btn-warning btn-block dropdown-toggle" id="btnGroupDrop2" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" ><i class="icon-settings mr-1"></i>Rapport</button>
+                                        <span class="dropdown-menu arrow  dropdown-menu-left"  aria-labelledby="btnGroupDrop2">
+                                            <a href="" onclick='imprimer_facture()' class="dropdown-item"><i class="fa fa-file-excel-o"></i> Imprimer liste </a>
+                                            <!-- <a href="#" class="dropdown-item"><i class="fa fa-file-word-o"></i> Actualier</a> -->
+                                            <!-- <a href="#" class="dropdown-item"><i class="fa fa-file-pdf-o"></i> PDF </a> -->
                                         </span>
                                     </span>
                                 </div>

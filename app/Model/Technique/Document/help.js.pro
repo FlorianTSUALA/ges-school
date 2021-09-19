@@ -41,3 +41,7 @@ $('#mySelect2').append(newOption).trigger('change');
 $('#mySelect2').val(null).trigger('change');
 
 $('#mySelect2').empty().trigger("change");
+
+function openInNewTab(url) {
+  window.open(url, '_blank').focus();
+ }

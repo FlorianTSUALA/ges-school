@@ -347,8 +347,8 @@ class EleveRepository extends BaseRepository{
         if($anneScolairePrecedenteID == 0)
           return  $this->getElevesSansParcours();
               
-         $eleveIscritAnneePreds = $this->getElevesInscris($anneScolairePrecedenteID) ; // eleves inscrit l'an precedent
-         $eleveIscritAnneeEncours = $this->getElevesInscris($annee_scolaire_id);
+         $eleveIscritAnneePreds = $this->get_eleves_inscrits($anneScolairePrecedenteID) ; // eleves inscrit l'an precedent
+         $eleveIscritAnneeEncours = $this->get_eleves_inscrits($annee_scolaire_id);
 
          $datasID = [];
          $datasEleveNonInscrit = [];
@@ -372,7 +372,7 @@ class EleveRepository extends BaseRepository{
      * @version  implemented
      * @return void
      */
-    public function getElevesInscris($annee_scolaire_id, $classe_id = 'ALL'){
+    public function get_eleves_inscrits($annee_scolaire_id, $classe_id = 'ALL'){
         
         $clause_classe_filter = ($classe_id == 'ALL') ? "" : "  AND parcours.classe_id = $classe_id";
         // dd($classe_id);

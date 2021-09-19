@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\App;
 use App\Helpers\S;
 use App\Model\Pays;
 use App\Model\Eleve;
@@ -11,14 +12,15 @@ use App\Helpers\Helpers;
 use App\Model\TypeEleve;
 use Config\Invariant\API;
 use Core\Session\Request;
-use App\Model\SalleClasse;
 
+use App\Model\SalleClasse;
 use App\Model\StatutEleve;
 use App\Helpers\HTMLHelper;
+use App\Model\AnneeScolaire;
 use function Core\Helper\dd;
+
 use function Core\Helper\vd;
 use App\Model\DossierMedical;
-
 use Core\HTML\Form\FormModel;
 use App\Model\DossierParental;
 use App\Model\StatutApprenant;
@@ -225,7 +227,7 @@ trait EleveControllerTraitCRUD
         $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
         $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes', 'sub_route'));
     }
-     
+
     public function liste_non_inscrit()
     {
         $route = 'eleve_liste';
@@ -233,43 +235,6 @@ trait EleveControllerTraitCRUD
         $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
         $this->render('sections.scolarite.eleve.liste_non_inscrit.index', compact( 'route', 'classes', 'sub_route'));
     }
-
-    // public function detail_scolarite_eleve()
-    // {
-    //     $route = 'eleve_liste';
-    //     $classes = Classe::table()->select([ 'code' => 'classe_id' , 'libelle' => 'classe'])->where('visibilite', 1)->get();
-    //     $this->render('sections.scolarite.eleve.liste_inscrit.index', compact( 'route', 'classes'));
-    // }
-    
-    public function getall_person()
-    {
-        $model = Eleve::table();
-        $results = $model->select('
-                type_eleve.libelle as type_eleve_id,
-                pays.libelle as pays_id,
-                eleve.code as code,
-                eleve.nom,
-                eleve.prenom,
-                eleve.sexe,
-                eleve.photo,
-                eleve.assurance,
-                eleve.telephone,
-                eleve.email,
-                eleve.adresse,
-                eleve.login,
-                eleve.password,
-                eleve.date_prise_service,
-                eleve.date_fin_carriere,
-                eleve.bibliographie')
-            ->where('eleve.visibilite', 1)
-            ->join('type_eleve', 'eleve.type_eleve_id', '=', 'type_eleve.id')
-            ->join('pays', 'eleve.pays_id', '=', 'pays.id')
-            ->get();
-
-
-        return $results;
-    }
-
     
     public function api_eleve_inscrit()
     {
@@ -282,13 +247,13 @@ trait EleveControllerTraitCRUD
         switch($filter_by){
             case 'classe':
                 $classe_id = Classe::table()->select('id')->where('code', '=', $code)->where('visibilite', '=', 1)->one()['id'];
-                $data = $this->eleve_repository->getElevesInscris($annee_scolaire_id, $classe_id);
+                $data = $this->eleve_repository->get_eleves_inscrits($annee_scolaire_id, $classe_id);
             break;
             case 'ALL':
-                $data = $this->eleve_repository->getElevesInscris($annee_scolaire_id);
+                $data = $this->eleve_repository->get_eleves_inscrits($annee_scolaire_id);
             break;
             default:
-                $data = $this->eleve_repository->getElevesInscris($annee_scolaire_id);
+                $data = $this->eleve_repository->get_eleves_inscrits($annee_scolaire_id);
         }
 
         $results[API::TAG_DATA] = $data;
@@ -299,7 +264,38 @@ trait EleveControllerTraitCRUD
         $results[API::TAG_DATA] = $data;
         echo Helpers::toJSON($results) ;
     }
-    
+         
+    public function api_facture_liste_inscrit($code)
+    {
+
+        $filter_by = ($code = "ALL")? "ALL" : "classe";
+
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE);
+        $data = [];
+        $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
+
+        switch($filter_by){
+            case 'classe':
+                $classe_id = Classe::table()->select('id')->where('code', '=', $code)->where('visibilite', '=', 1)->one()['id'];
+                $data['eleves'] = $this->eleve_repository->get_eleves_inscrits($annee_scolaire_id, $classe_id);
+                $data['classe'] =  Classe::table()->select('libelle')->where('id', $classe_id)->one()['libelle'];
+                $data['annee_scolaire'] =  AnneeScolaire::table()->select('libelle')->where('id', $annee_scolaire_id)->one()['libelle'];
+            break;
+            case 'ALL':
+                $data['eleves'] = $this->eleve_repository->get_eleves_inscrits($annee_scolaire_id);
+                $data['classe'] =  "Toutes les classes";
+                $data['annee_scolaire'] =  AnneeScolaire::table()->select('libelle')->where('id', $annee_scolaire_id)->one()['libelle'];
+            break;
+            default:
+                $data['eleves'] = $this->eleve_repository->get_eleves_inscrits($annee_scolaire_id);
+                $data['classe'] =  "Toutes les classes";
+                $data['annee_scolaire'] =  AnneeScolaire::table()->select('libelle')->where('id', $annee_scolaire_id)->one()['libelle'];
+        }
+
+        $this->renderPDF('reports.liste_eleve_inscrit', compact('data'), App::ORGANISATION.'_'.'LISTE_ELEVE_INSCRIT_'.$data['classe'].'_'. Helpers::today() );
+
+    }
+     
     public function api_eleve_non_inscrit()
     {
         $code = Request::getSecParam('code', NULL);

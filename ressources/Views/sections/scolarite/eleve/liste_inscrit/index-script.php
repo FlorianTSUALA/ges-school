@@ -302,3 +302,12 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
     table.ajax.reload()
   });
 </script>
+
+
+<script>
+  function imprimer_facture(){
+    let _code = (code == '')? 'ALL' : code;
+    let url = '<?= URL::link('api_facture_eleve_liste_inscrit');?>'+_code
+    window.open(url, '_blank').focus();
+  }
+</script>
