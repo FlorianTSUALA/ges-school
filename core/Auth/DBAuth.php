@@ -109,12 +109,11 @@ class DBAuth
 	}
 
 	public function logged() {
-		return (isset($_SESSION[S::LAST_ACTIVITY]) && !(time() - $_SESSION[S::LAST_ACTIVITY] > (30*60)));//30 minutes
+		return (isset($_SESSION[S::LAST_ACTIVITY]) && !(time() - $_SESSION[S::LAST_ACTIVITY] > (APP_SESSION_TIME_OUT)));//30 minutes
 	}
 
 	public function disconnect()
 	{
-		// last request was more than 30 minutes ago
 		if ($this->logged()) {
 			unset($_SESSION[S::PERS_CODE]);
 			unset($_SESSION[S::PERS_TYPE_PERSONNEL]);

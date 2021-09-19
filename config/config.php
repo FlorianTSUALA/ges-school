@@ -16,7 +16,7 @@ define('APP_LOGO', '/ressources/data/logo.png');
 
 define('APP_RES_IMG_PROFILE', '/ressources/uploads/');
 
-define("APP_SESSION_TIME_OUT", 1440);
+define("APP_SESSION_TIME_OUT", 1440); //24*60 : 24 minutes
 
  //if (!OFFLINE_DB) {
     if (OFFLINE_DB) {
