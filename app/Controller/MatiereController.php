@@ -49,7 +49,7 @@ class MatiereController extends AppController
         return $results;
     }
 
-    public function getApiAllEssentiel()  
+    public function api_get_general_info()  
     {
         $Matieres = Helpers::toJSON(Matiere::table()->select([ 'id' => 'id' , 'libelle' => 'value' ])->where('visibilite', 1)->get());
         $this->sendResponseAndExit(Helpers::toJSON($Matieres, TRUE));

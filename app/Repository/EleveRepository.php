@@ -86,7 +86,7 @@ class EleveRepository extends BaseRepository{
      * @author Prodigit <prodigit7@gmail.com>
      * @return void
      */
-    public function getInfoEleves(){
+    public function get_eleve_detail_all(){
         $req =
             "                
             SELECT  InfoEleve.pays_mere AS pays_mere, InfoEleve.pays_pere AS pays_pere,
@@ -153,7 +153,7 @@ class EleveRepository extends BaseRepository{
      * @author Prodigit <prodigit7@gmail.com>
      * @return void
      */
-    public function getInfoEleve($value, $tag = 'code'){
+    public function get_eleve_detail($value, $tag = 'code'){
        
         $req =
             "                
@@ -556,34 +556,38 @@ class EleveRepository extends BaseRepository{
         return (new self)->toObject($result);
     }
 
-
-    /*******************   OLD    *****************************/
-    /*******************   OLD    *****************************/
-    /*******************   OLD    *****************************/
-    /*******************   OLD    *****************************/
-    /*******************   OLD    *****************************/
-        /**
-     * @version old
+    /**
+     * @uses EleveController api_eleve_info
+     * @since 1.0.0
+     * @api api_eleve_info_post
+     * @version update
      */ 
-    public function info(string $search){
+    public function info($search = "", $limit = 5){
         $eleve = Eleve::table();
 
-        $eleve = $eleve->select(['id', 'code', 'nom', 'prenom', 'sexe', 'date_naissance', 'lieu_naissance', 'pays.libelle'=>'pays' ])
+        $eleve = $eleve->select(['eleve.code' => 'id', 'nom', 'prenom', 'photo', 'sexe', 'date_naissance', 'lieu_naissance', 'pays.libelle'=>'pays' ])
                 ->join('pays', 'pays.id', '=', 'eleve.pays_id')
                 ->where('eleve.visibilite', '=', 1);
 
         $data = explode(" ", $search);
 
-        foreach($data AS $item){
+        foreach($data??[] AS $item){
             $eleve = $eleve->orWhere('eleve.nom', 'like', '%'.$item.'%');
             $eleve = $eleve->orWhere('eleve.prenom', 'like', '%'.$item.'%');
+            $eleve = $eleve->orWhere('pays.libelle', 'like', '%'.$item.'%');
+            $eleve = $eleve->orWhere('eleve.lieu_naissance', 'like', '%'.$item.'%');
+            $eleve = $eleve->orWhere('eleve.date_naissance', 'like', '%'.$item.'%');
         }
-        
-        $model = $eleve->limit(5)->get();
 
-        echo json_encode($eleves);
-        
+        return $eleve->limit($limit)->get();
     }
+
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+    /*******************   OLD    *****************************/
+
 
     /**
      * @version old

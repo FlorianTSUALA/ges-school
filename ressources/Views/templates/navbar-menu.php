@@ -5,14 +5,14 @@ use App\Helpers\S;
 use Core\Routing\URL;
 use App\Repository\AnneeScolaireRepository;
 
-//@TODO
-//LA GESTION DES ANNEE SCOLAIRE DOIT ETRE LOCALE
-//ON DOIT GERER CELA AVEC LES SESSIONS. POUR NE PAS BASCULER TOUS LES UTILISATEURS
-//VERS UNE ANNEE SCOLAIRE DONNEE
-// $annee_scolaire_courante = ( new AnneeScolaireRepository() )->getActive('libelle')??'non définie';
-$annee_scolaire_courante = $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE); //annee scolaire courante
-$annee_scolaire_courante_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-$annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
+	//@TODO
+	//LA GESTION DES ANNEE SCOLAIRE DOIT ETRE LOCALE
+	//ON DOIT GERER CELA AVEC LES SESSIONS. POUR NE PAS BASCULER TOUS LES UTILISATEURS
+	//VERS UNE ANNEE SCOLAIRE DONNEE
+	// $annee_scolaire_courante = ( new AnneeScolaireRepository() )->getActive('libelle')??'non définie';
+	$annee_scolaire_courante = $this->session->get(S::ANNEE_SCOLAIRE_LIBELLE); //annee scolaire courante
+	$annee_scolaire_courante_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+	$annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 
 ?>
 
@@ -27,7 +27,7 @@ $annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 				</li>
 				<li class="nav-item">
 					<a class="navbar-brand" href=""><img class="brand-logo" alt="robust admin logo" src="<?= URL::base() ?>assets/app-assets/images/logo/logo-dark-sm.png">
-						<h3 class="brand-text">Ges-School</h3>
+						<h3 class="brand-text"> <?= App::ORGANISATION ?> </h3>
 					</a>
 				</li>
 				<li class="nav-item d-md-none">
@@ -49,17 +49,24 @@ $annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 
 					<li class="nav-item d-none d-md-block">
 						<fieldset class="form-group position-relative  has-icon-left mt-1 mb-0">
-							<input type="search" name="recherche" placeholder="Recherche" class="form-control">
-							<div class="form-control-position">
-								<i class="ficon ft-search"></i>
+							
+
+							<div align="center">
+								<input id="nav_bar_search" type="text" name="recherche" placeholder="Rechercher un élève" class="form-control">
+								<div class="form-control-position">
+									<i class="ficon ft-search"></i>
+								</div>
 							</div>
+							<ul class="list-group" id="result"></ul>
+
+
 						</fieldset>
 					</li>
 				</ul>
 
 				<ul class="nav navbar-nav float-right">
 					<li class="dropdown dropdown-language">
-						<a class="nav-link" id="dropdown-flag" ><b>Annee scolaire :</b></a>
+						<a class="nav-link" id="dropdown-flag" ><b>Année scolaire :</b></a>
 					</li>
 					<li class="dropdown dropdown-language nav-item">
 						<a class="dropdown-toggle nav-link" id="dropdown-flag" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -127,6 +134,7 @@ $annee_scolaires = ( new AnneeScolaireRepository() )->getAll();
 								<a class="dropdown-item text-muted text-center" href="">Lire tout...</a>
 							</li>
 						</ul> -->
+
 					</li>
 
 					<li class="dropdown dropdown-user nav-item">

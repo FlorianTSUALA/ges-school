@@ -65,7 +65,7 @@ class IntegrationEleveController extends AppController
 
     public function eleve_detail(string $code)
     {
-        return $this->eleve_repository->getInfoEleve($code);
+        return $this->eleve_repository->get_eleve_info($code);
     }
 
     public function eleve_classe(string $code)

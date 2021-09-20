@@ -24,7 +24,7 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
 
   function modal_eleve_detail(id){
         $.ajax({
-            url: '<?= URL::link('eleve_api_info');?>'+id,
+            url: '<?= URL::link('api_eleve_info');?>'+id,
             type: 'post',
             dataType: 'json',
             beforeSend:function(){

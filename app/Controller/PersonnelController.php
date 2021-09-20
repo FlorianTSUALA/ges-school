@@ -401,7 +401,7 @@ class PersonnelController extends AppController
         echo Helpers::toJSON($results) ;
     }
 
-    public function getApiAllEssentiel()  
+    public function api_get_general_info()  
     {
         $personnels = Helpers::toJSON(Personnel::table()->select([ 'id' => 'id' , new Expression("concat(nom,' ',prenom) as value")])->where('visibilite', 1)->get());
         $this->sendResponseAndExit(Helpers::toJSON($personnels, TRUE));

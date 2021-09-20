@@ -47,6 +47,8 @@
             opacity:  1;
         }
     </style>
+	<?php require "layouts/search/navbar-search-style.php" ?>
+
 
 </head>
 <!-- <body class="vertical-layout vertical-mmenu 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-mmenu" data-col="2-columns"> -->
@@ -56,7 +58,12 @@
 	<?php require "sidebar-menu.php" ?>
 
 	<!-- ############# -->
-	<?= $content; ?>
+	<div id="card-body-default">
+		<?= $content; ?>
+	</div>
+
+	<?php require "layouts/search/eleve_info_modal.php" ?>
+
 	
 	<?php require "layouts/footer.php" ?>
 
@@ -76,6 +83,10 @@
 	<?= $include_footer_script??""; ?>
 	<!-- ############# -->
 	<?php require  dirname(__DIR__)."/alert/alert.php" ?>
+
+	<?php require "layouts/search/navbar-search-script.php" ?>
+	<?php require "layouts/search/eleve_info_modal-script.php" ?>
+
 	
 </body>
 

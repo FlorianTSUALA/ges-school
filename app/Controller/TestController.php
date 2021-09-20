@@ -270,11 +270,11 @@ class TestController extends AppController
       
       // dd($pension_classe);
       dd(json_encode(DBTable::getModel('mois')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get()));
-      // dd((new VersementRepository )->getInfoEleveActivite(1,2) );
+      // dd((new VersementRepository )->get_eleve_info_by_codeActivite(1,2) );
       dd(Facture::get_paie_facture_activite(4));
       //dd((new AnneeScolaireRepository)->getAnneeScolaireID('2019-2020')) ;
       
-      //dd((new VersementRepository )->getInfoEleveActivite(1,2) );
+      //dd((new VersementRepository )->get_eleve_info_by_codeActivite(1,2) );
     
     }
 

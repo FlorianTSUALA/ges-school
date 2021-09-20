@@ -12,7 +12,7 @@ use Core\Repository\BaseRepository;
 class VersementRepository extends BaseRepository{
     
       
-    public function getInfoEleveScolarite($eleve_id, $annee_scolaire_id){
+    public function get_eleve_versement_detail_scolarite($eleve_id, $annee_scolaire_id){
         $req =
             "                
             select  pension_eleve.montant, facture.date_paiement, pension_eleve.reduction, tranche_scolaire.libelle
@@ -30,7 +30,7 @@ class VersementRepository extends BaseRepository{
 
  
 
-    public function getInfoEleveCantine($eleve_id, $annee_scolaire_id){
+    public function get_eleve_versement_detail_cantine($eleve_id, $annee_scolaire_id){
         $req =
             "                
             SELECT abonnement_cantine.eleve_id, abonnement_detail.total, abonnement_detail.periode, abonnement_detail.multiplicateur, abonnement_detail.prix_unitaire, abonnement_detail.date_debut, abonnement_detail.date_fin, facture.date_paiement
@@ -43,7 +43,7 @@ class VersementRepository extends BaseRepository{
         return $this->toObject($result);
     }
 
-    public function getInfoEleveactivite($eleve_id, $annee_scolaire_id){
+    public function get_eleve_versement_detail_activite($eleve_id, $annee_scolaire_id){
         $req =
             "                
             SELECT abonnement_activite.eleve_id, abonnement_detail.total, abonnement_detail.periode, abonnement_detail.multiplicateur, abonnement_detail.prix_unitaire, abonnement_detail.date_debut, abonnement_detail.date_fin, activite.libelle, facture.date_paiement

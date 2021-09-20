@@ -49,7 +49,7 @@ trait EleveControllerTraitCRUD
         $salle_classes = $this->salle_classe->all();
         $statut_eleves = $this->statut_eleve->all();
         $annee_scolaires =  $this->annee_scolaire->all();
-        $data_info_eleves = $this->eleve_repository->getInfoEleves();
+        $data_info_eleves = $this->eleve_repository->get_eleve_detail_all();
         
         $this->render('sections.scolarite.eleve.ajout.eleve_ajout', compact('route', 'annee_scolaires', 'pays', 'classes', 'statut_eleves', 'salle_classes'));
     }
@@ -65,14 +65,14 @@ trait EleveControllerTraitCRUD
             return $this->liste();
 
         $route = 'eleve_modifier';
-        $eleve = $this->eleve_repository->getInfoEleve($code);
+        $eleve = $this->eleve_repository->get_eleve_detail($code);
 
         $pays = $this->pays->all();
         $classes = $this->classe->all();
         $salle_classes = $this->salle_classe->all();
         $statut_eleves = $this->statut_eleve->all();
         $annee_scolaires =  $this->annee_scolaire->all();
-        $data_info_eleves = $this->eleve_repository->getInfoEleves();
+        $data_info_eleves = $this->eleve_repository->get_eleve_detail_all();
         
         $this->render('sections.scolarite.eleve.modification.eleve_modification', compact('route', 'eleve', 'annee_scolaires', 'pays', 'classes', 'statut_eleves', 'salle_classes'));
     }
@@ -505,7 +505,7 @@ trait EleveControllerTraitCRUD
         
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
-        $data_info_eleves = $this->eleve_repository->getInfoEleves($annee_scolaire_id);
+        $data_info_eleves = $this->eleve_repository->get_eleve_detail_all($annee_scolaire_id);
 
         // dd($data_info_eleves);
         $this->render('sections.eleve.eleve_salle_classe', compact( 'classes','data_info_eleves'));
@@ -514,18 +514,16 @@ trait EleveControllerTraitCRUD
 
     /**
      * @todo not implemented
-     *
+     * @since 1.0.0
      * @param code eleve $id
      * @return Eleve 
      */
-    public function getApiEleve($code)  
+    public function api_get_eleve_info($code)  
     {
-        $data_info_eleve = $this->eleve_repository->getInfoEleve($code);
-        echo Helpers::toJSON($data_info_eleve);
+        $this->sendResponseAndExit(Helpers::toJSON($this->eleve_repository->get_eleve_detail($code)));
     }
 
-
-    public function getApiEleves()  
+    public function api_get_eleve_info_all()  
     {
         $code = Request::getSecParam('code', NULL);
         $filter_by = Request::getSecParam('filter_by', 'ALL');
@@ -533,10 +531,10 @@ trait EleveControllerTraitCRUD
         $annee_scolaire_id =  (new AnneeScolaireRepository())->getActive('id');
 
         if($filter_by === 'ALL'){
-            $data_info_eleves = $this->eleve_repository->getInfoEleves();
+            $data_info_eleves = $this->eleve_repository->get_eleve_detail_all();
         }else{
             // $type_eleve_id = Model::getId(DBTable::TYPE_PERSONNEL, $code);
-            // $data_info_eleves = $this->eleve_repository->getInfoEleves($annee_scolaire_id, $type_eleve_id);
+            // $data_info_eleves = $this->eleve_repository->get_eleve_detail_all($annee_scolaire_id, $type_eleve_id);
         }
         
         $results[API::TAG_STATUS] = API::TAG_SUCCESS;
@@ -554,7 +552,7 @@ trait EleveControllerTraitCRUD
     {
         $eleve_id = Eleve::get_id($code);
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        $data_info_eleves = (new VersementRepository())->getInfoEleveActivite($eleve_id, $annee_scolaire_id);
+        $data_info_eleves = (new VersementRepository())->get_eleve_versement_detail_activite($eleve_id, $annee_scolaire_id);
         echo Helpers::toJSON($data_info_eleves) ;
     }
 
@@ -562,7 +560,7 @@ trait EleveControllerTraitCRUD
     {
         $eleve_id = Eleve::get_id($code);
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        $data_info_eleves = (new VersementRepository())->getInfoEleveCantine($eleve_id, $annee_scolaire_id);
+        $data_info_eleves = (new VersementRepository())->get_eleve_versement_detail_cantine($eleve_id, $annee_scolaire_id);
         echo Helpers::toJSON($data_info_eleves) ;
     }
 
@@ -570,11 +568,11 @@ trait EleveControllerTraitCRUD
     {
         $eleve_id = Eleve::get_id($code);
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        $data_info_eleves = (new VersementRepository())->getInfoEleveScolarite($eleve_id, $annee_scolaire_id);
+        $data_info_eleves = (new VersementRepository())->get_eleve_versement_detail_scolarite($eleve_id, $annee_scolaire_id);
         echo Helpers::toJSON($data_info_eleves) ;
     }
 
-    public function getApiAllEssentiel()  
+    public function api_get_general_info()  
     {
         $eleves = Helpers::toJSON(Eleve::table()->select([ 'id' => 'id' , new Expression("concat(nom,' ',prenom) as value")])->where('visibilite', 1)->get());
         $this->sendResponseAndExit(Helpers::toJSON($eleves, TRUE));

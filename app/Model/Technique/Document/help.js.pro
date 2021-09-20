@@ -7,6 +7,9 @@ ajax:{
     type: 'POST'
 }
 
+$("#recap-photo").attr('src', "<?= URL::upload() ?>img/eleve/"+eleve.photo)
+
+
 $('#mySelect2').val(null).trigger('change');
 
 $(document).ready(function() {

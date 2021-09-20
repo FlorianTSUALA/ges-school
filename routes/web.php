@@ -107,8 +107,8 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
         $router->addRoute('api_facture_eleve_liste_inscrit', 'api/facture/eleve/liste/inscrit/{code}', [EleveController::class, 'api_facture_liste_inscrit']);
         $router->addRoute('eleve_liste_non_inscrit', 'eleve/liste/non_inscrit', [EleveController::class, 'liste_non_inscrit']);
         $router->addRoute('eleve_salle_classe', 'eleve/salleclasse', [EleveController::class, 'liste_classe']);
-        $router->addRoute(' api_eleve_all', 'eleve/api/all', [EleveController::class, 'getApiEleves']);
-        $router->addRoute('eleve_api_info', 'eleve/api/info/{code}', [EleveController::class, 'getApiEleve']);
+        $router->addRoute(' api_eleve_all', 'eleve/api/all', [EleveController::class, 'api_get_eleve_infos']);
+        $router->addRoute('api_eleve_info', 'eleve/api/info/{code}', [EleveController::class, 'api_get_eleve_info']);
         $router->addRoute('eleve_api_info_scolarite', 'api/eleve_info/scolarite/{code}', [EleveController::class, 'api_eleve_info_scolarite']);
         $router->addRoute('eleve_api_info_activite', 'api/eleve_info/activite/{code}', [EleveController::class, 'api_eleve_info_api_activite']);
         $router->addRoute('eleve_api_info_cantine', 'api/eleve_info/cantine/{code}', [EleveController::class, 'api_eleve_info_api_cantine']);
@@ -117,7 +117,7 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
         $router->addRoute('eleve_api_eleve_non_inscrit', 'eleve/api/non_inscrit/all', [EleveController::class, 'api_eleve_non_inscrit']);
 
         $router->addRoute('eleve_api_delete_eleve', 'eleve/api/delete/eleve/{code}', [EleveController::class, 'apiDeleteEleve']);
-        $router->addRoute('api_eleve_list', 'eleve/api/list', [EleveController::class, 'getApiAllEssentiel']);
+        $router->addRoute('api_eleve_list', 'eleve/api/list', [EleveController::class, 'api_get_general_info']);
     
     // PAIEMENT
 
@@ -140,7 +140,10 @@ $router->addRoute('excell', 'excell', [ExcelController::class, 'index']);
 //ELEVE LIVE SEARCH
 $router->addRoute('eleve-list-class', 'eleve/list/class/{code}', [EleveController::class, 'eleve_classe']);
 $router->addRoute('eleve-list-all', 'eleve/list/class', [EleveController::class, 'eleve_classe']);
-$router->addRoute('eleve_search_info', 'eleve_info/search/{search}', [EleveController::class, 'eleve_info']);
+
+$router->addRoute('api_post_eleve_search_info', 'api/post/search/eleve/search', [EleveController::class, 'api_post_search_eleve_info']);
+$router->addRoute('api_get_eleve_search_info', 'api/get/search/eleve/{search}', [EleveController::class, 'api_get_search_eleve_info']);
+
 $router->addRoute('eleve_search_detail', 'eleve_detail/search/{code}', [EleveController::class, 'eleve_detail']);
 
 //VERSEMENT
@@ -305,7 +308,7 @@ $router->addRoute('personnel_salle_classe', 'personnel/salleclasse', [PersonnelC
 $router->addRoute(' api_personnel_all', 'personnel/api/all', [PersonnelController::class, 'getApiPersonnels']);
 $router->addRoute('personnel_api_info', 'personnel/api/info/{code}', [PersonnelController::class, 'getApiPersonnel']);
 $router->addRoute('personnel_api_delete_personnel', 'personnel/api/delete/personnel/{code}', [PersonnelController::class, 'apiDeletePersonnel']);
-$router->addRoute('api_personnel_list', 'personnel/api/list', [PersonnelController::class, 'getApiAllEssentiel']);
+$router->addRoute('api_personnel_list', 'personnel/api/list', [PersonnelController::class, 'api_get_general_info']);
 
 
 //CANTINE
@@ -354,7 +357,7 @@ $router->addRoute('affectation_classe_matiere_save', 'api/affectation/classe_mat
 $router->addRoute('affectation_classe_matiere_delete', 'api/affectation/classe_matiere/delete', [AffectationController::class, 'supprimerAffectationClasseMatiere']);
 $router->addRoute('affectation_classe_matiere_update', 'api/affectation/classe_matiere/update', [AffectationController::class, 'modifierAffectationClasseMatiere']);
 $router->addRoute('affectation_classe_matiere_all', 'api/affectation/classe_matiere/all', [AffectationController::class, 'listeAffectationClasseMatiere']);
-$router->addRoute('api_matiere_list', 'matiere/api/list', [MatiereController::class, 'getApiAllEssentiel']);
+$router->addRoute('api_matiere_list', 'matiere/api/list', [MatiereController::class, 'api_get_general_info']);
 
 
 //NOTE: REMPLISSAGE DES NOTES SCOLAIRE

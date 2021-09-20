@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Model\DBTable;
+use App\Helpers\Helpers;
+use Core\Session\Request;
 use App\Repository\EleveRepository;
 use App\Controller\Admin\AppController;
 use App\Controller\EleveControllerTraitCRUD;
@@ -75,7 +77,7 @@ class EleveController extends AppController
 
     public function eleve_detail(string $code)
     {
-        return $this->eleve_repository->getInfoEleve($code);
+        return $this->eleve_repository->get_eleve_info($code);
     }
 
     public function eleve_classe(string $code)
@@ -96,6 +98,18 @@ class EleveController extends AppController
 
     public function eleve_info(string $search)
     {
+        $this->sendResponseAndExit(Helpers::toJSON($this->eleve_repository->info($search)));
+    }
+
+    public function api_get_search_eleve_info(string $search)
+    {
         return $this->eleve_repository->info($search);
+    }
+
+    public function api_post_search_eleve_info()
+    {
+        $search = Request::getSecParam('search', "");
+        $limit = Request::getSecParam('limit', 17);
+        $this->sendResponseAndExit(Helpers::toJSON($this->eleve_repository->info($search, $limit)));
     }
 }
