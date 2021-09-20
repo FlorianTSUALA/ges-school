@@ -62,13 +62,13 @@ use Core\Routing\URL;
                 {
                     url: '<?= URL::link('api_post_eleve_search_info'); ?>',
                     method: 'POST',
-                    data: {'search' : searchField, 'limit': 5},
+                    data: {'search' : searchField, 'limit': 100},
                     beforeSend:function(){
                     },
                     success:function(_data){
                         let data = JSON.parse(_data);
                         for(eleve of data) {
-                            $(result).append('<li class="list-group-item link-class" > <a href="#" onclick="_modal_eleve_detail(\''+eleve.id+'\')"> <img src="<?= URL::upload() ?>img/eleve/'+ eleve.photo +'"  height="40" width="40" class="img-thumbnail" /> Nom(s) & Prénom(s): ' + eleve.nom + ' | <span class="text-muted"> Date Nais : ' + eleve.date_naissance + '</span> | <span class="text-muted"> Nationnalité : ' + eleve.pays + '</span></a></li>');
+                            $(result).append('<li class="list-group-item link-class" > <a href="#" onclick="_modal_eleve_detail(\''+eleve.id+'\')"> <img src="<?= URL::upload() ?>img/eleve/'+ eleve.photo +'"  height="40" width="40" class="img-thumbnail" /> Nom(s) & Prénom(s): ' + eleve.nom + ' ' + eleve.prenom + ' | <span class="text-muted"> Date Nais : ' + eleve.date_naissance + '</span> | <span class="text-muted"> Nationnalité : ' + eleve.pays + '</span></a></li>');
                         }
                     },
                     error: function (textStatus, errorThrown) {
@@ -84,10 +84,10 @@ use Core\Routing\URL;
             
         });
 
-        $(result).on('click', 'li', function() {
-            var click_text = $(this).text().split('|');
-            // $(search).val($.trim(click_text[0]));
-            $(result).html('');
-        });
+        // $(result).on('click', 'li', function() {
+        //     var click_text = $(this).text().split('|');
+        //     $(search).val($.trim(click_text[0]));
+        //     $(result).html('');
+        // });
     });
 </script>

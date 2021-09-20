@@ -1,7 +1,8 @@
 <style>
     #result {
         position: absolute;
-        width: 100%;
+        /* width: 100%; */
+        width: 820px;
         max-width: 870px;
         cursor: pointer;
         overflow-y: auto;

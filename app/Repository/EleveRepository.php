@@ -562,7 +562,7 @@ class EleveRepository extends BaseRepository{
      * @api api_eleve_info_post
      * @version update
      */ 
-    public function info($search = "", $limit = 5){
+    public function info($search = "", $limit = 100){
         $eleve = Eleve::table();
 
         $eleve = $eleve->select(['eleve.code' => 'id', 'nom', 'prenom', 'photo', 'sexe', 'date_naissance', 'lieu_naissance', 'pays.libelle'=>'pays' ])
@@ -571,15 +571,16 @@ class EleveRepository extends BaseRepository{
 
         $data = explode(" ", $search);
 
-        foreach($data??[] AS $item){
-            $eleve = $eleve->orWhere('eleve.nom', 'like', '%'.$item.'%');
+        foreach($data AS $item){
+            $eleve = $eleve->Where('eleve.nom', 'like', '%'.$item.'%');
             $eleve = $eleve->orWhere('eleve.prenom', 'like', '%'.$item.'%');
-            $eleve = $eleve->orWhere('pays.libelle', 'like', '%'.$item.'%');
-            $eleve = $eleve->orWhere('eleve.lieu_naissance', 'like', '%'.$item.'%');
-            $eleve = $eleve->orWhere('eleve.date_naissance', 'like', '%'.$item.'%');
+            // $eleve = $eleve->Where('pays.libelle', 'like', '%'.$item.'%');
+            // $eleve = $eleve->orWhere('eleve.lieu_naissance', 'like', '%'.$item.'%');
+            // $eleve = $eleve->orWhere('eleve.date_naissance', 'like', '%'.$item.'%');
         }
 
-        return $eleve->limit($limit)->get();
+        return $eleve->orderBy('nom', 'desc')->get();
+        // return $eleve->limit($limit)->get()->orderBy('');
     }
 
     /*******************   OLD    *****************************/

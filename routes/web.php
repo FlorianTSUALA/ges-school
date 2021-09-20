@@ -107,7 +107,7 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
         $router->addRoute('api_facture_eleve_liste_inscrit', 'api/facture/eleve/liste/inscrit/{code}', [EleveController::class, 'api_facture_liste_inscrit']);
         $router->addRoute('eleve_liste_non_inscrit', 'eleve/liste/non_inscrit', [EleveController::class, 'liste_non_inscrit']);
         $router->addRoute('eleve_salle_classe', 'eleve/salleclasse', [EleveController::class, 'liste_classe']);
-        $router->addRoute(' api_eleve_all', 'eleve/api/all', [EleveController::class, 'api_get_eleve_infos']);
+        $router->addRoute(' api_eleve_all', 'eleve/api/all', [EleveController::class, 'api_get_eleve_info_all']);
         $router->addRoute('api_eleve_info', 'eleve/api/info/{code}', [EleveController::class, 'api_get_eleve_info']);
         $router->addRoute('eleve_api_info_scolarite', 'api/eleve_info/scolarite/{code}', [EleveController::class, 'api_eleve_info_scolarite']);
         $router->addRoute('eleve_api_info_activite', 'api/eleve_info/activite/{code}', [EleveController::class, 'api_eleve_info_api_activite']);
