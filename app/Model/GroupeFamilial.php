@@ -27,7 +27,7 @@ class GroupeFamilial extends Model implements FrequentlyReapeat
         $this->fillables =
             [
                 new FormModel(true, self::FAMILLE),
-                new FormModel(false, self::DESCRIPTION, "Membre(s) de la familial ", InputType::SELECT2_MULTIPLE, $eleves, 'Membres de la famille' , true, 'select2 multiple', '', '', '', DBTable::GROUPE_FAMILIAL, Self::DESCRIPTION), //"#SELECT2MULTIPLE"
+                new FormModel(false, self::DESCRIPTION, "Membres de la famille ", InputType::SELECT2_MULTIPLE, $eleves, 'Membres de la famille' , true, 'select2 multiple', '', '', '', DBTable::GROUPE_FAMILIAL, Self::DESCRIPTION), //"#SELECT2MULTIPLE"
             ];
     }
 

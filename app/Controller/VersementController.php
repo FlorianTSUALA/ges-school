@@ -12,6 +12,7 @@ use App\Model\TypePension;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
 use App\Model\AbonnementActivite;
+use App\Model\Facture;
 use App\Repository\EleveRepository;
 use App\Repository\AnneeScolaireRepository;
 use ClanCats\Hydrahon\Query\Expression as Ex;
@@ -240,13 +241,15 @@ class VersementController extends \App\Controller\Admin\AppController
     {
         $route = 'versement_retard';
 
+        $eleves_retards = (new Facture() )->get_retard_paie_scolarite();
+
         $factures = DBTable::getModel('facture')
                   ->select()
                   ->where('visibilite', '=', 1)
                   ->orderBy('id', 'DESC')
                   ->get();
 
-        $this->render('sections.versement.liste.versement_retard', compact('route', 'factures'));
+        $this->render('sections.versement.retard.index', compact('route', 'factures','eleves_retards'));
     }
 
     public function liste_abonnee_test()
