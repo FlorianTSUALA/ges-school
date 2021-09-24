@@ -52,7 +52,7 @@
 
 </head>
 <!-- <body class="vertical-layout vertical-mmenu 2-columns menu-expanded fixed-navbar" data-open="click" data-menu="vertical-mmenu" data-col="2-columns"> -->
-<body class="vertical-layout vertical-mmenu content-detached-left-sidebar   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-mmenu" data-col="content-detached-left-sidebar">
+<body class="vertical-layout vertical-mmenu content-detached-left-sidebar   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-mmenu" data-col="content-detached-left-sidebar"  data-editor="ClassicEditor" data-collaboration="false">
 	<?php require "layouts/flash_message.php" ?>
 	<?php require "navbar-menu.php" ?>
 	<?php require "sidebar-menu.php" ?>

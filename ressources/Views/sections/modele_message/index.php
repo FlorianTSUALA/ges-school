@@ -30,6 +30,10 @@ $include_res_header .=  '<style>
                         
                     '. "\n";
 
+ob_start();
+    include 'modal/ajout/apercu_modal-style.php';
+$include_res_header = ob_get_clean();
+
 
 $include_res_header .= '' . "\n";
 
@@ -37,13 +41,16 @@ $include_res_footer = '' . "\n";
 $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/tables/jquery.dataTables.min.js"></script>' . "\n";
 $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/tables/datatable/dataTables.bootstrap4.min.js"></script>' . "\n";
 $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/filesaver/FileSaver.min.js"></script>' . "\n";
-// $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/tables/datatable/dataTables.responsive.min.js"></script>' . "\n";
-// $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/tables/datatable/dataTables.rowReorder.min.js"></script>' . "\n";
+
+
+$include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/editors/ckeditor5/ckeditor.js"></script>' . "\n";
+
+
 $include_res_footer .= "";
 
 ob_start();
     include 'index-script.php';
-    include 'apercu_modal-script.php';
+    include 'modal/ajout/apercu_modal-script.php';
 $include_footer_script = ob_get_clean();
 
 
@@ -63,6 +70,7 @@ $table_header = "
     --- $title
 
 -->
+
 
 <div class="app-content content">
     <div class="content-wrapper">
@@ -107,7 +115,8 @@ $table_header = "
                                         <h4 class="card-title" id="heading-prev-next">Liste des modèles de messages </h4><small class="text-muted">Consultation, modification et suppression.</small>
                                     </div>
                                     <div class="p-0 mr-1   ">
-                                        <a class="btn btn-warning btn-block "  href="<?= URL::link('ajout_personnel') ?>"><i class="ft-plus white"></i> Nouveau Modeles de message</a>
+                                        <a class="btn btn-warning btn-block "onclick="open_modal()"  href="#"><i class="ft-plus white"></i> Nouveau Modeles de message</a>
+                                        <!-- <a class="btn btn-warning btn-block " data-toggle="modal" data-target="#modal_modele_message_create" href="#"><i class="ft-plus white"></i> Nouveau Modeles de message</a> -->
                                     </div>
                                     <div class="p-0   ">
                                     </div>
@@ -184,6 +193,6 @@ $table_header = "
 </div>
 
 <?php
-    include 'apercu_modal.php';
-    include 'modifier_modal.php';
+    include 'modal/ajout/apercu_modal.php';
+    include 'modal/modifier/modifier_modal.php';
 ?>
