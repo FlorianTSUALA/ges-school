@@ -68,7 +68,7 @@ use Core\Routing\URL;
                     success:function(_data){
                         let data = JSON.parse(_data);
                         for(eleve of data) {
-                            $(result).append('<li class="list-group-item link-class" > <a href="#" onclick="_modal_eleve_detail(\''+eleve.id+'\')"> <img src="<?= URL::upload() ?>img/eleve/'+ eleve.photo +'"  height="40" width="40" class="img-thumbnail" /> Nom(s) & Prénom(s): ' + eleve.nom + ' ' + eleve.prenom + ' | <span class="text-muted"> Date Nais : ' + eleve.date_naissance + '</span> | <span class="text-muted"> Nationnalité : ' + eleve.pays + '</span></a></li>');
+                            $(result).append('<li class="list-group-item link-class" > <a href="#" onclick="_modal_eleve_detail(\''+eleve.id+'\')"> <img src="<?= URL::upload() ?>img/eleve/'+ eleve.photo +'"  height="40" width="40" class="img-thumbnail" /> ' + eleve.nom + ' ' + eleve.prenom + ' | <span class="text-muted"> Date Nais : ' + eleve.date_naissance + '</span> | <span class="text-muted"> Nationnalité : ' + eleve.pays + '</span></a></li>');
                         }
                     },
                     error: function (textStatus, errorThrown) {

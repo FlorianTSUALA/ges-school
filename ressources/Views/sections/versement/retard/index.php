@@ -169,8 +169,8 @@ $include_footer_script = ob_get_clean();
                                             </thead>
                                             <tbody>
 
-                                            <?php $comp=0; $eleve_retards = Facture::get_retard_paie_scolarite();         
-                                                  foreach ($eleve_retards as $eleve_retard): ?>
+                                            <?php $comp=0; //$eleves_retards = Facture::get_retard_paie_scolarite();         
+                                                  foreach ($eleves_retards as $eleve_retard): ?>
                                               <tr>
                                                   <td><?php $comp++; echo $comp; ?></td>
                                                   <td>
@@ -213,4 +213,4 @@ $include_footer_script = ob_get_clean();
 
 
 
-<?php include 'versement_detail_modal.php' ?>
+<!-- <?php //include 'versement_detail_modal.php' ?> -->

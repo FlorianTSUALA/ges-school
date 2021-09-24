@@ -77,7 +77,7 @@ use App\Model\StatutApprenant;
     <div class="row">
         <div class="col-md-6">
             <div class="form-group row">
-                <label for="pays_eleve" class="col-4 col-form-label">Pays d'origine<?= Helpers::required_input(); ?>:</label>
+                <label for="pays_eleve" class="col-4 col-form-label">Nationalité<?= Helpers::required_input(); ?>:</label>
                 <div class="col-8">
                     <select id="pays_eleve" class="select2 form-control" name="pays_eleve" required>
 

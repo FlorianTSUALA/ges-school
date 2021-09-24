@@ -41,6 +41,23 @@
                         </div>
 
                         <div class="col-4">
+                            <a href="<?= URL::link('club_accueil') ?>" style="cursor:pointer; text-decoration: none;">
+                                <div  id="mydiv" class="card border-0 shadow  ">
+                                    <div class="card-body kgs-bg-yellow">
+                                        <div class="row align-items-end h3 kgs-green">
+                                            <div class="col-12 text-center">
+                                                <span class="fa fa-trophy fa-5x"></span>
+                                            </div>
+
+                                            <div class="col">
+                                                <h1 align="center" class="text-uppercase pt-1"><strong>Club</strong></h1>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <!-- <div class="col-4">
                             <a href="<?= URL::link('emploi_temps_accueil') ?>" style="cursor:pointer; text-decoration: none;">
                                 <div id="mydiv" class="card border-0 shadow  ">
                                     <div class="card-body kgs-bg-yellow">
@@ -56,7 +73,7 @@
                                     </div>
                                 </div>
                             </a>
-                        </div>
+                        </div> -->
 
                         <div class="col-4">
                             <a href="<?= URL::link('biblio_accueil') ?>" style="cursor:pointer; text-decoration: none;">
@@ -117,25 +134,24 @@
                                 </div>
                             </a>
                         </div>
-
+     
                         <div class="col-4">
-                            <a href="<?= URL::link('club_accueil') ?>" style="cursor:pointer; text-decoration: none;">
-                                <div  id="mydiv" class="card border-0 shadow  ">
+                            <a href="<?= URL::link('comptabilite_accueil') ?>" style="cursor:pointer; text-decoration: none;">
+                                <div id="mydiv" class="card border-0 shadow  ">
                                     <div class="card-body kgs-bg-yellow">
                                         <div class="row align-items-end h3 kgs-green">
                                             <div class="col-12 text-center">
-                                                <span class="fa fa-trophy fa-5x"></span>
+                                                <span class="ft-search fa-5x"></span>
                                             </div>
 
                                             <div class="col">
-                                                <h1 align="center" class="text-uppercase pt-1"><strong>Club</strong></h1>
+                                                <h1 align="center" class="text-uppercase pt-1"><strong>Aperçus</strong></h1>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </a>
                         </div>
-
                     </div>
 
                     <div class="row">
@@ -180,28 +196,7 @@
                                 </div>
                             </a>
                         </div>
-
                         <div class="col-4">
-                            <a href="<?= URL::link('comptabilite_accueil') ?>" style="cursor:pointer; text-decoration: none;">
-                                <div id="mydiv" class="card border-0 shadow  ">
-                                    <div class="card-body kgs-bg-yellow">
-                                        <div class="row align-items-end h3 kgs-green">
-                                            <div class="col-12 text-center">
-                                                <span class="ft-search fa-5x"></span>
-                                            </div>
-
-                                            <div class="col">
-                                                <h1 align="center" class="text-uppercase pt-1"><strong>Aperçus</strong></h1>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                    <div class="col-4">
                         <a href="<?= URL::link('parametrage_accueil') ?>" style="cursor:pointer; text-decoration: none;">
                             <div id="mydiv" class="card border-0 shadow  ">
                                 <div class="card-body kgs-bg-yellow">
@@ -218,7 +213,12 @@
                             </div>
                         </a>
                     </div>
+                       
                     </div>
+<!-- 
+                    <div class="row">
+                    
+                    </div> -->
 				</div>
 			</div>
 		</div>
