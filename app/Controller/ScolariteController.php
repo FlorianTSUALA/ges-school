@@ -17,7 +17,7 @@ class ScolariteController extends AppController
 
     public function index()
     {
-        $this->app->setTitle('Gestion des emploie de temps  - Ges-School');
+        $this->app->setTitle('Gestion des emploie de temps  - ' . $this->organisation);
         
         $this->render('sections.emploie_temps.emploie_temps');
         // $this->render('sections.emploie_temps.emploie_temps', compact('pays', 'classes', 'statut_apprenants'));

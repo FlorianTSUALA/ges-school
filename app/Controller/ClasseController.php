@@ -22,7 +22,7 @@ class ClasseController extends AppController
         $this->base_route = 'classe';
         $this->class_name = 'Classe';
 
-        $this->title_page = 'Gestion des classes - Ges-School';
+        $this->title_page = 'Gestion des classes - ' . $this->organisation;
         $this->title_home = 'Gestion des classes';
         $this->create_title = "Creation d'une classe";
         $this->view_title = "Information d'une classe";

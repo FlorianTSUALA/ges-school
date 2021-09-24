@@ -22,7 +22,7 @@ class MatiereController extends AppController
         $this->base_route = 'matiere';
         $this->class_name = 'Matiere';
 
-        $this->title_page = 'Gestion des matieres - Ges-School';
+        $this->title_page = 'Gestion des matieres - ' . $this->organisation;
         $this->title_home = 'Gestion des matieres';
         $this->create_title = "Creation d'une matiere";
         $this->view_title = "Information d'une matiere";

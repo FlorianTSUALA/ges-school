@@ -34,6 +34,7 @@ include dirname(dirname(__DIR__))."/_common_lib/_select2_script.php";
         $.ajax({
             url: '<?= URL::link('personnel_api_info');?>'+id,
             type: 'post',
+            cache: true,
             dataType: 'json',
             beforeSend:function(){
             },

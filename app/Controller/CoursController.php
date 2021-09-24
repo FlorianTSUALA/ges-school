@@ -25,7 +25,7 @@ class CoursController extends AppController
         $this->base_route = 'cours';
         $this->class_name = 'cours';
 
-        $this->title_page = 'Gestion des cours - Ges-School';
+        $this->title_page = 'Gestion des cours - ' . $this->organisation;
         $this->title_home = 'Gestion des cours dispensés les salles';
         $this->create_title = "Creation d'un cours";
         $this->view_title = "Information d'un cours";

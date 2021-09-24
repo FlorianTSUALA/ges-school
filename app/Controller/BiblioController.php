@@ -37,7 +37,7 @@ class BiblioController extends AppController
         $this->base_route = 'abonnement_biblio';
         $this->class_name = 'abonnement_biblio';
 
-        $this->title_page = 'Gestion du abonnement_biblio - Ges-School';
+        $this->title_page = 'Gestion du abonnement_biblio - ' . $this->organisation;
         $this->title_home = 'Gestion du abonnement_biblio';
         $this->create_title = "Ajout d'un abonnement_biblio";
         $this->view_title = "Information sur un abonnement_biblio";

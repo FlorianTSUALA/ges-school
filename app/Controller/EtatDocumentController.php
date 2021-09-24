@@ -22,7 +22,7 @@ class EtatDocumentController extends AppController
         $this->base_route = 'etat_document';
         $this->class_name = 'etat_document';
 
-        $this->title_page = 'Gestion des état du document - Ges-School';
+        $this->title_page = 'Gestion des état du document - ' . $this->organisation;
         $this->title_home = 'Gestion des état du document';
         $this->create_title = "Création d'un état du document";
         $this->view_title = "Information d'un état du document";

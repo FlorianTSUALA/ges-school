@@ -24,7 +24,7 @@ class SessionController extends AppController
         $this->base_route = 'session';
         $this->class_name = 'Session';
 
-        $this->title_page = 'Gestion des sessions - Ges-School';
+        $this->title_page = 'Gestion des sessions - ' . $this->organisation;
         $this->title_home = 'Gestion des sessions';
         $this->create_title = "Creation d'une session";
         $this->view_title = "Information d'une session";

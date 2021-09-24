@@ -34,6 +34,7 @@ include dirname(dirname(dirname(__DIR__)))."/_common_lib/_select2_script.php";
       $.ajax({
           url: '<?= URL::link('eleve_api_delete_eleve');?>'+id,
           type: 'post',
+          cache: true,
           dataType: 'json',
           beforeSend:function(){
           },

@@ -23,7 +23,7 @@ class TypeTrancheScolaireController extends AppController
         $this->base_route = 'type_tranche_scolaire';
         $this->class_name = 'type_tranche_scolaire';
 
-        $this->title_page = 'Gestion des types de tranche_scolaire - Ges-School';
+        $this->title_page = 'Gestion des types de tranche_scolaire - ' . $this->organisation;
         $this->title_home = 'Gestion des types de tranche_scolaire';
         $this->create_title = "Création d'un type tranche_scolaire";
         $this->view_title = "Information d'un type tranche scolaire";

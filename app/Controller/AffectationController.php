@@ -20,7 +20,7 @@ class AffectationController extends AppController
         // $this->loadModel($this->vairant);
         // $this->base_route = 'affectation_classe_matiere';
         // $this->class_name = 'AffectationClasseMatiere';
-        // $this->title_page = 'Gestion des affectation classe matiàre - Ges-School';
+        // $this->title_page = 'Gestion des affectation classe matiàre - ' . $this->organisation;
         // $this->title_home = 'Gestion des affectation classe matiàre';
         // $this->create_title = "affectation classe matiàre";
         // $this->view_title = "Information des affectations classe matiàre";

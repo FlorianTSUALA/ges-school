@@ -22,7 +22,7 @@ class PaysController extends AppController
         $this->base_route = 'pays';
         $this->class_name = 'pays';
 
-        $this->title_page = 'Gestion des pays - Ges-School';
+        $this->title_page = 'Gestion des pays - ' . $this->organisation;
         $this->title_home = 'Gestion des pays';
         $this->create_title = "Création d'un pays";
         $this->view_title = "Information d'un pays";

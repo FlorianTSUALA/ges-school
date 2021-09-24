@@ -28,6 +28,7 @@
         console.log(id)
         $.ajax({
             url: '<?= URL::link('api_eleve_info');?>'+id,
+            cache: true,
             type: 'post',
             dataType: 'json',
             beforeSend:function(){

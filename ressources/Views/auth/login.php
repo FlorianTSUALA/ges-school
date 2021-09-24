@@ -27,9 +27,9 @@
             
             <div class="card-content">
                 <div class="card-body">
-                    <form class="needs-validation" method="POST" action="<?= URL::link("postlogin"); ?>" novalidate>
+                    <form class="needs-validation" autocomplete="off" method="POST" action="<?= URL::link("postlogin"); ?>" novalidate>
                         <div class="form-group position-relative has-icon-left mb-2">
-                            <input type="text" class="form-control form-control-lg input-lg" id="user-name" name="user-name" placeholder="Utilisateur" required/>
+                            <input type="text" autocomplete="nope" class="form-control form-control-lg input-lg" id="user-name" name="user-name" placeholder="Utilisateur" required/>
                                                        
                             <div class="valid-feedback">Valide !!!</div>
                             <div class="invalid-feedback">
@@ -47,7 +47,7 @@
                         </div>
 
                         <div class="form-group position-relative has-icon-left mb-1">                            
-                            <input type="password" class="form-control form-control-lg input-lg" id="user-password" name="user-password" placeholder="Mot de passe" required/>
+                            <input type="password" autocomplete="new-password" class="form-control form-control-lg input-lg" id="user-password" name="user-password" placeholder="Mot de passe" required/>
                            
                             <div class="valid-feedback">Valide !!!</div>
                             <div class="invalid-feedback">

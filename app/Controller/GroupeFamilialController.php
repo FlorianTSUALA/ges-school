@@ -36,7 +36,7 @@ class GroupeFamilialController  extends AppController
         $this->base_route = 'groupe_familial';
         $this->class_name = 'groupe_familial';
 
-        $this->title_page = 'Gestion des groupes familiaux - Ges-School';
+        $this->title_page = 'Gestion des groupes familiaux - ' . $this->organisation;
         $this->title_home = 'Gestion des groupes familiaux';
         $this->create_title = "Creation d'un groupe familial";
         $this->view_title = "Information d'un groupe familial";
@@ -71,6 +71,7 @@ class GroupeFamilialController  extends AppController
 
     public function get_one($code){
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+        dd($code);
         $result = (new GroupeFamilialRepository() )->get_one_groupe_familial_reduction($code);
         return $result;
     }

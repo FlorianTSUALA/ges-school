@@ -4,6 +4,7 @@ use App\Controller\MoisController;
 use App\Controller\ExcelController;
 use App\Controller\FactureController;
 use App\Controller\StatutEleveController;
+use App\Controller\ModeleMessageController;
 use App\Controller\GroupeFamilialController;
 use App\Controller\ReductionFamilialeController;
 use App\Controller\TypeTrancheScolaireController;
@@ -397,6 +398,15 @@ $router->crudRoute('discipline', DisciplineController::class);
 
 //MATIERE
 $router->crudRoute('matiere', MatiereController::class);
+
+
+//MODELE MESSAGE
+$router->addRoute('modele_message', 'index/modele_message', [ModeleMessageController::class, 'index']);
+$router->addRoute('preview_modele_message', 'preview/modele_message', [ModeleMessageController::class, 'preview']);
+$router->addRoute('edit_modele_message', 'edit/modele_message', [ModeleMessageController::class, 'edit']);
+$router->addRoute('api_detail_modele_message', 'api_/detail/modele_message', [ModeleMessageController::class, 'api_detail']);
+$router->addRoute('api_delete_modele_message', 'api_/delete/modele_message', [ModeleMessageController::class, 'api_delete']);
+$router->addRoute('api_update_modele_message', 'api_/update/modele_message', [ModeleMessageController::class, 'api_update']);
 
 
 //EMPLOIE DE TEMPS

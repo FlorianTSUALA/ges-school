@@ -22,7 +22,7 @@ class ActiviteController extends AppController
         $this->base_route = 'activite';
         $this->class_name = 'Activite';
 
-        $this->title_page = 'Gestion des activites - Ges-School';
+        $this->title_page = 'Gestion des activites - ' . $this->organisation;
         $this->title_home = 'Gestion des activites';
         $this->create_title = "Creation d'une activite";
         $this->view_title = "Information d'une activite";

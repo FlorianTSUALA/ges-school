@@ -8,6 +8,7 @@ use Core\Routing\URL;
         $.ajax({
             url: '<?= URL::link('eleve_api_info_scolarite');?>'+id,
             type: 'post',
+            cache: true,
             dataType: 'json',
             beforeSend:function(){
             },

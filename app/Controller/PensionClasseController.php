@@ -29,7 +29,7 @@ class PensionClasseController extends AppController
         $this->base_route = 'pension_classe';
         $this->class_name = 'pension_classe';
 
-        $this->title_page = 'Gestion des pension des classes - Ges-School';
+        $this->title_page = 'Gestion des pension des classes - ' . $this->organisation;
         $this->title_home = 'Gestion des pension des classes';
         $this->create_title = "Creation d'une pension de la classe";
         $this->view_title = "Information d'une pension de la classe";

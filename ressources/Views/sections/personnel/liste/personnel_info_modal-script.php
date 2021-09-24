@@ -10,6 +10,7 @@
         $.ajax({
             url: '<?= URL::link('personnel_api_delete_personnel');?>'+id,
             type: 'post',
+            cache: true,
             dataType: 'json',
             beforeSend:function(){
             },

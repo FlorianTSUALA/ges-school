@@ -42,7 +42,7 @@ class CantineController extends AppController
         $this->base_route = 'abonnement_cantine';
         $this->class_name = 'abonnement_cantine';
 
-        $this->title_page = 'Gestion du abonnement_cantine - Ges-School';
+        $this->title_page = 'Gestion du abonnement_cantine - ' . $this->organisation;
         $this->title_home = 'Gestion du abonnement_cantine';
         $this->create_title = "Ajout d'un abonnement_cantine";
         $this->view_title = "Information sur un abonnement_cantine";
@@ -102,7 +102,7 @@ class CantineController extends AppController
         
     public function abonnement_cantine()
     {
-        $this->app->setTitle('Abonnement Cantine- Ges-School');
+        $this->app->setTitle('Abonnement Cantine- - ' . $this->organisation);
 
         $prix_abonnements = DBTable::getModel('prix_abonnement')
                             ->select(

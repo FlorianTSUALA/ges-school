@@ -32,7 +32,6 @@ $helper->declareDebug();
 
 $action = str_replace( strtolower(App::base_url()) , "", strtolower(App::full_url()) );
 
-
 URL::registerRouter($router);
 
 try{

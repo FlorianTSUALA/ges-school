@@ -21,7 +21,7 @@ class DomaineController extends AppController
         $this->base_route = 'domaine';
         $this->class_name = 'Domaine';
 
-        $this->title_page = 'Gestion des domaines - Ges-School';
+        $this->title_page = 'Gestion des domaines - ' . $this->organisation;
         $this->title_home = 'Gestion des domaines';
         $this->create_title = "Creation d'un domaine";
         $this->view_title = "Information d'un domaine";

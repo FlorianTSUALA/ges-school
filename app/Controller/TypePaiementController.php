@@ -20,7 +20,7 @@ class TypePaiementController extends AppController
         $this->base_route = 'type_paiement';
         $this->class_name = 'TypePaiement';
 
-        $this->title_page = 'Gestion des types de paiements - Ges-School';
+        $this->title_page = 'Gestion des types de paiements - ' . $this->organisation;
         $this->title_home = 'Gestion des types de paiements';
         $this->create_title = "Creation d'un type de paiements";
         $this->view_title = "Information d'un type de paiements";

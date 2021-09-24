@@ -10,8 +10,8 @@ ob_start();
 echo '<script src="' . URL::base() . 'assets/app-assets/vendors/js/tables/datatable/datatables.min.js"></script>';
 echo '<script src="' . URL::base() . 'assets/app-assets/js/scripts/tables/datatables-extensions/datatables-sources.js"></script>';
 echo '<script src="' . URL::base() . 'assets/app-assets/vendors/js/forms/select/select2.full.min.js"></script>';
-include (dirname(__DIR__)) . "/_common/_crud_modal_script.php";
-include (dirname(__DIR__)) . "/_common/_datatable_script.php";
+include "_crud_modal_script.php";
+include "_datatable_script.php";
 $include_footer_script = ob_get_clean();
 ?>
 

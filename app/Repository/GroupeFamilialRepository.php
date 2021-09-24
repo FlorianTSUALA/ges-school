@@ -7,6 +7,9 @@ use App\Model\StatutEleve;
 use App\Model\GroupeFamilial;
 use Core\Repository\BaseRepository;
 
+use function Core\Helper\dd;
+use function Core\Helper\vd;
+
 class GroupeFamilialRepository extends BaseRepository{
 
     public function __construct(){
@@ -36,7 +39,7 @@ class GroupeFamilialRepository extends BaseRepository{
     public function get_one_groupe_familial_reduction($code){
         $demission_id = StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE);
         $fin_cyle_id = StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE);
-
+        
         $req = " SELECT GROUP_CONCAT(CONCAT(eleve.nom, ' ', eleve.prenom)  SEPARATOR ', ') AS description, 
                         GROUP_CONCAT(eleve.code SEPARATOR ', ') AS description_code,
                         groupe_familial.id,           
@@ -50,6 +53,7 @@ class GroupeFamilialRepository extends BaseRepository{
                         eleve.statut_eleve_id not in ($demission_id, $fin_cyle_id)
                 GROUP  BY groupe_familial.id
                 ";
+            dd($code);
             $result = (array)$this->query($req)[0];
             return $result;
     }

@@ -33,6 +33,7 @@ use App\Model\Eleve;
   function delete_eleve(id){
       $.ajax({
           url: '<?= URL::link('eleve_api_delete_eleve');?>'+id,
+          cache: true,
           type: 'post',
           dataType: 'json',
           beforeSend:function(){

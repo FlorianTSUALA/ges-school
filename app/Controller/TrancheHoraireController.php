@@ -20,7 +20,7 @@ class TrancheHoraireController extends AppController
         $this->base_route = 'tranche_horaire';
         $this->class_name = 'tranche_horaire';
 
-        $this->title_page = 'Gestion des tranches horaires - Ges-School';
+        $this->title_page = 'Gestion des tranches horaires - ' . $this->organisation;
         $this->title_home = 'Gestion des tranches horaires';
         $this->create_title = "Creation d'une tranche horaire";
         $this->view_title = "Information d'une tranche horaire";

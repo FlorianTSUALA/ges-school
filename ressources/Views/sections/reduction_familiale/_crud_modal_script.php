@@ -76,6 +76,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                $.ajax({
                     url: '<?= URL::link($base_route.'-read'); ?>'+id,
                     method: 'GET',
+                    cache: true,
                     dataType: 'json',
                     success: function(data){
                          $('#upd-code').val(data.code);
@@ -207,6 +208,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                $.ajax({
                     url: '<?= URL::link($base_route.'-delete'); ?>'+id,
                     method: 'GET',
+                    cache: true,
                     beforeSend:function(){
                               $('#button-form-delete').hide();
                               $('#del-loading').show();
@@ -237,6 +239,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                $.ajax({
                     url: '<?= URL::link($base_route.'-detail'); ?>'+id,
                     method: 'GET',
+                    cache: true,
                     //dataType: 'json',
                     success: function(data){
                          $("#modal-view-body").html(data);

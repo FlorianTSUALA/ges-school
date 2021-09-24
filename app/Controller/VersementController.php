@@ -31,7 +31,7 @@ class VersementController extends \App\Controller\Admin\AppController
         $this->base_route = 'versement';
         // $this->class_name = 'pension_eleve';
 
-        $this->title_page = 'Gestion des versements - Ges-School';
+        $this->title_page = 'Gestion des versements - ' . $this->organisation;
         $this->title_home = 'Gestion des versements';
         $this->create_title = "Creation d'un versement";
         $this->view_title = "Information d'un versement";

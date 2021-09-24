@@ -27,7 +27,7 @@ class AnneeScolaireController extends AppController
         $this->base_route = 'annee_scolaire';
         $this->class_name = 'AnneeScolaire';
 
-        $this->title_page = 'Gestion des annnée scolaire - Ges-School';
+        $this->title_page = 'Gestion des annnée scolaire - ' . $this->organisation;
         $this->title_home = 'Gestion des années scolaires';
         $this->create_title = "Creation d'une année scolaire";
         $this->view_title = "Information d'une année scolaire";

@@ -14,7 +14,7 @@ class RegisterController extends AppController
 
     public function login()
     {
-        $this->app->setTitle('Inscription - ges-school');
+        $this->app->setTitle('Inscription - ' . $this->organisation);
 
         $this->render('auth.register', [], "layout-auth");
     }

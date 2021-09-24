@@ -23,7 +23,7 @@ class StatutApprenantController extends AppController
         $this->base_route = 'statut_apprenant';
         $this->class_name = 'statut_apprenant';
 
-        $this->title_page = 'Gestion des statuts apprenants - Ges-School';
+        $this->title_page = 'Gestion des statuts apprenants - ' . $this->organisation;
         $this->title_home = 'Gestion des statuts apprenants';
         $this->create_title = "Creation d'un statut apprenant";
         $this->view_title = "Information d'un statut apprenant";

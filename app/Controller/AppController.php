@@ -17,6 +17,7 @@ class AppController extends BaseController
         parent::__construct(App::getAppInstance());
         $this->template = 'default';
         $this->viewPath = ROOT . '/ressources/views/';
+        $this->organisation = App::ORGANISATION;
     }
 
     protected function fill($to_extract, $fillables){

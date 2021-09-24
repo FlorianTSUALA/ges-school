@@ -34,7 +34,7 @@ class ReductionFamilialeController  extends AppController
         $this->base_route = 'reduction_familiale';
         $this->class_name = 'reduction_familiale';
 
-        $this->title_page = 'Gestion des reductions familiales - Ges-School';
+        $this->title_page = 'Gestion des reductions familiales - ' . $this->organisation;
         $this->title_home = 'Gestion des reductions familiales';
         $this->create_title = "Creation d'une reduction familiale";
         $this->view_title = "Information d'une reduction familiale";

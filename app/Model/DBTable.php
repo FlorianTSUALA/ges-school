@@ -53,6 +53,7 @@ class DBTable
     const FACTURE = 'facture';
     const JOUR_OUVRABLE = 'jour_ouvrable';
     const MATIERE = 'matiere';
+    const MODELE_MESSAGE = 'MODELE_MESSAGE';
     const PARCOURS = 'parcours';
     const PAYS = 'pays';
     const MOIS = 'mois';

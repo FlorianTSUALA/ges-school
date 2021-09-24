@@ -53,7 +53,7 @@ class EleveController extends AppController
         $this->base_route = 'eleve';
         $this->class_name = 'eleve';
 
-        $this->title_page = 'Gestion des eleves - Ges-School';
+        $this->title_page = 'Gestion des eleves - ' . $this->organisation;
         $this->title_home = 'Gestion des eleves';
         $this->create_title = "Creation d'un eleve";
         $this->view_title = "Information d'un eleve";

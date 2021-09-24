@@ -29,7 +29,7 @@ class StatutEleveController extends AppController
         $this->base_route = 'statut_eleve';
         $this->class_name = 'statut_eleve';
 
-        $this->title_page = 'Gestion des statuts eleves - Ges-School';
+        $this->title_page = 'Gestion des statuts eleves - ' . $this->organisation;
         $this->title_home = 'Gestion des statuts eleves';
         $this->create_title = "Creation d'un statut eleve";
         $this->view_title = "Information d'un statut eleve";

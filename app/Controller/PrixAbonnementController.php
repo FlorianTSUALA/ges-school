@@ -31,7 +31,7 @@ class PrixAbonnementController extends AppController
         $this->loadModel($this->vairant);
         $this->base_route = 'prix_abonnement';
 
-        $this->title_page = 'Gestion des affections des prix de differents abonements - Ges-School';
+        $this->title_page = 'Gestion des affections des prix de differents abonements - ' . $this->organisation;
         $this->title_home = 'Gestion des prix de differents abonements';
         $this->create_title = "Définition du prix d'un abonnement";
         $this->view_title = "Prix de l'abonnement";

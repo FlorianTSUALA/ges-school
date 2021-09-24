@@ -25,7 +25,7 @@ class CantineListeController extends AppController
         $this->base_route = 'cantineliste';
         $this->class_name = 'cantineliste';
 
-        $this->title_page = 'Gestion des eleves - Ges-School';
+        $this->title_page = 'Gestion des eleves - ' . $this->organisation;
         $this->title_home = 'Gestion des eleves';
         $this->create_title = "Creation d'un eleve";
         $this->view_title = "Information d'un eleve";
@@ -36,7 +36,7 @@ class CantineListeController extends AppController
 
     public function index()
     {
-        $this->app->setTitle('Liste des élèves inscrits  - Ges-School');
+        $this->app->setTitle('Liste des élèves inscrits  - ' . $this->organisation);
         $title = $this->title_page;
         $eleves = $this->eleve->getEleveInscriptionInfo();
         $classes = DBTable::getModel(DBTable::CLASSE)->select(['code' => 'id', 'libelle' => 'value'])->where('visibilite', '=', 1)->get();

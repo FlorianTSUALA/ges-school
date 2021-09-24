@@ -23,7 +23,7 @@ class ExemplaireController extends AppController
         $this->base_route = 'exemplaire';
         $this->class_name = 'exemplaire';
 
-        $this->title_page = 'Gestion des exemplaires de document - Ges-School';
+        $this->title_page = 'Gestion des exemplaires de document - ' . $this->organisation;
         $this->title_home = 'Gestion des exemplaires de document';
         $this->create_title = "Création d'un exemplaire de document";
         $this->view_title = "Information d'un exemplaire de document";

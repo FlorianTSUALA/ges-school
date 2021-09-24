@@ -20,7 +20,7 @@ class TypePensionController extends AppController
         $this->base_route = 'type_pension';
         $this->class_name = 'TypePension';
 
-        $this->title_page = 'Gestion des types de pensions - Ges-School';
+        $this->title_page = 'Gestion des types de pensions - ' . $this->organisation;
         $this->title_home = 'Gestion des types de pensions';
         $this->create_title = "Creation d'un type de pensions";
         $this->view_title = "Information d'un type de pensions";

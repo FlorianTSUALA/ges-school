@@ -21,7 +21,7 @@ class TypeActiviteController extends AppController
         $this->base_route = 'type_activite';
         $this->class_name = 'type_activite';
 
-        $this->title_page = 'Gestion des types d\'activités - Ges-School';
+        $this->title_page = 'Gestion des types d\'activités - ' . $this->organisation;
         $this->title_home = 'Gestion des types d\'activités';
         $this->create_title = "Creation d'un type d\'activités";
         $this->view_title = "Information d'un type d\'activités";

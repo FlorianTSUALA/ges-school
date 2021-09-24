@@ -23,7 +23,7 @@ class SalleClasseController extends AppController
         $this->base_route = 'salle_classe';
         $this->class_name = 'salle_classe';
 
-        $this->title_page = 'Gestion des salles de classes - Ges-School';
+        $this->title_page = 'Gestion des salles de classes - ' . $this->organisation;
         $this->title_home = 'Gestion des salles de classes';
         $this->create_title = "Creation d'une salle de classe";
         $this->view_title = "Information d'une salle de classe";

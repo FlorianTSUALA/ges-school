@@ -22,7 +22,7 @@ class RepasController extends AppController
         $this->base_route = 'repas';
         $this->class_name = 'repas';
 
-        $this->title_page = 'Gestion des repas - Ges-School';
+        $this->title_page = 'Gestion des repas - ' . $this->organisation;
         $this->title_home = 'Gestion des repas';
         $this->create_title = "Creation d'un repas";
         $this->view_title = "Information d'un repas";

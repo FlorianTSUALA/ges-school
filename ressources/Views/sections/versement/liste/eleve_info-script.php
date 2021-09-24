@@ -26,6 +26,7 @@ include dirname(dirname(dirname(__DIR__))) . "/_common_lib/_select2_script.php";
         $.ajax({
             url: '<?= URL::link('api_eleve_info');?>'+id,
             type: 'post',
+            cache: true,
             dataType: 'json',
             beforeSend:function(){
             },

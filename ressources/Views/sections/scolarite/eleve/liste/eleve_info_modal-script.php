@@ -29,6 +29,7 @@
         $.ajax({
             url: '<?= URL::link('api_eleve_info');?>'+id,
             type: 'post',
+            cache: true,
             dataType: 'json',
             beforeSend:function(){
             },

@@ -21,7 +21,7 @@ class AbonnementActiviteController extends AppController
         $this->base_route = 'abonnement_activite';
         $this->class_name = 'abonnement_activite';
 
-        $this->title_page = 'Gestion des abonnements d\'activités - Ges-School';
+        $this->title_page = 'Gestion des abonnements d\'activités - ' . $this->organisation;
         $this->title_home = 'Gestion des abonnements d\'activités';
         $this->create_title = "Creation d'un abonnement d\'activités";
         $this->view_title = "Information d'un abonnement d\'activités";

@@ -42,7 +42,7 @@ trait EleveControllerTraitCRUD
 
     public function index_ajout()
     {
-        $this->app->setTitle('Inscription d\'un(e) élève  - Ges-School');
+        $this->app->setTitle('Inscription d\'un(e) élève  - ' . $this->organisation);
         $route = "eleve_ajout";
         $pays = $this->pays->all();
         $classes = $this->classe->all();

@@ -979,6 +979,21 @@ return[
                 "children" => [],
             ],
 
+            "MODELE_MESSAGE" => [
+                "title" => "Modele de messages",
+                "icon" => "",
+                "msg_page" => "",
+                "menu_explication" => "",
+                "full_url" => URL::link("modele_message"),
+                "action" => "modele_message",
+                "alt" => "",
+                "class" => "",
+                "isActive" => "",
+                "alwaysVisible" => true,
+                "hasChildren" => false,
+                "children" => [],
+            ],
+
             "MATIERE" => [
                 "title" => "Matière",
                 "icon" => "",

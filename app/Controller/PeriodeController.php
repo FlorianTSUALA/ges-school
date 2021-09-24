@@ -28,7 +28,7 @@ class PeriodeController extends AppController
         $this->base_route = 'periode';
         $this->class_name = 'Periode';
 
-        $this->title_page = 'Gestion des periodes - Ges-School';
+        $this->title_page = 'Gestion des periodes - ' . $this->organisation;
         $this->title_home = 'Gestion des periodes';
         $this->create_title = "Creation d'une periode";
         $this->view_title = "Information d'une periode";

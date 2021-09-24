@@ -24,7 +24,7 @@ class InscriptionActiviteController extends AppController
         $this->base_route = 'inscription_activite';
         $this->class_name = 'Inscription_activite';
 
-        $this->title_page = 'Gestion des inscription_activites - Ges-School';
+        $this->title_page = 'Gestion des inscription_activites - ' . $this->organisation;
         $this->title_home = 'Gestion des inscription_activites';
         $this->create_title = "Creation d'une inscription_activite";
         $this->view_title = "Information d'une inscription_activite";

@@ -24,7 +24,7 @@ class DocumentController extends AppController
         $this->base_route = 'document';
         $this->class_name = 'Document';
 
-        $this->title_page = 'Gestion des documents - Ges-School';
+        $this->title_page = 'Gestion des documents - ' . $this->organisation;
         $this->title_home = 'Gestion des documents';
         $this->create_title = "Creation d'un document";
         $this->view_title = "Information d'un document";
