@@ -53,7 +53,7 @@ class GroupeFamilialRepository extends BaseRepository{
                         eleve.statut_eleve_id not in ($demission_id, $fin_cyle_id)
                 GROUP  BY groupe_familial.id
                 ";
-            dd($code);
+            // dd($code);
             $result = (array)$this->query($req)[0];
             return $result;
     }

@@ -71,7 +71,7 @@ class GroupeFamilialController  extends AppController
 
     public function get_one($code){
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        dd($code);
+        // dd($code);
         $result = (new GroupeFamilialRepository() )->get_one_groupe_familial_reduction($code);
         return $result;
     }
