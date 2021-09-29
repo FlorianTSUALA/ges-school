@@ -21,8 +21,8 @@ class StatutApprenant extends Model implements FrequentlyReapeat
             ];
     }
 
-    const NOUVEAU_CODE = 'NOUVEAU';
+    const CODE_NOUVEAU = 'NOUVEAU';
     const REDOUBLANT_CODE = 'REDOUBLANT';
-    const ANCIEN_CODE = 'ANCIEN';
+    const CODE_ANCIEN = 'ANCIEN';
 
 }

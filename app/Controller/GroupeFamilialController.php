@@ -95,7 +95,7 @@ class GroupeFamilialController  extends AppController
                                                     ]
                                                 )
                                         ->where('eleve.groupe_familial_id', $groupe_familial_id)
-                                        ->whereNotIn('eleve.statut_eleve_id', [StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE), StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE)])
+                                        ->whereNotIn('eleve.statut_eleve_id', [StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE), StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE)])
                                         ->where('eleve.visibilite', 1)
                                         ->get();
 
@@ -125,7 +125,7 @@ class GroupeFamilialController  extends AppController
                                                     ]
                                                 )
                                         ->where('eleve.groupe_familial_id', $groupe_familial_id)
-                                        ->whereNotIn('eleve.statut_eleve_id', [StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE), StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE)])
+                                        ->whereNotIn('eleve.statut_eleve_id', [StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE), StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE)])
                                         ->where('eleve.visibilite', 1)
                                         ->get();
 

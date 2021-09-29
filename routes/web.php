@@ -135,8 +135,17 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     //$router->addRoute('inscrire', 'inscription', [InscriptionController::class, 'index']);
     $router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
 
-// TEST SAVING WITH EXCEL
-$router->addRoute('excell', 'excell', [ExcelController::class, 'index']);
+// LOADER 
+    
+    //BEGIN_ELEVE
+        $router->addRoute('loader_eleve', 'eleve/chargement', [ExcelController::class, 'loader_eleve']);
+        $router->addRoute('api_loader_eleve_save', 'api/loader_eleve/save', [ExcelController::class, 'api_loader_eleve_api_save']);
+        $router->addRoute('api_loader_eleve_display_data', 'api/loader_eleve/display_data', [ExcelController::class, 'api_loader_eleve_api_display_data']);
+    //END_ELEVE
+
+    
+
+// LOADER 
 
 //ELEVE LIVE SEARCH
 $router->addRoute('eleve-list-class', 'eleve/list/class/{code}', [EleveController::class, 'eleve_classe']);

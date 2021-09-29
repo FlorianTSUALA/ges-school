@@ -41,7 +41,7 @@ class StatutEleveRepository extends BaseRepository{
         $precedente_annee_scolaire_id = (new AnneeScolaireRepository)->get_annee_scolaire_precedente_id($annee_scolaire_id);
 
         if(is_null($eleve['statut_eleve_id'])){
-            Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+            Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_NOUVEAU))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
        
             $eleve = Eleve::table()->select(
                                             [
@@ -55,9 +55,9 @@ class StatutEleveRepository extends BaseRepository{
         }
         $statut_eleve_code = StatutEleve::table()->select('code')->where('statut_eleve.id', $eleve['statut_eleve_id'])->one()['code'];
         
-        if((!$statut_eleve_code) || (!$precedente_annee_scolaire_id && $statut_eleve_code != StatutEleve::NOUVEAU_CODE))
+        if((!$statut_eleve_code) || (!$precedente_annee_scolaire_id && $statut_eleve_code != StatutEleve::CODE_NOUVEAU))
         {
-            Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+            Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_NOUVEAU))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
             $eleve = Eleve::table()->select(
                                                 [
                                                     'eleve.id' => 'id',
@@ -90,26 +90,26 @@ class StatutEleveRepository extends BaseRepository{
         $parcours_exists = !!$parcours; 
 
         switch($statut_eleve_code){
-            case StatutEleve::NOUVEAU_CODE:
+            case StatutEleve::CODE_NOUVEAU:
                 if($parcours_exists){
-                    Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::ANCIEN_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                    Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_ANCIEN))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                 }
             break;
             
-            case StatutEleve::ANCIEN_CODE:
+            case StatutEleve::CODE_ANCIEN:
                 if(!$parcours_exists){
-                    Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                    Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                 }else{
                     $fin_cycle = Cycle::table()->select()->where('classe_fin_cycle', $parcours['classe_id'])->where('visibilite', 1)->exists();
                     if($fin_cycle){
-                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                     }
                 }
             break;
-            case StatutEleve::DEMISSINAIRE_CODE:
+            case StatutEleve::CODE_DEMISSINAIRE:
                 //MISE A JOUR DU STATUT DURANT L'INSCRIPTION #STATUT_ELEVE#
             break;
-            case StatutEleve::FIN_CYCLE_CODE:
+            case StatutEleve::CODE_FIN_CYCLE:
                 //AUCUN CHANGEMENT D'ETAT
             break;
 

@@ -85,7 +85,39 @@ class ReductionFamilialeController  extends AppController
                                                     ]
                                                 )
                                         ->where('eleve.reduction_familiale_id', $reduction_familiale_id)
-                                        ->whereNotIn('eleve.statut_eleve_id', [StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE), StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE)])
+                                        ->whereNotIn('eleve.statut_eleve_id', [StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE), StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE)])
+                                        ->where('eleve.visibilite', 1)
+                                        ->get();
+
+        $data['reduction_familiale_info'] = ReductionFamiliale::table()->select()->where('id', $reduction_familiale_id)->where('visibilite', 1)->one();
+
+        $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
+
+        $data['reduction'] = 0;//  ReductionFamiliale::table()->select()->where('annee_scolaire_id', $annee_scolaire_id)->where('reduction_familiale_id', $reduction_familiale_id)->where('visibilite', 1)->one();
+
+        echo Helpers::toJSON($data) ;
+    }
+   
+    public function api_get_facture($code) 
+    {
+        $reduction_familiale_id = Eleve::table()->select('reduction_familiale_id')->where('visibilite', 1)->where('eleve.code', $code)->one()['reduction_familiale_id'];
+        if(is_null($reduction_familiale_id))
+        {
+            echo Helpers::toJSON('empty');
+            return ;
+        }
+        
+        $data['eleves'] = Eleve::table()->select(
+                                                    [
+                                                        new Expression("concat(eleve.nom,' ',eleve.prenom) AS nom_complet"),
+                                                        'eleve.code' => 'id',
+                                                        'eleve.matricule' => 'matricule',
+                                                        'eleve.date_naissance' => 'date_naissance',
+                                                        'eleve.lieu_naissance' => 'lieu_naissance'
+                                                    ]
+                                                )
+                                        ->where('eleve.reduction_familiale_id', $reduction_familiale_id)
+                                        ->whereNotIn('eleve.statut_eleve_id', [StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE), StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE)])
                                         ->where('eleve.visibilite', 1)
                                         ->get();
 

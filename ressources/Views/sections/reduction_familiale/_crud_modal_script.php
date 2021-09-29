@@ -60,6 +60,7 @@ include dirname(__DIR__)."/_common_lib/_select2_script.php";
                     form.classList.add('was-validated');
                }
           });
+          
      })();
 </script>
 

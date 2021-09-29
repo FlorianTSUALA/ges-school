@@ -196,14 +196,14 @@ trait VersementControllerTraitInscription
             //MISE A JOUR DU #STATUT_ELEVE#
                 if(is_null($eleve['statut_eleve_id'])){
                     // vd('#STATUT_ELEVE1#');
-                    Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                    Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_NOUVEAU))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                     // vd('#STATUT_ELEVE2#');
                 }else{
                     $statut_eleve_code = StatutEleve::table()->select('code')->where('statut_eleve.id', $eleve['statut_eleve_id'])->one()['code'];
-                    if($statut_eleve_code == StatutEleve::DEMISSINAIRE_CODE){
-                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::ANCIEN_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                    if($statut_eleve_code == StatutEleve::CODE_DEMISSINAIRE){
+                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_ANCIEN))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                     }else{
-                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::NOUVEAU_CODE))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
+                        Eleve::table()->update()->set('statut_eleve_id', StatutEleve::get_id(StatutEleve::CODE_NOUVEAU))->where('id', '=', $eleve['id'])->where('visibilite', 1)->execute();
                     }
                 }
         //  ##endregion INSCRIPTION PARCOURS 

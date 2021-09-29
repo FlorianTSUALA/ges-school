@@ -10,8 +10,8 @@ use Core\Repository\BaseRepository;
 class ReductionFamilialeRepository extends BaseRepository{
 
     public function get_all_groupe_familial_reduction($annee_scolaire_id = null){
-        $demission_id = StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE);
-        $fin_cyle_id = StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE);
+        $demission_id = StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE);
+        $fin_cyle_id = StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE);
 
         $req = "SELECT  GROUP_CONCAT( CONCAT(eleve.nom, ' ', eleve.prenom) SEPARATOR ', ') AS description, 
                         groupe_familial.id,           
@@ -30,8 +30,8 @@ class ReductionFamilialeRepository extends BaseRepository{
     }
 
     public function get_one_groupe_familial_reduction($code){
-        $demission_id = StatutEleve::get_id(StatutEleve::DEMISSINAIRE_CODE);
-        $fin_cyle_id = StatutEleve::get_id(StatutEleve::FIN_CYCLE_CODE);
+        $demission_id = StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE);
+        $fin_cyle_id = StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE);
         vd($demission_id);
         vd($fin_cyle_id);
         $req = " SELECT GROUP_CONCAT(CONCAT(eleve.nom, ' ', eleve.prenom)  SEPARATOR ', ') AS description, 

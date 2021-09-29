@@ -19,4 +19,9 @@ class TypePaiement extends Model implements FrequentlyReapeat
                 new FormModel(true, self::LIBELLE ),
             ];
     }
+
+    const CODE_MOBILE_MONEY = "MOBILE_MONEY";
+    const CODE_CHEQUE = "CHEQUE";
+    const CODE_ESPECE = "ESPECE";
+    
 }

@@ -17,7 +17,7 @@ class StatutApprenantRepository extends BaseRepository{
         $annee_scolaire_precedente_id = (new AnneeScolaireRepository)->get_annee_scolaire_precedente_id($annee_scolaire_id);
         
         if( !$annee_scolaire_precedente_id ) 
-            return StatutApprenant::get_id(StatutApprenant::NOUVEAU_CODE);
+            return StatutApprenant::get_id(StatutApprenant::CODE_NOUVEAU);
         
         $parcours_exists = Parcours::table()
                                 ->select(
@@ -35,7 +35,7 @@ class StatutApprenantRepository extends BaseRepository{
                                 ->where('parcours.visibilite', 1)
                                 ->exists();
         
-        return ($parcours_exists)? StatutApprenant::get_id(StatutApprenant::REDOUBLANT_CODE) : StatutApprenant::get_id(StatutApprenant::NOUVEAU_CODE);
+        return ($parcours_exists)? StatutApprenant::get_id(StatutApprenant::REDOUBLANT_CODE) : StatutApprenant::get_id(StatutApprenant::CODE_NOUVEAU);
     }
 
 }

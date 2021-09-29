@@ -21,9 +21,9 @@ class StatutEleve extends Model implements FrequentlyReapeat
             ];
     }
 
-    const NOUVEAU_CODE = 'NOUVEAU';
-    const ANCIEN_CODE = 'ANCIEN';
-    const DEMISSINAIRE_CODE = 'DEMISSINAIRE';
-    const FIN_CYCLE_CODE = 'FIN_CYCLE';
+    const CODE_NOUVEAU = 'NOUVEAU';
+    const CODE_ANCIEN = 'ANCIEN';
+    const CODE_DEMISSINAIRE = 'DEMISSINAIRE';
+    const CODE_FIN_CYCLE = 'FIN_CYCLE';
 
 }
