@@ -2,16 +2,18 @@
 
 namespace Core\Controller;
 
+use App\App;
 use Core\BaseApp;
+use Core\Routing\URL;
 use Core\Session\Session;
+use function Core\Helper\dd;
+use function Core\Helper\vd;
 use Spipu\Html2Pdf\Html2Pdf;
+
 use Core\HTML\Form\FormField;
 use Core\HTML\Form\BootstrapForm;
 use Spipu\Html2Pdf\Exception\Html2PdfException;
 use Spipu\Html2Pdf\Exception\ExceptionFormatter;
-
-use function Core\Helper\dd;
-use function Core\Helper\vd;
 
 abstract class BaseController
 {
@@ -126,6 +128,29 @@ abstract class BaseController
 
     }
 
+    protected function download($file_path, $from_storage = true){
+        if($from_storage)
+            $file_path = URL::storage('data') . $file_path;
+        header("Cache-Control: max-age=0");
+        header('Content-Type: '. mime_content_type($file_path));
+        
+        // switch ($type) {
+        //     case 'excel':
+        //         header("Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");                
+        //         break;
+        //     case 'pdf':
+        //         header("Content-type: application/pdf");
+        //         break;
+        //     case 'exe':
+        //         header('Content-Type: application/octet-stream');
+        //         header("Content-Transfer-Encoding: Binary"); 
+        //         break;
+        //     default:
+
+        // }
+        header("Content-disposition: attachment; filename=\"" . basename($file_path) . "\""); 
+        readfile($file_path); 
+    }
 
     protected function redirect(String $nameView, array $variables = [], string $template = null)
     {

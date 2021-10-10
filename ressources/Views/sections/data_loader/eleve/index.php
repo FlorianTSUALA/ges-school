@@ -3,6 +3,7 @@
 use Core\Routing\URL;
 use App\Helpers\Helpers;
 
+
 $include_res_header = '';
 $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/app-assets/vendors/css/tables/jsgrid/jsgrid-theme.min.css">';
 $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/app-assets/vendors/css/tables/jsgrid/jsgrid.min.css">';
@@ -29,13 +30,13 @@ $include_footer_script = ob_get_clean();
             <div class="content-header-left col-md-6 col-12">
                 <div class="row breadcrumbs-top">
                     <div class="breadcrumb-wrapper col-12">
-                        <h3 class="content-header-title">Affectation  Salle  Enseignant </h3>
+                        <h3 class="content-header-title">Chargement des élèves </h3>
                         <ol class="breadcrumb">
                             <li class="breadcrumb-item"><a href="<?= URL::link('accueil') ?>">Accueil</a>
                             </li>
-                            <li class="breadcrumb-item"><a href="#">Affectation</a>
+                            <li class="breadcrumb-item"><a href="<?= URL::link('loader') ?>">Chargment des données</a>
                             </li>
-                            <li class="breadcrumb-item active">Salle - Enseignant
+                            <li class="breadcrumb-item active"> Eleves
                             </li>
                         </ol>
                     </div>
@@ -45,63 +46,56 @@ $include_footer_script = ob_get_clean();
                 <div class="btn-group float-md-right" role="group" aria-label="Button group with nested dropdown">
                     <div class="btn-group" role="group">
                     </div>
-                        <a class="btn btn-outline-info" href="<?= URL::link('classe') ?>" title="gestion des salles de classes"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Gestion classes</a>
-                    <a class="btn btn-outline-info" href="<?= URL::link('salle_classe') ?>" title="gestion des classes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Gestion salles de classes</a>
+                        <a class="btn btn-outline-info" href="<?= URL::link('loader_eleve') ?>" title="Chargement des élèves"><i class="fa fa-window-maximize"></i>&nbsp;&nbsp; Chargement des élèves</a>
+                    <a class="btn btn-outline-info" href="<?= "#" ?>" title="Chargement des notes"><i class="fa fa-window-restore"></i>&nbsp; &nbsp; Chargement des notes</a>
                 </div>
             </div>
             <div class="content-header-lead col-12 mt-2">
             </div>
         </div>
+
         <div class="content-body">
-            <!-- Basic scenario start -->
-            <section id="basic">
-                <div class="row">
+                <section class="row">
                     <div class="col-12">
                         <div class="card">
-                            <div class="card-header">
-                                <div class="d-flex justify-content-between">
-                                    <div class="p-0">
-                                        <h4 class="card-title" id="heading-prev-next">Tableau d'affectation des enseignants aux salles de classe.</h4>
-                                        <small class="text-muted">Cette grille vous permet d'affecter un personnel à une salle de classe.</small>
-                                       <br> <small class="text-muted">Cliquer sur les champs d'en-tete de la grille pour trier la colonne ciblée.</small>
+    
+                            <div class="card-header pb-0 mb-0">
+                                <div class="d-flex">
+                                    <div class="p-0  col-md-6 mr-auto ">
+                                        <h4 class="card-title" id="heading-prev-next">Chargement des données</h4>
+                                        <small class="text-muted">Chargement, prévisualisation et sauvegarde .</small>
                                     </div>
-      
-                                    <div class="p-0">
-                                        <a class="heading-elements-toggle"><i class="fa fa-ellipsis-v font-medium-3"></i></a>
-                                        <div class="heading-elements">
-                                            <ul class="list-inline mb-0">
-                                                <!-- <li><a data-action="collapse"><i class="ft-minus"></i></a></li> -->
-                                                <!-- <li><a data-action="reload"><i class="ft-rotate-cw"></i></a></li> -->
-                                                <!-- <li><a data-action="expand"><i class="ft-maximize"></i></a></li> -->
-                                                <!-- <li><a data-action="close"><i class="ft-x"></i></a></li> -->
-                                            </ul>
-                                        </div>
+                                    <div class="p-0 mr-1   ">
+                                        <span class="btn btn-success input_file_upload mr-1" data-target="excel_file">
+                                            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;" name="excel_file" id="excel_file" onchange="load_jsgrid(this, '.excel_file');" /> 
+                                            <i class="icon-plus"></i>
+                                            <span>charger le fichier...</span>
+                                        </span>
                                     </div>
 
-                                    
+                                    <div class="p-0 mr-1   ">
+                                        <a class="btn btn-warning btn-block "  href="<?= URL::link('download_template_loader_eleve') ?>"><i class="ft-plus white"></i> Télécharger un modèle</a>
+                                    </div>
                                    
                                 </div>
-                                <p class="lead"></p>
-                                <!-- <h4 class="card-title">Basic Scenario</h4> -->
-                                
-                            </div>
-                            <div class="card-content collapse show">
-                                <?php if(false){ //inutile car la génération se fera automatiquement si ce n'est pas encore existant?>
-                                    <div class="card-header">
-                                        <button class="btn btn-primary "  data-toggle="modal" data-target="#modal-emprunt"><i class="ft-plus white"></i> Initialiser les affectations pour cette année scolaire</button>
+                                <!-- <div class="d-flex  mt-1">
+                                    <div class="alert bg-success alert-icon-left" role="alert">
+                                        <span class="alert-icon"><i class="fa fa-pencil-square"></i></span>
+                                        <span class="alert-icon"><i class="fa fa-pencil-square"></i></span>
+                                        <span id='resume_filtre'> listes des enseignants.</span>
                                     </div>
-                                <?php }?>
+                                </div> -->
+                            </div>
+
+                            <div class="card-content collapse show pt-0 mt-1" >
                                 <div class="card-body card-dashboard mt-0 pt-0">
-                                    <!-- <p>Cette grille vous permet d'affecter un personnel à une salle de classe.</p> -->
-                                    <div id="table_affectation_personnel_salle_classe"></div>
-                                </div>
+                                <div id="table_affectation_personnel_salle_classe"></div>
+                            </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </section>
-
-        </div>
+                </section>
+            </div>
     </div>
 </div>
 

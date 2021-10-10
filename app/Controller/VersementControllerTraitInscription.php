@@ -5,6 +5,7 @@ namespace App\Controller;
 use DateTime;
 use App\Helpers\S;
 use App\Model\Eleve;
+use App\Model\Classe;
 use Core\Model\Model;
 use App\Model\DBTable;
 use App\Model\Facture;
@@ -14,8 +15,10 @@ use Core\Session\Request;
 use App\Model\StatutEleve;
 use App\Model\TypePension;
 use App\Model\PensionEleve;
+use App\Model\PensionClasse;
 use function Core\Helper\dd;
 use function Core\Helper\vd;
+use App\Model\StatutApprenant;
 use App\Repository\EleveRepository;
 use App\Repository\AnneeScolaireRepository;
 use App\Repository\StatutApprenantRepository;
@@ -44,17 +47,17 @@ trait VersementControllerTraitInscription
         
         $eleves = (new EleveRepository() )->getEleve();
 
-        $classes = DBTable::getModel('classe')->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
+        $classes = Classe::table()->select(['code'=>'id', 'libelle' => 'libelle'])->where('visibilite', '=', 1)->get();
 
         $annee_scolaires =  (new AnneeScolaireRepository())->getAll();
 
-        $statut_apprenants = DBTable::getModel('statut_apprenant')
+        $statut_apprenants = StatutApprenant::table()
                             ->select(['code'=>'id', 'libelle' => 'libelle'])
                             ->where('visibilite', '=', 1)
                             ->orderBy('date_creation', 'desc')
                             ->get();
 
-        $pension_classe = DBTable::getModel('pension_classe')
+        $pension_classe = PensionClasse::table()
             ->select(
                 [
                     'classe.code' => 'classe_id',
@@ -62,8 +65,6 @@ trait VersementControllerTraitInscription
                     'type_pension.code' => 'type_pension',
                     'pension_classe.code' => 'id',
                     'pension_classe.montant' => 'montant',
-                    // 'pension_classe.est_mensuel' => 'est_mensuel',
-                    // 'pension_classe.mensualite' => 'mensualite',
                     'pension_classe.libelle' => 'libelle'
                 ]
             )

@@ -129,9 +129,9 @@ $(document).ready(function() {
     
 
 
-    db.pays = <?= $_??[] ?>;
-    db.sexes = <?= $_??[] ?>;
-    db.classes = <?= $_??[] ?>;
+    db.pays = <?php print_r($pays??[])  ?>;
+    db.sexes = <?php print_r($sexes??[])  ?>;
+    db.classes = <?php print_r($classes??[])  ?>;
 
     db.pays.unshift(    {
         id: null,
@@ -161,7 +161,7 @@ $(document).ready(function() {
         pageSize: 15,
         pageButtonCount: 5,
         controller: db,
-        noDataContent: "Aucune correspondance trouvée",
+        noDataContent: "Oh la liste vide !!! Chargez un fichier de données.",
         fields: [
             // NOM,PRENOM,DATE DE NAISSANCE,LIEU DE NAISSANCE ,NATIONALITE,SEXE,CLASSE ANNEE ENCOURS,CLASSE ANTERIEUR,INSCRIPTION
 
@@ -277,6 +277,45 @@ $(document).ready(function() {
     setInterval(function(){
         $("#table_affectation_personnel_salle_classe").jsGrid("loadData")
     }, 10000);
+
+
+    $('.input_file_upload').on('click', function(){
+        document.getElementById($(this).data('target')).click()
+    })
+
+    function load_jsgrid(input, selector){
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+
+            reader.onload = function(e) {
+                $(selector)
+                    .attr('src', e.target.result);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        /*
+            var formData = new FormData();
+            formData.append('file', $('#file')[0].files[0]);
+
+            $.ajax({
+                url : 'upload.php',
+                type : 'POST',
+                data : formData,
+                processData: false,  // tell jQuery not to process the data
+                contentType: false,  // tell jQuery not to set contentType
+                success : function(data) {
+                    console.log(data);
+                    alert(data);
+                }
+            });
+
+        */
+
+        }
+
+    }
+
 
 
 }())

@@ -58,7 +58,7 @@
 	<?php require "sidebar-menu.php" ?>
 
 	<!-- ############# -->
-	<div class="wrapper" id="card-body-default" style=" flex: 1; ">
+	<div id="card-body-default" style=" flex: 1; ">
 		<?= $content; ?>
 	</div>
 

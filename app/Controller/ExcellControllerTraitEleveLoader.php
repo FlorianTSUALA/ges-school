@@ -21,6 +21,7 @@ use function Core\Helper\vd;
 use App\Model\DossierMedical;
 use App\Model\DossierParental;
 use App\Model\AntecedentScolaire;
+use App\Model\Pays;
 use App\Repository\EleveRepository;
 use App\Repository\StatutApprenantRepository;
 
@@ -30,10 +31,10 @@ trait ExcellControllerTraitEleveLoader
     public function loader_eleve()
     {
         $route = 'loader_eleve';
-        
-        $excel_template_file = URL::storage('data') ."excel/comelinesListe.xlsx";
-        
-        $this->render('sections.data_loader.eleve_loader', compact('route',  'excel_template_file'));
+        $classes = Helpers::toJSON(Classe::table()->select(['id'=>'id', 'libelle' => 'value'])->where('visibilite', '=', 1)->get());
+        $pays = Helpers::toJSON(Pays::table()->select(['id'=>'id', 'libelle' => 'value'])->where('visibilite', '=', 1)->get());
+        $sexes = Helpers::toJSON([['id'=>'M', 'libelle' => 'Masculin'], ['id'=>'F', 'libelle' => 'Feminin']]);
+        $this->render('sections.data_loader.eleve.index', compact('route', 'pays', 'classes', 'sexes'));
     }
      
         
@@ -235,6 +236,11 @@ trait ExcellControllerTraitEleveLoader
     public function load_data_from_file()
     {
         # code...
+    }
+
+    public function download_template_loader_eleve()
+    {
+        $this->download('excel/enregistrement_eleve.xlsx');
     }
 
 }

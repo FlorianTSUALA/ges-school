@@ -63,7 +63,7 @@ class ReductionFamilialeController  extends AppController
 
     public function get_all(){
         $annee_scolaire_id = $this->session->get(S::ANNEE_SCOLAIRE); //annee scolaire courante
-        return (new ReductionFamilialeRepository() )->get_all_reduction_familiale_reduction($annee_scolaire_id);
+        return (new ReductionFamilialeRepository() )->get_all_groupe_familial_reduction($annee_scolaire_id);
     }
    
     public function api_get_reduction_familiale($code) 

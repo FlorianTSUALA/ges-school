@@ -140,9 +140,16 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     
     //BEGIN_ELEVE
         $router->addRoute('loader_eleve', 'eleve/chargement', [ExcelController::class, 'loader_eleve']);
+        $router->addRoute('download_template_loader_eleve', 'download/loader_template/eleve', [ExcelController::class, 'download_template_loader_eleve']);
         $router->addRoute('api_loader_eleve_save', 'api/loader_eleve/save', [ExcelController::class, 'api_loader_eleve_api_save']);
         $router->addRoute('api_loader_eleve_display_data', 'api/loader_eleve/display_data', [ExcelController::class, 'api_loader_eleve_api_display_data']);
     //END_ELEVE
+    
+    //BEGIN_NOTE
+        $router->addRoute('loader_note', 'note/chargement', [ExcelController::class, 'loader_note']);
+        $router->addRoute('api_loader_note_save', 'api/loader_note/save', [ExcelController::class, 'api_loader_note_api_save']);
+        $router->addRoute('api_loader_note_display_data', 'api/loader_note/display_data', [ExcelController::class, 'api_loader_note_api_display_data']);
+    //END_NOTE
 
     
 

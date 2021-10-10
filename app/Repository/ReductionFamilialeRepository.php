@@ -32,8 +32,8 @@ class ReductionFamilialeRepository extends BaseRepository{
     public function get_one_groupe_familial_reduction($code){
         $demission_id = StatutEleve::get_id(StatutEleve::CODE_DEMISSINAIRE);
         $fin_cyle_id = StatutEleve::get_id(StatutEleve::CODE_FIN_CYCLE);
-        vd($demission_id);
-        vd($fin_cyle_id);
+        // vd($demission_id);
+        // vd($fin_cyle_id);
         $req = " SELECT GROUP_CONCAT(CONCAT(eleve.nom, ' ', eleve.prenom)  SEPARATOR ', ') AS description, 
                         GROUP_CONCAT(eleve.code SEPARATOR ', ') AS description_code,
                         groupe_familial.id,           
