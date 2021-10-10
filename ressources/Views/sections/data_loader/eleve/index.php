@@ -16,7 +16,7 @@ $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendor
 
 ob_start();
 
-require 'affectation-script.php';
+require 'script.php';
 
 $include_footer_script = ob_get_clean();
 

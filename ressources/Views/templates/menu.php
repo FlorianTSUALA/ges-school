@@ -753,6 +753,20 @@ return[
         "alwaysVisible" => true,
         "hasChildren" => true,
         "children" => [
+            "CHARGEMENT" => [
+                "title" => "Chargement",
+                "icon" => "",
+                "msg_page" => "",
+                "menu_explication" => "",
+                "full_url" => URL::link("loader"),
+                "action" => "loader",
+                "alt" => "",
+                "class" => "",
+                "isActive" => "",
+                "alwaysVisible" => true,
+                "hasChildren" => false,
+                "children" => [],
+            ],
             "CYCLE" => [
                 "title" => "Cycle",
                 "icon" => "",

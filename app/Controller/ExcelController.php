@@ -24,9 +24,13 @@ class ExcelController extends AppController
     }
 
 
-    public function index() {
+    public function loader() {
         // https://phpspreadsheet.readthedocs.io/en/latest/topics/reading-files/
+        $this->app->setTitle('Chargement des données  - ' . $this->organisation);
+        $route = 'loader';
+        $this->render('sections.data_loader.index', compact('route'));
     }
+
 
     public function display_jsgrid() {
 

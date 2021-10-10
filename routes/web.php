@@ -136,6 +136,7 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     $router->addRoute('inscrire-create', 'inscription/create/', [InscriptionController::class, 'inscrire']);
 
 // LOADER 
+    $router->addRoute('loader', 'chargement', [ExcelController::class, 'loader']);
     
     //BEGIN_ELEVE
         $router->addRoute('loader_eleve', 'eleve/chargement', [ExcelController::class, 'loader_eleve']);

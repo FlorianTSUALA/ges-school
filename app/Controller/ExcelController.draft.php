@@ -31,7 +31,7 @@ use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 
 class ExcelController extends AppController
 {
-    use ExcelControllerTrait, ExcellEleveInsertionTrait;
+    use ExcelControllerTrait, ExcellControllerTraitEleveLoader;
     /**
      * Initialise les Models qu'on charge dans ce controller
      **/
@@ -41,7 +41,7 @@ class ExcelController extends AppController
     }
 
 
-    public function index() {
+    public function index_old() {
         // https://phpspreadsheet.readthedocs.io/en/latest/topics/reading-files/
 
         $path= URL::storage('data') ."excel/comelinesListe.xlsx";

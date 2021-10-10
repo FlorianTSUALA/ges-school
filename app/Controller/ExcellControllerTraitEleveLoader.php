@@ -33,7 +33,7 @@ trait ExcellControllerTraitEleveLoader
         
         $excel_template_file = URL::storage('data') ."excel/comelinesListe.xlsx";
         
-        $this->render('sections.data_loader.loader_eleve', compact('route',  'excel_template_file'));
+        $this->render('sections.data_loader.eleve_loader', compact('route',  'excel_template_file'));
     }
      
         
