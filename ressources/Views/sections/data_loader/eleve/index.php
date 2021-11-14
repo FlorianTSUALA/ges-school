@@ -8,6 +8,16 @@ $include_res_header = '';
 $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/app-assets/vendors/css/tables/jsgrid/jsgrid-theme.min.css">';
 $include_res_header .= '<link rel="stylesheet" type="text/css" href="' . URL::base() . 'assets/app-assets/vendors/css/tables/jsgrid/jsgrid.min.css">';
 
+$include_res_header .= '
+                        <style>
+                        input.form-control {
+                            width: auto;
+                          }
+                        </style>
+
+' . "\n";
+$include_res_header .= '' . "\n";
+
 $include_res_footer = '';
 $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/forms/select/select2.full.min.js"></script>';
 $include_res_footer .= '<script src="' . URL::base() . 'assets/app-assets/vendors/js/tables/jsgrid/jsgrid.min.js"></script>';
@@ -89,7 +99,44 @@ $include_footer_script = ob_get_clean();
 
                             <div class="card-content collapse show pt-0 mt-1" >
                                 <div class="card-body card-dashboard mt-0 pt-0">
-                                <div id="table_affectation_personnel_salle_classe"></div>
+                                <!-- <div id="table_affectation_personnel_salle_classe"></div> -->
+                                <form class="form-horizontal">
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped table-highlight">
+      <thead>
+        <th>Nom</th>
+        <th>Prenom</th>
+        <th>Date Naissance</th>
+        <th>Lieu Naissance</th>
+        <th>Nationnalté</th>
+        <th>Sexe</th>
+        <th>Classe</th>
+        <th>Inscription</th>
+      </thead>
+      <tbody>
+        <?php foreach ($eleves??[] as $eleve){?>
+            <tr>
+            <td><input type="text" class="form-control" value="<?= $eleve['nom'] ?>" /></td>
+            <td><input type="text" class="form-control" value="<?= $eleve['prenom'] ?>" /></td>
+            <td><input type="date" class="form-control" value="<?= $eleve['date_naissance'] ?>" /></td>
+            <td>
+            <select class="form-control">
+                    <?php foreach ($pays as $item){?>
+                        <option value="<?= $item['prenom'] ?>" ><?= $eleve['nom'] ?></option>
+                    <?php } ?>
+            
+                        </select>
+            </td>
+            <td><input type="text" class="form-control" value="another long value" /></td>
+            <td><input type="text" class="form-control" value="some val" /></td>
+            <td><input type="text" class="form-control" value="<?= $eleve['nom'] ?>" /></td>
+            <td>$505.79</td>
+            </tr>
+        <?php } ?>
+      </tbody>
+    </table>
+  </div>
+</form>
                             </div>
                             </div>
                         </div>

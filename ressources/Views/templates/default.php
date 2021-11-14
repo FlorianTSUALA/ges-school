@@ -46,6 +46,7 @@
             color:    #909;
             opacity:  1;
         }
+		
     </style>
 	<?php require "layouts/search/navbar-search-style.php" ?>
 
