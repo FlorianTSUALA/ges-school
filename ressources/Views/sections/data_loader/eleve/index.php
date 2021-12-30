@@ -77,7 +77,7 @@ $include_footer_script = ob_get_clean();
                                     </div>
                                     <div class="p-0 mr-1   ">
                                         <span class="btn btn-success input_file_upload mr-1" data-target="excel_file">
-                                            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;" name="excel_file" id="excel_file" onchange="load_jsgrid(this, '.excel_file');" /> 
+                                            <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display: none;" name="excel_file" id="excel_file" onchange="load_table(this, '.excel_file');" /> 
                                             <i class="icon-plus"></i>
                                             <span>charger le fichier...</span>
                                         </span>
@@ -130,7 +130,7 @@ $include_footer_script = ob_get_clean();
             <td><input type="text" class="form-control" value="another long value" /></td>
             <td><input type="text" class="form-control" value="some val" /></td>
             <td><input type="text" class="form-control" value="<?= $eleve['nom'] ?>" /></td>
-            <td>$505.79</td>
+            <td><?= $eleve['nom'] ?></td>
             </tr>
         <?php } ?>
       </tbody>

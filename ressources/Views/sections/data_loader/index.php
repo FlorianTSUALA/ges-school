@@ -52,45 +52,7 @@
                                             <div class="col">
                                                 <h1 align="center" class="text-uppercase pt-1"><strong>Chargement des Notes</strong></h1>
                                             </div>
-
-                                            <table class="table table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 32px;"></th>
-                                                        <th style="width: 7em;"></th>
-                                                        <th style="width: 7em;">Test 1</th>
-                                                        <th style="width: 10em;">Test 2 </th>
-                                                        <th style="width: auto;">Test 3</th>
-                                                        <th style="width: 10em;">Test 4
-                                                        <th style="width: auto;">Test 5 </th>
-                                                        <th style="width: auto;">Alternative 1</th>
-                                                        <th style="width: 10em;">Probability 1</th>
-                                                        <th style="width: auto;">Alternative 2</th>
-                                                        <th style="width: 10em;">Probability 2</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr  class="shareEditor">
-                                                    <input  type="hidden" value="1" />
-                                                    <input  type="hidden" value="7" />
-                                                    <input  type="hidden" value="0" />
-                                                    <input  type="hidden" value="2" />
-                                                    <td>
-                                                    </td>
-                                                    <td>Test</td>
-                                                    <td>
-                                                <input  type="hidden" value="True" /><input  type="hidden" value="1" />Test</td>
-                                        <td><input class="form-control"  type="text" value="" /></td>
-                                        <td>
-                                            <div class="input-group">
-                                                <input value="0" class="form-control" />
-                                                <div class="input-group-append input-group-text">m3</div>
-                                            </div>
-                                        </td>
-                                        <!-- Omitted -->
-                                        </tr>            
-                                    </tbody>
-                                    </table>
+                                            
                                         </div>
                                     </div>
                                 </div>

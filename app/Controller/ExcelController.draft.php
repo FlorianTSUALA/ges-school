@@ -44,7 +44,7 @@ class ExcelController extends AppController
     public function index_old() {
         // https://phpspreadsheet.readthedocs.io/en/latest/topics/reading-files/
 
-        $path= URL::storage('data') ."excel/comelinesListe.xlsx";
+        $path = URL::storage('data') ."excel/comelinesListe.xlsx";
 
         $ligne_debut = 3;
         $numero_feuille = 0;
@@ -61,6 +61,7 @@ class ExcelController extends AppController
         */
 
         //now it is created a html table with the excel file data
+        /*
         $html_tb ='<table border="1"><tr><th>'. implode('</th><th>', $xls_data[1]) .'</th></tr>';
         $nr = count($xls_data); //number of rows
         for($i=2; $i<=$nr; $i++){
@@ -69,7 +70,7 @@ class ExcelController extends AppController
         $html_tb .='</table>';
 
         echo $html_tb; 
-        dd('ok');
+        dd('ok');*/
 
         $i = 0;
         $index_classe = 1;

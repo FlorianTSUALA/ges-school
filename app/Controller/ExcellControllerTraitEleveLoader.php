@@ -24,6 +24,8 @@ use App\Model\AntecedentScolaire;
 use App\Model\Pays;
 use App\Repository\EleveRepository;
 use App\Repository\StatutApprenantRepository;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
+use PhpOffice\PhpSpreadsheet\IOFactory;
 
 trait ExcellControllerTraitEleveLoader 
 {
@@ -37,7 +39,137 @@ trait ExcellControllerTraitEleveLoader
         $this->render('sections.data_loader.eleve.index', compact('route', 'pays', 'classes', 'sexes'));
     }
      
+    public function api_file_reader_to_data(){
+        var_dump($_FILES['file']['tmp_name']);
+
+        $path = URL::storage('data') ."excel/comelinesListe.xlsx";
+        $target_dir = URL::storage('data') .'excel/';
+        $target_file = $target_dir . "tmp_".basename($_FILES["filepath"]["name"]);
+        $imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
+        move_uploaded_file($_FILES["filepath"]["tmp_name"], $target_file);
         
+
+        $ligne_debut = 3;
+        $numero_feuille = 0;
+
+        $excel_Obj = IOFactory::load($target_file);
+        // $reader= IOFactory::createReaderForFile($path);
+        //$Reader->setReadDataOnly(true);
+        // $excel_Obj = $reader->load($path);
+        
+        //read excel data and store it into an array
+        $xls_data = $excel_Obj->getActiveSheet()->toArray(null, true, true, true);
+        /* $xls_data contains this array:
+        [1=>['A'=>'Domain', 'B'=>'Category', 'C'=>'Nr. Pages'], 2=>['A'=>'CoursesWeb.net', 'B'=>'Web Development', 'C'=>4000], 3=>['A'=>'MarPlo.net', 'B'=>'Courses & Games', 'C'=>15000]]
+        */
+
+        //now it is created a html table with the excel file data
+        /*
+        $html_tb ='<table border="1"><tr><th>'. implode('</th><th>', $xls_data[1]) .'</th></tr>';
+        $nr = count($xls_data); //number of rows
+        for($i=2; $i<=$nr; $i++){
+        $html_tb .='<tr><td>'. implode('</td><td>', $xls_data[$i]) .'</td></tr>';
+        }
+        $html_tb .='</table>';
+
+        echo $html_tb; 
+        dd('ok');*/
+
+        $i = 0;
+        $index_classe = 1;
+        $index_antecedent_scolaire = 2;
+        $index_nom = 3;
+        $index_prenom = 4;
+        $index_date_naissance = 5;
+        $index_lieu_naissance = 6;
+        $index_nationalite = 7;
+        $index_sexe = 8;
+        $annee_scolaire = '2020-2021';
+        
+        $nbre_feuille = $excel_Obj->getSheetCount();
+        
+        $data = [];
+
+        while ($excel_Obj->setActiveSheetIndex($numero_feuille))
+        {
+            $worksheet=$excel_Obj->getSheet($numero_feuille);
+            $Worksheet = $excel_Obj->getActiveSheet();
+            $lastRow = $worksheet->getHighestDataRow();
+            $colomncount = $worksheet->getHighestDataColumn();
+            $colomncount_number = Coordinate::columnIndexFromString($colomncount);
+
+            echo "  <tr>
+                        <td>nationnalité</td>
+                        <td>Salle de classe</td>
+                        <td>annee scolaire</td>
+                        <td>classe</td>
+                        <td>nom</td>
+                        <td>prenom</td>
+                        <td>sexe</td>
+                        <td>date_naissance</td>
+                        <td>lieu_naissance</td>
+                        <td>antecedent_scolaire</td>
+                    </tr>
+            ";
+
+            for($row=3;$row<=$lastRow;$row++){
+                $val1= 25569;
+                $val2= 86400;
+                $salle_classe =  $worksheet->getCell(Coordinate::stringFromColumnIndex($index_classe).$row)->getValue()   ;
+                $antecedent_scolaire  =  $worksheet->getCell(Coordinate::stringFromColumnIndex($index_antecedent_scolaire).$row)->getValue()   ;
+                $nom =  $worksheet->getCell(Coordinate::stringFromColumnIndex($index_nom).$row)->getValue()   ;
+                $prenom =  $worksheet->getCell(Coordinate::stringFromColumnIndex($index_prenom).$row)->getValue()   ;
+                $inline = $worksheet->getCell(Coordinate::stringFromColumnIndex($index_date_naissance).$row)->getValue();   		
+                
+                $timestamp = ($inline - $val1) * $val2 ; 
+                $date_naissance =  date("d/m/y",$timestamp)  ;
+                            
+                $lieu_naissance =  $worksheet->getCell(Coordinate::stringFromColumnIndex($index_lieu_naissance).$row)->getValue()   ;
+                $nationalite =  $worksheet->getCell(Coordinate::stringFromColumnIndex($index_nationalite).$row)->getValue()   ;
+                $sexe =  $worksheet->getCell(Coordinate::stringFromColumnIndex($index_sexe).$row)->getValue()   ;
+                $classe = salleDeClasseToClass($salle_classe);
+                
+                $data["salle_classe"]= $salle_classe;
+                $data["antecedent_scolaire"]= $antecedent_scolaire;
+                $data["nom"]= $nom;
+                $data["prenom"]= $prenom;
+                $data["inline"]= $inline;
+                $data["lieu_naissance"]= $lieu_naissance;
+                $data["date_naissance"]= $date_naissance;
+                $data["nationalite"]= $nationalite;
+                $data["sexe"]= $sexe;
+                $data["classe"]= $classe;
+                
+                echo "  <tr>
+                            <td>$nationalite</td>
+                            <td>$salle_classe</td>
+                            <td>$annee_scolaire</td>
+                            <td>$classe</td>
+                            <td>$nom</td>
+                            <td>$prenom</td>
+                            <td>$sexe</td>
+                            <td>$date_naissance</td>
+                            <td>$lieu_naissance</td>
+                            <td>$antecedent_scolaire</td>
+                        </tr>
+                ";
+
+                // echo "$nationalite, $salle_classe,$annee_scolaire,$classe";
+    
+        
+            }
+            
+            $i++;
+            
+            if ($i == $nbre_feuille) 
+                break;    
+            $col2 =13; $row2=2;		
+            echo $value = $worksheet->getCell(Coordinate::stringFromColumnIndex($col2).$row2)->getOldCalculatedValue();
+
+        }
+        echo json_encode($data);
+    }
+
     public function api_loader_eleve_api_display_data()
     {
         

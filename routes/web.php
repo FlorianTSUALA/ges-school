@@ -139,6 +139,8 @@ $router->addRoute('logout', 'logout', [LoginController::class, 'logout']);
     $router->addRoute('loader', 'chargement', [ExcelController::class, 'loader']);
     
     //BEGIN_ELEVE
+    
+        $router->addRoute('loader_upload_file', 'eleve/upload_file', [ExcelController::class, 'api_file_reader_to_data']);
         $router->addRoute('loader_eleve', 'eleve/chargement', [ExcelController::class, 'loader_eleve']);
         $router->addRoute('download_template_loader_eleve', 'download/loader_template/eleve', [ExcelController::class, 'download_template_loader_eleve']);
         $router->addRoute('api_loader_eleve_save', 'api/loader_eleve/save', [ExcelController::class, 'api_loader_eleve_api_save']);
